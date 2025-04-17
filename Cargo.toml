@@ -1,11 +1,6 @@
-[package]
-name = "setacean"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
-cxx = { version = "1.0.157", features = ["c++20"] }
-
-[build-dependencies]
-bindgen = "0.71.1"
-cxx-build = { version = "1.0.157", features = ["parallel"] }
+[workspace]
+resolver = "3"
+members = [
+    "barvinok-sys",
+    "raffine"
+]
