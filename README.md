@@ -3,7 +3,7 @@
 ## How to Compile
 
 (assume ubuntu)
-```
+```bash
 # install LLVM
 wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
