@@ -2,19 +2,30 @@ use melior::Context as MLIRContext;
 pub mod affine;
 pub mod tree;
 
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+    #[error("MLIR internal error: {0}")]
+    MeliorError(#[from] melior::Error),
+    #[error("invalid loop nest from MLIR code ({0})")]
+    InvalidLoopNest(&'static str),
+}
+
 pub fn initialize_mlir_context() -> MLIRContext {
     let context = melior::Context::new();
     let registery = melior::dialect::DialectRegistry::new();
     melior::utility::register_all_dialects(&registery);
     context.append_dialect_registry(&registery);
     context.load_all_available_dialects();
-    tracing::debug!("Loaded all available dialects ({} in total)", context.loaded_dialect_count());
+    tracing::debug!(
+        "Loaded all available dialects ({} in total)",
+        context.loaded_dialect_count()
+    );
     context
 }
 
 pub struct Context {
-  mlir_context: MLIRContext,
-  arena: bumpalo::Bump,
+    mlir_context: MLIRContext,
+    arena: bumpalo::Bump,
 }
 
 impl Default for Context {
@@ -24,19 +35,22 @@ impl Default for Context {
 }
 
 impl Context {
-  pub fn new() -> Self {
-    let mlir_context = initialize_mlir_context();
-    let arena = bumpalo::Bump::new();
-    Self { mlir_context, arena }
-  }
+    pub fn new() -> Self {
+        let mlir_context = initialize_mlir_context();
+        let arena = bumpalo::Bump::new();
+        Self {
+            mlir_context,
+            arena,
+        }
+    }
 
-  pub fn mlir_context(&self) -> &MLIRContext {
-    &self.mlir_context
-  }
+    pub fn mlir_context(&self) -> &MLIRContext {
+        &self.mlir_context
+    }
 
-  pub fn arena(&self) -> &bumpalo::Bump {
-    &self.arena
-  }
+    pub fn arena(&self) -> &bumpalo::Bump {
+        &self.arena
+    }
 }
 
 #[cfg(test)]
@@ -93,9 +107,8 @@ mod tests {
         let body = body.first_block().unwrap();
         let first_op = body.first_operation().unwrap();
         println!("First operation: {}", first_op);
-        let op : melior::dialect::ods::affine::AffineForOperation = unsafe {
-          std::mem::transmute(first_op.to_raw())
-        };
+        let op: &melior::dialect::ods::affine::AffineForOperation =
+            unsafe { std::mem::transmute(first_op.to_ref()) };
         let lower_bound = op.lower_bound_map().unwrap();
         println!("Lower bound: {}", lower_bound);
     }
