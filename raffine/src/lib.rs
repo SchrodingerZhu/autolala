@@ -1,7 +1,8 @@
-use melior::Context;
+use melior::Context as MLIRContext;
 pub mod affine;
+pub mod tree;
 
-pub fn initialize_mlir_context() -> Context {
+pub fn initialize_mlir_context() -> MLIRContext {
     let context = melior::Context::new();
     let registery = melior::dialect::DialectRegistry::new();
     melior::utility::register_all_dialects(&registery);
@@ -11,10 +12,30 @@ pub fn initialize_mlir_context() -> Context {
     context
 }
 
+pub struct Context {
+  mlir_context: MLIRContext,
+  arena: bumpalo::Bump,
+}
+
+impl Context {
+  pub fn new() -> Self {
+    let mlir_context = initialize_mlir_context();
+    let arena = bumpalo::Bump::new();
+    Self { mlir_context, arena }
+  }
+
+  pub fn mlir_context(&self) -> &MLIRContext {
+    &self.mlir_context
+  }
+
+  pub fn arena(&self) -> &bumpalo::Bump {
+    &self.arena
+  }
+}
+
 #[cfg(test)]
 mod tests {
-    use melior::ir::Module;
-
+    use melior::ir::{BlockLike, Module, RegionLike};
 
     #[test]
     fn mlir_loads_affine_dialect() {
@@ -60,5 +81,16 @@ mod tests {
 "#;
         let module = Module::parse(&context, module).unwrap();
         tracing::debug!("Parsed module: {}", module.body().to_string());
+        let body = module.body();
+        let op = body.first_operation().unwrap();
+        let body = op.region(0).unwrap();
+        let body = body.first_block().unwrap();
+        let first_op = body.first_operation().unwrap();
+        println!("First operation: {}", first_op);
+        let op : melior::dialect::ods::affine::AffineForOperation = unsafe {
+          std::mem::transmute(first_op.to_raw())
+        };
+        let lower_bound = op.lower_bound_map().unwrap();
+        println!("Lower bound: {}", lower_bound);
     }
 }
