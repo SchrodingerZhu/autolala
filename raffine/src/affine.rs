@@ -597,14 +597,14 @@ mod tests {
         let expr2 = AffineExpr::new_constant(&context, 3);
         let expr3 = expr1 + expr2;
         let map = AffineMap::new(&context, 0, 0, &[expr3]);
-        assert_eq!(map.is_identity(), false);
-        assert_eq!(map.is_empty(), false);
+        assert!(!map.is_identity());
+        assert!(!map.is_empty());
         assert_eq!(map.num_dims(), 0);
         assert_eq!(map.num_symbols(), 0);
         assert_eq!(map.num_results(), 1);
-        assert_eq!(map.is_permutation(), false);
-        assert_eq!(map.is_minor_identity(), false);
-        assert_eq!(map.is_single_constant(), true);
+        assert!(!map.is_permutation());
+        assert!(!map.is_minor_identity());
+        assert!(map.is_single_constant());
         println!("map: {}", map);
     }
 }

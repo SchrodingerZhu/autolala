@@ -17,6 +17,12 @@ pub struct Context {
   arena: bumpalo::Bump,
 }
 
+impl Default for Context {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Context {
   pub fn new() -> Self {
     let mlir_context = initialize_mlir_context();
