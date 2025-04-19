@@ -39,7 +39,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .collect::<Vec<_>>();
     let flags = llvm_config("--cxxflags")?
         .split_whitespace()
-        .filter(|x| !x.starts_with("-I"))
+        .filter(|x| !x.starts_with("-I") && !x.contains("no-exceptions"))
         .map(String::from)
         .collect::<Vec<_>>();
     let cxx_sources = Path::new("src/cxx")
@@ -59,13 +59,16 @@ fn main() -> Result<(), Box<dyn Error>> {
         .collect::<Vec<_>>();
     let mut build = cxx_build::bridge("src/cxx.rs");
     for flag in flags {
-        build.flag(flag);
+        build.flag_if_supported(flag);
     }
+    let cxx_source_dir = Path::new("src/cxx").canonicalize()?;
     build
         .files(cxx_sources)
         .includes(includes)
+        .include(cxx_source_dir)
         .cpp(true)
         .std("gnu++20")
+        .flag_if_supported("-Wno-unused-parameter")
         .compile("raffine-cxx");
     println!("cargo:rerun-if-changed=src/cxx");
     println!("cargo:rerun-if-changed=build.rs");

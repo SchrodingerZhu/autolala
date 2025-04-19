@@ -1,4 +1,5 @@
-use melior::ir::{BlockLike, BlockRef, Operation, RegionLike};
+
+use melior::ir::{BlockLike, BlockRef, OperationRef, RegionLike};
 
 use crate::{
     Context,
@@ -77,16 +78,15 @@ impl Context {
 
     pub fn build_tree_from_loop<'a>(
         &'a self,
-        entry: &'_ Operation<'a>,
+        entry: OperationRef<'a, '_>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
         tracing::trace!("building tree from loop: {}", entry);
-        let lower_bound = todo!();
-        let upper_bound = todo!();
-        let lower_bound = AffineMap::from_attr(lower_bound)
-            .ok_or(crate::Error::InvalidLoopNest("invalid lowerbound"))?;
-        let upper_bound = AffineMap::from_attr(upper_bound)
-            .ok_or(crate::Error::InvalidLoopNest("invalid upperbound"))?;
-        let step = todo!();
+        let lower_bound = crate::cxx::for_op_get_lower_bound_map(entry)?;
+        tracing::trace!("lower bound: {}", lower_bound);
+        let upper_bound = crate::cxx::for_op_get_upper_bound_map(entry)?;
+        tracing::trace!("upper bound: {}", upper_bound);
+        let step = crate::cxx::for_op_get_step(entry);
+        tracing::trace!("step: {}", step);
         let region = entry.region(0)?;
         let body = region
             .first_block()
@@ -100,7 +100,7 @@ impl Context {
 
     fn build_tree_from_load<'a>(
         &'a self,
-        entry: &'_ Operation<'a>,
+        entry: OperationRef<'a, '_>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
         tracing::trace!("building tree from load: {}", entry);
         let target_id = todo!();
@@ -113,7 +113,7 @@ impl Context {
 
     fn build_tree_from_store<'a>(
         &'a self,
-        entry: &'_ Operation<'a>,
+        entry: OperationRef<'a, '_>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
         tracing::trace!("building tree from store: {}", entry);
         let target_id = todo!();
@@ -126,7 +126,7 @@ impl Context {
 
     fn build_tree_from_if<'a>(
         &'a self,
-        entry: &'_ Operation<'a>,
+        entry: OperationRef<'a, '_>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
         tracing::trace!("building tree from if: {}", entry);
         todo!()
@@ -138,25 +138,36 @@ impl Context {
     ) -> Result<&'a Tree<'a>, crate::Error> {
         tracing::trace!("building tree from block: {}", entry);
         let mut subtrees = Vec::new();
-        let mut cursor = entry.first_operation().map(|x| unsafe { x.to_ref() });
-        while let Some(op) = cursor {
-            cursor = op.next_in_block().map(|x| unsafe { x.to_ref() });
+        fn collect_op<'a>(
+            this: &'a Context,
+            op: OperationRef<'a, '_>,
+            subtrees: &mut Vec<&'a Tree<'a>>,
+        ) -> Result<(), crate::Error> {
             let name = op.name();
             let name = name
                 .as_string_ref()
                 .as_str()
                 .map_err(|_| crate::Error::InvalidLoopNest("invalid operation name"))?;
-            let res = match name {
-                "affine.for" => self.build_tree_from_loop(op)?,
-                "affine.load" => self.build_tree_from_load(op)?,
-                "affine.store" => self.build_tree_from_store(op)?,
-                "affine.if" => self.build_tree_from_if(op)?,
-                _ => {
-                    tracing::trace!("ignored operation: {}", op);
-                    continue;
-                }
-            };
-            subtrees.push(res);
+            'dispatch: {
+                let res = match name {
+                    "affine.for" => this.build_tree_from_loop(op)?,
+                    "affine.load" => this.build_tree_from_load(op)?,
+                    "affine.store" => this.build_tree_from_store(op)?,
+                    "affine.if" => this.build_tree_from_if(op)?,
+                    _ => {
+                        tracing::trace!("ignored operation: {}", op);
+                        break 'dispatch;
+                    }
+                };
+                subtrees.push(res);
+            }
+            if let Some(next) = op.next_in_block() {
+                return collect_op(this, next, subtrees);
+            }
+            Ok(())
+        }
+        if let Some(op) = entry.first_operation() {
+            collect_op(self, op, &mut subtrees)?;
         }
         if subtrees.is_empty() {
             return Err(crate::Error::InvalidLoopNest("empty block"));
@@ -219,9 +230,7 @@ mod tests {
         let body = body.first_block().unwrap();
         let first_op = body.first_operation().unwrap();
         println!("First operation: {}", first_op);
-        let tree = context
-            .build_tree_from_loop(unsafe { first_op.to_ref() })
-            .unwrap();
+        let tree = context.build_tree_from_loop(first_op).unwrap();
         tracing::debug!("Tree: {:?}", tree);
     }
 }

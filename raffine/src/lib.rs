@@ -9,6 +9,8 @@ pub enum Error {
     MeliorError(#[from] melior::Error),
     #[error("invalid loop nest from MLIR code ({0})")]
     InvalidLoopNest(&'static str),
+    #[error("invalid ffi operation ({0})")]
+    FFIError(#[from] ::cxx::Exception),
 }
 
 pub fn initialize_mlir_context() -> MLIRContext {
