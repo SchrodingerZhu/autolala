@@ -1,9 +1,13 @@
 #include <mlir-c/AffineMap.h>
 #include <mlir-c/IR.h>
+#include <mlir-c/IntegerSet.h>
 #include <mlir-c/Support.h>
 #include <mlir/CAPI/AffineMap.h>
 #include <mlir/CAPI/IR.h>
+#include <mlir/CAPI/IntegerSet.h>
 #include <mlir/Dialect/Affine/IR/AffineOps.h>
+#include <mlir/IR/Block.h>
+#include <rust/cxx.h>
 #include <stdexcept>
 
 #include "affine_helper.hpp"
@@ -53,6 +57,33 @@ MlirAffineMap loadStoreOpGetAccessMap(MlirOperation target) {
     return wrap(storeOp.getAffineMap());
   throw std::invalid_argument(
       "Expected an AffineLoadOp/AffineStoreOp, but got a different operation.");
+}
+
+MlirIntegerSet ifOpGetCondition(MlirOperation ifOp) {
+  Operation *op = unwrap(ifOp);
+  if (auto ifOp = dyn_cast<affine::AffineIfOp>(op))
+    return wrap(ifOp.getCondition());
+  throw std::invalid_argument(
+      "Expected an AffineIfOp, but got a different operation.");
+}
+
+MlirBlock ifOpGetThenBlock(MlirOperation ifOp) {
+  Operation *op = unwrap(ifOp);
+  if (auto ifOp = dyn_cast<affine::AffineIfOp>(op))
+    return wrap(ifOp.getThenBlock());
+  throw std::invalid_argument(
+      "Expected an AffineIfOp, but got a different operation.");
+}
+MlirBlock ifOpGetElseBlock(MlirOperation ifOp) {
+  Operation *op = unwrap(ifOp);
+  if (auto ifOp = dyn_cast<affine::AffineIfOp>(op)) {
+    if (ifOp.hasElse())
+      return wrap(ifOp.getElseBlock());
+    else
+      return wrap(static_cast<Block *>(nullptr));
+  }
+  throw std::invalid_argument(
+      "Expected an AffineIfOp, but got a different operation.");
 }
 
 } // namespace raffine

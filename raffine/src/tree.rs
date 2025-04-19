@@ -127,11 +127,8 @@ impl Context {
     ) -> Result<&'a Tree<'a>, crate::Error> {
         tracing::trace!("building tree from loop: {}", entry);
         let lower_bound = crate::cxx::for_op_get_lower_bound_map(entry)?;
-        tracing::trace!("lower bound: {}", lower_bound);
         let upper_bound = crate::cxx::for_op_get_upper_bound_map(entry)?;
-        tracing::trace!("upper bound: {}", upper_bound);
         let step = crate::cxx::for_op_get_step(entry)?;
-        tracing::trace!("step: {}", step);
         let region = entry.region(0)?;
         let body = region
             .first_block()
@@ -159,7 +156,15 @@ impl Context {
         entry: OperationRef<'a, '_>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
         tracing::trace!("building tree from if: {}", entry);
-        todo!()
+        let condition = crate::cxx::if_op_get_condition(entry)?;
+        let then_block = crate::cxx::if_op_get_then_block(entry)?;
+        let then = self.build_tree_from_block(then_block)?;
+        let r#else = if let Some(else_block) = crate::cxx::if_op_get_else_block(entry)? {
+            Some(self.build_tree_from_block(else_block)?)
+        } else {
+            None
+        };
+        Ok(self.build_if(condition, then, r#else))
     }
 
     fn build_tree_from_block<'a>(
