@@ -1,5 +1,6 @@
 use melior::Context as MLIRContext;
 pub mod affine;
+mod cxx;
 pub mod tree;
 
 #[derive(Debug, thiserror::Error)]
@@ -107,9 +108,5 @@ mod tests {
         let body = body.first_block().unwrap();
         let first_op = body.first_operation().unwrap();
         println!("First operation: {}", first_op);
-        let op: &melior::dialect::ods::affine::AffineForOperation =
-            unsafe { std::mem::transmute(first_op.to_ref()) };
-        let lower_bound = op.lower_bound_map().unwrap();
-        println!("Lower bound: {}", lower_bound);
     }
 }

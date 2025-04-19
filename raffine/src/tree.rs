@@ -1,9 +1,4 @@
-use melior::{
-    dialect::ods::affine::{
-        AffineForOperation, AffineIfOperation, AffineLoadOperation, AffineStoreOperation,
-    },
-    ir::{BlockLike, BlockRef, Operation, RegionLike, ValueLike},
-};
+use melior::ir::{BlockLike, BlockRef, Operation, RegionLike};
 
 use crate::{
     Context,
@@ -82,17 +77,17 @@ impl Context {
 
     pub fn build_tree_from_loop<'a>(
         &'a self,
-        entry: &'_ AffineForOperation<'a>,
+        entry: &'_ Operation<'a>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
-        tracing::trace!("building tree from loop: {}", entry.as_operation());
-        let lower_bound = entry.lower_bound_map()?;
-        let upper_bound = entry.upper_bound_map()?;
+        tracing::trace!("building tree from loop: {}", entry);
+        let lower_bound = todo!();
+        let upper_bound = todo!();
         let lower_bound = AffineMap::from_attr(lower_bound)
             .ok_or(crate::Error::InvalidLoopNest("invalid lowerbound"))?;
         let upper_bound = AffineMap::from_attr(upper_bound)
             .ok_or(crate::Error::InvalidLoopNest("invalid upperbound"))?;
-        let step = entry.step()?.signed_value() as isize;
-        let region = entry.region()?;
+        let step = todo!();
+        let region = entry.region(0)?;
         let body = region
             .first_block()
             .ok_or(crate::Error::InvalidLoopNest("invalid loop body"))?;
@@ -105,12 +100,11 @@ impl Context {
 
     fn build_tree_from_load<'a>(
         &'a self,
-        entry: &'_ AffineLoadOperation<'a>,
+        entry: &'_ Operation<'a>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
-        tracing::trace!("building tree from load: {}", entry.as_operation());
-        let target = entry.memref()?;
-        let target_id = target.to_raw().ptr as usize;
-        let map = entry.map()?;
+        tracing::trace!("building tree from load: {}", entry);
+        let target_id = todo!();
+        let map = todo!();
         let map =
             AffineMap::from_attr(map).ok_or(crate::Error::InvalidLoopNest("invalid load map"))?;
         let is_write = false;
@@ -119,12 +113,11 @@ impl Context {
 
     fn build_tree_from_store<'a>(
         &'a self,
-        entry: &'_ AffineStoreOperation<'a>,
+        entry: &'_ Operation<'a>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
-        tracing::trace!("building tree from store: {}", entry.as_operation());
-        let target = entry.memref()?;
-        let target_id = target.to_raw().ptr as usize;
-        let map = entry.map()?;
+        tracing::trace!("building tree from store: {}", entry);
+        let target_id = todo!();
+        let map = todo!();
         let map =
             AffineMap::from_attr(map).ok_or(crate::Error::InvalidLoopNest("invalid store map"))?;
         let is_write = true;
@@ -133,10 +126,9 @@ impl Context {
 
     fn build_tree_from_if<'a>(
         &'a self,
-        entry: &'_ AffineIfOperation<'a>,
+        entry: &'_ Operation<'a>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
-        tracing::trace!("building tree from if: {}", entry.as_operation());
-        let condition = entry.as_operation();
+        tracing::trace!("building tree from if: {}", entry);
         todo!()
     }
 
@@ -148,39 +140,23 @@ impl Context {
         let mut subtrees = Vec::new();
         let mut cursor = entry.first_operation().map(|x| unsafe { x.to_ref() });
         while let Some(op) = cursor {
+            cursor = op.next_in_block().map(|x| unsafe { x.to_ref() });
             let name = op.name();
             let name = name
                 .as_string_ref()
                 .as_str()
                 .map_err(|_| crate::Error::InvalidLoopNest("invalid operation name"))?;
-            match name {
-                "affine.for" => {
-                    let for_op =
-                        unsafe { std::mem::transmute::<&Operation, &AffineForOperation>(op) };
-                    let tree = self.build_tree_from_loop(for_op)?;
-                    subtrees.push(tree);
+            let res = match name {
+                "affine.for" => self.build_tree_from_loop(op)?,
+                "affine.load" => self.build_tree_from_load(op)?,
+                "affine.store" => self.build_tree_from_store(op)?,
+                "affine.if" => self.build_tree_from_if(op)?,
+                _ => {
+                    tracing::trace!("ignored operation: {}", op);
+                    continue;
                 }
-                "affine.load" => {
-                    let load_op =
-                        unsafe { std::mem::transmute::<&Operation, &AffineLoadOperation>(op) };
-                    let tree = self.build_tree_from_load(load_op)?;
-                    subtrees.push(tree);
-                }
-                "affine.store" => {
-                    let store_op =
-                        unsafe { std::mem::transmute::<&Operation, &AffineStoreOperation>(op) };
-                    let tree = self.build_tree_from_store(store_op)?;
-                    subtrees.push(tree);
-                }
-                "affine.if" => {
-                    let if_op =
-                        unsafe { std::mem::transmute::<&Operation, &AffineIfOperation>(op) };
-                    let tree = self.build_tree_from_if(if_op)?;
-                    subtrees.push(tree);
-                }
-                _ => tracing::trace!("ignored operation: {}", op),
-            }
-            cursor = op.next_in_block().map(|x| unsafe { x.to_ref() });
+            };
+            subtrees.push(res);
         }
         if subtrees.is_empty() {
             return Err(crate::Error::InvalidLoopNest("empty block"));
@@ -188,7 +164,7 @@ impl Context {
         if subtrees.len() == 1 {
             return Ok(subtrees[0]);
         }
-        let block = self.build_block(subtrees.into_iter());
+        let block = self.build_block(subtrees);
         Ok(block)
     }
 }
@@ -242,9 +218,10 @@ mod tests {
         let body = op.region(0).unwrap();
         let body = body.first_block().unwrap();
         let first_op = body.first_operation().unwrap();
-        let op: &melior::dialect::ods::affine::AffineForOperation =
-            unsafe { std::mem::transmute(first_op.to_ref()) };
-        let tree = context.build_tree_from_loop(op).unwrap();
+        println!("First operation: {}", first_op);
+        let tree = context
+            .build_tree_from_loop(unsafe { first_op.to_ref() })
+            .unwrap();
         tracing::debug!("Tree: {:?}", tree);
     }
 }
