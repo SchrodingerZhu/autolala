@@ -33,7 +33,15 @@ mod ffi {
 
         #[namespace = "raffine"]
         #[cxx_name = "forOpGetStep"]
-        fn for_op_get_step(for_op: MlirOperation) -> isize;
+        fn for_op_get_step(for_op: MlirOperation) -> Result<isize>;
+
+        #[namespace = "raffine"]
+        #[cxx_name = "loadStoreOpGetAccessId"]
+        fn load_store_op_get_access_id(op: MlirOperation) -> Result<usize>;
+
+        #[namespace = "raffine"]
+        #[cxx_name = "loadStoreOpGetAccessMap"]
+        fn load_store_op_get_access_map(op: MlirOperation) -> Result<MlirAffineMap>;
     }
 }
 
@@ -52,6 +60,16 @@ pub(crate) fn for_op_get_upper_bound_map<'a>(
     let map = ffi::for_op_get_upper_bound_map(for_op)?;
     Ok(unsafe { std::mem::transmute::<MlirAffineMap, AffineMap>(map) })
 }
-pub(crate) fn for_op_get_step(for_op: OperationRef) -> isize {
-    ffi::for_op_get_step(MlirOperation(for_op.to_raw()))
+pub(crate) fn for_op_get_step(for_op: OperationRef) -> Result<isize, crate::Error> {
+    ffi::for_op_get_step(MlirOperation(for_op.to_raw())).map_err(Into::into)
+}
+pub(crate) fn load_store_op_get_access_id(op: OperationRef) -> Result<usize, crate::Error> {
+    ffi::load_store_op_get_access_id(MlirOperation(op.to_raw())).map_err(Into::into)
+}
+pub(crate) fn load_store_op_get_access_map<'a>(
+    op: OperationRef<'a, '_>,
+) -> Result<AffineMap<'a>, crate::Error> {
+    let op = MlirOperation(op.to_raw());
+    let map = ffi::load_store_op_get_access_map(op)?;
+    Ok(unsafe { std::mem::transmute::<MlirAffineMap, AffineMap>(map) })
 }

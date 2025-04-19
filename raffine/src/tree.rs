@@ -1,4 +1,3 @@
-
 use melior::ir::{BlockLike, BlockRef, OperationRef, RegionLike};
 
 use crate::{
@@ -25,6 +24,52 @@ pub enum Tree<'a> {
         then: &'a Tree<'a>,
         r#else: Option<&'a Tree<'a>>,
     },
+}
+
+impl std::fmt::Display for Tree<'_> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Tree::For {
+                lower_bound,
+                upper_bound,
+                step,
+                body,
+            } => write!(
+                f,
+                "for {} to {} step {} {}",
+                lower_bound, upper_bound, step, body
+            ),
+            Tree::Block(body) => write!(
+                f,
+                "{{ {} }}",
+                body.iter()
+                    .map(|b| b.to_string())
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            ),
+            Tree::Access {
+                target_id,
+                map,
+                is_write: true,
+            } => write!(f, "store {}[{}]", target_id, map),
+            Tree::Access {
+                target_id,
+                map,
+                is_write: false,
+            } => write!(f, "load {}[{}]", target_id, map),
+            Tree::If {
+                condition,
+                then,
+                r#else,
+            } => write!(
+                f,
+                "if {} {{ {} }} else {{ {} }}",
+                condition,
+                then,
+                r#else.map_or("None".to_string(), |e| e.to_string())
+            ),
+        }
+    }
 }
 
 impl Context {
@@ -85,7 +130,7 @@ impl Context {
         tracing::trace!("lower bound: {}", lower_bound);
         let upper_bound = crate::cxx::for_op_get_upper_bound_map(entry)?;
         tracing::trace!("upper bound: {}", upper_bound);
-        let step = crate::cxx::for_op_get_step(entry);
+        let step = crate::cxx::for_op_get_step(entry)?;
         tracing::trace!("step: {}", step);
         let region = entry.region(0)?;
         let body = region
@@ -98,29 +143,14 @@ impl Context {
         Ok(self.build_for(lower_bound, upper_bound, step, body))
     }
 
-    fn build_tree_from_load<'a>(
+    fn build_tree_from_load_store<'a>(
         &'a self,
+        is_write: bool,
         entry: OperationRef<'a, '_>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
         tracing::trace!("building tree from load: {}", entry);
-        let target_id = todo!();
-        let map = todo!();
-        let map =
-            AffineMap::from_attr(map).ok_or(crate::Error::InvalidLoopNest("invalid load map"))?;
-        let is_write = false;
-        Ok(self.build_access(target_id, map, is_write))
-    }
-
-    fn build_tree_from_store<'a>(
-        &'a self,
-        entry: OperationRef<'a, '_>,
-    ) -> Result<&'a Tree<'a>, crate::Error> {
-        tracing::trace!("building tree from store: {}", entry);
-        let target_id = todo!();
-        let map = todo!();
-        let map =
-            AffineMap::from_attr(map).ok_or(crate::Error::InvalidLoopNest("invalid store map"))?;
-        let is_write = true;
+        let target_id = crate::cxx::load_store_op_get_access_id(entry)?;
+        let map = crate::cxx::load_store_op_get_access_map(entry)?;
         Ok(self.build_access(target_id, map, is_write))
     }
 
@@ -151,8 +181,8 @@ impl Context {
             'dispatch: {
                 let res = match name {
                     "affine.for" => this.build_tree_from_loop(op)?,
-                    "affine.load" => this.build_tree_from_load(op)?,
-                    "affine.store" => this.build_tree_from_store(op)?,
+                    "affine.load" => this.build_tree_from_load_store(false, op)?,
+                    "affine.store" => this.build_tree_from_load_store(true, op)?,
                     "affine.if" => this.build_tree_from_if(op)?,
                     _ => {
                         tracing::trace!("ignored operation: {}", op);
@@ -231,6 +261,6 @@ mod tests {
         let first_op = body.first_operation().unwrap();
         println!("First operation: {}", first_op);
         let tree = context.build_tree_from_loop(first_op).unwrap();
-        tracing::debug!("Tree: {:?}", tree);
+        tracing::debug!("Tree: {:#}", tree);
     }
 }

@@ -1,11 +1,17 @@
 use std::ffi::c_void;
 
-use melior::{ir::{Attribute, AttributeLike}, Context, ContextRef};
+use melior::{
+    Context, ContextRef,
+    ir::{Attribute, AttributeLike},
+};
 use mlir_sys::{MlirAffineExpr, MlirStringRef};
 
 #[derive(Debug, Clone, Copy)]
 #[repr(transparent)]
-pub struct AffineExpr<'a>(mlir_sys::MlirAffineExpr, std::marker::PhantomData<*mut &'a ()>);
+pub struct AffineExpr<'a>(
+    mlir_sys::MlirAffineExpr,
+    std::marker::PhantomData<*mut &'a ()>,
+);
 
 pub enum AffineExprKind {
     Add,
@@ -41,9 +47,7 @@ impl std::fmt::Display for AffineExpr<'_> {
             let data = string_ref.data as *const u8;
             let slice = unsafe { std::slice::from_raw_parts(data, length) };
             let chars = std::str::from_utf8(slice).unwrap();
-            fmt.result = fmt.result.and_then(|_| {
-                fmt.fmt.write_str(chars)
-            });
+            fmt.result = fmt.result.and_then(|_| fmt.fmt.write_str(chars));
         }
         let mut ctx = FmtCtx {
             fmt: f,
@@ -51,11 +55,7 @@ impl std::fmt::Display for AffineExpr<'_> {
         };
         let user_data = &mut ctx as *mut _ as *mut c_void;
         unsafe {
-            mlir_sys::mlirAffineExprPrint(
-                self.0,
-                Some(mlir_string_callback),
-                user_data,
-            );
+            mlir_sys::mlirAffineExprPrint(self.0, Some(mlir_string_callback), user_data);
         }
         ctx.result
     }
@@ -87,7 +87,7 @@ impl<'a> AffineExpr<'a> {
         }
     }
     /// ## Safety
-    /// 
+    ///
     pub unsafe fn from_raw(_ctx: &'a Context, expr: mlir_sys::MlirAffineExpr) -> Self {
         AffineExpr(expr, std::marker::PhantomData)
     }
@@ -128,7 +128,7 @@ impl<'a> AffineExpr<'a> {
         }
     }
     pub fn context(&self) -> &'a Context {
-        let ctx_ref = unsafe { ContextRef::from_raw(mlir_sys::mlirAffineExprGetContext(self.0) )};
+        let ctx_ref = unsafe { ContextRef::from_raw(mlir_sys::mlirAffineExprGetContext(self.0)) };
         unsafe { ctx_ref.to_ref() }
     }
     pub fn get_lhs(&self) -> Option<AffineExpr<'_>> {
@@ -210,7 +210,10 @@ impl<'a> std::ops::Div for AffineExpr<'a> {
 
 #[derive(Debug, Clone, Copy)]
 #[repr(transparent)]
-pub struct AffineMap<'a>(mlir_sys::MlirAffineMap, std::marker::PhantomData<*mut &'a ()>);
+pub struct AffineMap<'a>(
+    mlir_sys::MlirAffineMap,
+    std::marker::PhantomData<*mut &'a ()>,
+);
 
 impl<'a> AffineMap<'a> {
     pub fn get_raw(&self) -> mlir_sys::MlirAffineMap {
@@ -220,9 +223,14 @@ impl<'a> AffineMap<'a> {
         let ctx_ref = unsafe { ContextRef::from_raw(mlir_sys::mlirAffineMapGetContext(self.0)) };
         unsafe { ctx_ref.to_ref() }
     }
-    pub fn new(ctx: &'a Context, num_dims: usize, num_symbols: usize, exprs: &[AffineExpr<'a>]) -> Self {
+    pub fn new(
+        ctx: &'a Context,
+        num_dims: usize,
+        num_symbols: usize,
+        exprs: &[AffineExpr<'a>],
+    ) -> Self {
         let num_exprs = exprs.len();
-        let exprs_ptr : *mut MlirAffineExpr = exprs.as_ptr() as *mut MlirAffineExpr;
+        let exprs_ptr: *mut MlirAffineExpr = exprs.as_ptr() as *mut MlirAffineExpr;
         let map = unsafe {
             mlir_sys::mlirAffineMapGet(
                 ctx.to_raw(),
@@ -244,7 +252,13 @@ impl<'a> AffineMap<'a> {
     pub fn is_empty(&self) -> bool {
         unsafe { mlir_sys::mlirAffineMapIsEmpty(self.0) }
     }
-    pub fn replace(&self, expr: AffineExpr<'a>, replacement: AffineExpr<'a>, num_dims: usize, num_symbols: usize) -> Self {
+    pub fn replace(
+        &self,
+        expr: AffineExpr<'a>,
+        replacement: AffineExpr<'a>,
+        num_dims: usize,
+        num_symbols: usize,
+    ) -> Self {
         let map = unsafe {
             mlir_sys::mlirAffineMapReplace(
                 self.0,
@@ -264,16 +278,11 @@ impl<'a> AffineMap<'a> {
         let expr = unsafe { mlir_sys::mlirAffineMapGetResult(self.0, pos) };
         AffineExpr(expr, std::marker::PhantomData)
     }
-    pub fn get_submap(&self, positions: &[isize]) -> AffineMap<'a> 
-    {
+    pub fn get_submap(&self, positions: &[isize]) -> AffineMap<'a> {
         let num_positions = positions.len();
-        let positions_ptr : *mut isize = positions.as_ptr() as *mut isize;
+        let positions_ptr: *mut isize = positions.as_ptr() as *mut isize;
         let map = unsafe {
-            mlir_sys::mlirAffineMapGetSubMap(
-                self.0,
-                num_positions as isize,
-                positions_ptr,
-            )
+            mlir_sys::mlirAffineMapGetSubMap(self.0, num_positions as isize, positions_ptr)
         };
         AffineMap(map, std::marker::PhantomData)
     }
@@ -288,7 +297,7 @@ impl<'a> AffineMap<'a> {
         AffineMap(map, std::marker::PhantomData)
     }
     pub fn from_attr(attr: Attribute<'a>) -> Option<Self> {
-        if !unsafe {mlir_sys::mlirAttributeIsAAffineMap(attr.to_raw())} {
+        if !unsafe { mlir_sys::mlirAttributeIsAAffineMap(attr.to_raw()) } {
             return None;
         }
         let map = unsafe { mlir_sys::mlirAffineMapAttrGetValue(attr.to_raw()) };
@@ -307,7 +316,13 @@ impl<'a> AffineMap<'a> {
         unsafe { mlir_sys::mlirAffineMapIsPermutation(self.0) }
     }
     pub fn new_zero_result(ctx: &'a Context, num_dims: usize, num_symbols: usize) -> Self {
-        let map = unsafe { mlir_sys::mlirAffineMapZeroResultGet(ctx.to_raw(), num_dims as isize, num_symbols as isize) };
+        let map = unsafe {
+            mlir_sys::mlirAffineMapZeroResultGet(
+                ctx.to_raw(),
+                num_dims as isize,
+                num_symbols as isize,
+            )
+        };
         AffineMap(map, std::marker::PhantomData)
     }
     pub fn major_submap(&self, num_results: usize) -> Self {
@@ -320,13 +335,9 @@ impl<'a> AffineMap<'a> {
     }
     pub fn new_permutation(ctx: &'a Context, numbers: &[u32]) -> Self {
         let num_numbers = numbers.len();
-        let numbers_ptr : *mut u32 = numbers.as_ptr() as *mut u32;
+        let numbers_ptr: *mut u32 = numbers.as_ptr() as *mut u32;
         let map = unsafe {
-            mlir_sys::mlirAffineMapPermutationGet(
-                ctx.to_raw(),
-                num_numbers as isize,
-                numbers_ptr,
-            )
+            mlir_sys::mlirAffineMapPermutationGet(ctx.to_raw(), num_numbers as isize, numbers_ptr)
         };
         AffineMap(map, std::marker::PhantomData)
     }
@@ -337,11 +348,18 @@ impl<'a> AffineMap<'a> {
         unsafe { mlir_sys::mlirAffineMapIsSingleConstant(self.0) }
     }
     pub fn new_minor_identity(ctx: &'a Context, num_dims: usize, num_results: usize) -> Self {
-        let map = unsafe { mlir_sys::mlirAffineMapMinorIdentityGet(ctx.to_raw(), num_dims as isize, num_results as isize) };
+        let map = unsafe {
+            mlir_sys::mlirAffineMapMinorIdentityGet(
+                ctx.to_raw(),
+                num_dims as isize,
+                num_results as isize,
+            )
+        };
         AffineMap(map, std::marker::PhantomData)
     }
     pub fn new_multi_dim_identity(ctx: &'a Context, num_dims: usize) -> Self {
-        let map = unsafe { mlir_sys::mlirAffineMapMultiDimIdentityGet(ctx.to_raw(), num_dims as isize) };
+        let map =
+            unsafe { mlir_sys::mlirAffineMapMultiDimIdentityGet(ctx.to_raw(), num_dims as isize) };
         AffineMap(map, std::marker::PhantomData)
     }
     pub fn is_projected_permutation(&self) -> bool {
@@ -367,14 +385,12 @@ impl std::fmt::Display for AffineMap<'_> {
             string_ref: MlirStringRef,
             user_data: *mut c_void,
         ) {
-            let fmt : &mut FmtCtx = unsafe { &mut *(user_data as *mut _) };
+            let fmt: &mut FmtCtx = unsafe { &mut *(user_data as *mut _) };
             let length = string_ref.length;
             let data = string_ref.data as *const u8;
-            let slice  = unsafe { std::slice::from_raw_parts(data, length) };
+            let slice = unsafe { std::slice::from_raw_parts(data, length) };
             let chars = std::str::from_utf8(slice).unwrap();
-            fmt.result = fmt.result.and_then(|_| {
-                fmt.fmt.write_str(chars)
-            });
+            fmt.result = fmt.result.and_then(|_| fmt.fmt.write_str(chars));
         }
         let mut ctx = FmtCtx {
             fmt: f,
@@ -382,11 +398,7 @@ impl std::fmt::Display for AffineMap<'_> {
         };
         let user_data = &mut ctx as *mut _ as *mut c_void;
         unsafe {
-            mlir_sys::mlirAffineMapPrint(
-                self.0,
-                Some(mlir_string_callback),
-                user_data,
-            );
+            mlir_sys::mlirAffineMapPrint(self.0, Some(mlir_string_callback), user_data);
         }
         ctx.result
     }
@@ -394,7 +406,10 @@ impl std::fmt::Display for AffineMap<'_> {
 
 #[derive(Debug, Clone, Copy)]
 #[repr(transparent)]
-pub struct IntegerSet<'a>(mlir_sys::MlirIntegerSet, std::marker::PhantomData<*mut &'a ()>);
+pub struct IntegerSet<'a>(
+    mlir_sys::MlirIntegerSet,
+    std::marker::PhantomData<*mut &'a ()>,
+);
 
 impl<'a> IntegerSet<'a> {
     pub fn new<I>(ctx: &'a Context, num_dims: usize, num_symbols: usize, constraints: I) -> Self
@@ -434,7 +449,9 @@ impl<'a> IntegerSet<'a> {
         unsafe { ctx_ref.to_ref() }
     }
     pub fn new_empty(ctx: &'a Context, num_dims: usize, num_symbols: usize) -> Self {
-        let set = unsafe { mlir_sys::mlirIntegerSetEmptyGet(ctx.to_raw(), num_dims as isize, num_symbols as isize) };
+        let set = unsafe {
+            mlir_sys::mlirIntegerSetEmptyGet(ctx.to_raw(), num_dims as isize, num_symbols as isize)
+        };
         IntegerSet(set, std::marker::PhantomData)
     }
     pub fn num_dims(&self) -> usize {
@@ -443,7 +460,13 @@ impl<'a> IntegerSet<'a> {
     pub fn num_symbols(&self) -> usize {
         unsafe { mlir_sys::mlirIntegerSetGetNumSymbols(self.0) as usize }
     }
-    pub fn replace(&self, dim_replacements: &[AffineExpr<'a>], sym_replacements: &[AffineExpr<'a>], num_dims: usize, num_symbols: usize) -> Self {
+    pub fn replace(
+        &self,
+        dim_replacements: &[AffineExpr<'a>],
+        sym_replacements: &[AffineExpr<'a>],
+        num_dims: usize,
+        num_symbols: usize,
+    ) -> Self {
         let dim_replacements_ptr = dim_replacements.as_ptr() as *const MlirAffineExpr;
         let sym_replacements_ptr = sym_replacements.as_ptr() as *const MlirAffineExpr;
         let set = unsafe {
@@ -458,7 +481,7 @@ impl<'a> IntegerSet<'a> {
         IntegerSet(set, std::marker::PhantomData)
     }
     pub fn from_attr(attr: Attribute<'a>) -> Option<Self> {
-        if !unsafe {mlir_sys::mlirAttributeIsAIntegerSet(attr.to_raw())} {
+        if !unsafe { mlir_sys::mlirAttributeIsAIntegerSet(attr.to_raw()) } {
             return None;
         }
         let set = unsafe { mlir_sys::mlirIntegerSetAttrGetValue(attr.to_raw()) };
@@ -506,14 +529,12 @@ impl std::fmt::Display for IntegerSet<'_> {
             string_ref: MlirStringRef,
             user_data: *mut c_void,
         ) {
-            let fmt : &mut FmtCtx = unsafe { &mut *(user_data as *mut _) };
+            let fmt: &mut FmtCtx = unsafe { &mut *(user_data as *mut _) };
             let length = string_ref.length;
             let data = string_ref.data as *const u8;
-            let slice  = unsafe { std::slice::from_raw_parts(data, length) };
+            let slice = unsafe { std::slice::from_raw_parts(data, length) };
             let chars = std::str::from_utf8(slice).unwrap();
-            fmt.result = fmt.result.and_then(|_| {
-                fmt.fmt.write_str(chars)
-            });
+            fmt.result = fmt.result.and_then(|_| fmt.fmt.write_str(chars));
         }
         let mut ctx = FmtCtx {
             fmt: f,
@@ -521,11 +542,7 @@ impl std::fmt::Display for IntegerSet<'_> {
         };
         let user_data = &mut ctx as *mut _ as *mut c_void;
         unsafe {
-            mlir_sys::mlirIntegerSetPrint(
-                self.0,
-                Some(mlir_string_callback),
-                user_data,
-            );
+            mlir_sys::mlirIntegerSetPrint(self.0, Some(mlir_string_callback), user_data);
         }
         ctx.result
     }
