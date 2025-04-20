@@ -3,9 +3,7 @@ use std::path::PathBuf;
 fn main() {
     use autotools::Config;
 
-    let dst = Config::new("barvinok")
-        .reconf("-ivf")
-        .build();
+    let dst = Config::new("barvinok").reconf("-ivf").build();
 
     println!("cargo:rustc-link-search=native={}/lib", dst.display());
     println!("cargo:rustc-link-lib=static=barvinok");
@@ -18,6 +16,7 @@ fn main() {
         // The input header we would like to generate
         // bindings for.
         .header(format!("{}/include/barvinok/barvinok.h", dst.display()))
+        .header(format!("{}/include/isl/val.h", dst.display()))
         .clang_arg(format!("-I{}", include_dir.display()))
         // allow only those functions starts with barvinok and isl and recursively
         .allowlist_function("isl.*")
