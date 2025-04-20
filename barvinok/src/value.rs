@@ -2,7 +2,7 @@ use std::ptr::NonNull;
 
 use num_traits::PrimInt;
 
-use crate::Context;
+use crate::{Context, nonnull_or_alloc_error};
 
 #[repr(transparent)]
 pub struct Value<'a> {
@@ -10,72 +10,30 @@ pub struct Value<'a> {
     marker: std::marker::PhantomData<&'a ()>,
 }
 
+macro_rules! isl_val_new {
+    ($name:ident, $func:ident $(, $arg_name:ident : $arg_ty:ty)*) => {
+        pub fn $name(ctx: &'a Context $(, $arg_name: $arg_ty)*) -> Self {
+            let handle = unsafe { barvinok_sys::$func(ctx.0.as_ptr() $(, $arg_name)*) };
+            let handle = nonnull_or_alloc_error(handle);
+            Self {
+                handle,
+                marker: std::marker::PhantomData,
+            }
+        }
+    };
+}
+
 impl<'a> Value<'a> {
-    pub fn new_zero(ctx: &'a Context) -> Option<Self> {
-        let handle = unsafe { barvinok_sys::isl_val_zero(ctx.0.as_ptr()) };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
-            handle,
-            marker: std::marker::PhantomData,
-        })
-    }
-    pub fn new_one(ctx: &'a Context) -> Option<Self> {
-        let handle = unsafe { barvinok_sys::isl_val_one(ctx.0.as_ptr()) };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
-            handle,
-            marker: std::marker::PhantomData,
-        })
-    }
-    pub fn new_negone(ctx: &'a Context) -> Option<Self> {
-        let handle = unsafe { barvinok_sys::isl_val_negone(ctx.0.as_ptr()) };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
-            handle,
-            marker: std::marker::PhantomData,
-        })
-    }
-    pub fn new_nan(ctx: &'a Context) -> Option<Self> {
-        let handle = unsafe { barvinok_sys::isl_val_nan(ctx.0.as_ptr()) };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
-            handle,
-            marker: std::marker::PhantomData,
-        })
-    }
-    pub fn new_infty(ctx: &'a Context) -> Option<Self> {
-        let handle = unsafe { barvinok_sys::isl_val_infty(ctx.0.as_ptr()) };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
-            handle,
-            marker: std::marker::PhantomData,
-        })
-    }
-    pub fn new_neg_infty(ctx: &'a Context) -> Option<Self> {
-        let handle = unsafe { barvinok_sys::isl_val_neginfty(ctx.0.as_ptr()) };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
-            handle,
-            marker: std::marker::PhantomData,
-        })
-    }
-    pub fn new_si(ctx: &'a Context, value: i64) -> Option<Self> {
-        let handle = unsafe { barvinok_sys::isl_val_int_from_si(ctx.0.as_ptr(), value) };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
-            handle,
-            marker: std::marker::PhantomData,
-        })
-    }
-    pub fn new_ui(ctx: &'a Context, value: u64) -> Option<Self> {
-        let handle = unsafe { barvinok_sys::isl_val_int_from_ui(ctx.0.as_ptr(), value) };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
-            handle,
-            marker: std::marker::PhantomData,
-        })
-    }
-    pub fn new_chunks<T: PrimInt>(ctx: &'a Context, value: &[T]) -> Option<Self> {
+    isl_val_new!(new_zero, isl_val_zero);
+    isl_val_new!(new_one, isl_val_one);
+    isl_val_new!(new_negone, isl_val_negone);
+    isl_val_new!(new_nan, isl_val_nan);
+    isl_val_new!(new_infty, isl_val_infty);
+    isl_val_new!(new_neg_infty, isl_val_neginfty);
+    isl_val_new!(new_si, isl_val_int_from_si, value: i64);
+    isl_val_new!(new_ui, isl_val_int_from_ui, value: u64);
+
+    pub fn new_chunks<T: PrimInt>(ctx: &'a Context, value: &[T]) -> Self {
         let handle = unsafe {
             barvinok_sys::isl_val_int_from_chunks(
                 ctx.0.as_ptr(),
@@ -84,19 +42,32 @@ impl<'a> Value<'a> {
                 value.as_ptr() as *const std::ffi::c_void,
             )
         };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
+        let handle = nonnull_or_alloc_error(handle);
+        Self {
             handle,
             marker: std::marker::PhantomData,
-        })
+        }
     }
-    pub fn try_clone(&self) -> Option<Self> {
-        let handle = unsafe { barvinok_sys::isl_val_copy(self.handle.as_ptr()) };
-        let handle = NonNull::new(handle)?;
-        Some(Self {
+
+    pub fn numerator(&self) -> i64 {
+        unsafe { barvinok_sys::isl_val_get_num_si(self.handle.as_ptr()) }
+    }
+
+    pub fn denominator(&self) -> i64 {
+        unsafe { barvinok_sys::isl_val_get_den_si(self.handle.as_ptr()) }
+    }
+
+    pub fn denominator_value(&self) -> Self {
+        let handle = unsafe { barvinok_sys::isl_val_get_den_val(self.handle.as_ptr()) };
+        let handle = nonnull_or_alloc_error(handle);
+        Self {
             handle,
             marker: std::marker::PhantomData,
-        })
+        }
+    }
+
+    pub fn to_f64(&self) -> f64 {
+        unsafe { barvinok_sys::isl_val_get_d(self.handle.as_ptr()) }
     }
 }
 
@@ -108,6 +79,17 @@ impl Drop for Value<'_> {
 
 impl Clone for Value<'_> {
     fn clone(&self) -> Self {
-        self.try_clone().expect("failed to clone ISL value")
+        let handle = unsafe { barvinok_sys::isl_val_copy(self.handle.as_ptr()) };
+        let handle = nonnull_or_alloc_error(handle);
+        Self {
+            handle,
+            marker: std::marker::PhantomData,
+        }
+    }
+}
+
+impl From<Value<'_>> for f64 {
+    fn from(value: Value<'_>) -> Self {
+        value.to_f64()
     }
 }
