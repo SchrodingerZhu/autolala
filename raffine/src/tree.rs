@@ -268,4 +268,41 @@ mod tests {
         let tree = context.build_tree_from_loop(first_op).unwrap();
         tracing::debug!("Tree: {:#}", tree);
     }
+
+    #[test]
+    fn symbolic_matmul() {
+        _ = tracing_subscriber::fmt()
+            .with_max_level(tracing::Level::TRACE)
+            .try_init();
+        let context = Context::new();
+        let module = r#"
+        module {
+  func.func @matmul(%arg0: memref<?x?xf32>, %arg1: memref<?x?xf32>, %arg2: memref<?x?xf32>, %arg3: index, %arg4: index, %arg5: index) {
+    affine.for %arg6 = 0 to %arg3 {
+      affine.for %arg7 = 0 to %arg5 {
+        affine.for %arg8 = 0 to %arg4 {
+          %0 = affine.load %arg0[%arg6, %arg8] : memref<?x?xf32>
+          %1 = affine.load %arg1[%arg8, %arg7] : memref<?x?xf32>
+          %2 = affine.load %arg2[%arg6, %arg7] : memref<?x?xf32>
+          %3 = arith.mulf %0, %1 : f32
+          %4 = arith.addf %2, %3 : f32
+          affine.store %4, %arg2[%arg6, %arg7] : memref<?x?xf32>
+        }
+      }
+    }
+    return
+  }
+}
+"#;
+        let module = Module::parse(context.mlir_context(), module).unwrap();
+        tracing::debug!("Parsed module: {}", module.body().to_string());
+        let body = module.body();
+        let op = body.first_operation().unwrap();
+        let body = op.region(0).unwrap();
+        let body = body.first_block().unwrap();
+        let first_op = body.first_operation().unwrap();
+        println!("First operation: {}", first_op);
+        let tree = context.build_tree_from_loop(first_op).unwrap();
+        tracing::debug!("Tree: {:#}", tree);
+    }
 }
