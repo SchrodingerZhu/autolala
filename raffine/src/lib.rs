@@ -2,6 +2,7 @@ use melior::Context as MLIRContext;
 pub mod affine;
 mod cxx;
 pub mod tree;
+pub use cxx::DominanceInfo;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
@@ -110,5 +111,19 @@ mod tests {
         let body = body.first_block().unwrap();
         let first_op = body.first_operation().unwrap();
         println!("First operation: {}", first_op);
+    }
+
+    #[test]
+    fn create_dominance_info() {
+        let context = super::initialize_mlir_context();
+        let module = r#"
+        module {
+            func.func @test_func() {
+                func.return
+            }
+        }
+        "#;
+        let module = Module::parse(&context, module).unwrap();
+        let _dominance_info = crate::DominanceInfo::new(&module);
     }
 }

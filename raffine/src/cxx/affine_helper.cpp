@@ -1,3 +1,4 @@
+#include <memory>
 #include <mlir-c/AffineMap.h>
 #include <mlir-c/IR.h>
 #include <mlir-c/IntegerSet.h>
@@ -7,6 +8,7 @@
 #include <mlir/CAPI/IntegerSet.h>
 #include <mlir/Dialect/Affine/IR/AffineOps.h>
 #include <mlir/IR/Block.h>
+#include <mlir/IR/Dominance.h>
 #include <rust/cxx.h>
 #include <stdexcept>
 
@@ -81,6 +83,74 @@ MlirBlock ifOpGetElseBlock(MlirOperation ifOp) {
       return wrap(ifOp.getElseBlock());
     else
       return wrap(static_cast<Block *>(nullptr));
+  }
+  throw std::invalid_argument(
+      "Expected an AffineIfOp, but got a different operation.");
+}
+rust::Vec<MlirValue> forOpGetLowerBoundOperands(MlirOperation forOp) {
+  Operation *op = unwrap(forOp);
+  if (auto forOp = dyn_cast<affine::AffineForOp>(op)) {
+    rust::Vec<MlirValue> result;
+    for (auto val : forOp.getLowerBoundOperands())
+      result.push_back(wrap(val));
+    return result;
+  }
+  throw std::invalid_argument(
+      "Expected an AffineIfOp, but got a different operation.");
+}
+rust::Vec<MlirValue> forOpGetUpperBoundOperands(MlirOperation forOp) {
+  Operation *op = unwrap(forOp);
+  if (auto forOp = dyn_cast<affine::AffineForOp>(op)) {
+    rust::Vec<MlirValue> result;
+    for (auto val : forOp.getUpperBoundOperands())
+      result.push_back(wrap(val));
+    return result;
+  }
+  throw std::invalid_argument(
+      "Expected an AffineIfOp, but got a different operation.");
+}
+MlirValue forOpGetInductionVar(MlirOperation forOp) {
+  Operation *op = unwrap(forOp);
+  if (auto forOp = dyn_cast<affine::AffineForOp>(op))
+    return wrap(forOp.getInductionVar());
+  throw std::invalid_argument(
+      "Expected an AffineIfOp, but got a different operation.");
+}
+bool mlirValueProperlyDominatesOperation(MlirValue value,
+                                         MlirOperation operation,
+                                         const DominanceInfo &dom) {
+  Operation *op = unwrap(operation);
+  Value val = unwrap(value);
+  return dom.properlyDominates(val, op);
+}
+std::unique_ptr<DominanceInfo> createDominanceInfo(MlirModule op) {
+  ModuleOp operation = unwrap(op);
+  return std::make_unique<DominanceInfo>(operation);
+}
+rust::Vec<MlirValue> loadStoreOpGetAffineOperands(MlirOperation target) {
+  Operation *op = unwrap(target);
+  if (auto loadOp = dyn_cast<affine::AffineLoadOp>(op)) {
+    rust::Vec<MlirValue> result;
+    for (auto val : loadOp.getIndices())
+      result.push_back(wrap(val));
+    return result;
+  }
+  if (auto storeOp = dyn_cast<affine::AffineStoreOp>(op)) {
+    rust::Vec<MlirValue> result;
+    for (auto val : storeOp.getIndices())
+      result.push_back(wrap(val));
+    return result;
+  }
+  throw std::invalid_argument(
+      "Expected an AffineLoadOp/AffineStoreOp, but got a different operation.");
+}
+rust::Vec<MlirValue> ifOpGetConditionOperands(MlirOperation ifOp) {
+  Operation *op = unwrap(ifOp);
+  if (auto ifOp = dyn_cast<affine::AffineIfOp>(op)) {
+    rust::Vec<MlirValue> result;
+    for (auto val : ifOp->getOperands())
+      result.push_back(wrap(val));
+    return result;
   }
   throw std::invalid_argument(
       "Expected an AffineIfOp, but got a different operation.");
