@@ -1,4 +1,4 @@
-# AutoLALA and its components
+# AutoLALA
 
 ## How to Compile
 
@@ -11,9 +11,6 @@ sudo ./llvm.sh 20
 
 # install build tools
 sudo apt install build-essential cmake autoconf libtool
-
-# install barvinok's dependencies
-sudo apt install libgmp-dev libntl-dev
 
 # set environment variables
 export MLIR_SYS_200_PREFIX=/usr/lib/llvm-20
