@@ -1,0 +1,13 @@
+[package]
+name = "tile-analysis"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+raffine = { path = "../raffine" }
+barvinok = { git = "https://github.com/Roc-Locality/barvinok-rs", rev = "19077ccb8faec52191d53152866d3d4f5412c90c" }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing = { version = "0.1", features = ["std", "log"] }
+clap = { version = "4.5.37", features = ["derive"] }
+melior = { version = "0.24.0", features = ["helpers"] }
+anyhow = { version = "1.0.98", features = ["backtrace"] }
