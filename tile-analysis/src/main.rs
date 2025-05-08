@@ -1,10 +1,44 @@
 use anyhow::{Ok, anyhow};
+use barvinok::ContextRef as BContext;
 use clap::Parser;
+use melior::Context as MContext;
 use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
-use raffine::{Context, DominanceInfo, tree::Tree};
+use raffine::Context as RContext;
+use raffine::{DominanceInfo, tree::Tree};
 use std::{io::Read, path::PathBuf};
-use tracing::debug;
+use tracing::{debug, error};
 use tracing_subscriber::EnvFilter;
+mod transform;
+
+struct AnalysisContext<'a> {
+    rcontext: RContext,
+    bcontext: BContext<'a>,
+}
+
+impl<'a> AnalysisContext<'a>
+where
+    Self: 'a,
+{
+    fn start<F, R>(f: F) -> R
+    where
+        F: for<'x> FnOnce(AnalysisContext<'x>) -> R,
+    {
+        let rcontext = RContext::new();
+        barvinok::Context::new().scope(move |bcontext| {
+            let context = AnalysisContext { rcontext, bcontext };
+            f(context)
+        })
+    }
+    fn rcontext(&self) -> &RContext {
+        &self.rcontext
+    }
+    fn bcontext(&self) -> BContext<'a> {
+        self.bcontext
+    }
+    fn mcontext(&self) -> &MContext {
+        self.rcontext.mlir_context()
+    }
+}
 
 #[derive(Debug, Parser)]
 struct Options {
@@ -29,12 +63,15 @@ struct Options {
     target_affine_loop: Option<String>,
 }
 
-fn extract_target<'a>(
-    module: &Module<'a>,
+fn extract_target<'bctx, 'ctx, 'dom>(
+    module: &'ctx Module<'ctx>,
     options: &Options,
-    context: &'a Context,
-    dom: &'a DominanceInfo<'a>,
-) -> anyhow::Result<&'a Tree<'a>> {
+    context: &'ctx AnalysisContext<'bctx>,
+    dom: &'ctx DominanceInfo<'ctx>,
+) -> anyhow::Result<&'ctx Tree<'ctx>>
+where
+    'bctx: 'ctx,
+{
     let body = module.body();
     fn locate_function<'a, 'b, F>(
         cursor: Option<OperationRef<'a, 'b>>,
@@ -93,19 +130,12 @@ fn extract_target<'a>(
             .ok_or_else(|| anyhow!("function does not have block"))?
             .first_operation();
         locate_loop(cursor, options, move |for_loop| {
-            Ok(context.build_tree(for_loop, dom)?)
+            Ok(context.rcontext().build_tree(for_loop, dom)?)
         })
     })
 }
 
-fn main() -> anyhow::Result<()> {
-    tracing_subscriber::fmt()
-        .with_env_filter(
-            EnvFilter::builder()
-                .with_default_directive(tracing::Level::INFO.into())
-                .from_env_lossy(),
-        )
-        .init();
+fn main_entry() -> anyhow::Result<()> {
     let options = Options::parse();
 
     let mut reader = match options.input.as_ref() {
@@ -129,24 +159,50 @@ fn main() -> anyhow::Result<()> {
             Box::new(std::io::stdout()) as Box<dyn std::io::Write>
         }
     };
+    AnalysisContext::start(|context| {
+        let context = &context;
+        let mut source = String::new();
+        let bytes = reader.read_to_string(&mut source)?;
 
-    let context = raffine::Context::new();
+        debug!("Read {} bytes", bytes);
 
-    let mut source = String::new();
-    let bytes = reader.read_to_string(&mut source)?;
+        let module = Module::parse(context.mcontext(), &source)
+            .ok_or_else(|| anyhow!("Failed to parse module"))?;
 
-    debug!("Read {} bytes", bytes);
+        debug!("Parsed module: {}", module.as_operation());
 
-    let module = Module::parse(context.mlir_context(), &source)
-        .ok_or_else(|| anyhow!("Failed to parse module"))?;
+        let dom = DominanceInfo::new(&module);
 
-    debug!("Parsed module: {}", module.as_operation());
+        let tree = extract_target(&module, &options, context, &dom)?;
 
-    let dom = DominanceInfo::new(&module);
+        debug!("Extracted tree: {}", tree);
 
-    let tree = extract_target(&module, &options, &context, &dom)?;
+        let total_space = transform::get_space(context, tree)?;
 
-    debug!("Extracted tree: {}", tree);
+        debug!("Total space: {:?}", total_space);
+        Ok(())
+    })
+}
 
-    Ok(())
+fn main() {
+    tracing_subscriber::fmt()
+        .with_env_filter(
+            EnvFilter::builder()
+                .with_default_directive(tracing::Level::INFO.into())
+                .from_env_lossy(),
+        )
+        .init();
+    let res = main_entry();
+    if let Err(e) = res {
+        let bt = e.backtrace();
+        error!("{:#}", e);
+        match bt.status() {
+            std::backtrace::BacktraceStatus::Disabled => {
+                error!("Backtrace is disabled -- rerun with RUST_BACKTRACE=1 to get a backtrace")
+            }
+            std::backtrace::BacktraceStatus::Captured => error!("Stack backtrace:\n{bt}"),
+            _ => panic!("unsupported backtrace"),
+        }
+        std::process::exit(1);
+    }
 }
