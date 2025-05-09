@@ -6,6 +6,7 @@ use raffine::affine::AffineExpr;
 use raffine::tree::Tree;
 use raffine::tree::ValID;
 use symbolica::atom::Symbol;
+use symbolica::domains::Field;
 use symbolica::domains::Ring;
 use symbolica::domains::integer::IntegerRing;
 use symbolica::domains::rational_polynomial::FromNumeratorAndDenominator;
@@ -159,12 +160,32 @@ impl<'b> ExprConverter<'b> {
                     parse!(sym).map_err(|e| anyhow::anyhow!("failed to parse symbol: {}", e))?;
                 todo!("how to do this?")
             }
-            raffine::affine::AffineExprKind::Mod => todo!(),
-            raffine::affine::AffineExprKind::Mul => todo!(),
+            raffine::affine::AffineExprKind::Mod => Err(anyhow::anyhow!("mod not supported")),
+            raffine::affine::AffineExprKind::Mul => {
+                let lhs = affine_expr
+                    .get_lhs()
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression"))?;
+                let rhs = affine_expr
+                    .get_rhs()
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression"))?;
+                let lhs = self.convert_polynomial(lhs)?;
+                let rhs = self.convert_polynomial(rhs)?;
+                Ok(self.poly_field.mul(&lhs, &rhs))
+            }
             raffine::affine::AffineExprKind::Symbol => todo!(),
-            raffine::affine::AffineExprKind::CeilDiv => todo!(),
+            raffine::affine::AffineExprKind::CeilDiv
+            | raffine::affine::AffineExprKind::FloorDiv => {
+                let lhs = affine_expr
+                    .get_lhs()
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression"))?;
+                let rhs = affine_expr
+                    .get_rhs()
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression"))?;
+                let lhs = self.convert_polynomial(lhs)?;
+                let rhs = self.convert_polynomial(rhs)?;
+                Ok(self.poly_field.div(&lhs, &rhs))
+            }
             raffine::affine::AffineExprKind::Constant => todo!(),
-            raffine::affine::AffineExprKind::FloorDiv => todo!(),
         }
     }
 }
