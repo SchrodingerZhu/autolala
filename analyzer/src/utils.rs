@@ -11,7 +11,9 @@ use symbolica::domains::integer::IntegerRing;
 use symbolica::domains::rational_polynomial::FromNumeratorAndDenominator;
 use symbolica::domains::rational_polynomial::RationalPolynomial;
 use symbolica::domains::rational_polynomial::RationalPolynomialField;
+use symbolica::parse;
 use symbolica::symbol;
+use tracing_subscriber::fmt::format;
 
 pub type Poly = RationalPolynomial<IntegerRing, u32>;
 
@@ -117,18 +119,16 @@ pub fn create_symbol_mapping<'a>(space: &Space<'a>) -> Result<HashMap<ValID, Sym
 
 pub struct ExprConverter<'b> {
     operands: &'b [ValID],
-    sym_map: HashMap<ValID, Symbol>,
     integer_ring: IntegerRing,
     poly_field: RationalPolynomialField<IntegerRing, u32>,
 }
 
 impl<'b> ExprConverter<'b> {
-    pub fn new(operands: &'b [ValID], sym_map: HashMap<ValID, Symbol>) -> Self {
+    pub fn new(operands: &'b [ValID]) -> Self {
         let integer_ring = IntegerRing::new();
         let poly_field = RationalPolynomialField::new(integer_ring);
         Self {
             operands,
-            sym_map,
             integer_ring,
             poly_field,
         }
@@ -154,11 +154,10 @@ impl<'b> ExprConverter<'b> {
                 let val_id = self.operands.get(id as usize).ok_or_else(|| {
                     anyhow::anyhow!("invalid affine expression: invalid position")
                 })?;
-                let symbol = self
-                    .sym_map
-                    .get(val_id)
-                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression: invalid symbol"))?;
-                todo!()
+                let sym = format!("s{}", id);
+                let symbol =
+                    parse!(sym).map_err(|e| anyhow::anyhow!("failed to parse symbol: {}", e))?;
+                todo!("how to do this?")
             }
             raffine::affine::AffineExprKind::Mod => todo!(),
             raffine::affine::AffineExprKind::Mul => todo!(),
