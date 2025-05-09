@@ -8,7 +8,7 @@ use raffine::{DominanceInfo, tree::Tree};
 use std::{io::Read, path::PathBuf};
 use tracing::{debug, error};
 use tracing_subscriber::EnvFilter;
-mod transform;
+mod utils;
 
 struct AnalysisContext<'a> {
     rcontext: RContext,
@@ -177,9 +177,12 @@ fn main_entry() -> anyhow::Result<()> {
 
         debug!("Extracted tree: {}", tree);
 
-        let total_space = transform::get_space(context, tree)?;
+        let total_space = utils::get_space(context, tree)?;
 
         debug!("Total space: {:?}", total_space);
+
+        let nesting_level = utils::get_nesting_level(tree);
+        debug!("Nesting level: {:?}", nesting_level);
         Ok(())
     })
 }

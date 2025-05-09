@@ -9,5 +9,5 @@ barvinok = { git = "https://github.com/Roc-Locality/barvinok-rs", rev = "19077cc
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing = { version = "0.1", features = ["std", "log"] }
 clap = { version = "4.5.37", features = ["derive"] }
-melior = { version = "0.24.0", features = ["helpers"] }
+melior = { version = "0.24.0" }
 anyhow = { version = "1.0.98", features = ["backtrace"] }

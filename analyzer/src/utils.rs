@@ -68,3 +68,24 @@ pub fn get_space<'a, 'b: 'a>(context: &AnalysisContext<'b>, tree: &Tree<'a>) -> 
     let space = Space::set(context.bcontext(), max_param as u32, max_ivar as u32)?;
     Ok(space)
 }
+
+/// Return levels of nesting if the loop is perfectly nested.
+pub fn get_nesting_level(tree: &Tree) -> Option<usize> {
+    match tree {
+        Tree::For { body, .. } => get_nesting_level(body).map(|level| level + 1),
+        Tree::Block(trees) => {
+            if trees.iter().all(|t| matches!(t, Tree::Access { .. })) {
+                Some(0)
+            } else if trees.len() != 1 {
+                None
+            } else {
+                let Some(t) = trees.first() else {
+                    return None;
+                };
+                get_nesting_level(t)
+            }
+        }
+        Tree::Access { .. } => Some(0),
+        Tree::If { .. } => None,
+    }
+}
