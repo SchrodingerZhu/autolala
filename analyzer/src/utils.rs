@@ -1,7 +1,19 @@
+use std::collections::HashMap;
+
 use anyhow::Result;
 use barvinok::space::Space;
+use raffine::affine::AffineExpr;
 use raffine::tree::Tree;
 use raffine::tree::ValID;
+use symbolica::atom::Symbol;
+use symbolica::domains::Ring;
+use symbolica::domains::integer::IntegerRing;
+use symbolica::domains::rational_polynomial::FromNumeratorAndDenominator;
+use symbolica::domains::rational_polynomial::RationalPolynomial;
+use symbolica::domains::rational_polynomial::RationalPolynomialField;
+use symbolica::symbol;
+
+pub type Poly = RationalPolynomial<IntegerRing, u32>;
 
 use crate::AnalysisContext;
 
@@ -87,5 +99,73 @@ pub fn get_nesting_level(tree: &Tree) -> Option<usize> {
         }
         Tree::Access { .. } => Some(0),
         Tree::If { .. } => None,
+    }
+}
+
+pub fn create_symbol_mapping<'a>(space: &Space<'a>) -> Result<HashMap<ValID, Symbol>> {
+    let mut sym_map = HashMap::new();
+    for i in 0..space.get_dim(barvinok::DimType::Param)? {
+        let symbol = symbol!(format!("s{i}"));
+        sym_map.insert(ValID::Symbol(i as usize), symbol);
+    }
+    for i in 0..space.get_dim(barvinok::DimType::Out)? {
+        let symbol = symbol!(format!("i{i}"));
+        sym_map.insert(ValID::IVar(i as usize), symbol);
+    }
+    Ok(sym_map)
+}
+
+pub struct ExprConverter<'b> {
+    operands: &'b [ValID],
+    sym_map: HashMap<ValID, Symbol>,
+    integer_ring: IntegerRing,
+    poly_field: RationalPolynomialField<IntegerRing, u32>,
+}
+
+impl<'b> ExprConverter<'b> {
+    pub fn new(operands: &'b [ValID], sym_map: HashMap<ValID, Symbol>) -> Self {
+        let integer_ring = IntegerRing::new();
+        let poly_field = RationalPolynomialField::new(integer_ring);
+        Self {
+            operands,
+            sym_map,
+            integer_ring,
+            poly_field,
+        }
+    }
+
+    pub fn convert_polynomial<'a>(&self, affine_expr: AffineExpr<'a>) -> Result<Poly> {
+        match affine_expr.get_kind() {
+            raffine::affine::AffineExprKind::Add => {
+                let lhs = affine_expr
+                    .get_lhs()
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression"))?;
+                let rhs = affine_expr
+                    .get_rhs()
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression"))?;
+                let lhs = self.convert_polynomial(lhs)?;
+                let rhs = self.convert_polynomial(rhs)?;
+                Ok(self.poly_field.add(&lhs, &rhs))
+            }
+            raffine::affine::AffineExprKind::Dim => {
+                let id = affine_expr.get_position().ok_or_else(|| {
+                    anyhow::anyhow!("invalid affine expression: missing position")
+                })?;
+                let val_id = self.operands.get(id as usize).ok_or_else(|| {
+                    anyhow::anyhow!("invalid affine expression: invalid position")
+                })?;
+                let symbol = self
+                    .sym_map
+                    .get(val_id)
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression: invalid symbol"))?;
+                todo!()
+            }
+            raffine::affine::AffineExprKind::Mod => todo!(),
+            raffine::affine::AffineExprKind::Mul => todo!(),
+            raffine::affine::AffineExprKind::Symbol => todo!(),
+            raffine::affine::AffineExprKind::CeilDiv => todo!(),
+            raffine::affine::AffineExprKind::Constant => todo!(),
+            raffine::affine::AffineExprKind::FloorDiv => todo!(),
+        }
     }
 }
