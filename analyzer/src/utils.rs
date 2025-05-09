@@ -5,6 +5,8 @@ use barvinok::space::Space;
 use raffine::affine::AffineExpr;
 use raffine::tree::Tree;
 use raffine::tree::ValID;
+use symbolica::atom::Atom;
+use symbolica::atom::AtomCore;
 use symbolica::atom::Symbol;
 use symbolica::domains::Field;
 use symbolica::domains::Ring;
@@ -148,17 +150,22 @@ impl<'b> ExprConverter<'b> {
                 let rhs = self.convert_polynomial(rhs)?;
                 Ok(self.poly_field.add(&lhs, &rhs))
             }
-            raffine::affine::AffineExprKind::Dim => {
+            raffine::affine::AffineExprKind::Dim | raffine::affine::AffineExprKind::Symbol => {
                 let id = affine_expr.get_position().ok_or_else(|| {
                     anyhow::anyhow!("invalid affine expression: missing position")
                 })?;
                 let val_id = self.operands.get(id as usize).ok_or_else(|| {
                     anyhow::anyhow!("invalid affine expression: invalid position")
                 })?;
-                let sym = format!("s{}", id);
-                let symbol =
-                    parse!(sym).map_err(|e| anyhow::anyhow!("failed to parse symbol: {}", e))?;
-                todo!("how to do this?")
+                let symbol = match val_id {
+                    ValID::Symbol(n) => symbol!(format!("s{n}")),
+                    ValID::IVar(n) => symbol!(format!("i{n}")),
+                    _ => return Err(anyhow::anyhow!("invalid affine expression")),
+                };
+                let atom = Atom::new_var(symbol);
+                let poly =
+                    atom.to_rational_polynomial(&self.integer_ring, &self.integer_ring, None);
+                Ok(poly)
             }
             raffine::affine::AffineExprKind::Mod => Err(anyhow::anyhow!("mod not supported")),
             raffine::affine::AffineExprKind::Mul => {
@@ -172,7 +179,6 @@ impl<'b> ExprConverter<'b> {
                 let rhs = self.convert_polynomial(rhs)?;
                 Ok(self.poly_field.mul(&lhs, &rhs))
             }
-            raffine::affine::AffineExprKind::Symbol => todo!(),
             raffine::affine::AffineExprKind::CeilDiv
             | raffine::affine::AffineExprKind::FloorDiv => {
                 let lhs = affine_expr
@@ -185,7 +191,15 @@ impl<'b> ExprConverter<'b> {
                 let rhs = self.convert_polynomial(rhs)?;
                 Ok(self.poly_field.div(&lhs, &rhs))
             }
-            raffine::affine::AffineExprKind::Constant => todo!(),
+            raffine::affine::AffineExprKind::Constant => {
+                let val = affine_expr
+                    .get_value()
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression: missing value"))?;
+                let atom = Atom::new_num(val);
+                let poly =
+                    atom.to_rational_polynomial(&self.integer_ring, &self.integer_ring, None);
+                Ok(poly)
+            }
         }
     }
 }
