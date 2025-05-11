@@ -183,6 +183,8 @@ fn main_entry() -> anyhow::Result<()> {
 
         let nesting_level = utils::get_nesting_level(tree);
         debug!("Nesting level: {:?}", nesting_level);
+
+        utils::walk_tree_print_converted_affine_map(tree, 0)?;
         Ok(())
     })
 }
