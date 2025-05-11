@@ -107,19 +107,6 @@ pub fn get_nesting_level(tree: &Tree) -> Option<usize> {
     }
 }
 
-pub fn create_symbol_mapping<'a>(space: &Space<'a>) -> Result<HashMap<ValID, Symbol>> {
-    let mut sym_map = HashMap::new();
-    for i in 0..space.get_dim(barvinok::DimType::Param)? {
-        let symbol = symbol!(format!("s{i}"));
-        sym_map.insert(ValID::Symbol(i as usize), symbol);
-    }
-    for i in 0..space.get_dim(barvinok::DimType::Out)? {
-        let symbol = symbol!(format!("i{i}"));
-        sym_map.insert(ValID::IVar(i as usize), symbol);
-    }
-    Ok(sym_map)
-}
-
 pub struct ExprConverter<'b> {
     operands: &'b [ValID],
     integer_ring: IntegerRing,
