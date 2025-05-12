@@ -172,9 +172,10 @@ dependencies = [
 [[package]]
 name = "barvinok"
 version = "0.1.0-alpha.1"
-source = "git+https://github.com/Roc-Locality/barvinok-rs?rev=19077ccb8faec52191d53152866d3d4f5412c90c#19077ccb8faec52191d53152866d3d4f5412c90c"
+source = "git+https://github.com/Roc-Locality/barvinok-rs#a9710389813654d50809c0005dd9a630304eddf6"
 dependencies = [
  "barvinok-sys",
+ "libc",
  "num-traits",
  "paste",
  "thiserror",
@@ -183,7 +184,7 @@ dependencies = [
 [[package]]
 name = "barvinok-sys"
 version = "0.1.0-alpha.1"
-source = "git+https://github.com/Roc-Locality/barvinok-rs?rev=19077ccb8faec52191d53152866d3d4f5412c90c#19077ccb8faec52191d53152866d3d4f5412c90c"
+source = "git+https://github.com/Roc-Locality/barvinok-rs#a9710389813654d50809c0005dd9a630304eddf6"
 dependencies = [
  "autotools",
  "bindgen",

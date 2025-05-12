@@ -117,8 +117,13 @@ impl<'b> ExprConverter<'b> {
         }
     }
 
-    pub fn convert_polynomial<'a>(&self, affine_expr: AffineExpr<'a>) -> Result<Poly> {
-        match affine_expr.get_kind() {
+    pub fn convert_polynomial<'a, 'm: 'a>(
+        &self,
+        map: AffineMap<'m>,
+        affine_expr: AffineExpr<'a>,
+    ) -> Result<Poly> {
+        let kind = affine_expr.get_kind();
+        match kind {
             raffine::affine::AffineExprKind::Add => {
                 let lhs = affine_expr
                     .get_lhs()
@@ -126,15 +131,19 @@ impl<'b> ExprConverter<'b> {
                 let rhs = affine_expr
                     .get_rhs()
                     .ok_or_else(|| anyhow::anyhow!("invalid affine expression"))?;
-                let lhs = self.convert_polynomial(lhs)?;
-                let rhs = self.convert_polynomial(rhs)?;
+                let lhs = self.convert_polynomial(map, lhs)?;
+                let rhs = self.convert_polynomial(map, rhs)?;
                 Ok(self.poly_field.add(&lhs, &rhs))
             }
             raffine::affine::AffineExprKind::Dim | raffine::affine::AffineExprKind::Symbol => {
-                let id = affine_expr.get_position().ok_or_else(|| {
-                    anyhow::anyhow!("invalid affine expression: missing position")
-                })?;
-                let val_id = self.operands.get(id as usize).ok_or_else(|| {
+                let mut id = affine_expr
+                    .get_position()
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression: missing position"))?
+                    as usize;
+                if matches!(kind, raffine::affine::AffineExprKind::Symbol) {
+                    id += map.num_dims();
+                }
+                let val_id = self.operands.get(id).ok_or_else(|| {
                     anyhow::anyhow!("invalid affine expression: invalid position")
                 })?;
                 let symbol = match val_id {
@@ -155,8 +164,8 @@ impl<'b> ExprConverter<'b> {
                 let rhs = affine_expr
                     .get_rhs()
                     .ok_or_else(|| anyhow::anyhow!("invalid affine expression"))?;
-                let lhs = self.convert_polynomial(lhs)?;
-                let rhs = self.convert_polynomial(rhs)?;
+                let lhs = self.convert_polynomial(map, lhs)?;
+                let rhs = self.convert_polynomial(map, rhs)?;
                 Ok(self.poly_field.mul(&lhs, &rhs))
             }
             raffine::affine::AffineExprKind::CeilDiv
@@ -167,8 +176,8 @@ impl<'b> ExprConverter<'b> {
                 let rhs = affine_expr
                     .get_rhs()
                     .ok_or_else(|| anyhow::anyhow!("invalid affine expression"))?;
-                let lhs = self.convert_polynomial(lhs)?;
-                let rhs = self.convert_polynomial(rhs)?;
+                let lhs = self.convert_polynomial(map, lhs)?;
+                let rhs = self.convert_polynomial(map, rhs)?;
                 Ok(self.poly_field.div(&lhs, &rhs))
             }
             raffine::affine::AffineExprKind::Constant => {
@@ -189,7 +198,7 @@ pub fn convert_affine_map<'a>(map: AffineMap<'a>, operands: &'a [ValID]) -> Resu
     let mut result = Vec::with_capacity(map.num_results());
     for i in 0..map.num_results() {
         let affine_expr = map.get_result_expr(i as isize);
-        let poly = converter.convert_polynomial(affine_expr)?;
+        let poly = converter.convert_polynomial(map, affine_expr)?;
         result.push(poly);
     }
     Ok(result.into_boxed_slice())
