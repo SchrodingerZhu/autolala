@@ -190,6 +190,13 @@ fn main_entry() -> anyhow::Result<()> {
 
         if std::env::var("ISL_DEBUG").is_ok() {
             isl::walk_tree_print_converted_affine_map(tree, 0, &total_space)?;
+            let space = isl::get_timestamp_space(
+                total_space.get_dim(barvinok::DimType::Param)? as usize,
+                0,
+                context,
+                tree,
+            )?;
+            debug!("Timestamp space: {:?}", space);
         }
 
         Ok(())
