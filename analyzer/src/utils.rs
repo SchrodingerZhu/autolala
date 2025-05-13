@@ -1,5 +1,4 @@
 use anyhow::Result;
-use barvinok::space::Space;
 use raffine::affine::AffineExpr;
 use raffine::affine::AffineMap;
 use raffine::tree::Tree;
@@ -15,9 +14,7 @@ use symbolica::symbol;
 
 pub type Poly = RationalPolynomial<IntegerRing, u32>;
 
-use crate::AnalysisContext;
-
-fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(usize, usize)> {
+pub(crate) fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(usize, usize)> {
     let mut max_param = 0;
     let mut max_ivar = 0;
     match tree {
@@ -73,12 +70,6 @@ fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(usize, usize)> {
         Tree::If { .. } => return Err(anyhow::anyhow!("not implemented for conditional branch")),
     }
     Ok((max_param, max_ivar))
-}
-
-pub fn get_space<'a, 'b: 'a>(context: &AnalysisContext<'b>, tree: &Tree<'a>) -> Result<Space<'b>> {
-    let (max_param, max_ivar) = get_max_param_ivar(tree)?;
-    let space = Space::set(context.bcontext(), max_param as u32, max_ivar as u32)?;
-    Ok(space)
 }
 
 /// Return levels of nesting if the loop is perfectly nested.

@@ -8,6 +8,7 @@ use raffine::{DominanceInfo, tree::Tree};
 use std::{io::Read, path::PathBuf};
 use tracing::{debug, error};
 use tracing_subscriber::EnvFilter;
+mod isl;
 mod utils;
 
 struct AnalysisContext<'a> {
@@ -149,6 +150,7 @@ fn main_entry() -> anyhow::Result<()> {
         }
     };
 
+    #[allow(unused)]
     let writer = match options.output.as_ref() {
         Some(path) => {
             debug!("Opening output file: {}", path.display());
@@ -177,7 +179,7 @@ fn main_entry() -> anyhow::Result<()> {
 
         debug!("Extracted tree: {}", tree);
 
-        let total_space = utils::get_space(context, tree)?;
+        let total_space = isl::get_space(context, tree)?;
 
         debug!("Total space: {:?}", total_space);
 
