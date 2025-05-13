@@ -274,9 +274,12 @@ impl<'a> AffineMap<'a> {
         let map = unsafe { mlir_sys::mlirAffineMapEmptyGet(ctx.to_raw()) };
         AffineMap(map, std::marker::PhantomData)
     }
-    pub fn get_result_expr(&self, pos: isize) -> AffineExpr<'a> {
+    pub fn get_result_expr(&self, pos: isize) -> Option<AffineExpr<'a>> {
         let expr = unsafe { mlir_sys::mlirAffineMapGetResult(self.0, pos) };
-        AffineExpr(expr, std::marker::PhantomData)
+        if expr.ptr.is_null() {
+            return None;
+        }
+        Some(AffineExpr(expr, std::marker::PhantomData))
     }
     pub fn get_submap(&self, positions: &[isize]) -> AffineMap<'a> {
         let num_positions = positions.len();

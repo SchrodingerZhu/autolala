@@ -188,7 +188,9 @@ pub fn convert_affine_map<'a>(map: AffineMap<'a>, operands: &'a [ValID]) -> Resu
     let converter = ExprConverter::new(operands);
     let mut result = Vec::with_capacity(map.num_results());
     for i in 0..map.num_results() {
-        let affine_expr = map.get_result_expr(i as isize);
+        let affine_expr = map
+            .get_result_expr(i as isize)
+            .ok_or_else(|| anyhow::anyhow!("invalid affine expression: invalid result index"))?;
         let poly = converter.convert_polynomial(map, affine_expr)?;
         result.push(poly);
     }

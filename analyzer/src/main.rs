@@ -187,6 +187,11 @@ fn main_entry() -> anyhow::Result<()> {
         debug!("Nesting level: {:?}", nesting_level);
 
         utils::walk_tree_print_converted_affine_map(tree, 0)?;
+
+        if std::env::var("ISL_DEBUG").is_ok() {
+            isl::walk_tree_print_converted_affine_map(tree, 0, &total_space)?;
+        }
+
         Ok(())
     })
 }
