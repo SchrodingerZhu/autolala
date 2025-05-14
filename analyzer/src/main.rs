@@ -1,5 +1,7 @@
 use anyhow::{Ok, anyhow};
 use barvinok::ContextRef as BContext;
+use barvinok::constraint::Constraint;
+use barvinok::local_space::LocalSpace;
 use clap::Parser;
 use melior::Context as MContext;
 use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
@@ -62,6 +64,8 @@ enum Method {
         barvinok_arg: Vec<String>,
         #[clap(short = 'b', long, default_value = "1")]
         block_size: usize,
+        #[clap(short = 'l', long)]
+        symbol_lowerbound: Vec<i32>,
     },
     /// Use the PerfectTiling algorithm to compute the polyhedral model
     PerfectTiling {},
@@ -196,6 +200,7 @@ fn main_entry() -> anyhow::Result<()> {
         Method::Barvinok {
             barvinok_arg,
             block_size,
+            symbol_lowerbound,
         } => AnalysisContext::start_with_args(barvinok_arg.as_slice(), |context| {
             let context = &context;
             let mut source = String::new();
@@ -208,7 +213,17 @@ fn main_entry() -> anyhow::Result<()> {
             let tree = extract_target(&module, &options, context, &dom)?;
             debug!("Extracted tree: {}", tree);
             let (max_param, _) = utils::get_max_param_ivar(tree)?;
-            let space = isl::get_timestamp_space(max_param + 1, 0, context, tree, &mut Vec::new())?;
+            let mut space =
+                isl::get_timestamp_space(max_param + 1, 0, context, tree, &mut Vec::new())?;
+            let local_space: LocalSpace = space.get_space()?.try_into()?;
+            for (idx, bound) in symbol_lowerbound.iter().enumerate() {
+                let bound = *bound;
+                debug!("Setting lower bound for symbol {idx} >= {bound}");
+                let constraint = Constraint::new_inequality(local_space.clone())
+                    .set_coefficient_si(barvinok::DimType::Param, idx as u32, 1)?
+                    .set_constant_si(-bound)?;
+                space = space.add_constraint(constraint)?;
+            }
             let access_map = isl::get_access_map(
                 max_param + 1,
                 0,
