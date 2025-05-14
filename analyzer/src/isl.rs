@@ -134,18 +134,21 @@ pub fn get_access_map<'a, 'b: 'a>(
     context: &AnalysisContext<'b>,
     tree: &Tree<'a>,
     ivar_map: &mut Vec<usize>,
+    block_size: usize,
 ) -> Result<Map<'b>> {
     match tree {
         Tree::For { body, .. } => {
             ivar_map.push(depth);
-            let res = get_access_map(num_params, depth + 1, context, body, ivar_map);
+            let res = get_access_map(num_params, depth + 1, context, body, ivar_map, block_size)?;
             ivar_map.pop();
-            res
+            Ok(res)
         }
         Tree::Block(stmts) => {
             let mut sub_maps = stmts
                 .iter()
-                .map(|stmt| get_access_map(num_params, depth + 1, context, stmt, ivar_map))
+                .map(|stmt| {
+                    get_access_map(num_params, depth + 1, context, stmt, ivar_map, block_size)
+                })
                 .collect::<Result<Vec<_>>>()?;
             let longest = sub_maps
                 .iter()
@@ -198,7 +201,12 @@ pub fn get_access_map<'a, 'b: 'a>(
                     .get_result_expr(i as isize)
                     .ok_or_else(|| anyhow::anyhow!("invalid affine expression: invalid result"))?;
                 tracing::debug!("expr: {}", expr);
-                let aff = converter.convert_polynomial(expr)?;
+                let mut aff = converter.convert_polynomial(expr)?;
+                if block_size > 1 && i == map.num_results() - 1 {
+                    let block_size = Value::new_ui(domain_space.context_ref(), block_size as u64);
+                    let block_size = Affine::val_on_domain_space(domain_space.clone(), block_size)?;
+                    aff = aff.checked_div(block_size)?;
+                }
                 aff_list.push(aff);
             }
             let basic_map = BasicMap::from_affine_list(domain_space, aff_list)?;

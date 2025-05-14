@@ -30,6 +30,18 @@ where
             f(context)
         })
     }
+    fn start_with_args<S: AsRef<str>, F, R>(args: &[S], f: F) -> anyhow::Result<R>
+    where
+        F: for<'x> FnOnce(AnalysisContext<'x>) -> anyhow::Result<R>,
+    {
+        let rcontext = RContext::new();
+        unsafe { barvinok::Context::from_args(args.iter().map(|x| x.as_ref()))? }.scope(
+            move |bcontext| {
+                let context = AnalysisContext { rcontext, bcontext };
+                f(context)
+            },
+        )
+    }
     fn rcontext(&self) -> &RContext {
         &self.rcontext
     }
@@ -39,6 +51,20 @@ where
     fn mcontext(&self) -> &MContext {
         self.rcontext.mlir_context()
     }
+}
+
+#[derive(Debug, Parser)]
+enum Method {
+    /// Use the Barvinok library to compute the polyhedral model
+    Barvinok {
+        #[clap(short = 'B', long)]
+        /// barvinok options
+        barvinok_arg: Vec<String>,
+        #[clap(short = 'b', long, default_value = "1")]
+        block_size: usize,
+    },
+    /// Use the PerfectTiling algorithm to compute the polyhedral model
+    PerfectTiling {},
 }
 
 #[derive(Debug, Parser)]
@@ -62,6 +88,10 @@ struct Options {
     /// if not specified, the program will try to find first affine loop in the function
     #[clap(short = 'l', long)]
     target_affine_loop: Option<String>,
+
+    /// method to use for polyhedral model computation
+    #[clap(subcommand)]
+    method: Method,
 }
 
 fn extract_target<'bctx, 'ctx, 'dom>(
@@ -151,7 +181,7 @@ fn main_entry() -> anyhow::Result<()> {
     };
 
     #[allow(unused)]
-    let writer = match options.output.as_ref() {
+    let mut writer = match options.output.as_ref() {
         Some(path) => {
             debug!("Opening output file: {}", path.display());
             Box::new(std::fs::File::create(path)?) as Box<dyn std::io::Write>
@@ -161,47 +191,31 @@ fn main_entry() -> anyhow::Result<()> {
             Box::new(std::io::stdout()) as Box<dyn std::io::Write>
         }
     };
-    AnalysisContext::start(|context| {
-        let context = &context;
-        let mut source = String::new();
-        let bytes = reader.read_to_string(&mut source)?;
 
-        debug!("Read {} bytes", bytes);
-
-        let module = Module::parse(context.mcontext(), &source)
-            .ok_or_else(|| anyhow!("Failed to parse module"))?;
-
-        debug!("Parsed module: {}", module.as_operation());
-
-        let dom = DominanceInfo::new(&module);
-
-        let tree = extract_target(&module, &options, context, &dom)?;
-
-        debug!("Extracted tree: {}", tree);
-
-        let total_space = isl::get_space(context, tree)?;
-
-        debug!("Total space: {:?}", total_space);
-
-        let nesting_level = utils::get_nesting_level(tree);
-        debug!("Nesting level: {:?}", nesting_level);
-
-        utils::walk_tree_print_converted_affine_map(tree, 0)?;
-
-        if std::env::var("ISL_DEBUG").is_ok() {
-            let space = isl::get_timestamp_space(
-                total_space.get_dim(barvinok::DimType::Param)? as usize,
-                0,
-                context,
-                tree,
-                &mut Vec::new(),
-            )?;
+    match &options.method {
+        Method::Barvinok {
+            barvinok_arg,
+            block_size,
+        } => AnalysisContext::start_with_args(barvinok_arg.as_slice(), |context| {
+            let context = &context;
+            let mut source = String::new();
+            let bytes = reader.read_to_string(&mut source)?;
+            debug!("Read {} bytes", bytes);
+            let module = Module::parse(context.mcontext(), &source)
+                .ok_or_else(|| anyhow!("Failed to parse module"))?;
+            debug!("Parsed module: {}", module.as_operation());
+            let dom = DominanceInfo::new(&module);
+            let tree = extract_target(&module, &options, context, &dom)?;
+            debug!("Extracted tree: {}", tree);
+            let (max_param, _) = utils::get_max_param_ivar(tree)?;
+            let space = isl::get_timestamp_space(max_param + 1, 0, context, tree, &mut Vec::new())?;
             let access_map = isl::get_access_map(
-                total_space.get_dim(barvinok::DimType::Param)? as usize,
+                max_param + 1,
                 0,
                 context,
                 tree,
                 &mut Vec::new(),
+                *block_size,
             )?;
             let access_map = access_map.intersect_domain(space.clone())?;
             let lt = space.clone().lex_lt_set(space.clone())?;
@@ -219,11 +233,39 @@ fn main_entry() -> anyhow::Result<()> {
             let processor = isl::RIProcessor::new(ri_values);
             let table = isl::create_table(&processor.get_distribution()?)
                 .ok_or_else(|| anyhow!("Failed to create table"))?;
-            println!("{table}");
-        }
+            writeln!(writer, "{table}")?;
+            Ok(())
+        }),
+        Method::PerfectTiling {} => AnalysisContext::start(|context| {
+            let context = &context;
+            let mut source = String::new();
+            let bytes = reader.read_to_string(&mut source)?;
 
-        Ok(())
-    })
+            debug!("Read {} bytes", bytes);
+
+            let module = Module::parse(context.mcontext(), &source)
+                .ok_or_else(|| anyhow!("Failed to parse module"))?;
+
+            debug!("Parsed module: {}", module.as_operation());
+
+            let dom = DominanceInfo::new(&module);
+
+            let tree = extract_target(&module, &options, context, &dom)?;
+
+            debug!("Extracted tree: {}", tree);
+
+            let total_space = isl::get_space(context, tree)?;
+
+            debug!("Total space: {:?}", total_space);
+
+            let nesting_level = utils::get_nesting_level(tree);
+            debug!("Nesting level: {:?}", nesting_level);
+
+            utils::walk_tree_print_converted_affine_map(tree, 0)?;
+
+            Ok(())
+        }),
+    }
 }
 
 fn main() {
