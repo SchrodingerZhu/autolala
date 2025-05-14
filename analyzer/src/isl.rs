@@ -87,7 +87,12 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
             ivar_map.pop();
             Ok(set
                 .add_constraint(ge_0)?
-                .add_constraint(affine_minus_ivar_gt_0)?)
+                .add_constraint(affine_minus_ivar_gt_0)?
+                .set_dim_name(
+                    DimType::Out,
+                    depth as u32,
+                    &format!("i{}", ivar_map.len() + 1),
+                )?)
         }
         Tree::Block(stmts) => {
             let mut sub_sets = stmts
@@ -117,7 +122,12 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
             }
             let total_set = sub_sets
                 .into_iter()
-                .try_fold(Set::empty(space.clone())?, |acc, set| acc.union(set))?;
+                .try_fold(Set::empty(space.clone())?, |acc, set| acc.union(set))?
+                .set_dim_name(
+                    DimType::Out,
+                    depth as u32,
+                    &format!("t{}", depth - ivar_map.len()),
+                )?;
             Ok(total_set)
         }
         Tree::Access { .. } => {
@@ -141,7 +151,11 @@ pub fn get_access_map<'a, 'b: 'a>(
             ivar_map.push(depth);
             let res = get_access_map(num_params, depth + 1, context, body, ivar_map, block_size)?;
             ivar_map.pop();
-            Ok(res)
+            Ok(res.set_dim_name(
+                DimType::In,
+                depth as u32,
+                &format!("i{}", ivar_map.len() + 1),
+            )?)
         }
         Tree::Block(stmts) => {
             let mut sub_maps = stmts
@@ -178,7 +192,12 @@ pub fn get_access_map<'a, 'b: 'a>(
             }
             let total_map = sub_maps
                 .into_iter()
-                .try_fold(Map::empty(space.clone())?, |acc, set| acc.union(set))?;
+                .try_fold(Map::empty(space.clone())?, |acc, set| acc.union(set))?
+                .set_dim_name(
+                    DimType::In,
+                    depth as u32,
+                    &format!("t{}", depth - ivar_map.len()),
+                )?;
             Ok(total_map)
         }
         Tree::Access {
