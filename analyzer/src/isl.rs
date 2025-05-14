@@ -3,14 +3,15 @@ use barvinok::{
     DimType,
     aff::Affine,
     constraint::Constraint,
-    ident::Ident,
     list::List,
     local_space::LocalSpace,
     map::{BasicMap, Map},
+    polynomial::{PiecewiseQuasiPolynomial, QuasiPolynomial},
     set::Set,
     space::Space,
     value::Value,
 };
+use comfy_table::Table;
 use raffine::{
     affine::{AffineExpr, AffineExprKind, AffineMap},
     tree::{Tree, ValID},
@@ -316,4 +317,133 @@ impl<'isl, 'mlir, 'map> ExprConverter<'isl, 'mlir, 'map> {
             _ => Err(anyhow::anyhow!("invalid affine expression")),
         }
     }
+}
+
+#[derive(Clone, Debug)]
+pub struct RIProcessor<'a> {
+    pw_qpoly: PiecewiseQuasiPolynomial<'a>,
+}
+
+#[derive(Clone, Debug)]
+pub struct Piece<'a> {
+    domain: Set<'a>,
+    qpoly: QuasiPolynomial<'a>,
+}
+
+#[derive(Clone, Debug)]
+pub struct DistItem<'a> {
+    qpoly: QuasiPolynomial<'a>,
+    cardinality: PiecewiseQuasiPolynomial<'a>,
+}
+
+impl<'a> RIProcessor<'a> {
+    pub fn new(pw_qpoly: PiecewiseQuasiPolynomial<'a>) -> Self {
+        RIProcessor { pw_qpoly }
+    }
+    pub fn get_all_pieces(&self) -> Result<Box<[Piece<'a>]>, barvinok::Error> {
+        let mut pieces: Vec<Piece<'_>> = Vec::new();
+        self.pw_qpoly.foreach_piece(|qpoly, domain| {
+            let mut to_merge = None;
+            for existing in pieces.iter().enumerate() {
+                // TODO: this can be sped up. currently O(n^2)
+                if qpoly.plain_is_equal(&existing.1.qpoly)? {
+                    to_merge = Some(existing.0);
+                    break;
+                }
+            }
+            if let Some(index) = to_merge {
+                pieces[index].domain = pieces[index].domain.clone().union(domain)?;
+            } else {
+                pieces.push(Piece { domain, qpoly });
+            }
+            Ok(())
+        })?;
+        Ok(pieces.into_boxed_slice())
+    }
+    fn get_processed_pieces(&self) -> Result<Box<[Piece<'a>]>, barvinok::Error> {
+        let mut pieces = self.get_all_pieces()?;
+        for piece in pieces.iter_mut() {
+            let involved_dims = piece.involved_input_dims()?;
+            // move involved_dims into params space (currently for domain only)
+            let mut domain = piece.domain.clone();
+            for (shift, dim) in involved_dims.iter().enumerate() {
+                // TODO: this should not unwrap
+                let num_params = domain.get_dims(DimType::Param).unwrap();
+                domain = domain.move_dims(
+                    DimType::Param,
+                    num_params,
+                    DimType::Out,
+                    *dim - shift as u32,
+                    1,
+                )?;
+            }
+            piece.domain = domain;
+        }
+        Ok(pieces)
+    }
+    pub fn get_distribution(&self) -> Result<Box<[DistItem<'a>]>, barvinok::Error> {
+        let mut pieces = self.get_processed_pieces()?;
+        let mut dist_items: Vec<DistItem<'_>> = Vec::new();
+        for piece in pieces.iter_mut() {
+            let cardinality = piece.cardinality()?;
+            dist_items.push(DistItem {
+                qpoly: piece.qpoly.clone(),
+                cardinality,
+            });
+        }
+        Ok(dist_items.into_boxed_slice())
+    }
+}
+
+impl<'a> Piece<'a> {
+    pub fn domain(&self) -> Set<'a> {
+        self.domain.clone()
+    }
+    pub fn cardinality(&self) -> Result<PiecewiseQuasiPolynomial<'a>, barvinok::Error> {
+        self.domain().cardinality()
+    }
+    fn involved_input_dims(&self) -> Result<Box<[u32]>, barvinok::Error> {
+        let dims = self.qpoly.get_dim(DimType::In)?;
+        let mut res = Vec::with_capacity(dims as usize);
+        for i in 0..dims {
+            if self.qpoly.involves_dims(DimType::In, i, 1)? {
+                res.push(i);
+            }
+        }
+        Ok(res.into_boxed_slice())
+    }
+}
+
+pub fn create_table(dist: &[DistItem]) -> Option<Table> {
+    let mut table = Table::new();
+    table.set_header(vec!["RI Value", "Count", "Symbol Range"]);
+    for item in dist.iter() {
+        let poly_str = format!("{:?}", item.qpoly);
+        // extract after second -> and before }
+        let value = poly_str
+            .split("->")
+            .nth(2)
+            .unwrap_or("")
+            .split("}")
+            .next()
+            .unwrap_or("")
+            .trim();
+        let card_str = format!("{:?}", item.cardinality);
+        // extract after { before :
+        let counts = card_str
+            .split("{")
+            .nth(1)
+            .unwrap_or("")
+            .split("}")
+            .next()
+            .unwrap_or("")
+            .trim();
+        for count_range in counts.split(";") {
+            let mut split = count_range.split(":");
+            let count = split.next().unwrap_or("").trim();
+            let range = split.next().unwrap_or("").trim();
+            table.add_row([value, count, range]);
+        }
+    }
+    Some(table)
 }

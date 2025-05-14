@@ -204,8 +204,22 @@ fn main_entry() -> anyhow::Result<()> {
                 &mut Vec::new(),
             )?;
             let access_map = access_map.intersect_domain(space.clone())?;
+            let lt = space.clone().lex_lt_set(space.clone())?;
+            let le = space.clone().lex_le_set(space.clone())?;
+            let access_rev = access_map.clone().reverse()?;
+            let same_element = access_map.clone().apply_range(access_rev)?;
+            let consecutive_access = same_element.intersect(lt.clone())?.lexmin()?;
+            let prev = consecutive_access.reverse()?;
+            let after = prev.apply_range(le.clone())?;
+            let ri = after.intersect(le.reverse()?)?;
+            let ri_values = ri.cardinality()?;
             debug!("Timestamp space: {:?}", space);
             debug!("Access map: {:?}", access_map);
+            debug!("RI values: {:?}", ri_values);
+            let processor = isl::RIProcessor::new(ri_values);
+            let table = isl::create_table(&processor.get_distribution()?)
+                .ok_or_else(|| anyhow!("Failed to create table"))?;
+            println!("{table}");
         }
 
         Ok(())
