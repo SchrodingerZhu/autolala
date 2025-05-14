@@ -31,9 +31,10 @@ pub fn get_space<'a, 'b: 'a>(context: &AnalysisContext<'b>, tree: &Tree<'a>) -> 
 }
 
 struct ConvertedIVar<'a> {
-    lower_bound: AffineExpr<'a>,
+    lower_bound: AffineMap<'a>,
     step_size: i64,
     index: usize,
+    operands: &'a [ValID],
 }
 
 type IVarMap<'a> = Vec<ConvertedIVar<'a>>;
@@ -65,15 +66,13 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
             ..
         } => {
             {
-                let lower_bound = lower_bound.get_result_expr(0).ok_or_else(|| {
-                    anyhow::anyhow!("invalid affine expression: at least one result expression")
-                })?;
                 let step_size = *step as i64;
                 let index = depth;
                 let ivar = ConvertedIVar {
-                    lower_bound,
+                    lower_bound: *lower_bound,
                     step_size,
                     index,
+                    operands: lower_bound_operands,
                 };
                 ivar_map.push(ivar);
             }
@@ -202,19 +201,18 @@ fn get_access_map_impl<'a, 'b: 'a>(
         Tree::For {
             body,
             lower_bound,
+            lower_bound_operands,
             step,
             ..
         } => {
             {
-                let lower_bound = lower_bound.get_result_expr(0).ok_or_else(|| {
-                    anyhow::anyhow!("invalid affine expression: at least one result expression")
-                })?;
                 let step_size = *step as i64;
                 let index = depth;
                 let ivar = ConvertedIVar {
-                    lower_bound,
+                    lower_bound: *lower_bound,
                     step_size,
                     index,
+                    operands: lower_bound_operands,
                 };
                 ivar_map.push(ivar);
             }
@@ -436,7 +434,22 @@ impl<'isl, 'mlir, 'map> ExprConverter<'isl, 'mlir, 'map> {
                 let step_size =
                     Value::new_si(self.local_space.context_ref(), self.ivar_map[n].step_size);
                 let step_size = Affine::val_on_domain(self.local_space.clone(), step_size)?;
-                let lower_bound = self.convert_polynomial(self.ivar_map[n].lower_bound)?;
+                let converter = Self {
+                    local_space: self.local_space.clone(),
+                    ivar_map: self.ivar_map,
+                    map: self.ivar_map[n].lower_bound,
+                    operands: self.ivar_map[n].operands,
+                };
+                let lower_bound = converter.convert_polynomial(
+                    self.ivar_map[n]
+                        .lower_bound
+                        .get_result_expr(0)
+                        .ok_or_else(|| {
+                            anyhow::anyhow!(
+                                "invalid affine expression: at least one result expression"
+                            )
+                        })?,
+                )?;
                 Ok(ivar.checked_mul(step_size)?.checked_add(lower_bound)?)
             }
             _ => Err(anyhow::anyhow!("invalid affine expression")),
