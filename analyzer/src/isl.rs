@@ -1,6 +1,14 @@
 use anyhow::Result;
 use barvinok::{
-    DimType, aff::Affine, constraint::Constraint, local_space::LocalSpace, set::Set, space::Space,
+    DimType,
+    aff::Affine,
+    constraint::Constraint,
+    ident::Ident,
+    list::List,
+    local_space::LocalSpace,
+    map::{BasicMap, Map},
+    set::Set,
+    space::Space,
     value::Value,
 };
 use raffine::{
@@ -25,6 +33,7 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
     depth: usize,
     context: &AnalysisContext<'b>,
     tree: &Tree<'a>,
+    ivar_map: &mut Vec<usize>,
 ) -> Result<Set<'b>> {
     match tree {
         Tree::For {
@@ -36,16 +45,17 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
             body,
             ..
         } => {
-            let set = get_timestamp_space(num_params, depth + 1, context, body)?;
+            ivar_map.push(depth);
+            let set = get_timestamp_space(num_params, depth + 1, context, body, ivar_map)?;
             let space = set.get_space()?;
             let lower_converter =
-                ExprConverter::new(space.clone(), *lower_bound, lower_bound_operands)?;
+                ExprConverter::new(space.clone(), *lower_bound, lower_bound_operands, ivar_map)?;
             let lower_bound =
                 lower_converter.convert_polynomial(lower_bound.get_result_expr(0).ok_or_else(
                     || anyhow::anyhow!("invalid affine expression: at least one result expression"),
                 )?)?;
             let upper_converter =
-                ExprConverter::new(space.clone(), *upper_bound, upper_bound_operands)?;
+                ExprConverter::new(space.clone(), *upper_bound, upper_bound_operands, ivar_map)?;
             let upper_bound =
                 upper_converter.convert_polynomial(upper_bound.get_result_expr(0).ok_or_else(
                     || anyhow::anyhow!("invalid affine expression: at least one result expression"),
@@ -73,6 +83,7 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
                     Value::new_si(context.bcontext(), 1),
                 )?)?;
             let affine_minus_ivar_gt_0 = Constraint::new_inequality_from_affine(affine_minus_ivar);
+            ivar_map.pop();
             Ok(set
                 .add_constraint(ge_0)?
                 .add_constraint(affine_minus_ivar_gt_0)?)
@@ -80,7 +91,7 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
         Tree::Block(stmts) => {
             let mut sub_sets = stmts
                 .iter()
-                .map(|stmt| get_timestamp_space(num_params, depth + 1, context, stmt))
+                .map(|stmt| get_timestamp_space(num_params, depth + 1, context, stmt, ivar_map))
                 .collect::<Result<Vec<_>>>()?;
             let longest = sub_sets
                 .iter()
@@ -95,7 +106,7 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
                 for j in length..longest.num_dims()? {
                     // add constraint eq 0
                     let constraint = Constraint::new_equality(local_space.clone())
-                        .set_coefficient_si(DimType::Out, j as u32, 1)?;
+                        .set_coefficient_si(DimType::Out, j, 1)?;
                     s = s.add_constraint(constraint)?;
                 }
                 let current_dim_eq_i = Constraint::new_equality(local_space.clone())
@@ -116,23 +127,106 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
     }
 }
 
-struct ExprConverter<'isl, 'mlir> {
+pub fn get_access_map<'a, 'b: 'a>(
+    num_params: usize,
+    depth: usize,
+    context: &AnalysisContext<'b>,
+    tree: &Tree<'a>,
+    ivar_map: &mut Vec<usize>,
+) -> Result<Map<'b>> {
+    match tree {
+        Tree::For { body, .. } => {
+            ivar_map.push(depth);
+            let res = get_access_map(num_params, depth + 1, context, body, ivar_map);
+            ivar_map.pop();
+            res
+        }
+        Tree::Block(stmts) => {
+            let mut sub_maps = stmts
+                .iter()
+                .map(|stmt| get_access_map(num_params, depth + 1, context, stmt, ivar_map))
+                .collect::<Result<Vec<_>>>()?;
+            let longest = sub_maps
+                .iter()
+                .max_by_key(|map| {
+                    map.get_space()
+                        .and_then(|s| s.get_dim(DimType::In))
+                        .unwrap_or_default()
+                })
+                .ok_or_else(|| anyhow::anyhow!("no maps found"))?
+                .clone();
+            let space = longest.get_space()?;
+            let local_space = LocalSpace::try_from(space.clone())?;
+            let longest_length = longest.get_space()?.get_dim(DimType::In)?;
+            for (idx, i) in sub_maps.iter_mut().enumerate() {
+                let length = i.get_space()?.get_dim(DimType::In)?;
+                let mut s = i.clone().add_dims(DimType::In, longest_length - length)?;
+                for j in length..longest_length {
+                    // add constraint eq 0
+                    let constraint = Constraint::new_equality(local_space.clone())
+                        .set_coefficient_si(DimType::In, j, 1)?;
+                    s = s.add_constraint(constraint)?;
+                }
+                let current_dim_eq_i = Constraint::new_equality(local_space.clone())
+                    .set_coefficient_si(DimType::In, depth as u32, 1)?
+                    .set_constant_si(-(idx as i32))?;
+                *i = s.add_constraint(current_dim_eq_i)?;
+            }
+            let total_map = sub_maps
+                .into_iter()
+                .try_fold(Map::empty(space.clone())?, |acc, set| acc.union(set))?;
+            Ok(total_map)
+        }
+        Tree::Access {
+            map,
+            operands,
+            memref,
+            ..
+        } => {
+            let domain_space = Space::set(context.bcontext(), num_params as u32, depth as u32)?;
+            let converter = ExprConverter::new(domain_space.clone(), *map, operands, ivar_map)?;
+            let mut aff_list = List::new(domain_space.context_ref(), map.num_results());
+            let ValID::Memref(memref) = *memref else {
+                return Err(anyhow::anyhow!("invalid access map: invalid memref"));
+            };
+            let val = Value::new_ui(domain_space.context_ref(), memref as u64);
+            let aff = Affine::val_on_domain_space(domain_space.clone(), val)?;
+            aff_list.push(aff);
+            for i in 0..map.num_results() {
+                let expr = map
+                    .get_result_expr(i as isize)
+                    .ok_or_else(|| anyhow::anyhow!("invalid affine expression: invalid result"))?;
+                tracing::debug!("expr: {}", expr);
+                let aff = converter.convert_polynomial(expr)?;
+                aff_list.push(aff);
+            }
+            let basic_map = BasicMap::from_affine_list(domain_space, aff_list)?;
+            Ok(basic_map.try_into()?)
+        }
+        Tree::If { .. } => Err(anyhow::anyhow!("not implemented for conditional branch")),
+    }
+}
+
+struct ExprConverter<'isl, 'mlir, 'map> {
     local_space: LocalSpace<'isl>,
+    ivar_map: &'map Vec<usize>,
     map: AffineMap<'mlir>,
     operands: &'mlir [ValID],
 }
 
-impl<'isl, 'mlir> ExprConverter<'isl, 'mlir> {
+impl<'isl, 'mlir, 'map> ExprConverter<'isl, 'mlir, 'map> {
     pub fn new(
         space: Space<'isl>,
         map: AffineMap<'mlir>,
         operands: &'mlir [ValID],
+        ivar_map: &'map Vec<usize>,
     ) -> Result<Self> {
         let local_space = LocalSpace::try_from(space)?;
         Ok(Self {
             local_space,
             map,
             operands,
+            ivar_map,
         })
     }
 
@@ -208,74 +302,18 @@ impl<'isl, 'mlir> ExprConverter<'isl, 'mlir> {
             .operands
             .get(position)
             .ok_or_else(|| anyhow::anyhow!("invalid affine expression: invalid position"))?;
-
         match val_id {
-            ValID::Symbol(n) | ValID::IVar(n) => Ok(Affine::var_on_domain(
+            ValID::Symbol(n) => Ok(Affine::var_on_domain(
                 self.local_space.clone(),
                 dim_type,
                 n as u32,
             )?),
+            ValID::IVar(n) => Ok(Affine::var_on_domain(
+                self.local_space.clone(),
+                dim_type,
+                self.ivar_map[n] as u32,
+            )?),
             _ => Err(anyhow::anyhow!("invalid affine expression")),
         }
     }
-}
-
-pub fn convert_affine_map<'isl, 'mlir>(
-    map: AffineMap<'mlir>,
-    operands: &'mlir [ValID],
-    space: Space<'isl>,
-) -> Result<Box<[Affine<'isl>]>> {
-    let converter = ExprConverter::new(space, map, operands)?;
-    let mut result = Vec::with_capacity(map.num_results());
-    for i in 0..map.num_results() {
-        let expr = map.get_result_expr(i as isize).ok_or_else(|| {
-            anyhow::anyhow!("invalid affine expression: invalid result expression")
-        })?;
-        let poly = converter.convert_polynomial(expr)?;
-        result.push(poly);
-    }
-    Ok(result.into_boxed_slice())
-}
-
-pub fn walk_tree_print_converted_affine_map<'a, 'b>(
-    tree: &'a Tree<'a>,
-    indent: usize,
-    space: &Space<'b>,
-) -> Result<()> {
-    fn print_sequence<'b>(context: &str, poly_vec: &[Affine<'b>], indent: usize) {
-        let indent_str = "  ".repeat(indent);
-        println!("{indent_str}{}: ", context);
-        for poly in poly_vec.iter() {
-            println!("\t- {:?}", poly);
-        }
-    }
-    match tree {
-        Tree::For {
-            lower_bound,
-            upper_bound,
-            lower_bound_operands,
-            upper_bound_operands,
-            body,
-            ..
-        } => {
-            let lower_bound_coverted =
-                convert_affine_map(*lower_bound, lower_bound_operands, space.clone())?;
-            let upper_bound_converted =
-                convert_affine_map(*upper_bound, upper_bound_operands, space.clone())?;
-            print_sequence("Lower bound", &lower_bound_coverted, indent);
-            print_sequence("Upper bound", &upper_bound_converted, indent);
-            walk_tree_print_converted_affine_map(body, indent + 1, space)?;
-        }
-        Tree::Block(trees) => {
-            for subtree in trees.iter() {
-                walk_tree_print_converted_affine_map(subtree, indent + 1, space)?;
-            }
-        }
-        Tree::Access { map, operands, .. } => {
-            let converted_map = convert_affine_map(*map, operands, space.clone())?;
-            print_sequence("Access", &converted_map, indent);
-        }
-        Tree::If { .. } => return Err(anyhow::anyhow!("not implemented for conditional branch")),
-    }
-    Ok(())
 }

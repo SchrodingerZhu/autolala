@@ -113,6 +113,12 @@ impl<'a, 'b> TranslationContext<'a, 'b> {
             }
         }
     }
+    fn loop_scope<R>(&self, f: impl FnOnce(&Self) -> R) -> R {
+        let current_ivar = self.ivar_counter.get();
+        let res = f(self);
+        self.ivar_counter.set(current_ivar);
+        res
+    }
 }
 
 struct VarArrayDisplay<'a>(&'a [ValID]);
@@ -267,40 +273,42 @@ impl Context {
         ctx: &TranslationContext<'a, 'c>,
     ) -> Result<&'a Tree<'a>, crate::Error> {
         tracing::trace!("building tree from loop: {}", entry);
-        let lower_bound = crate::cxx::for_op_get_lower_bound_map(entry)?;
-        let upper_bound = crate::cxx::for_op_get_upper_bound_map(entry)?;
-        let lower_bound_operands = crate::cxx::for_op_get_lower_bound_operands(entry)?;
-        let upper_bound_operands = crate::cxx::for_op_get_upper_bound_operands(entry)?;
-        let ivar = crate::cxx::for_op_get_induction_variable(entry)?;
-        let lower_bound_operands = self.arena.alloc_slice_fill_iter(
-            lower_bound_operands
-                .iter()
-                .map(|v| ctx.get_affine_operand(*v)),
-        );
-        let upper_bound_operands = self.arena.alloc_slice_fill_iter(
-            upper_bound_operands
-                .iter()
-                .map(|v| ctx.get_affine_operand(*v)),
-        );
-        let ivar = ctx.get_affine_operand(ivar);
-        let step = crate::cxx::for_op_get_step(entry)?;
-        let region = entry.region(0)?;
-        let body = region
-            .first_block()
-            .ok_or(crate::Error::InvalidLoopNest("invalid loop body"))?;
-        if body.next_in_region().is_some() {
-            return Err(crate::Error::InvalidLoopNest("invalid loop body"));
-        }
-        let body = self.build_tree_from_block(body, ctx)?;
-        Ok(self.build_for(
-            lower_bound,
-            lower_bound_operands,
-            upper_bound,
-            upper_bound_operands,
-            step,
-            body,
-            ivar,
-        ))
+        ctx.loop_scope(|ctx| {
+            let lower_bound = crate::cxx::for_op_get_lower_bound_map(entry)?;
+            let upper_bound = crate::cxx::for_op_get_upper_bound_map(entry)?;
+            let lower_bound_operands = crate::cxx::for_op_get_lower_bound_operands(entry)?;
+            let upper_bound_operands = crate::cxx::for_op_get_upper_bound_operands(entry)?;
+            let ivar = crate::cxx::for_op_get_induction_variable(entry)?;
+            let lower_bound_operands = self.arena.alloc_slice_fill_iter(
+                lower_bound_operands
+                    .iter()
+                    .map(|v| ctx.get_affine_operand(*v)),
+            );
+            let upper_bound_operands = self.arena.alloc_slice_fill_iter(
+                upper_bound_operands
+                    .iter()
+                    .map(|v| ctx.get_affine_operand(*v)),
+            );
+            let ivar = ctx.get_affine_operand(ivar);
+            let step = crate::cxx::for_op_get_step(entry)?;
+            let region = entry.region(0)?;
+            let body = region
+                .first_block()
+                .ok_or(crate::Error::InvalidLoopNest("invalid loop body"))?;
+            if body.next_in_region().is_some() {
+                return Err(crate::Error::InvalidLoopNest("invalid loop body"));
+            }
+            let body = self.build_tree_from_block(body, ctx)?;
+            Ok(self.build_for(
+                lower_bound,
+                lower_bound_operands,
+                upper_bound,
+                upper_bound_operands,
+                step,
+                body,
+                ivar,
+            ))
+        })
     }
 
     fn build_tree_from_load_store<'a, 'b, 'c: 'b>(

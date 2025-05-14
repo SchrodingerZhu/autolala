@@ -189,14 +189,23 @@ fn main_entry() -> anyhow::Result<()> {
         utils::walk_tree_print_converted_affine_map(tree, 0)?;
 
         if std::env::var("ISL_DEBUG").is_ok() {
-            isl::walk_tree_print_converted_affine_map(tree, 0, &total_space)?;
             let space = isl::get_timestamp_space(
                 total_space.get_dim(barvinok::DimType::Param)? as usize,
                 0,
                 context,
                 tree,
+                &mut Vec::new(),
             )?;
+            let access_map = isl::get_access_map(
+                total_space.get_dim(barvinok::DimType::Param)? as usize,
+                0,
+                context,
+                tree,
+                &mut Vec::new(),
+            )?;
+            let access_map = access_map.intersect_domain(space.clone())?;
             debug!("Timestamp space: {:?}", space);
+            debug!("Access map: {:?}", access_map);
         }
 
         Ok(())
