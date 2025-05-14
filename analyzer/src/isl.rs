@@ -1,3 +1,4 @@
+use crate::utils::get_max_array_dim;
 use anyhow::Result;
 use barvinok::{
     DimType,
@@ -70,7 +71,7 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
                 let step_size = *step as i64;
                 let index = depth;
                 let ivar = ConvertedIVar {
-                    lower_bound: lower_bound.clone(),
+                    lower_bound,
                     step_size,
                     index,
                 };
@@ -176,7 +177,16 @@ pub fn get_access_map<'a, 'b: 'a>(
     block_size: usize,
 ) -> Result<Map<'b>> {
     let mut ivar_map = Vec::new();
-    get_access_map_impl(num_params, 0, context, tree, &mut ivar_map, block_size)
+    let max_array_dim = get_max_array_dim(tree)?;
+    get_access_map_impl(
+        num_params,
+        0,
+        context,
+        tree,
+        &mut ivar_map,
+        block_size,
+        max_array_dim,
+    )
 }
 
 fn get_access_map_impl<'a, 'b: 'a>(
@@ -186,6 +196,7 @@ fn get_access_map_impl<'a, 'b: 'a>(
     tree: &Tree<'a>,
     ivar_map: &mut IVarMap<'a>,
     block_size: usize,
+    max_array_dim: usize,
 ) -> Result<Map<'b>> {
     match tree {
         Tree::For {
@@ -201,14 +212,21 @@ fn get_access_map_impl<'a, 'b: 'a>(
                 let step_size = *step as i64;
                 let index = depth;
                 let ivar = ConvertedIVar {
-                    lower_bound: lower_bound.clone(),
+                    lower_bound,
                     step_size,
                     index,
                 };
                 ivar_map.push(ivar);
             }
-            let res =
-                get_access_map_impl(num_params, depth + 1, context, body, ivar_map, block_size)?;
+            let res = get_access_map_impl(
+                num_params,
+                depth + 1,
+                context,
+                body,
+                ivar_map,
+                block_size,
+                max_array_dim,
+            )?;
             ivar_map.pop();
             Ok(res.set_dim_name(
                 DimType::In,
@@ -220,7 +238,15 @@ fn get_access_map_impl<'a, 'b: 'a>(
             let mut sub_maps = stmts
                 .iter()
                 .map(|stmt| {
-                    get_access_map_impl(num_params, depth + 1, context, stmt, ivar_map, block_size)
+                    get_access_map_impl(
+                        num_params,
+                        depth + 1,
+                        context,
+                        stmt,
+                        ivar_map,
+                        block_size,
+                        max_array_dim,
+                    )
                 })
                 .collect::<Result<Vec<_>>>()?;
             let longest = sub_maps
@@ -274,6 +300,12 @@ fn get_access_map_impl<'a, 'b: 'a>(
             let val = Value::new_ui(domain_space.context_ref(), memref as u64);
             let aff = Affine::val_on_domain_space(domain_space.clone(), val)?;
             aff_list.push(aff);
+            // align array dimension
+            for _ in 0..max_array_dim - map.num_results() {
+                let val = Value::new_ui(domain_space.context_ref(), 0);
+                let aff = Affine::val_on_domain_space(domain_space.clone(), val)?;
+                aff_list.push(aff);
+            }
             for i in 0..map.num_results() {
                 let expr = map
                     .get_result_expr(i as isize)

@@ -72,6 +72,22 @@ pub(crate) fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(usize, usize)> 
     Ok((max_param, max_ivar))
 }
 
+pub(crate) fn get_max_array_dim<'a>(tree: &Tree<'a>) -> Result<usize> {
+    match tree {
+        Tree::For { body, .. } => get_max_array_dim(body),
+        Tree::Block(blk) => blk.iter().try_fold(0, |acc, subtree| {
+            let dim = get_max_array_dim(subtree)?;
+            Ok(dim.max(acc))
+        }),
+        Tree::Access { map, .. } => Ok(map.num_results()),
+        Tree::If { then, r#else, .. } => {
+            let a = get_max_array_dim(then)?;
+            let b = r#else.map(|r| get_max_array_dim(r)).unwrap_or(Ok(0))?;
+            Ok(a.max(b))
+        }
+    }
+}
+
 /// Return levels of nesting if the loop is perfectly nested.
 pub fn get_nesting_level(tree: &Tree) -> Option<usize> {
     match tree {
