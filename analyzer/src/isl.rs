@@ -29,12 +29,29 @@ pub fn get_space<'a, 'b: 'a>(context: &AnalysisContext<'b>, tree: &Tree<'a>) -> 
     Ok(space)
 }
 
+struct ConvertedIVar<'a> {
+    lower_bound: AffineExpr<'a>,
+    step_size: i64,
+    index: usize,
+}
+
+type IVarMap<'a> = Vec<ConvertedIVar<'a>>;
+
 pub fn get_timestamp_space<'a, 'b: 'a>(
+    num_params: usize,
+    context: &AnalysisContext<'b>,
+    tree: &Tree<'a>,
+) -> Result<Set<'b>> {
+    let mut ivar_map = Vec::new();
+    get_timestamp_space_impl(num_params, 0, context, tree, &mut ivar_map)
+}
+
+fn get_timestamp_space_impl<'a, 'b: 'a>(
     num_params: usize,
     depth: usize,
     context: &AnalysisContext<'b>,
     tree: &Tree<'a>,
-    ivar_map: &mut Vec<usize>,
+    ivar_map: &mut IVarMap<'a>,
 ) -> Result<Set<'b>> {
     match tree {
         Tree::For {
@@ -46,8 +63,20 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
             body,
             ..
         } => {
-            ivar_map.push(depth);
-            let set = get_timestamp_space(num_params, depth + 1, context, body, ivar_map)?;
+            {
+                let lower_bound = lower_bound.get_result_expr(0).ok_or_else(|| {
+                    anyhow::anyhow!("invalid affine expression: at least one result expression")
+                })?;
+                let step_size = *step as i64;
+                let index = depth;
+                let ivar = ConvertedIVar {
+                    lower_bound: lower_bound.clone(),
+                    step_size,
+                    index,
+                };
+                ivar_map.push(ivar);
+            }
+            let set = get_timestamp_space_impl(num_params, depth + 1, context, body, ivar_map)?;
             let space = set.get_space()?;
             let lower_converter =
                 ExprConverter::new(space.clone(), *lower_bound, lower_bound_operands, ivar_map)?;
@@ -97,7 +126,9 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
         Tree::Block(stmts) => {
             let mut sub_sets = stmts
                 .iter()
-                .map(|stmt| get_timestamp_space(num_params, depth + 1, context, stmt, ivar_map))
+                .map(|stmt| {
+                    get_timestamp_space_impl(num_params, depth + 1, context, stmt, ivar_map)
+                })
                 .collect::<Result<Vec<_>>>()?;
             let longest = sub_sets
                 .iter()
@@ -140,16 +171,44 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
 
 pub fn get_access_map<'a, 'b: 'a>(
     num_params: usize,
+    context: &AnalysisContext<'b>,
+    tree: &Tree<'a>,
+    block_size: usize,
+) -> Result<Map<'b>> {
+    let mut ivar_map = Vec::new();
+    get_access_map_impl(num_params, 0, context, tree, &mut ivar_map, block_size)
+}
+
+fn get_access_map_impl<'a, 'b: 'a>(
+    num_params: usize,
     depth: usize,
     context: &AnalysisContext<'b>,
     tree: &Tree<'a>,
-    ivar_map: &mut Vec<usize>,
+    ivar_map: &mut IVarMap<'a>,
     block_size: usize,
 ) -> Result<Map<'b>> {
     match tree {
-        Tree::For { body, .. } => {
-            ivar_map.push(depth);
-            let res = get_access_map(num_params, depth + 1, context, body, ivar_map, block_size)?;
+        Tree::For {
+            body,
+            lower_bound,
+            step,
+            ..
+        } => {
+            {
+                let lower_bound = lower_bound.get_result_expr(0).ok_or_else(|| {
+                    anyhow::anyhow!("invalid affine expression: at least one result expression")
+                })?;
+                let step_size = *step as i64;
+                let index = depth;
+                let ivar = ConvertedIVar {
+                    lower_bound: lower_bound.clone(),
+                    step_size,
+                    index,
+                };
+                ivar_map.push(ivar);
+            }
+            let res =
+                get_access_map_impl(num_params, depth + 1, context, body, ivar_map, block_size)?;
             ivar_map.pop();
             Ok(res.set_dim_name(
                 DimType::In,
@@ -161,7 +220,7 @@ pub fn get_access_map<'a, 'b: 'a>(
             let mut sub_maps = stmts
                 .iter()
                 .map(|stmt| {
-                    get_access_map(num_params, depth + 1, context, stmt, ivar_map, block_size)
+                    get_access_map_impl(num_params, depth + 1, context, stmt, ivar_map, block_size)
                 })
                 .collect::<Result<Vec<_>>>()?;
             let longest = sub_maps
@@ -237,7 +296,7 @@ pub fn get_access_map<'a, 'b: 'a>(
 
 struct ExprConverter<'isl, 'mlir, 'map> {
     local_space: LocalSpace<'isl>,
-    ivar_map: &'map Vec<usize>,
+    ivar_map: &'map IVarMap<'mlir>,
     map: AffineMap<'mlir>,
     operands: &'mlir [ValID],
 }
@@ -247,7 +306,7 @@ impl<'isl, 'mlir, 'map> ExprConverter<'isl, 'mlir, 'map> {
         space: Space<'isl>,
         map: AffineMap<'mlir>,
         operands: &'mlir [ValID],
-        ivar_map: &'map Vec<usize>,
+        ivar_map: &'map IVarMap<'mlir>,
     ) -> Result<Self> {
         let local_space = LocalSpace::try_from(space)?;
         Ok(Self {
@@ -336,11 +395,18 @@ impl<'isl, 'mlir, 'map> ExprConverter<'isl, 'mlir, 'map> {
                 dim_type,
                 n as u32,
             )?),
-            ValID::IVar(n) => Ok(Affine::var_on_domain(
-                self.local_space.clone(),
-                dim_type,
-                self.ivar_map[n] as u32,
-            )?),
+            ValID::IVar(n) => {
+                let ivar = Affine::var_on_domain(
+                    self.local_space.clone(),
+                    dim_type,
+                    self.ivar_map[n].index as u32,
+                )?;
+                let step_size =
+                    Value::new_si(self.local_space.context_ref(), self.ivar_map[n].step_size);
+                let step_size = Affine::val_on_domain(self.local_space.clone(), step_size)?;
+                let lower_bound = self.convert_polynomial(self.ivar_map[n].lower_bound)?;
+                Ok(ivar.checked_mul(step_size)?.checked_add(lower_bound)?)
+            }
             _ => Err(anyhow::anyhow!("invalid affine expression")),
         }
     }

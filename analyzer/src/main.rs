@@ -213,8 +213,7 @@ fn main_entry() -> anyhow::Result<()> {
             let tree = extract_target(&module, &options, context, &dom)?;
             debug!("Extracted tree: {}", tree);
             let (max_param, _) = utils::get_max_param_ivar(tree)?;
-            let mut space =
-                isl::get_timestamp_space(max_param + 1, 0, context, tree, &mut Vec::new())?;
+            let mut space = isl::get_timestamp_space(max_param + 1, context, tree)?;
             let local_space: LocalSpace = space.get_space()?.try_into()?;
             for (idx, bound) in symbol_lowerbound.iter().enumerate() {
                 let bound = *bound;
@@ -224,14 +223,7 @@ fn main_entry() -> anyhow::Result<()> {
                     .set_constant_si(-bound)?;
                 space = space.add_constraint(constraint)?;
             }
-            let access_map = isl::get_access_map(
-                max_param + 1,
-                0,
-                context,
-                tree,
-                &mut Vec::new(),
-                *block_size,
-            )?;
+            let access_map = isl::get_access_map(max_param + 1, context, tree, *block_size)?;
             let access_map = access_map.intersect_domain(space.clone())?;
             let lt = space.clone().lex_lt_set(space.clone())?;
             let le = space.clone().lex_le_set(space.clone())?;
