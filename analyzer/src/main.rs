@@ -249,6 +249,8 @@ fn main_entry() -> anyhow::Result<()> {
             let table = isl::create_table(&processor.get_distribution()?)
                 .ok_or_else(|| anyhow!("Failed to create table"))?;
             writeln!(writer, "{table}")?;
+            let space_count = space.cardinality()?;
+            writeln!(writer, "Total: {space_count:?}")?;
             Ok(())
         }),
         Method::PerfectTiling {} => AnalysisContext::start(|context| {
