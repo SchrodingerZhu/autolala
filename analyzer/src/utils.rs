@@ -240,3 +240,21 @@ pub fn walk_tree_print_converted_affine_map<'a>(tree: &'a Tree<'a>, indent: usiz
     }
     Ok(())
 }
+
+pub fn create_table(dist: &[(Poly, Poly)]) -> comfy_table::Table {
+    use comfy_table::ContentArrangement;
+    use comfy_table::modifiers::UTF8_ROUND_CORNERS;
+    use comfy_table::presets::UTF8_FULL;
+    let mut table = comfy_table::Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .apply_modifier(UTF8_ROUND_CORNERS)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec!["RI Value", "Portion"]);
+    for item in dist.iter() {
+        let value = format!("{}", item.0);
+        let portion = format!("{}", item.1);
+        table.add_row([value, portion]);
+    }
+    table
+}
