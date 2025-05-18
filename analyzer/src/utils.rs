@@ -11,7 +11,6 @@ use symbolica::domains::integer::IntegerRing;
 use symbolica::domains::rational_polynomial::RationalPolynomial;
 use symbolica::domains::rational_polynomial::RationalPolynomialField;
 use symbolica::symbol;
-
 pub type Poly = RationalPolynomial<IntegerRing, u32>;
 
 pub(crate) fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(usize, usize)> {
@@ -85,25 +84,6 @@ pub(crate) fn get_max_array_dim<'a>(tree: &Tree<'a>) -> Result<usize> {
             let b = r#else.map(|r| get_max_array_dim(r)).unwrap_or(Ok(0))?;
             Ok(a.max(b))
         }
-    }
-}
-
-/// Return levels of nesting if the loop is perfectly nested.
-pub fn get_nesting_level(tree: &Tree) -> Option<usize> {
-    match tree {
-        Tree::For { body, .. } => get_nesting_level(body).map(|level| level + 1),
-        Tree::Block(trees) => {
-            if trees.iter().all(|t| matches!(t, Tree::Access { .. })) {
-                Some(0)
-            } else if trees.len() != 1 {
-                None
-            } else {
-                let t = trees.first()?;
-                get_nesting_level(t)
-            }
-        }
-        Tree::Access { .. } => Some(0),
-        Tree::If { .. } => None,
     }
 }
 
@@ -213,39 +193,57 @@ pub fn convert_affine_map<'a>(map: AffineMap<'a>, operands: &'a [ValID]) -> Resu
     Ok(result.into_boxed_slice())
 }
 
-pub fn walk_tree_print_converted_affine_map<'a>(tree: &'a Tree<'a>, indent: usize) -> Result<()> {
-    fn print_sequence(context: &str, poly_vec: &[Poly], indent: usize) {
-        let indent_str = "  ".repeat(indent);
-        println!("{indent_str}{}: ", context);
-        for poly in poly_vec.iter() {
-            println!("\t- {}", poly);
-        }
+// pub fn walk_tree_print_converted_affine_map<'a>(tree: &'a Tree<'a>, indent: usize) -> Result<()> {
+//     fn print_sequence(context: &str, poly_vec: &[Poly], indent: usize) {
+//         let indent_str = "  ".repeat(indent);
+//         println!("{indent_str}{}: ", context);
+//         for poly in poly_vec.iter() {
+//             println!("\t- {}", poly);
+//         }
+//     }
+//     match tree {
+//         Tree::For {
+//             lower_bound,
+//             upper_bound,
+//             lower_bound_operands,
+//             upper_bound_operands,
+//             body,
+//             ..
+//         } => {
+//             let lower_bound_coverted = convert_affine_map(*lower_bound, lower_bound_operands)?;
+//             let upper_bound_converted = convert_affine_map(*upper_bound, upper_bound_operands)?;
+//             print_sequence("Lower bound", &lower_bound_coverted, indent);
+//             print_sequence("Upper bound", &upper_bound_converted, indent);
+//             walk_tree_print_converted_affine_map(body, indent + 1)?;
+//         }
+//         Tree::Block(trees) => {
+//             for subtree in trees.iter() {
+//                 walk_tree_print_converted_affine_map(subtree, indent + 1)?;
+//             }
+//         }
+//         Tree::Access { map, operands, .. } => {
+//             let converted_map = convert_affine_map(*map, operands)?;
+//             print_sequence("Access", &converted_map, indent);
+//         }
+//         Tree::If { .. } => return Err(anyhow::anyhow!("not implemented for conditional branch")),
+//     }
+//     Ok(())
+// }
+
+pub fn create_table(dist: &[(Poly, Poly)]) -> comfy_table::Table {
+    use comfy_table::ContentArrangement;
+    use comfy_table::modifiers::UTF8_ROUND_CORNERS;
+    use comfy_table::presets::UTF8_FULL;
+    let mut table = comfy_table::Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .apply_modifier(UTF8_ROUND_CORNERS)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec!["RI Value", "Portion"]);
+    for item in dist.iter() {
+        let value = format!("{}", item.0);
+        let portion = format!("{}", item.1);
+        table.add_row([value, portion]);
     }
-    match tree {
-        Tree::For {
-            lower_bound,
-            upper_bound,
-            lower_bound_operands,
-            upper_bound_operands,
-            body,
-            ..
-        } => {
-            let lower_bound_coverted = convert_affine_map(*lower_bound, lower_bound_operands)?;
-            let upper_bound_converted = convert_affine_map(*upper_bound, upper_bound_operands)?;
-            print_sequence("Lower bound", &lower_bound_coverted, indent);
-            print_sequence("Upper bound", &upper_bound_converted, indent);
-            walk_tree_print_converted_affine_map(body, indent + 1)?;
-        }
-        Tree::Block(trees) => {
-            for subtree in trees.iter() {
-                walk_tree_print_converted_affine_map(subtree, indent + 1)?;
-            }
-        }
-        Tree::Access { map, operands, .. } => {
-            let converted_map = convert_affine_map(*map, operands)?;
-            print_sequence("Access", &converted_map, indent);
-        }
-        Tree::If { .. } => return Err(anyhow::anyhow!("not implemented for conditional branch")),
-    }
-    Ok(())
+    table
 }
