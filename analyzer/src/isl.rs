@@ -553,8 +553,15 @@ impl<'a> Piece<'a> {
 }
 
 pub fn create_table(dist: &[DistItem]) -> Option<Table> {
+    use comfy_table::ContentArrangement;
+    use comfy_table::modifiers::UTF8_ROUND_CORNERS;
+    use comfy_table::presets::UTF8_FULL;
     let mut table = Table::new();
-    table.set_header(vec!["RI Value", "Count", "Symbol Range"]);
+    table
+        .load_preset(UTF8_FULL)
+        .apply_modifier(UTF8_ROUND_CORNERS)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec!["RI Value", "Count", "Symbol Range"]);
     for item in dist.iter() {
         let poly_str = format!("{:?}", item.qpoly);
         // extract after second -> and before }

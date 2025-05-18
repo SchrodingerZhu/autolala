@@ -7,12 +7,14 @@ use melior::Context as MContext;
 use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
 use raffine::Context as RContext;
 use raffine::{DominanceInfo, tree::Tree};
-use std::{io::Read, path::PathBuf};
+use std::{collections::HashMap, io::Read, path::PathBuf};
 use tracing::{debug, error};
 use tracing_subscriber::EnvFilter;
 mod isl;
+mod salt;
 mod utils;
 
+use utils::create_table;
 struct AnalysisContext<'a> {
     rcontext: RContext,
     bcontext: BContext<'a>,
@@ -68,7 +70,7 @@ enum Method {
         symbol_lowerbound: Vec<i32>,
     },
     /// Use the PerfectTiling algorithm to compute the polyhedral model
-    PerfectTiling {},
+    Salt,
 }
 
 #[derive(Debug, Parser)]
@@ -184,7 +186,6 @@ fn main_entry() -> anyhow::Result<()> {
         }
     };
 
-    #[allow(unused)]
     let mut writer = match options.output.as_ref() {
         Some(path) => {
             debug!("Opening output file: {}", path.display());
@@ -245,7 +246,7 @@ fn main_entry() -> anyhow::Result<()> {
             writeln!(writer, "Total: {space_count:?}")?;
             Ok(())
         }),
-        Method::PerfectTiling {} => AnalysisContext::start(|context| {
+        Method::Salt => AnalysisContext::start(|context| {
             let context = &context;
             let mut source = String::new();
             let bytes = reader.read_to_string(&mut source)?;
@@ -267,11 +268,14 @@ fn main_entry() -> anyhow::Result<()> {
 
             debug!("Total space: {:?}", total_space);
 
-            let nesting_level = utils::get_nesting_level(tree);
-            debug!("Nesting level: {:?}", nesting_level);
+            //  utils::walk_tree_print_converted_affine_map(tree, 0)?;
+            let mut ri_dist = vec![];
+            let mut rf = HashMap::new();
+            let mut tc = HashMap::new();
+            salt::get_reuse_interval_distribution(&mut ri_dist, tree, &mut rf, &mut tc, 0, context);
+            let table = create_table(&ri_dist);
 
-            utils::walk_tree_print_converted_affine_map(tree, 0)?;
-
+            println!("Reuse interval distribution:\n{}", table);
             Ok(())
         }),
     }
