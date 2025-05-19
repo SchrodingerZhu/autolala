@@ -99,45 +99,54 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                     }
                 }
             }
-
-            let mut shrinked_ref_vec = vec![];
-            for i in 0..reference_vector.len() - 1 {
-                if reference_vector[i] != reference_vector[i + 1] {
-                    if i == 0 {
-                        shrinked_ref_vec.push(0x5eabed);
-                    } else {
-                        shrinked_ref_vec.push(i - 1);
-                    }
-                }
-            }
-            if reference_vector[reference_vector.len() - 1] == 0 {
-                shrinked_ref_vec.push(reference_vector.len() - 2);
-            }
-
-            let mut ri_value = isize_to_poly(0, context);
-            let mut ri_portion = isize_to_poly(1, context);
-            let mut ri_portion_sum = isize_to_poly(0, context);
             let field = RationalPolynomialField::new(symbolica::domains::integer::IntegerRing);
 
-            for i in 0..reference_vector.len() - 1 {
-                if reference_vector[i + 1] == 0 {
-                    ri_portion = field.div(&ri_portion, trip_counts.get(&i).unwrap());
-                }
+            let mut portion = isize_to_poly(1, context);
+            let mut portion_sum = isize_to_poly(0, context);
+            let mut shrinked_ref_vec = vec![];
+            let mut portions = vec![];
+
+            for i in trip_counts.iter() {
+                println!("trip_counts[{}]: {}", i.0, i.1);
             }
+
+            for i in (0..reference_vector.len() - 1).rev() {
+                if reference_vector[i] != reference_vector[i + 1] {
+                    shrinked_ref_vec.push(i);
+                }
+                if reference_vector[i + 1] == 0 {
+                    portion = field.div(&portion, &trip_counts.get(&(i)).unwrap());
+                }
+                portions.push(portion.clone());
+            }
+
+            shrinked_ref_vec.reverse();
+            if reference_vector[reference_vector.len() - 1] == 0 {
+                shrinked_ref_vec.push(reference_vector.len() - 1);
+            }
+            portions.reverse();
+            for i in portions.iter() {
+                print!("{} ", i);
+            }
+            println!();
+            let mut ri_portion_sum = isize_to_poly(0, context);
+
             let mut coefficient = 1;
             let n_ref = isize_to_poly(ref_count as isize, context);
-
+            println!("reference_vector: {:?}", reference_vector);
+            println!("shrinked_ref_vec: {:?}", shrinked_ref_vec);
+            let mut ri_value = isize_to_poly(0, context);
             for (place, i) in (shrinked_ref_vec.iter().rev()).enumerate() {
                 let tmp = reuse_factors.get(i).unwrap() * &isize_to_poly(coefficient, context);
                 ri_value = &ri_value + &tmp;
                 if coefficient == 1 {
                     if place != shrinked_ref_vec.len() - 1 {
+                        let ri_portion = portions[i - 1].clone();
                         ri_dist.push((
                             &ri_value * &n_ref,
                             field.div(&(&ri_portion - &ri_portion_sum), &n_ref),
                         ));
                         ri_portion_sum = &ri_portion_sum + &ri_portion;
-                        ri_portion = &ri_portion * trip_counts.get(i).unwrap()
                     } else {
                         ri_dist.push((
                             &ri_value * &n_ref,

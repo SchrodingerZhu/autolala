@@ -272,7 +272,7 @@ fn main_entry() -> anyhow::Result<()> {
             let mut ri_dist = vec![];
             let mut rf = HashMap::new();
             let mut tc = HashMap::new();
-            salt::get_reuse_interval_distribution(&mut ri_dist, tree, &mut rf, &mut tc, 0, context);
+            salt::get_reuse_interval_distribution(&mut ri_dist, tree, &mut rf, &mut tc, 1, context);
             let table = create_table(&ri_dist);
 
             println!("Reuse interval distribution:\n{}", table);
