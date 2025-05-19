@@ -269,11 +269,13 @@ fn main_entry() -> anyhow::Result<()> {
             debug!("Total space: {:?}", total_space);
 
             //  utils::walk_tree_print_converted_affine_map(tree, 0)?;
-            let mut ri_dist = vec![];
             let mut rf = HashMap::new();
             let mut tc = HashMap::new();
-            salt::get_reuse_interval_distribution(&mut ri_dist, tree, &mut rf, &mut tc, 1, context);
-            let table = create_table(&ri_dist);
+            let ri_dist = salt::get_reuse_interval_distribution( tree, &mut rf, &mut tc, 1, context);
+            // hashmap to vector tuple
+            let ri_dist_vec = 
+                ri_dist.iter().map(|(k, v)| (k.clone(), v.clone())).collect::<Vec<_>>();
+            let table = create_table(&ri_dist_vec);
 
             println!("Reuse interval distribution:\n{}", table);
             Ok(())

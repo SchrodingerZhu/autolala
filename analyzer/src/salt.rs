@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap};
 
 use raffine::{
     affine::{AffineExpr, AffineMap},
@@ -25,13 +25,12 @@ fn isize_to_poly<'a>(value: isize, context: &AnalysisContext<'a>) -> Poly {
 
 // reuse interval distribution without block
 pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
-    ri_dist: &mut Vec<(Poly, Poly)>,
     tree: &Tree<'a>,
     reuse_factors: &mut HashMap<usize, Poly>,
     trip_counts: &mut HashMap<usize, Poly>,
     ref_count: usize,
     context: &AnalysisContext<'b>,
-) {
+) -> HashMap<Poly, Poly> {
     match tree {
         Tree::For {
             lower_bound,
@@ -64,7 +63,6 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             trip_counts.insert(*id, trip_count.clone());
 
             get_reuse_interval_distribution(
-                ri_dist,
                 body,
                 reuse_factors,
                 trip_counts,
@@ -73,16 +71,24 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             )
         }
         Tree::Block(trees) => {
+            let mut ri_dist: HashMap<Poly, Poly> = HashMap::new();
             for subtree in trees.iter() {
-                get_reuse_interval_distribution(
-                    ri_dist,
+                let tmp = get_reuse_interval_distribution(
                     subtree,
                     reuse_factors,
                     trip_counts,
                     trees.len(),
                     context,
                 );
+                for (i, j) in tmp.iter() {
+                    if ri_dist.contains_key(i) {
+                        *ri_dist.get_mut(i).unwrap() = ri_dist.get(i).unwrap() +  j;
+                    } else {
+                        ri_dist.insert(i.clone(), j.clone());
+                    }
+                }
             }
+            ri_dist
         }
         Tree::Access { map, operands, .. } => {
             let mut reference_vector = vec![0; reuse_factors.len()];
@@ -105,10 +111,6 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             let mut shrinked_ref_vec = vec![];
             let mut portions = vec![];
 
-            for i in trip_counts.iter() {
-                println!("trip_counts[{}]: {}", i.0, i.1);
-            }
-
             for i in (0..reference_vector.len() - 1).rev() {
                 if reference_vector[i] != reference_vector[i + 1] {
                     shrinked_ref_vec.push(i);
@@ -125,17 +127,13 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             }
 
             portions.reverse();
-            for i in portions.iter() {
-                print!("{} ", i);
-            }
-            println!();
+
             let mut ri_portion_sum = isize_to_poly(0, context);
 
             let mut coefficient = 1;
             let n_ref = isize_to_poly(ref_count as isize, context);
-            println!("reference_vector: {:?}", reference_vector);
-            println!("shrinked_ref_vec: {:?}", shrinked_ref_vec);
             let mut ri_value = isize_to_poly(0, context);
+            let mut ri_dist: HashMap<Poly, Poly> = HashMap::new();
             for (place, i) in (shrinked_ref_vec.iter().rev()).enumerate() {
                 let tmp = if *i == 0 {
                     reuse_factors.get(&(0x5eabed)).unwrap() * &isize_to_poly(coefficient, context)
@@ -146,21 +144,36 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                 if coefficient == 1 {
                     if place != shrinked_ref_vec.len() - 1 {
                         let ri_portion = portions[i - 1].clone();
-                        ri_dist.push((
+                        if ri_dist.contains_key(&(&ri_value * &n_ref)) {
+                            let r1 = ri_dist.get(&(&ri_value * &n_ref)).unwrap().clone();
+                            let r2 = field.div(&(&ri_portion - &ri_portion_sum), &n_ref);
+
+                            *ri_dist.get_mut(&(&ri_value * &n_ref)).unwrap() = &r1 + &r2;
+                        }
+                        else {
+                            ri_dist.insert(
                             &ri_value * &n_ref,
-                            field.div(&(&ri_portion - &ri_portion_sum), &n_ref),
-                        ));
+                            field.div(&(&ri_portion - &ri_portion_sum), &n_ref));
+                        }
                         ri_portion_sum = ri_portion;
                     } else {
-                        ri_dist.push((
+                        if ri_dist.contains_key(&(&ri_value * &n_ref)) {
+                            let r1 = ri_dist.get(&(&ri_value * &n_ref)).unwrap().clone();
+                            let r2 = field.div(&(&isize_to_poly(1, context) - &ri_portion_sum), &n_ref);
+                            *ri_dist.get_mut(&(&ri_value * &n_ref)).unwrap() = &r1 + &r2;
+                        }
+                        else {
+                            ri_dist.insert(
                             &ri_value * &n_ref,
-                            field.div(&(&isize_to_poly(1, context) - &ri_portion_sum), &n_ref),
-                        ));
+                            field.div(&(&isize_to_poly(1, context) - &ri_portion_sum), &n_ref));
+                        }
+                       
                     }
                 }
                 coefficient *= -1;
             }
+            ri_dist
         }
-        Tree::If { .. } => {}
+        Tree::If { .. } => {HashMap::new()}
     }
 }
