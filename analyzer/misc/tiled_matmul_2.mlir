@@ -7,10 +7,10 @@ module {
           affine.for %ii = 0 to %t0 { 
             affine.for %jj = 0 to %t1 { 
               affine.for %kk = 0 to %t2 { 
-                //%0 = affine.load %A[%i * symbol(%t0) + %ii, %k * symbol(%t2) + %kk] : memref<?x?xf32>
+                %0 = affine.load %A[%i * symbol(%t0) + %ii, %k * symbol(%t2) + %kk] : memref<?x?xf32>
                 %1 = affine.load %B[%k * symbol(%t2) + %kk, %j * symbol(%t1) + %jj] : memref<?x?xf32>
-                //%2 = arith.mulf %0, %1 : f32
-                //affine.store %2, %C[%i * symbol(%t0) + %ii,  %j * symbol(%t1) + %jj] : memref<?x?xf32>
+                %2 = arith.mulf %0, %1 : f32
+                affine.store %2, %C[%i * symbol(%t0) + %ii,  %j * symbol(%t1) + %jj] : memref<?x?xf32>
               }
             }
           }
@@ -20,3 +20,5 @@ module {
     return
   }
 }
+
+// a = 1/s3  + (-s2+s3)/(s3*s2) + (-s2-s3+s3*s2)/(s3*s2)

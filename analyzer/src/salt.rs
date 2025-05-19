@@ -102,7 +102,6 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             let field = RationalPolynomialField::new(symbolica::domains::integer::IntegerRing);
 
             let mut portion = isize_to_poly(1, context);
-            let mut portion_sum = isize_to_poly(0, context);
             let mut shrinked_ref_vec = vec![];
             let mut portions = vec![];
 
@@ -115,7 +114,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                     shrinked_ref_vec.push(i);
                 }
                 if reference_vector[i + 1] == 0 {
-                    portion = field.div(&portion, &trip_counts.get(&(i)).unwrap());
+                    portion = field.div(&portion, trip_counts.get(&(i)).unwrap());
                 }
                 portions.push(portion.clone());
             }
@@ -124,6 +123,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             if reference_vector[reference_vector.len() - 1] == 0 {
                 shrinked_ref_vec.push(reference_vector.len() - 1);
             }
+
             portions.reverse();
             for i in portions.iter() {
                 print!("{} ", i);
@@ -137,7 +137,11 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             println!("shrinked_ref_vec: {:?}", shrinked_ref_vec);
             let mut ri_value = isize_to_poly(0, context);
             for (place, i) in (shrinked_ref_vec.iter().rev()).enumerate() {
-                let tmp = reuse_factors.get(i).unwrap() * &isize_to_poly(coefficient, context);
+                let tmp = if *i == 0 {
+                    reuse_factors.get(&(0x5eabed)).unwrap() * &isize_to_poly(coefficient, context)
+                } else {
+                    reuse_factors.get(&(i - 1)).unwrap() * &isize_to_poly(coefficient, context)
+                };
                 ri_value = &ri_value + &tmp;
                 if coefficient == 1 {
                     if place != shrinked_ref_vec.len() - 1 {
@@ -146,7 +150,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                             &ri_value * &n_ref,
                             field.div(&(&ri_portion - &ri_portion_sum), &n_ref),
                         ));
-                        ri_portion_sum = &ri_portion_sum + &ri_portion;
+                        ri_portion_sum = ri_portion;
                     } else {
                         ri_dist.push((
                             &ri_value * &n_ref,
