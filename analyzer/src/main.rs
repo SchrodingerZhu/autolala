@@ -233,7 +233,7 @@ fn main_entry() -> anyhow::Result<()> {
             let consecutive_access = same_element.intersect(lt.clone())?.lexmin()?;
             let prev = consecutive_access.reverse()?;
             let after = prev.apply_range(le.clone())?;
-            let ri = after.intersect(le.reverse()?)?;
+            let ri = after.intersect(lt.reverse()?)?;
             let ri_values = ri.cardinality()?;
             debug!("Timestamp space: {:?}", space);
             debug!("Access map: {:?}", access_map);
