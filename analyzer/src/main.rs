@@ -68,6 +68,8 @@ enum Method {
         block_size: usize,
         #[clap(short = 'l', long)]
         symbol_lowerbound: Vec<i32>,
+        #[clap(long)]
+        infinite_repeat: bool,
     },
     /// Use the PerfectTiling algorithm to compute the polyhedral model
     Salt,
@@ -202,6 +204,7 @@ fn main_entry() -> anyhow::Result<()> {
             barvinok_arg,
             block_size,
             symbol_lowerbound,
+            infinite_repeat: _todo,
         } => AnalysisContext::start_with_args(barvinok_arg.as_slice(), |context| {
             let context = &context;
             let mut source = String::new();
