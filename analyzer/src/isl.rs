@@ -1,4 +1,3 @@
-
 use crate::utils::{Poly, get_max_array_dim};
 use anyhow::Result;
 use barvinok::{
@@ -19,9 +18,9 @@ use raffine::{
     tree::{Tree, ValID},
 };
 
+use symbolica::domains::{Ring, rational_polynomial::RationalPolynomialField};
 use symbolica::{atom::Atom, domains::Field, domains::integer::IntegerRing};
 use symbolica::{atom::AtomCore, symbol};
-use symbolica::domains::{Ring, rational_polynomial::RationalPolynomialField};
 
 use crate::{AnalysisContext, utils::get_max_param_ivar};
 
@@ -587,6 +586,13 @@ pub fn create_table(
             let poly = convert_quasi_poly(qpoly.clone())?;
             let count = format!("{poly}");
             let range = format!("{domain:?}");
+            let range = range
+                .split("{  : ")
+                .nth(1)
+                .unwrap_or_default()
+                .split(" }")
+                .next()
+                .unwrap_or_default();
             // L'Hôpital's rule
             let portion = if infinite_repeat {
                 tracing::debug!("applying L'Hôpital's rule for {poly}/{total_count_poly}");
@@ -596,7 +602,7 @@ pub fn create_table(
                         .unwrap_or_default()
                 });
                 if poly.is_zero() || poly_var.is_none() {
-                    table.add_row([&value_str, &count, &range, "0"]);
+                    table.add_row([&value_str, &count, range, "0"]);
                     return Ok(());
                 }
                 let total_var = total_count_poly
@@ -611,7 +617,7 @@ pub fn create_table(
                 let poly = poly.derivative(poly_var.unwrap());
                 let total = total_count_poly.derivative(total_var);
                 if total.is_zero() {
-                    table.add_row([&value_str, &count, &range, "∞"]);
+                    table.add_row([&value_str, &count, range, "∞"]);
                     return Ok(());
                 }
                 field.div(&poly, &total)
@@ -619,7 +625,7 @@ pub fn create_table(
                 field.div(&poly, &total_count_poly)
             };
             let portion_str = format!("{portion}");
-            table.add_row([&value_str, &count, &range, &portion_str]);
+            table.add_row([&value_str, &count, range, &portion_str]);
             Ok(())
         })?;
     }
