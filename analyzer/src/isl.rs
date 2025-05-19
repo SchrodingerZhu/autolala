@@ -1,4 +1,6 @@
-use crate::utils::get_max_array_dim;
+use std::sync::Arc;
+
+use crate::utils::{Poly, get_max_array_dim};
 use anyhow::Result;
 use barvinok::{
     DimType,
@@ -7,7 +9,7 @@ use barvinok::{
     list::List,
     local_space::LocalSpace,
     map::{BasicMap, Map},
-    polynomial::{PiecewiseQuasiPolynomial, QuasiPolynomial},
+    polynomial::{PiecewiseQuasiPolynomial, QuasiPolynomial, Term},
     set::Set,
     space::Space,
     value::Value,
@@ -16,6 +18,13 @@ use comfy_table::Table;
 use raffine::{
     affine::{AffineExpr, AffineExprKind, AffineMap},
     tree::{Tree, ValID},
+};
+
+use symbolica::{atom::Atom, domains::Field, domains::integer::IntegerRing};
+use symbolica::{atom::AtomCore, symbol};
+use symbolica::{
+    domains::{Ring, rational_polynomial::RationalPolynomialField},
+    poly::Variable,
 };
 
 use crate::{AnalysisContext, utils::get_max_param_ivar};
@@ -552,43 +561,192 @@ impl<'a> Piece<'a> {
     }
 }
 
-pub fn create_table(dist: &[DistItem]) -> Option<Table> {
+pub fn create_table(
+    dist: &[DistItem],
+    total: PiecewiseQuasiPolynomial<'_>,
+    infinite_repeat: bool,
+) -> Result<Table> {
     use comfy_table::ContentArrangement;
     use comfy_table::modifiers::UTF8_ROUND_CORNERS;
     use comfy_table::presets::UTF8_FULL;
+    let mut total_count = None;
+    total.foreach_piece(|qpoly, _| {
+        total_count.replace(qpoly);
+        Ok(())
+    })?;
+    let total_count = total_count.ok_or_else(|| anyhow::anyhow!("no total count found"))?;
+    let total_count_poly = convert_quasi_poly(total_count)?;
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
         .apply_modifier(UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
-        .set_header(vec!["RI Value", "Count", "Symbol Range"]);
+        .set_header(vec!["RI Value", "Count", "Symbol Range", "Portion"]);
+    let ring = IntegerRing::new();
+    let field = RationalPolynomialField::new(ring);
     for item in dist.iter() {
-        let poly_str = format!("{:?}", item.qpoly);
-        // extract after second -> and before }
-        let value = poly_str
-            .split("->")
-            .nth(2)
-            .unwrap_or("")
-            .split("}")
-            .next()
-            .unwrap_or("")
-            .trim();
-        let card_str = format!("{:?}", item.cardinality);
-        // extract after { before :
-        let counts = card_str
-            .split("{")
-            .nth(1)
-            .unwrap_or("")
-            .split("}")
-            .next()
-            .unwrap_or("")
-            .trim();
-        for count_range in counts.split(";") {
-            let mut split = count_range.split(":");
-            let count = split.next().unwrap_or("").trim();
-            let range = split.next().unwrap_or("").trim();
-            table.add_row([value, count, range]);
+        let value = convert_quasi_poly(item.qpoly.clone())?;
+        let value_str = format!("{value}");
+        item.cardinality.foreach_piece(|qpoly, domain| {
+            let poly = convert_quasi_poly(qpoly.clone())?;
+            let count = format!("{poly}");
+            let range = format!("{domain:?}");
+            // L'Hôpital's rule
+            let portion = if infinite_repeat {
+                tracing::debug!("applying L'Hôpital's rule for {poly}/{total_count_poly}");
+                let poly_var = poly.get_variables().iter().position(|x| {
+                    x.to_id()
+                        .map(|x| x.get_stripped_name() == "R")
+                        .unwrap_or_default()
+                });
+                if poly.is_zero() || poly_var.is_none() {
+                    table.add_row([&value_str, &count, &range, "0"]);
+                    return Ok(());
+                }
+                let total_var = total_count_poly
+                    .get_variables()
+                    .iter()
+                    .position(|x| {
+                        x.to_id()
+                            .map(|x| x.get_stripped_name() == "R")
+                            .unwrap_or_default()
+                    })
+                    .unwrap();
+                let poly = poly.derivative(poly_var.unwrap());
+                let total = total_count_poly.derivative(total_var);
+                if total.is_zero() {
+                    table.add_row([&value_str, &count, &range, "∞"]);
+                    return Ok(());
+                }
+                field.div(&poly, &total)
+            } else {
+                field.div(&poly, &total_count_poly)
+            };
+            let portion_str = format!("{portion}");
+            table.add_row([&value_str, &count, &range, &portion_str]);
+            Ok(())
+        })?;
+    }
+    Ok(table)
+}
+
+struct QpolyConverter<'a> {
+    ring: IntegerRing,
+    field: RationalPolynomialField<IntegerRing, u32>,
+    space: Space<'a>,
+    symbols: Arc<Vec<Variable>>,
+}
+
+fn convert_quasi_poly<'a>(
+    qpoly: QuasiPolynomial<'a>,
+) -> std::result::Result<Poly, barvinok::Error> {
+    let space = qpoly.get_space()?;
+    let converter = QpolyConverter::new(space)?;
+    converter.quasi_poly_to_rational_poly(qpoly)
+}
+
+impl<'a> QpolyConverter<'a> {
+    pub fn new(space: Space<'a>) -> std::result::Result<Self, barvinok::Error> {
+        let ring = IntegerRing::new();
+        let field = RationalPolynomialField::new(ring);
+        let params = space.get_dim(DimType::Param)?;
+        // We make sure parameters are ordered
+        let dims = std::iter::repeat_n(DimType::Param, params as usize).enumerate();
+        let symbols = dims
+            .map(|(idx, ty)| {
+                let name = space.get_dim_name(ty, idx as u32).unwrap();
+                let symbol = symbol!(name);
+                Variable::Symbol(symbol)
+            })
+            .collect();
+        let symbols = Arc::new(symbols);
+        Ok(QpolyConverter {
+            ring,
+            field,
+            space,
+            symbols,
+        })
+    }
+    fn value_to_rational_poly(&self, value: Value<'a>) -> Poly {
+        let num = value.numerator();
+        let denom = value.denominator();
+        let num: Atom = Atom::new_num(num);
+        let denom: Atom = Atom::new_num(denom);
+        let num = num.to_rational_polynomial(&self.ring, &self.ring, self.symbols.clone());
+        let denom = denom.to_rational_polynomial(&self.ring, &self.ring, self.symbols.clone());
+        self.field.div(&num, &denom)
+    }
+
+    fn term_to_rational_poly(&self, term: Term<'a>) -> std::result::Result<Poly, barvinok::Error> {
+        let mut poly = self.value_to_rational_poly(term.coefficient()?);
+        let params = self.space.get_dim(DimType::Param)?;
+        let in_dims = self.space.get_dim(DimType::In)?;
+        let dims = std::iter::repeat_n(DimType::Param, params as usize)
+            .enumerate()
+            .chain(std::iter::repeat_n(DimType::Out, in_dims as usize).enumerate());
+        for (i, ty) in dims {
+            let exp = term.exponent(ty, i as u32)?;
+            if exp > 0 {
+                let ty = if matches!(ty, DimType::Param) {
+                    DimType::Param
+                } else {
+                    DimType::In
+                };
+                let name = self.space.get_dim_name(ty, i as u32)?;
+                let symbol = symbol!(name);
+                let exp = Atom::new_num(exp as i64);
+                let atom = Atom::new_var(symbol).pow(exp);
+                let atom =
+                    atom.to_rational_polynomial(&self.ring, &self.ring, self.symbols.clone());
+                poly = self.field.mul(&poly, &atom);
+            }
+        }
+        Ok(poly)
+    }
+
+    fn quasi_poly_to_rational_poly(
+        &self,
+        qpoly: QuasiPolynomial<'a>,
+    ) -> std::result::Result<Poly, barvinok::Error> {
+        let mut poly =
+            Atom::new_num(0).to_rational_polynomial(&self.ring, &self.ring, self.symbols.clone());
+        qpoly.foreach_term(|term| {
+            let term_poly = self.term_to_rational_poly(term)?;
+            poly = self.field.add(&poly, &term_poly);
+            Ok(())
+        })?;
+        Ok(poly)
+    }
+}
+
+pub(crate) fn ensure_set_name<'a>(mut set: Set<'a>) -> Result<Set<'a>> {
+    let params = set.num_params()?;
+    let dims = set.num_dims()?;
+    for i in 0..params {
+        if !set.has_dim_name(DimType::Param, i)? {
+            set = set.set_dim_name(DimType::Param, i, &format!("p{}", i))?;
         }
     }
-    Some(table)
+    for i in 0..dims {
+        if !set.has_dim_name(DimType::Out, i)? {
+            set = set.set_dim_name(DimType::Out, i, &format!("i{}", i))?;
+        }
+    }
+    Ok(set)
+}
+
+pub(crate) fn ensure_map_domain_name<'a>(mut map: Map<'a>) -> Result<Map<'a>> {
+    let params = map.dim(DimType::Param)?;
+    let in_dims = map.dim(DimType::In)?;
+    for i in 0..params {
+        if !map.has_dim_name(DimType::Param, i)? {
+            map = map.set_dim_name(DimType::Param, i, &format!("p{}", i))?;
+        }
+    }
+    for i in 0..in_dims {
+        if !map.has_dim_name(DimType::In, i)? {
+            map = map.set_dim_name(DimType::In, i, &format!("i{}", i))?;
+        }
+    }
+    Ok(map)
 }

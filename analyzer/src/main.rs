@@ -243,9 +243,16 @@ fn main_entry() -> anyhow::Result<()> {
                     .set_coefficient_si(barvinok::DimType::Out, 0, -1)?
                     .set_coefficient_si(barvinok::DimType::Param, num_params, 1)?
                     .set_constant_si(-1)?;
-                space = space.add_constraint(lb)?.add_constraint(ub)?;
+                let repeat_lb = Constraint::new_inequality(local_space.clone())
+                    .set_coefficient_si(barvinok::DimType::Param, num_params, 1)?
+                    .set_constant_si(-2)?;
+                space = space
+                    .add_constraint(lb)?
+                    .add_constraint(ub)?
+                    .add_constraint(repeat_lb)?;
                 debug!("space with infinite repeat: {space:?}");
             }
+            space = isl::ensure_set_name(space)?;
             let mut access_map = isl::get_access_map(max_param + 1, context, tree, *block_size)?;
             if *infinite_repeat {
                 let num_params = access_map.get_space()?.get_dim(barvinok::DimType::Param)?;
@@ -254,6 +261,7 @@ fn main_entry() -> anyhow::Result<()> {
                     .insert_dims(barvinok::DimType::Param, num_params, 1)?
                     .set_dim_name(barvinok::DimType::Param, num_params, "R")?;
             }
+            let access_map = isl::ensure_map_domain_name(access_map)?;
             let access_map = access_map.intersect_domain(space.clone())?;
             let lt = space.clone().lex_lt_set(space.clone())?;
             let le = space.clone().lex_le_set(space.clone())?;
@@ -268,10 +276,13 @@ fn main_entry() -> anyhow::Result<()> {
             debug!("Access map: {:?}", access_map);
             debug!("RI values: {:?}", ri_values);
             let processor = isl::RIProcessor::new(ri_values);
-            let table = isl::create_table(&processor.get_distribution()?)
-                .ok_or_else(|| anyhow!("Failed to create table"))?;
-            writeln!(writer, "{table}")?;
             let space_count = space.cardinality()?;
+            let table = isl::create_table(
+                &processor.get_distribution()?,
+                space_count.clone(),
+                *infinite_repeat,
+            )?;
+            writeln!(writer, "{table}")?;
             writeln!(writer, "Total: {space_count:?}")?;
             Ok(())
         }),
@@ -300,10 +311,12 @@ fn main_entry() -> anyhow::Result<()> {
             //  utils::walk_tree_print_converted_affine_map(tree, 0)?;
             let mut rf = HashMap::new();
             let mut tc = HashMap::new();
-            let ri_dist = salt::get_reuse_interval_distribution( tree, &mut rf, &mut tc, 1, context);
+            let ri_dist = salt::get_reuse_interval_distribution(tree, &mut rf, &mut tc, 1, context);
             // hashmap to vector tuple
-            let ri_dist_vec = 
-                ri_dist.iter().map(|(k, v)| (k.clone(), v.clone())).collect::<Vec<_>>();
+            let ri_dist_vec = ri_dist
+                .iter()
+                .map(|(k, v)| (k.clone(), v.clone()))
+                .collect::<Vec<_>>();
             let table = create_table(&ri_dist_vec);
 
             println!("Reuse interval distribution:\n{}", table);
