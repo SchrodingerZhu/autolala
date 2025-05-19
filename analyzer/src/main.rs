@@ -204,7 +204,7 @@ fn main_entry() -> anyhow::Result<()> {
             barvinok_arg,
             block_size,
             symbol_lowerbound,
-            infinite_repeat: _todo,
+            infinite_repeat,
         } => AnalysisContext::start_with_args(barvinok_arg.as_slice(), |context| {
             let context = &context;
             let mut source = String::new();
@@ -227,7 +227,33 @@ fn main_entry() -> anyhow::Result<()> {
                     .set_constant_si(-bound)?;
                 space = space.add_constraint(constraint)?;
             }
-            let access_map = isl::get_access_map(max_param + 1, context, tree, *block_size)?;
+            if *infinite_repeat {
+                let num_params = space.get_dims(barvinok::DimType::Param)?;
+                space = space
+                    .insert_dims(barvinok::DimType::Out, 0, 1)?
+                    .insert_dims(barvinok::DimType::Param, num_params, 1)?
+                    .set_dim_name(barvinok::DimType::Param, num_params, "R")?;
+                let local_space: LocalSpace = space.get_space()?.try_into()?;
+                let lb = Constraint::new_inequality(local_space.clone()).set_coefficient_si(
+                    barvinok::DimType::Out,
+                    0,
+                    1,
+                )?;
+                let ub = Constraint::new_inequality(local_space.clone())
+                    .set_coefficient_si(barvinok::DimType::Out, 0, -1)?
+                    .set_coefficient_si(barvinok::DimType::Param, num_params, 1)?
+                    .set_constant_si(-1)?;
+                space = space.add_constraint(lb)?.add_constraint(ub)?;
+                debug!("space with infinite repeat: {space:?}");
+            }
+            let mut access_map = isl::get_access_map(max_param + 1, context, tree, *block_size)?;
+            if *infinite_repeat {
+                let num_params = access_map.get_space()?.get_dim(barvinok::DimType::Param)?;
+                access_map = access_map
+                    .insert_dims(barvinok::DimType::In, 0, 1)?
+                    .insert_dims(barvinok::DimType::Param, num_params, 1)?
+                    .set_dim_name(barvinok::DimType::Param, num_params, "R")?;
+            }
             let access_map = access_map.intersect_domain(space.clone())?;
             let lt = space.clone().lex_lt_set(space.clone())?;
             let le = space.clone().lex_le_set(space.clone())?;
