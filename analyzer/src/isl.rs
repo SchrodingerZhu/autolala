@@ -1,4 +1,3 @@
-use std::sync::Arc;
 
 use crate::utils::{Poly, get_max_array_dim};
 use anyhow::Result;
@@ -22,10 +21,7 @@ use raffine::{
 
 use symbolica::{atom::Atom, domains::Field, domains::integer::IntegerRing};
 use symbolica::{atom::AtomCore, symbol};
-use symbolica::{
-    domains::{Ring, rational_polynomial::RationalPolynomialField},
-    poly::Variable,
-};
+use symbolica::domains::{Ring, rational_polynomial::RationalPolynomialField};
 
 use crate::{AnalysisContext, utils::get_max_param_ivar};
 
@@ -634,7 +630,6 @@ struct QpolyConverter<'a> {
     ring: IntegerRing,
     field: RationalPolynomialField<IntegerRing, u32>,
     space: Space<'a>,
-    symbols: Arc<Vec<Variable>>,
 }
 
 fn convert_quasi_poly<'a>(
@@ -649,31 +644,15 @@ impl<'a> QpolyConverter<'a> {
     pub fn new(space: Space<'a>) -> std::result::Result<Self, barvinok::Error> {
         let ring = IntegerRing::new();
         let field = RationalPolynomialField::new(ring);
-        let params = space.get_dim(DimType::Param)?;
-        // We make sure parameters are ordered
-        let dims = std::iter::repeat_n(DimType::Param, params as usize).enumerate();
-        let symbols = dims
-            .map(|(idx, ty)| {
-                let name = space.get_dim_name(ty, idx as u32).unwrap();
-                let symbol = symbol!(name);
-                Variable::Symbol(symbol)
-            })
-            .collect();
-        let symbols = Arc::new(symbols);
-        Ok(QpolyConverter {
-            ring,
-            field,
-            space,
-            symbols,
-        })
+        Ok(QpolyConverter { ring, field, space })
     }
     fn value_to_rational_poly(&self, value: Value<'a>) -> Poly {
         let num = value.numerator();
         let denom = value.denominator();
         let num: Atom = Atom::new_num(num);
         let denom: Atom = Atom::new_num(denom);
-        let num = num.to_rational_polynomial(&self.ring, &self.ring, self.symbols.clone());
-        let denom = denom.to_rational_polynomial(&self.ring, &self.ring, self.symbols.clone());
+        let num = num.to_rational_polynomial(&self.ring, &self.ring, None);
+        let denom = denom.to_rational_polynomial(&self.ring, &self.ring, None);
         self.field.div(&num, &denom)
     }
 
@@ -696,8 +675,7 @@ impl<'a> QpolyConverter<'a> {
                 let symbol = symbol!(name);
                 let exp = Atom::new_num(exp as i64);
                 let atom = Atom::new_var(symbol).pow(exp);
-                let atom =
-                    atom.to_rational_polynomial(&self.ring, &self.ring, self.symbols.clone());
+                let atom = atom.to_rational_polynomial(&self.ring, &self.ring, None);
                 poly = self.field.mul(&poly, &atom);
             }
         }
@@ -708,8 +686,7 @@ impl<'a> QpolyConverter<'a> {
         &self,
         qpoly: QuasiPolynomial<'a>,
     ) -> std::result::Result<Poly, barvinok::Error> {
-        let mut poly =
-            Atom::new_num(0).to_rational_polynomial(&self.ring, &self.ring, self.symbols.clone());
+        let mut poly = Atom::new_num(0).to_rational_polynomial(&self.ring, &self.ring, None);
         qpoly.foreach_term(|term| {
             let term_poly = self.term_to_rational_poly(term)?;
             poly = self.field.add(&poly, &term_poly);
