@@ -322,6 +322,7 @@ fn get_access_map_impl<'a, 'b: 'a>(
                     let block_size = Value::new_ui(domain_space.context_ref(), block_size as u64);
                     let block_size = Affine::val_on_domain_space(domain_space.clone(), block_size)?;
                     aff = aff.checked_div(block_size)?;
+                    aff = aff.floor()?;
                 }
                 aff_list.push(aff);
             }
@@ -406,7 +407,7 @@ impl<'isl, 'mlir, 'map> ExprConverter<'isl, 'mlir, 'map> {
                     .ok_or_else(|| anyhow::anyhow!("invalid affine expression: invalid rhs"))?;
                 let lhs = self.convert_polynomial(lhs)?;
                 let rhs = self.convert_polynomial(rhs)?;
-                Ok(lhs.checked_div(rhs)?)
+                Ok(lhs.checked_div(rhs)?.floor()?)
             }
         }
     }

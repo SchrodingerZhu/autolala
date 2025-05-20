@@ -104,12 +104,12 @@ struct Options {
 
     /// Miss ratio curve width
     /// if not specified, the default value is 800
-    #[clap(short = 'w', long, default_value = "800")]
+    #[clap(short = 'W', long, default_value = "800")]
     miss_ratio_curve_width: u32,
 
     /// Miss ratio curve height
     /// if not specified, the default value is 600
-    #[clap(short = 'h', long, default_value = "600")]
+    #[clap(short = 'H', long, default_value = "600")]
     miss_ratio_curve_height: u32,
 
     /// method to use for polyhedral model computation
@@ -361,7 +361,6 @@ fn main() {
                 .with_default_directive(tracing::Level::INFO.into())
                 .from_env_lossy(),
         )
-        .with_max_level(tracing::Level::TRACE)
         .init();
     let res = main_entry();
     if let Err(e) = res {

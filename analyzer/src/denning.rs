@@ -2,7 +2,6 @@ use anyhow::Result;
 use core::f64;
 use plotters::prelude::*;
 use std::path::Path;
-use tracing::debug;
 
 pub struct MissRatioCurve {
     miss_ratio: Vec<f64>,
@@ -24,8 +23,8 @@ impl MissRatioCurve {
             *iter = prev + miss_ratio[i - 1] * (ri_dist[i].0 - ri_dist[i - 1].0) as f64;
             prev = *iter;
         }
-        debug!("Turning points: {:?}", turning_points);
-        debug!("Miss ratio: {:?}", miss_ratio);
+        //trace!("Turning points: {:?}", turning_points);
+        //trace!("Miss ratio: {:?}", miss_ratio);
         Self {
             miss_ratio,
             turning_points,
