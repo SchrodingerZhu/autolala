@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 raffine = { path = "../raffine" }
+denning = { path = "../denning" }
 barvinok = { git = "https://github.com/Roc-Locality/barvinok-rs" }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing = { version = "0.1", default-features = false, features = [
@@ -16,8 +17,9 @@ tracing = { version = "0.1", default-features = false, features = [
 clap = { version = "4.5.37", features = ["derive"] }
 melior = { version = "0.24.0" }
 anyhow = { version = "1.0.98", features = ["backtrace"] }
-symbolica = "0.16.0"
+symbolica = { version = "0.16.0", features = ["serde"] }
 comfy-table = "7.1.4"
 ahash = "0.8.12"
-plotters = "0.3.7"
 gmp-mpfr-sys = { version = "1.6.5", features = ["use-system-libs"] }
+serde = { version = "1.0.219", features = ["derive"] }
+snmalloc-rs = { version = "0.3.8", features = ["usewait-on-address"] }

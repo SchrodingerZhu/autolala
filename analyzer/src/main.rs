@@ -3,6 +3,7 @@ use barvinok::ContextRef as BContext;
 use barvinok::constraint::Constraint;
 use barvinok::local_space::LocalSpace;
 use clap::Parser;
+use denning::plotters::prelude::IntoDrawingArea;
 use melior::Context as MContext;
 use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
 use raffine::Context as RContext;
@@ -10,7 +11,6 @@ use raffine::{DominanceInfo, tree::Tree};
 use std::{collections::HashMap, io::Read, path::PathBuf};
 use tracing::{debug, error, info};
 use tracing_subscriber::EnvFilter;
-mod denning;
 mod isl;
 mod salt;
 mod utils;
@@ -112,6 +112,11 @@ struct Options {
     #[clap(short = 'H', long, default_value = "600")]
     miss_ratio_curve_height: u32,
 
+    /// Use bincode encoded output
+    /// Requires output file to be specified
+    #[clap(long)]
+    bincode: bool,
+
     /// method to use for polyhedral model computation
     #[clap(subcommand)]
     method: Method,
@@ -191,6 +196,10 @@ where
 
 fn main_entry() -> anyhow::Result<()> {
     let options = Options::parse();
+
+    if options.bincode && options.output.is_none() {
+        return Err(anyhow!("bincode option requires output file"));
+    }
 
     let mut reader = match options.input.as_ref() {
         Some(path) => {
@@ -301,11 +310,15 @@ fn main_entry() -> anyhow::Result<()> {
                 Ok(dist) => {
                     let curve = denning::MissRatioCurve::new(&dist);
                     if let Some(path) = &options.miss_ratio_curve {
-                        curve.plot_miss_ratio_curve(
+                        let svgbackend = denning::plotters::backend::SVGBackend::new(
                             path,
-                            options.miss_ratio_curve_width,
-                            options.miss_ratio_curve_height,
-                        )?;
+                            (
+                                options.miss_ratio_curve_width,
+                                options.miss_ratio_curve_height,
+                            ),
+                        );
+                        let area = svgbackend.into_drawing_area();
+                        curve.plot_miss_ratio_curve(&area)?;
                         info!("Miss ratio curve saved to {}", path.display());
                     }
                 }
