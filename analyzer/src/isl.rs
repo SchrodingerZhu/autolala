@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::hash_map::Entry;
 
 use crate::utils::{Poly, get_max_array_dim};
 use ahash::AHashMap;
@@ -751,7 +751,7 @@ impl<'a> ConvertedDistItem<'a> {
         let portion = evaluate_poly(&self.portion, &point)?;
         Ok((value, portion))
     }
-    fn add_to_dist(&self, dist: &mut BTreeMap<isize, f64>) -> Result<()> {
+    fn add_to_dist(&self, dist: &mut AHashMap<isize, f64>) -> Result<()> {
         let mut points = Vec::new();
         self.domain.foreach_point(|point| {
             points.push(point);
@@ -760,10 +760,10 @@ impl<'a> ConvertedDistItem<'a> {
         points.into_iter().try_for_each(|point| {
             let (value, portion) = self.evaluate(point)?;
             match dist.entry(value) {
-                std::collections::btree_map::Entry::Occupied(mut entry) => {
+                Entry::Occupied(mut entry) => {
                     *entry.get_mut() += portion;
                 }
-                std::collections::btree_map::Entry::Vacant(entry) => {
+                Entry::Vacant(entry) => {
                     entry.insert(portion);
                 }
             }
@@ -827,13 +827,16 @@ pub fn get_distro<'a>(
     dist: &[DistItem<'a>],
     total: PiecewiseQuasiPolynomial<'a>,
     infinite_repeat: bool,
-) -> Result<BTreeMap<isize, f64>> {
+) -> Result<Box<[(isize, f64)]>> {
     let dist = convert_dist(dist, total, infinite_repeat)?;
-    let mut result = BTreeMap::new();
+    let mut result = AHashMap::new();
     for item in dist.iter() {
         item.add_to_dist(&mut result)?;
     }
-    Ok(result)
+    let mut vector = vec![(0, 0.0)];
+    vector.extend(result.iter().map(|(k, v)| (*k, *v)));
+    vector.sort_unstable_by_key(|a| a.0);
+    Ok(vector.into_boxed_slice())
 }
 
 fn convert_dist<'a>(

@@ -8,8 +8,9 @@ use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
 use raffine::Context as RContext;
 use raffine::{DominanceInfo, tree::Tree};
 use std::{collections::HashMap, io::Read, path::PathBuf};
-use tracing::{debug, error};
+use tracing::{debug, error, info};
 use tracing_subscriber::EnvFilter;
+mod denning;
 mod isl;
 mod salt;
 mod utils;
@@ -96,6 +97,20 @@ struct Options {
     /// if not specified, the program will try to find first affine loop in the function
     #[clap(short = 'l', long)]
     target_affine_loop: Option<String>,
+
+    /// Miss ratio curve output path
+    #[clap(short = 'm', long)]
+    miss_ratio_curve: Option<PathBuf>,
+
+    /// Miss ratio curve width
+    /// if not specified, the default value is 800
+    #[clap(short = 'w', long, default_value = "800")]
+    miss_ratio_curve_width: u32,
+
+    /// Miss ratio curve height
+    /// if not specified, the default value is 600
+    #[clap(short = 'h', long, default_value = "600")]
+    miss_ratio_curve_height: u32,
 
     /// method to use for polyhedral model computation
     #[clap(subcommand)]
@@ -283,7 +298,17 @@ fn main_entry() -> anyhow::Result<()> {
             writeln!(writer, "{table}")?;
             writeln!(writer, "Total: {space_count:?}")?;
             match isl::get_distro(&raw_distro, space_count, *infinite_repeat) {
-                Ok(dist) => println!("Reuse interval distribution:\n{:?}", dist),
+                Ok(dist) => {
+                    let curve = denning::MissRatioCurve::new(&dist);
+                    if let Some(path) = &options.miss_ratio_curve {
+                        curve.plot_miss_ratio_curve(
+                            path,
+                            options.miss_ratio_curve_width,
+                            options.miss_ratio_curve_height,
+                        )?;
+                        info!("Miss ratio curve saved to {}", path.display());
+                    }
+                }
                 Err(e) => {
                     error!("Failed to get distribution: {}\n{}", e, e.backtrace());
                 }
@@ -336,6 +361,7 @@ fn main() {
                 .with_default_directive(tracing::Level::INFO.into())
                 .from_env_lossy(),
         )
+        .with_max_level(tracing::Level::TRACE)
         .init();
     let res = main_entry();
     if let Err(e) = res {
