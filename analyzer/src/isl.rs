@@ -144,11 +144,14 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
                 .ok_or_else(|| anyhow::anyhow!("no sets found"))?
                 .clone();
             let space = longest.get_space()?;
+            let longest_dim = longest.num_dims()?;
             let value_one = Value::new_si(context.bcontext(), 1);
             let local_space = LocalSpace::try_from(space.clone())?;
             for (idx, i) in sub_sets.iter_mut().enumerate() {
                 let length = i.num_dims()?;
-                let mut s = i.clone().reset_space(space.clone())?;
+                let mut s = i
+                    .clone()
+                    .insert_dims(DimType::Out, length, longest_dim - length)?;
                 for j in length..longest.num_dims()? {
                     // add constraint eq 0
                     let constraint = Constraint::new_equality(local_space.clone())
