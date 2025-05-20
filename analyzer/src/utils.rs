@@ -13,9 +13,9 @@ use symbolica::domains::rational_polynomial::RationalPolynomialField;
 use symbolica::symbol;
 pub type Poly = RationalPolynomial<IntegerRing, u32>;
 
-pub(crate) fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(usize, usize)> {
-    let mut max_param = 0;
-    let mut max_ivar = 0;
+pub(crate) fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(isize, isize)> {
+    let mut max_param = -1;
+    let mut max_ivar = -1;
     match tree {
         Tree::For {
             lower_bound_operands,
@@ -27,17 +27,17 @@ pub(crate) fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(usize, usize)> 
             let ValID::IVar(n) = ivar else {
                 return Err(anyhow::anyhow!("invalid tree"));
             };
-            max_ivar = max_ivar.max(*n);
+            max_ivar = max_ivar.max(*n as isize);
             for id in lower_bound_operands
                 .iter()
                 .chain(upper_bound_operands.iter())
             {
                 match id {
                     ValID::Symbol(n) => {
-                        max_param = max_param.max(*n);
+                        max_param = max_param.max(*n as isize);
                     }
                     ValID::IVar(n) => {
-                        max_ivar = max_ivar.max(*n);
+                        max_ivar = max_ivar.max(*n as isize);
                     }
                     _ => {}
                 }
@@ -57,10 +57,10 @@ pub(crate) fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(usize, usize)> 
             for id in operands.iter() {
                 match id {
                     ValID::Symbol(n) => {
-                        max_param = max_param.max(*n);
+                        max_param = max_param.max(*n as isize);
                     }
                     ValID::IVar(n) => {
-                        max_ivar = max_ivar.max(*n);
+                        max_ivar = max_ivar.max(*n as isize);
                     }
                     _ => {}
                 }

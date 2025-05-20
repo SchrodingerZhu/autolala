@@ -58,6 +58,7 @@ dependencies = [
 name = "analyzer"
 version = "0.1.0"
 dependencies = [
+ "ahash",
  "anyhow",
  "barvinok",
  "clap",
@@ -173,7 +174,7 @@ dependencies = [
 [[package]]
 name = "barvinok"
 version = "0.1.0-alpha.1"
-source = "git+https://github.com/Roc-Locality/barvinok-rs#c7fe4158fe53843e16b4741b6666fb56c5d62f1a"
+source = "git+https://github.com/Roc-Locality/barvinok-rs#39d083bc4b572c73d4c09d3d57d1c2c4c5b00727"
 dependencies = [
  "barvinok-sys",
  "libc",
@@ -185,7 +186,7 @@ dependencies = [
 [[package]]
 name = "barvinok-sys"
 version = "0.1.0-alpha.1"
-source = "git+https://github.com/Roc-Locality/barvinok-rs#c7fe4158fe53843e16b4741b6666fb56c5d62f1a"
+source = "git+https://github.com/Roc-Locality/barvinok-rs#39d083bc4b572c73d4c09d3d57d1c2c4c5b00727"
 dependencies = [
  "autotools",
  "bindgen",

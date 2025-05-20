@@ -1,4 +1,7 @@
+use std::collections::BTreeMap;
+
 use crate::utils::{Poly, get_max_array_dim};
+use ahash::AHashMap;
 use anyhow::Result;
 use barvinok::{
     DimType,
@@ -7,6 +10,7 @@ use barvinok::{
     list::List,
     local_space::LocalSpace,
     map::{BasicMap, Map},
+    point::Point,
     polynomial::{PiecewiseQuasiPolynomial, QuasiPolynomial, Term},
     set::Set,
     space::Space,
@@ -732,4 +736,171 @@ pub(crate) fn ensure_map_domain_name<'a>(mut map: Map<'a>) -> Result<Map<'a>> {
         }
     }
     Ok(map)
+}
+
+#[derive(Clone, Debug)]
+struct ConvertedDistItem<'a> {
+    value: Poly,
+    portion: Poly,
+    domain: Set<'a>,
+}
+
+impl<'a> ConvertedDistItem<'a> {
+    fn evaluate(&self, point: Point<'a>) -> Result<(isize, f64)> {
+        let value = evaluate_poly(&self.value, &point)? as isize;
+        let portion = evaluate_poly(&self.portion, &point)?;
+        Ok((value, portion))
+    }
+    fn add_to_dist(&self, dist: &mut BTreeMap<isize, f64>) -> Result<()> {
+        let mut points = Vec::new();
+        self.domain.foreach_point(|point| {
+            points.push(point);
+            Ok(())
+        })?;
+        points.into_iter().try_for_each(|point| {
+            let (value, portion) = self.evaluate(point)?;
+            match dist.entry(value) {
+                std::collections::btree_map::Entry::Occupied(mut entry) => {
+                    *entry.get_mut() += portion;
+                }
+                std::collections::btree_map::Entry::Vacant(entry) => {
+                    entry.insert(portion);
+                }
+            }
+            Ok(())
+        })
+    }
+}
+
+fn evaluate_poly<'a>(poly: &Poly, point: &Point<'a>) -> Result<f64> {
+    let variables = poly.get_variables();
+    let name_map = variables
+        .iter()
+        .filter_map(|x| {
+            x.to_id()
+                .map(|x| (x.get_stripped_name().to_string(), Atom::new_var(x)))
+        })
+        .collect::<AHashMap<String, Atom>>();
+    let space = point.get_space()?;
+    let dims = space.get_dim(DimType::Out)?;
+    let mut const_map = AHashMap::new();
+    for i in 0..dims {
+        let name = space.get_dim_name(DimType::Out, i)?;
+        let Some(atom) = name_map.get(name).cloned() else {
+            continue;
+        };
+        let val = point.get_coordinate_val(DimType::Out, i)?.to_f64();
+        const_map.insert(atom, val);
+    }
+    let expr = poly.to_expression();
+    expr.evaluate(|x| x.to_f64(), &const_map, &AHashMap::new())
+        .map_err(|msg| anyhow::anyhow!("failed to evaluate polynomial: {msg}"))
+}
+
+fn convert_bounded_set<'a>(mut set: Set<'a>) -> Result<Set<'a>> {
+    let mut num_params = set.num_params()?;
+    let mut infinite_repeat_dim = None;
+    for i in 0..num_params {
+        let name = set.get_dim_name(DimType::Param, i)?;
+        if name.starts_with("p") {
+            return Err(anyhow::anyhow!(
+                "all parameters must be instantiated for numerical analysis"
+            ));
+        }
+        if name == "R" {
+            infinite_repeat_dim = Some(i);
+        }
+    }
+    if let Some(dim) = infinite_repeat_dim {
+        set = set.remove_dims(DimType::Param, dim, 1)?;
+        num_params -= 1;
+    }
+    // move all parameters to set space
+    set = set.move_dims(DimType::Out, 0, DimType::Param, 0, num_params)?;
+    if !set.is_bounded()? {
+        return Err(anyhow::anyhow!("set {set:?} is not bounded"));
+    }
+    Ok(set)
+}
+
+pub fn get_distro<'a>(
+    dist: &[DistItem<'a>],
+    total: PiecewiseQuasiPolynomial<'a>,
+    infinite_repeat: bool,
+) -> Result<BTreeMap<isize, f64>> {
+    let dist = convert_dist(dist, total, infinite_repeat)?;
+    let mut result = BTreeMap::new();
+    for item in dist.iter() {
+        item.add_to_dist(&mut result)?;
+    }
+    Ok(result)
+}
+
+fn convert_dist<'a>(
+    dist: &[DistItem<'a>],
+    total: PiecewiseQuasiPolynomial<'a>,
+    infinite_repeat: bool,
+) -> Result<Box<[ConvertedDistItem<'a>]>> {
+    let mut total_count = None;
+    total.foreach_piece(|qpoly, _| {
+        total_count.replace(qpoly);
+        Ok(())
+    })?;
+    let total_count = total_count.ok_or_else(|| anyhow::anyhow!("no total count found"))?;
+    let total_count_poly = convert_quasi_poly(total_count)?;
+    let mut output = Vec::new();
+    let ring = IntegerRing::new();
+    let field = RationalPolynomialField::new(ring);
+    for item in dist.iter() {
+        let value = convert_quasi_poly(item.qpoly.clone())?;
+        let mut res = Ok(());
+        item.cardinality.foreach_piece(|qpoly, domain| {
+            if res.is_err() {
+                return Ok(());
+            }
+            let poly = convert_quasi_poly(qpoly.clone())?;
+            // L'Hôpital's rule
+            let portion = if infinite_repeat {
+                tracing::debug!("applying L'Hôpital's rule for {poly}/{total_count_poly}");
+                let poly_var = poly.get_variables().iter().position(|x| {
+                    x.to_id()
+                        .map(|x| x.get_stripped_name() == "R")
+                        .unwrap_or_default()
+                });
+                if poly.is_zero() || poly_var.is_none() {
+                    return Ok(());
+                }
+                let Some(total_var) = total_count_poly.get_variables().iter().position(|x| {
+                    x.to_id()
+                        .map(|x| x.get_stripped_name() == "R")
+                        .unwrap_or_default()
+                }) else {
+                    res = Err(anyhow::anyhow!("no total var found"));
+                    return Ok(());
+                };
+                let poly = poly.derivative(poly_var.unwrap());
+                let total = total_count_poly.derivative(total_var);
+                if total.is_zero() {
+                    return Ok(());
+                }
+                field.div(&poly, &total)
+            } else {
+                field.div(&poly, &total_count_poly)
+            };
+            match convert_bounded_set(domain) {
+                Ok(domain) => {
+                    let item = ConvertedDistItem {
+                        value: value.clone(),
+                        portion,
+                        domain,
+                    };
+                    output.push(item);
+                }
+                Err(e) => res = Err(e),
+            }
+            Ok(())
+        })?;
+        res?;
+    }
+    Ok(output.into_boxed_slice())
 }

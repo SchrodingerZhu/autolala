@@ -1,4 +1,4 @@
-use anyhow::{Ok, anyhow};
+use anyhow::anyhow;
 use barvinok::ContextRef as BContext;
 use barvinok::constraint::Constraint;
 use barvinok::local_space::LocalSpace;
@@ -217,7 +217,7 @@ fn main_entry() -> anyhow::Result<()> {
             let tree = extract_target(&module, &options, context, &dom)?;
             debug!("Extracted tree: {}", tree);
             let (max_param, _) = utils::get_max_param_ivar(tree)?;
-            let mut space = isl::get_timestamp_space(max_param + 1, context, tree)?;
+            let mut space = isl::get_timestamp_space((max_param + 1).try_into()?, context, tree)?;
             let local_space: LocalSpace = space.get_space()?.try_into()?;
             for (idx, bound) in symbol_lowerbound.iter().enumerate() {
                 let bound = *bound;
@@ -253,7 +253,8 @@ fn main_entry() -> anyhow::Result<()> {
                 debug!("space with infinite repeat: {space:?}");
             }
             space = isl::ensure_set_name(space)?;
-            let mut access_map = isl::get_access_map(max_param + 1, context, tree, *block_size)?;
+            let mut access_map =
+                isl::get_access_map((max_param + 1).try_into()?, context, tree, *block_size)?;
             if *infinite_repeat {
                 let num_params = access_map.get_space()?.get_dim(barvinok::DimType::Param)?;
                 access_map = access_map
@@ -277,13 +278,16 @@ fn main_entry() -> anyhow::Result<()> {
             debug!("RI values: {:?}", ri_values);
             let processor = isl::RIProcessor::new(ri_values);
             let space_count = space.cardinality()?;
-            let table = isl::create_table(
-                &processor.get_distribution()?,
-                space_count.clone(),
-                *infinite_repeat,
-            )?;
+            let raw_distro = processor.get_distribution()?;
+            let table = isl::create_table(&raw_distro, space_count.clone(), *infinite_repeat)?;
             writeln!(writer, "{table}")?;
             writeln!(writer, "Total: {space_count:?}")?;
+            match isl::get_distro(&raw_distro, space_count, *infinite_repeat) {
+                Ok(dist) => println!("Reuse interval distribution:\n{:?}", dist),
+                Err(e) => {
+                    error!("Failed to get distribution: {}\n{}", e, e.backtrace());
+                }
+            }
             Ok(())
         }),
         Method::Salt => AnalysisContext::start(|context| {
