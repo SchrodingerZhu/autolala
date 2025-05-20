@@ -144,6 +144,7 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
                 .ok_or_else(|| anyhow::anyhow!("no sets found"))?
                 .clone();
             let space = longest.get_space()?;
+            let value_one = Value::new_si(context.bcontext(), 1);
             let local_space = LocalSpace::try_from(space.clone())?;
             for (idx, i) in sub_sets.iter_mut().enumerate() {
                 let length = i.num_dims()?;
@@ -151,11 +152,11 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
                 for j in length..longest.num_dims()? {
                     // add constraint eq 0
                     let constraint = Constraint::new_equality(local_space.clone())
-                        .set_coefficient_si(DimType::Out, j, 1)?;
+                        .set_coefficient_val(DimType::Out, j, value_one.clone())?;
                     s = s.add_constraint(constraint)?;
                 }
                 let current_dim_eq_i = Constraint::new_equality(local_space.clone())
-                    .set_coefficient_si(DimType::Out, depth as u32, 1)?
+                    .set_coefficient_val(DimType::Out, depth as u32, value_one.clone())?
                     .set_constant_si(-(idx as i32))?;
                 *i = s.add_constraint(current_dim_eq_i)?;
             }
