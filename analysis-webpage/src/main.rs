@@ -295,6 +295,39 @@ pub fn update_ri_table_barvinok(
     Ok(())
 }
 
+pub fn update_ri_table_salt(ri_values: &[String], portions: &[String]) -> Result<(), JsValue> {
+    // Ensure all vectors have the same length
+    let len = ri_values.len();
+    if portions.len() != len {
+        return Err(JsValue::from_str("Input arrays must have the same length"));
+    }
+
+    // Start building HTML
+    let mut html = String::new();
+    html.push_str("<table class=\"table table-bordered table-striped table-sm\">");
+    html.push_str("<thead><tr><th>Reuse Interval</th><th>Portion</th></tr></thead><tbody>");
+
+    for i in 0..len {
+        html.push_str(&format!(
+            "<tr><td>{}</td><td>{}</td></tr>",
+            render_to_string(&ident_to_mathjax(&ri_values[i])),
+            render_to_string(&ident_to_mathjax(&portions[i]))
+        ));
+    }
+
+    html.push_str("</tbody></table>");
+
+    // Set it as the innerHTML of the target element
+    let document = window().unwrap().document().unwrap();
+    let container = document
+        .get_element_by_id("ri-table")
+        .ok_or_else(|| JsValue::from_str("Element with id 'ri-table' not found"))?;
+
+    container.set_inner_html(&html);
+
+    Ok(())
+}
+
 #[function_component]
 fn App() -> Html {
     let show_barvinok = use_state(|| true);
@@ -374,7 +407,36 @@ fn App() -> Html {
                         });
                     })
                 }
-                Some("Salt") => todo!(),
+                Some("Salt") => {
+                    let request = AnalysisRequest::Salt {
+                        source: text.unwrap(),
+                    };
+                    let error_message = error_message.clone();
+                    let show_error = show_error.clone();
+                    spawn_local(async move {
+                        let future = async {
+                            let response = gloo_net::http::Request::post("/analysis")
+                                .header("Content-Type", "application/json")
+                                .json(&request)?;
+                            let response = response.send().await?;
+                            if response.status() == 200 {
+                                let result = response.json::<SaltResult>().await?;
+                                set_total_count("not implemented");
+                                update_ri_table_salt(&result.ri_values, &result.portions).unwrap();
+                            } else {
+                                let body = response.text().await.unwrap_or_else(|e| format!("{e}"));
+                                error_message
+                                    .set(format!("Input program cannot be analyze: {body}"));
+                                show_error.set(true);
+                            }
+                            anyhow::Ok(())
+                        };
+                        future.await.unwrap_or_else(|err| {
+                            error_message.set(format!("Error: {}", err));
+                            show_error.set(true);
+                        });
+                    })
+                }
                 _ => {
                     error_message.set("invalid solver".to_string());
                     show_error.set(true);
@@ -435,6 +497,9 @@ fn App() -> Html {
             <div class="gap-3 mb-3">
                 <div id="error-message" class="alert alert-danger" role="alert" style={if *show_error { "" } else { "display: none;" }}>
                     <strong id="error-message-text">{(*error_message).clone()}</strong>
+                </div>
+                <div id="error-message" class="alert alert-info" role="alert">
+                    <strong id="error-message-text">{"Symbol subscripts are in the order of introduction. Salt solver can only handle perfectly nested loop but it accept symbols appearing as coefficients. Barvinok solver can only handle pure affine expressions. Under Barvinok solver, if there is no symbolic input, a miss ratio curve will be produced."}</strong>
                 </div>
                 <div class="input-group">
                     <span class="input-group-text"> { "Solver" }</span>

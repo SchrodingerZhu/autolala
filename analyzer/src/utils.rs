@@ -11,6 +11,7 @@ use symbolica::domains::Ring;
 use symbolica::domains::integer::IntegerRing;
 use symbolica::domains::rational_polynomial::RationalPolynomial;
 use symbolica::domains::rational_polynomial::RationalPolynomialField;
+use symbolica::printer::PrintOptions;
 use symbolica::symbol;
 pub type Poly = RationalPolynomial<IntegerRing, u32>;
 
@@ -256,8 +257,22 @@ struct SaltResult {
 }
 
 pub fn create_json_output(dist: &[(Poly, Poly)]) -> Result<String> {
-    let ri_values: Vec<String> = dist.iter().map(|(poly, _)| poly.to_string()).collect();
-    let portions: Vec<String> = dist.iter().map(|(_, poly)| poly.to_string()).collect();
+    let ri_values: Vec<String> = dist
+        .iter()
+        .map(|(poly, _)| {
+            poly.to_expression()
+                .printer(PrintOptions::latex())
+                .to_string()
+        })
+        .collect();
+    let portions: Vec<String> = dist
+        .iter()
+        .map(|(_, poly)| {
+            poly.to_expression()
+                .printer(PrintOptions::latex())
+                .to_string()
+        })
+        .collect();
     let result = SaltResult {
         ri_values,
         portions,
