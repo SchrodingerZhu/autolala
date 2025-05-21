@@ -22,6 +22,7 @@ use raffine::{
     tree::{Tree, ValID},
 };
 
+use serde::Serialize;
 use symbolica::domains::{Ring, rational_polynomial::RationalPolynomialField};
 use symbolica::{atom::Atom, domains::Field, domains::integer::IntegerRing};
 use symbolica::{atom::AtomCore, symbol};
@@ -911,4 +912,110 @@ fn convert_dist<'a>(
         res?;
     }
     Ok(output.into_boxed_slice())
+}
+
+#[derive(Serialize)]
+struct BarvinokResult {
+    ri_values: Box<[String]>,
+    symbol_ranges: Box<[String]>,
+    counts: Box<[String]>,
+    portions: Box<[String]>,
+    total_count: String,
+    distribution: Box<[(isize, f64)]>,
+}
+
+pub fn create_json_output<'a>(
+    dist: &[DistItem<'a>],
+    total: PiecewiseQuasiPolynomial<'a>,
+    infinite_repeat: bool,
+) -> Result<String> {
+    let distribution = get_distro(dist, total.clone(), infinite_repeat).unwrap_or_default();
+    let mut total_count = None;
+    total.foreach_piece(|qpoly, _| {
+        total_count.replace(qpoly);
+        Ok(())
+    })?;
+    let total_count = total_count.ok_or_else(|| anyhow::anyhow!("no total count found"))?;
+    let total_count_poly = convert_quasi_poly(total_count)?;
+    let mut ri_values = Vec::new();
+    let mut symbol_ranges = Vec::new();
+    let mut counts = Vec::new();
+    let mut portions = Vec::new();
+    let ring = IntegerRing::new();
+    let field = RationalPolynomialField::new(ring);
+    for item in dist.iter() {
+        let value = convert_quasi_poly(item.qpoly.clone())?;
+        let value_str = format!("{value}");
+        item.cardinality.foreach_piece(|qpoly, domain| {
+            let poly = convert_quasi_poly(qpoly.clone())?;
+            let count = format!("{poly}");
+            let range = format!("{domain:?}");
+            let range = range
+                .split("{  : ")
+                .nth(1)
+                .unwrap_or_default()
+                .split(" }")
+                .next()
+                .unwrap_or_default();
+            // L'Hôpital's rule
+            let portion = if infinite_repeat {
+                tracing::debug!("applying L'Hôpital's rule for {poly}/{total_count_poly}");
+                let poly_var = poly.get_variables().iter().position(|x| {
+                    x.to_id()
+                        .map(|x| x.get_stripped_name() == "R")
+                        .unwrap_or_default()
+                });
+                if poly.is_zero() || poly_var.is_none() {
+                    ri_values.push(value_str.clone());
+                    symbol_ranges.push(range.to_string());
+                    counts.push(count);
+                    portions.push("0".to_string());
+                    return Ok(());
+                }
+                let total_var = total_count_poly
+                    .get_variables()
+                    .iter()
+                    .position(|x| {
+                        x.to_id()
+                            .map(|x| x.get_stripped_name() == "R")
+                            .unwrap_or_default()
+                    })
+                    .unwrap();
+                let poly = poly.derivative(poly_var.unwrap());
+                let total = total_count_poly.derivative(total_var);
+                if total.is_zero() {
+                    ri_values.push(value_str.clone());
+                    symbol_ranges.push(range.to_string());
+                    counts.push(count);
+                    portions.push("∞".to_string());
+                    return Ok(());
+                }
+                field.div(&poly, &total)
+            } else {
+                field.div(&poly, &total_count_poly)
+            };
+            let portion_str = format!("{portion}");
+            ri_values.push(value_str.clone());
+            symbol_ranges.push(range.to_string());
+            counts.push(count);
+            portions.push(portion_str);
+            Ok(())
+        })?;
+    }
+    let ri_values = ri_values.into_boxed_slice();
+    let symbol_ranges = symbol_ranges.into_boxed_slice();
+    let counts = counts.into_boxed_slice();
+    let portions = portions.into_boxed_slice();
+    let total_count = format!("{total_count_poly}");
+    let result = BarvinokResult {
+        ri_values,
+        symbol_ranges,
+        counts,
+        portions,
+        distribution,
+        total_count,
+    };
+    let json = serde_json::to_string(&result)
+        .map_err(|e| anyhow::anyhow!("failed to serialize to JSON: {e}"))?;
+    Ok(json)
 }

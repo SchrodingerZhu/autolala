@@ -76,6 +76,9 @@ enum Method {
     Salt,
 }
 
+#[global_allocator]
+static GLOBAL: tikv_jemallocator::Jemalloc = tikv_jemallocator::Jemalloc;
+
 #[derive(Debug, Parser)]
 struct Options {
     /// The input file to process
@@ -115,7 +118,7 @@ struct Options {
     /// Use bincode encoded output
     /// Requires output file to be specified
     #[clap(long)]
-    bincode: bool,
+    json: bool,
 
     /// method to use for polyhedral model computation
     #[clap(subcommand)]
@@ -196,10 +199,6 @@ where
 
 fn main_entry() -> anyhow::Result<()> {
     let options = Options::parse();
-
-    if options.bincode && options.output.is_none() {
-        return Err(anyhow!("bincode option requires output file"));
-    }
 
     let mut reader = match options.input.as_ref() {
         Some(path) => {
@@ -303,27 +302,32 @@ fn main_entry() -> anyhow::Result<()> {
             let processor = isl::RIProcessor::new(ri_values);
             let space_count = space.cardinality()?;
             let raw_distro = processor.get_distribution()?;
-            let table = isl::create_table(&raw_distro, space_count.clone(), *infinite_repeat)?;
-            writeln!(writer, "{table}")?;
-            writeln!(writer, "Total: {space_count:?}")?;
-            match isl::get_distro(&raw_distro, space_count, *infinite_repeat) {
-                Ok(dist) => {
-                    let curve = denning::MissRatioCurve::new(&dist);
-                    if let Some(path) = &options.miss_ratio_curve {
-                        let svgbackend = denning::plotters::backend::SVGBackend::new(
-                            path,
-                            (
-                                options.miss_ratio_curve_width,
-                                options.miss_ratio_curve_height,
-                            ),
-                        );
-                        let area = svgbackend.into_drawing_area();
-                        curve.plot_miss_ratio_curve(&area)?;
-                        info!("Miss ratio curve saved to {}", path.display());
+            if options.json {
+                let output = isl::create_json_output(&raw_distro, space_count, *infinite_repeat)?;
+                writeln!(writer, "{output}")?;
+            } else {
+                let table = isl::create_table(&raw_distro, space_count.clone(), *infinite_repeat)?;
+                writeln!(writer, "{table}")?;
+                writeln!(writer, "Total: {space_count:?}")?;
+                match isl::get_distro(&raw_distro, space_count, *infinite_repeat) {
+                    Ok(dist) => {
+                        let curve = denning::MissRatioCurve::new(&dist);
+                        if let Some(path) = &options.miss_ratio_curve {
+                            let svgbackend = denning::plotters::backend::SVGBackend::new(
+                                path,
+                                (
+                                    options.miss_ratio_curve_width,
+                                    options.miss_ratio_curve_height,
+                                ),
+                            );
+                            let area = svgbackend.into_drawing_area();
+                            curve.plot_miss_ratio_curve(&area)?;
+                            info!("Miss ratio curve saved to {}", path.display());
+                        }
                     }
-                }
-                Err(e) => {
-                    error!("Failed to get distribution: {}\n{}", e, e.backtrace());
+                    Err(e) => {
+                        error!("Failed to get distribution: {}\n{}", e, e.backtrace());
+                    }
                 }
             }
             Ok(())
@@ -359,9 +363,13 @@ fn main_entry() -> anyhow::Result<()> {
                 .iter()
                 .map(|(k, v)| (k.clone(), v.clone()))
                 .collect::<Vec<_>>();
-            let table = create_table(&ri_dist_vec);
-
-            println!("Reuse interval distribution:\n{}", table);
+            if options.json {
+                let output = utils::create_json_output(&ri_dist_vec)?;
+                writeln!(writer, "{output}")?;
+            } else {
+                let table = create_table(&ri_dist_vec);
+                writeln!(writer, "{table}")?;
+            }
             Ok(())
         }),
     }

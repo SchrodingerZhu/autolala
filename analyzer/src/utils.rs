@@ -3,6 +3,7 @@ use raffine::affine::AffineExpr;
 use raffine::affine::AffineMap;
 use raffine::tree::Tree;
 use raffine::tree::ValID;
+use serde::Serialize;
 use symbolica::atom::Atom;
 use symbolica::atom::AtomCore;
 use symbolica::domains::Field;
@@ -246,4 +247,21 @@ pub fn create_table(dist: &[(Poly, Poly)]) -> comfy_table::Table {
         table.add_row([value, portion]);
     }
     table
+}
+
+#[derive(Serialize)]
+struct SaltResult {
+    ri_values: Vec<String>,
+    portions: Vec<String>,
+}
+
+pub fn create_json_output(dist: &[(Poly, Poly)]) -> Result<String> {
+    let ri_values: Vec<String> = dist.iter().map(|(poly, _)| poly.to_string()).collect();
+    let portions: Vec<String> = dist.iter().map(|(_, poly)| poly.to_string()).collect();
+    let result = SaltResult {
+        ri_values,
+        portions,
+    };
+    serde_json::to_string(&result)
+        .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {}", e))
 }
