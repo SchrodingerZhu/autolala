@@ -122,10 +122,8 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
            reference_vector[block_position] = 2;
 
 
-            if block_position != reference_vector.len() - 1 {
-               if reference_vector[block_position + 1] == 0 {
-                    reference_vector[block_position] = 0;
-                }
+            if block_position != reference_vector.len() - 1 && reference_vector[block_position + 1] == 0 {
+                reference_vector[block_position] = 0;
             }
 
 
@@ -185,7 +183,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             
             for (place, i) in (shrinked_ref_vec.iter().rev()).enumerate() {
                 
-                let current_portion = portions[(*i).abs() as usize].clone();
+                let current_portion = portions[(*i).unsigned_abs()].clone();
                 if *i < 0 {
                     let factor = if -(*i) > 0 {
                         reuse_factors.get( &(((*i).abs() - 1) as usize)).unwrap()
@@ -198,13 +196,13 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                         ri_value = isize_to_poly(1, context);
                     }
                     else {
-                        ri_value = &ri_value - &(&(&block_poly - &isize_to_poly(1, context)) * &factor);
+                        ri_value = &ri_value - &(&(&block_poly - &isize_to_poly(1, context)) * factor);
                     }
                     
                     let ri_portion = &current_portion - &last_portion;
                     block_ri = (&ri_value.clone() * &n_ref, field.div(&ri_portion, &n_ref));
                     
-                    if reference_vector[((*i).abs() as usize) - 1] == 0 {
+                    if reference_vector[(*i).unsigned_abs() - 1] == 0 {
                         coefficient = 1;
                     }
                     else {
@@ -228,11 +226,11 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                     reuse_factors.get(&usize::MAX).unwrap()
                 };
                 if coefficient == -1 {
-                    ri_value = &ri_value - &factor;
+                    ri_value = &ri_value - factor;
                     coefficient = 1;
                     continue;
                 }
-                ri_value = &ri_value + &factor;
+                ri_value = &ri_value + factor;
                 if block_ri.0 != isize_to_poly(0, context) {
                     let without_block = if place != shrinked_ref_vec.len() - 1 {
                         field.div(&(&current_portion - &last_portion), &n_ref)
