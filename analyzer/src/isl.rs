@@ -23,9 +23,12 @@ use raffine::{
 };
 
 use serde::Serialize;
-use symbolica::domains::{Ring, rational_polynomial::RationalPolynomialField};
 use symbolica::{atom::Atom, domains::Field, domains::integer::IntegerRing};
 use symbolica::{atom::AtomCore, symbol};
+use symbolica::{
+    domains::{Ring, rational_polynomial::RationalPolynomialField},
+    printer::PrintOptions,
+};
 
 use crate::{AnalysisContext, utils::get_max_param_ivar};
 
@@ -945,10 +948,10 @@ pub fn create_json_output<'a>(
     let field = RationalPolynomialField::new(ring);
     for item in dist.iter() {
         let value = convert_quasi_poly(item.qpoly.clone())?;
-        let value_str = format!("{value}");
+        let value_str = format!("{}", value.to_expression().printer(PrintOptions::latex()));
         item.cardinality.foreach_piece(|qpoly, domain| {
             let poly = convert_quasi_poly(qpoly.clone())?;
-            let count = format!("{poly}");
+            let count = format!("{}", poly.to_expression().printer(PrintOptions::latex()));
             let range = format!("{domain:?}");
             let range = range
                 .split("{  : ")
@@ -994,7 +997,7 @@ pub fn create_json_output<'a>(
             } else {
                 field.div(&poly, &total_count_poly)
             };
-            let portion_str = format!("{portion}");
+            let portion_str = format!("{}", portion.to_expression().printer(PrintOptions::latex()));
             ri_values.push(value_str.clone());
             symbol_ranges.push(range.to_string());
             counts.push(count);
@@ -1006,7 +1009,12 @@ pub fn create_json_output<'a>(
     let symbol_ranges = symbol_ranges.into_boxed_slice();
     let counts = counts.into_boxed_slice();
     let portions = portions.into_boxed_slice();
-    let total_count = format!("{total_count_poly}");
+    let total_count = format!(
+        "{}",
+        total_count_poly
+            .to_expression()
+            .printer(PrintOptions::latex())
+    );
     let result = BarvinokResult {
         ri_values,
         symbol_ranges,
