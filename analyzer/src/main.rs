@@ -10,7 +10,6 @@ use raffine::Context as RContext;
 use raffine::{DominanceInfo, tree::Tree};
 use std::{collections::HashMap, io::Read, path::PathBuf};
 use tracing::{debug, error, info};
-use tracing_subscriber::EnvFilter;
 mod isl;
 mod salt;
 mod utils;
@@ -377,11 +376,7 @@ fn main_entry() -> anyhow::Result<()> {
 
 fn main() {
     tracing_subscriber::fmt()
-        .with_env_filter(
-            EnvFilter::builder()
-                .with_default_directive(tracing::Level::INFO.into())
-                .from_env_lossy(),
-        )
+        .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
         .init();
     let res = main_entry();
     if let Err(e) = res {
