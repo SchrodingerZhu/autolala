@@ -239,6 +239,8 @@ fn string_to_mathjax(s: &str) -> String {
     // replace and with \wedge and or with \vee
     buffer = buffer.replace(" and ", " \\wedge ");
     buffer = buffer.replace(" or ", " \\vee ");
+    // replace mod with \\bmod
+    buffer = buffer.replace(" mod ", " \\bmod ");
     buffer
 }
 
