@@ -84,24 +84,28 @@ struct Guard<'a> {
 impl AppState {
     fn try_acquire(&self) -> anyhow::Result<Guard> {
         let mut remaining_try = 128;
-        self.current_requests
-            .fetch_update(Ordering::SeqCst, Ordering::SeqCst, |count| {
-                if count < self.max_concurrent_requests || remaining_try > 0 {
-                    remaining_try -= 1;
-                    Some(count + 1)
-                } else {
-                    None
-                }
-            })
-            .map_err(|current| {
-                anyhow::anyhow!(
-                    "Failed to acquire request slot, max concurrent requests: {}, current: {current}",
-                    self.max_concurrent_requests
-                )
-            })?;
-        Ok(Guard {
-            current_requests: &self.current_requests,
-        })
+        while remaining_try > 0 {
+            remaining_try -= 1;
+            let current = self.current_requests.load(Ordering::SeqCst);
+            let proposed = current + 1;
+            if proposed > self.max_concurrent_requests {
+                std::hint::spin_loop();
+                continue;
+            }
+            if self
+                .current_requests
+                .compare_exchange(current, proposed, Ordering::SeqCst, Ordering::SeqCst)
+                .is_ok()
+            {
+                return Ok(Guard {
+                    current_requests: &self.current_requests,
+                });
+            }
+        }
+        Err(anyhow::anyhow!(
+            "Too many concurrent requests: {}",
+            self.max_concurrent_requests
+        ))
     }
 }
 

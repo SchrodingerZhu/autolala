@@ -1,10 +1,10 @@
-use plotters::prelude::IntoDrawingArea;
+use plotters::{prelude::IntoDrawingArea, style::WHITE};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::spawn_local;
 use web_sys::{
     HtmlInputElement, HtmlSelectElement, HtmlSpanElement,
-    js_sys::{self, Array, Function, Object, Reflect},
+    js_sys::{self},
     window,
 };
 use yew::prelude::*;
@@ -119,23 +119,35 @@ pub fn set_total_count(value: &str) {
             .and_then(|el| el.dyn_into::<HtmlSpanElement>().ok())
         {
             span.set_inner_html(value);
-            rerender_mathjax(span.into()).unwrap_or_else(|err| {
-                web_sys::console::error_1(&format!("Error rerendering MathJax: {:?}", err).into());
-            });
         }
     }
 }
 
-fn string_to_mathjax_inner(s: &str, buffer: &mut String) {
-    let parts = s.split('/').collect::<Vec<_>>();
-    if parts.len() == 2 {
-        buffer.push_str("\\frac{");
-        string_to_mathjax_inner(parts[0], buffer);
-        buffer.push_str("}{");
-        string_to_mathjax_inner(parts[1], buffer);
-        buffer.push('}');
-        return;
+pub fn clear_table() {
+    if let Some(document) = window().and_then(|w| w.document()) {
+        if let Some(container) = document.get_element_by_id("ri-table") {
+            container.set_inner_html("");
+        }
     }
+}
+
+pub fn clear_canvas() {
+    let canvas = window()
+        .unwrap()
+        .document()
+        .unwrap()
+        .get_element_by_id("canvas")
+        .unwrap()
+        .dyn_into::<web_sys::HtmlCanvasElement>()
+        .unwrap();
+    plotters_canvas::CanvasBackend::with_canvas_object(canvas)
+        .unwrap()
+        .into_drawing_area()
+        .fill(&WHITE)
+        .unwrap();
+}
+
+fn string_to_mathjax_inner(s: &str, buffer: &mut String) {
     let mut prev_is_less = false;
     let mut prev_is_greater = false;
     let mut last_is_alpha = false;
@@ -194,28 +206,6 @@ fn string_to_mathjax_inner(s: &str, buffer: &mut String) {
     }
 }
 
-pub fn rerender_mathjax(element: JsValue) -> Result<(), JsValue> {
-    let win = window().unwrap();
-
-    // Get MathJax global object
-    let mathjax = Reflect::get(&win, &"MathJax".into())?;
-
-    // Create a JavaScript array containing our single element
-    let elements_array = js_sys::Array::new();
-    elements_array.push(&element);
-
-    // First call typesetClear on the array of elements
-    let typeset_clear_fn =
-        Reflect::get(&mathjax, &"typesetClear".into())?.dyn_into::<Function>()?;
-    typeset_clear_fn.call1(&mathjax, &elements_array)?;
-
-    // Then call typeset on the array of elements
-    let typeset_fn = Reflect::get(&mathjax, &"typeset".into())?.dyn_into::<Function>()?;
-    typeset_fn.call1(&mathjax, &elements_array)?;
-
-    Ok(())
-}
-
 pub fn render_canvas(dist: &[(isize, f64)]) {
     let document = window().unwrap().document().unwrap();
     let canvas = document
@@ -229,19 +219,40 @@ pub fn render_canvas(dist: &[(isize, f64)]) {
         .unwrap();
 }
 
+fn ident_to_mathjax(s: &str) -> String {
+    let re = regex::Regex::new(r"([a-zA-Z])(\d+)").unwrap();
+    re.replace_all(s, "${1}_{${2}}").to_string()
+}
+
 fn string_to_mathjax(s: &str) -> String {
     if s.trim().is_empty() {
         return String::new();
     }
-    let mut buffer = "$".to_string();
+    let mut buffer = String::new();
     string_to_mathjax_inner(s, &mut buffer);
-    buffer.push('$');
     // replace and with \wedge and or with \vee
     buffer = buffer.replace(" and ", " \\wedge ");
     buffer = buffer.replace(" or ", " \\vee ");
     // replace mod with \\bmod
     buffer = buffer.replace(" mod ", " \\bmod ");
     buffer
+}
+
+pub fn render_to_string(s: &str) -> String {
+    let render = js_sys::Reflect::get(
+        &js_sys::Reflect::get(&window().unwrap(), &JsValue::from_str("katex")).unwrap(),
+        &JsValue::from_str("renderToString"),
+    )
+    .unwrap()
+    .dyn_into::<js_sys::Function>()
+    .unwrap();
+    let input = JsValue::from_str(s);
+
+    render
+        .call1(&JsValue::NULL, &input)
+        .unwrap()
+        .as_string()
+        .unwrap()
 }
 
 pub fn update_ri_table_barvinok(
@@ -264,10 +275,10 @@ pub fn update_ri_table_barvinok(
     for i in 0..len {
         html.push_str(&format!(
             "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>",
-            string_to_mathjax(&ri_values[i]),
-            string_to_mathjax(&symbol_ranges[i]),
-            string_to_mathjax(&counts[i]),
-            string_to_mathjax(&portions[i])
+            render_to_string(&ident_to_mathjax(&ri_values[i])),
+            render_to_string(&string_to_mathjax(&symbol_ranges[i])),
+            render_to_string(&ident_to_mathjax(&counts[i])),
+            render_to_string(&ident_to_mathjax(&portions[i]))
         ));
     }
 
@@ -280,10 +291,6 @@ pub fn update_ri_table_barvinok(
         .ok_or_else(|| JsValue::from_str("Element with id 'ri-table' not found"))?;
 
     container.set_inner_html(&html);
-
-    rerender_mathjax(container.into()).unwrap_or_else(|err| {
-        web_sys::console::error_1(&format!("Error rerendering MathJax: {:?}", err).into());
-    });
 
     Ok(())
 }
@@ -307,6 +314,9 @@ fn App() -> Html {
         let show_error = show_error.clone();
         let error_message = error_message.clone();
         move |_| {
+            clear_table();
+            set_total_count("Loading...");
+            clear_canvas();
             show_error.set(false);
             let text = get_ace_editor_text()
                 .and_then(|s| if s.trim().is_empty() { None } else { Some(s) });
@@ -339,7 +349,9 @@ fn App() -> Html {
                             let response = response.send().await?;
                             if response.status() == 200 {
                                 let result = response.json::<BarvinokResult>().await?;
-                                set_total_count(&string_to_mathjax(&result.total_count));
+                                set_total_count(&render_to_string(&string_to_mathjax(
+                                    &result.total_count,
+                                )));
                                 render_canvas(&result.distribution);
                                 update_ri_table_barvinok(
                                     &result.ri_values,
@@ -360,7 +372,7 @@ fn App() -> Html {
                             error_message.set(format!("Error: {}", err));
                             show_error.set(true);
                         });
-                    });
+                    })
                 }
                 Some("Salt") => todo!(),
                 _ => {
@@ -409,29 +421,6 @@ fn App() -> Html {
                                 })
                         });
                 }
-            }
-
-            if let Ok(mathjax) = Reflect::get(&window, &"MathJax".into()) {
-                let config = Reflect::get(&mathjax, &"config".into()).unwrap();
-                // --- Modify MathJax.tex ---
-                let tex = Object::new();
-                let inline_math = Array::new();
-                inline_math.push(&Array::of2(&"$".into(), &"$".into()));
-                inline_math.push(&Array::of2(&"\\(".into(), &"\\)".into()));
-                Reflect::set(&tex, &"inlineMath".into(), &inline_math).unwrap();
-
-                Reflect::set(&config, &"tex".into(), &tex).unwrap();
-
-                // --- Modify MathJax.svg ---
-                let svg = Object::new();
-                Reflect::set(&svg, &"fontCache".into(), &"global".into()).unwrap();
-
-                Reflect::set(&config, &"svg".into(), &svg).unwrap();
-                // --- call MathJax.startup.getAllConponents() ---
-                let startup = Reflect::get(&mathjax, &"startup".into()).unwrap();
-                let get_all_components = Reflect::get(&startup, &"getComponents".into()).unwrap();
-                let get_all_components = get_all_components.dyn_ref::<js_sys::Function>().unwrap();
-                get_all_components.call0(&startup).unwrap();
             }
         }
 
@@ -489,9 +478,12 @@ fn App() -> Html {
                     <span class="input-group-text"> { "Total Count" }</span>
                     <span class="form-control" id="total-count"></span>
                 </div>
+                <br />
                 // RI table div
                 <div id="ri-table"></div>
-                <canvas id="canvas" width="800" height="600"></canvas>
+                <div class="container text-center">
+                    <canvas id="canvas" width="800" height="600"></canvas>
+                </div>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">

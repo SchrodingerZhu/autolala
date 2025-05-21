@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["raffine", "analyzer", "denning", "analysis-server"]
+members = ["raffine", "analyzer", "denning", "analysis-server", "analysis-webpage"]
 
 [profile.release]
 lto = "thin"
