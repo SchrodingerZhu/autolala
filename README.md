@@ -1,5 +1,7 @@
 # AutoLALA
 
+AUTOmatic Loop Asympotic Locality Analysis
+
 ## How to Compile
 
 (assume ubuntu)
