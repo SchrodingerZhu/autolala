@@ -1,13 +1,15 @@
-use std::{collections::HashMap};
+use std::collections::HashMap;
 
 use raffine::{
     affine::{AffineExpr, AffineMap},
     tree::{Tree, ValID},
 };
-use symbolica::domains::{integer::IntegerRing,rational_polynomial::RationalPolynomialField, Field};
-use symbolica::symbol;
 use symbolica::atom::Atom;
 use symbolica::atom::AtomCore;
+use symbolica::domains::{
+    Field, integer::IntegerRing, rational_polynomial::RationalPolynomialField,
+};
+use symbolica::symbol;
 
 use crate::{
     AnalysisContext,
@@ -65,13 +67,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             reuse_factors.insert(*id, isize_to_poly(1, context));
             trip_counts.insert(*id, trip_count.clone());
 
-            get_reuse_interval_distribution(
-                body,
-                reuse_factors,
-                trip_counts,
-                ref_count,
-                context,
-            )
+            get_reuse_interval_distribution(body, reuse_factors, trip_counts, ref_count, context)
         }
         Tree::Block(trees) => {
             let mut ri_dist: HashMap<Poly, Poly> = HashMap::new();
@@ -85,7 +81,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                 );
                 for (i, j) in tmp.iter() {
                     if ri_dist.contains_key(i) {
-                        *ri_dist.get_mut(i).unwrap() = ri_dist.get(i).unwrap() +  j;
+                        *ri_dist.get_mut(i).unwrap() = ri_dist.get(i).unwrap() + j;
                     } else {
                         ri_dist.insert(i.clone(), j.clone());
                     }
@@ -96,13 +92,12 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             for (_key, value) in ri_dist.iter() {
                 if *value != isize_to_poly(3, context) {
                     sum = &sum + value;
-
                 }
             }
             ri_dist
         }
         Tree::Access { map, operands, .. } => {
-            
+            let field = RationalPolynomialField::new(symbolica::domains::integer::IntegerRing);
             let mut reference_vector = vec![0; reuse_factors.len()];
             let converted_map = convert_affine_map(*map, operands);
             let mut block_position = 0;
@@ -119,151 +114,129 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                     }
                 }
             }
-           reference_vector[block_position] = 2;
 
+            reference_vector[block_position] = 1;
 
-            if block_position != reference_vector.len() - 1 && reference_vector[block_position + 1] == 0 {
-                reference_vector[block_position] = 0;
+            let mut portion_factors = vec![];
+            let mut p_factor = isize_to_poly(1, context);
+            for i in (0..reference_vector.len()).rev() {
+                portion_factors.push(field.div(&isize_to_poly(1, context), &p_factor.clone()));
+                if reference_vector[i] == 0 && i != 0 {
+                    p_factor = &p_factor * &trip_counts.get(&(i - 1)).unwrap()
+                }
             }
+            portion_factors.reverse();
 
+            reference_vector[block_position] = 2;
 
-            let field = RationalPolynomialField::new(symbolica::domains::integer::IntegerRing);
-
-            let mut portion = isize_to_poly(1, context);
             let mut shrinked_ref_vec = vec![];
-            let mut portions = vec![];
+            let mut coefficients = vec![];
+            let mut b_found = false;
+            let mut last_position_of_zero_group = reference_vector.len() - 1;
 
             for i in (0..reference_vector.len() - 1).rev() {
                 if reference_vector[i] != reference_vector[i + 1] {
-                    if reference_vector[i] == 2 {
-                        shrinked_ref_vec.push(-(i as isize));
+                    if i == block_position {
+                        if reference_vector[i + 1] == 1 {
+                            coefficients.push(0);
+                            last_position_of_zero_group = block_position;
+                        } else {
+                            reference_vector[i] = 1;
+                            b_found = true;
+                            continue;
+                        }
+                    } else if reference_vector[i] == 1 {
+                        coefficients.push(-1);
+                    } else if reference_vector[i] == 0 {
+                        coefficients.push(1);
+                        if !b_found {
+                            last_position_of_zero_group = i;
+                        }
                     }
-                    else {
-                        shrinked_ref_vec.push(i as isize);
-                    }
-                  
+                    shrinked_ref_vec.push(i);
                 }
-                if reference_vector[i + 1] == 0 {
-                    portion = field.div(&portion, trip_counts.get(&(i)).unwrap());
+                if i == block_position {
+                    b_found = true;
                 }
-                portions.push(portion.clone());
             }
+
             shrinked_ref_vec.reverse();
+            coefficients.reverse();
             if reference_vector[reference_vector.len() - 1] == 0 {
-                shrinked_ref_vec.push((reference_vector.len() - 1) as isize);
-                portions.push(field.div(&portion, trip_counts.get(&(reference_vector.len() - 2)).unwrap()));
+                shrinked_ref_vec.push(reference_vector.len() - 1);
+                coefficients.push(1);
+            } else if reference_vector[reference_vector.len() - 1] == 2 {
+                shrinked_ref_vec.push(reference_vector.len() - 1);
+                coefficients.push(0);
+                last_position_of_zero_group = reference_vector.len() - 1;
             }
-            else if reference_vector[reference_vector.len() - 1] == 2 {
-                shrinked_ref_vec.push(-((reference_vector.len() - 1) as isize));
-                portions.push(field.div(&portion, trip_counts.get(&(reference_vector.len() - 2)).unwrap()));
-            }
-            else {
-                portions.push(portion);
-            }
-            
 
-
-            let mut last_portion = isize_to_poly(0, context);
-
-            let mut coefficient = 1;
             let n_ref = isize_to_poly(ref_count as isize, context);
             let mut ri_value = isize_to_poly(0, context);
-            let mut ri_dist: HashMap<Poly, Poly> = HashMap::new();
-            let mut block_ri = (isize_to_poly(0, context), isize_to_poly(0, context));
-            
-
 
             let block_atom = Atom::new_var(symbol!("b"));
-            let block_poly = block_atom.to_rational_polynomial(
-                &IntegerRing::new(),
-                &IntegerRing::new(),
-                None,
-            );
-            
-            
+            let block_poly =
+                block_atom.to_rational_polynomial(&IntegerRing::new(), &IntegerRing::new(), None);
+            let mut ri_values: Vec<(Poly, usize)> = vec![];
+
+            let mut ri_block_poly = isize_to_poly(-1, context);
+
             for (place, i) in (shrinked_ref_vec.iter().rev()).enumerate() {
-                
-                let current_portion = portions[(*i).unsigned_abs()].clone();
-                if *i < 0 {
-                    let factor = if -(*i) > 0 {
-                        reuse_factors.get( &(((*i).abs() - 1) as usize)).unwrap()
-                    }
-                    else {
-                        reuse_factors.get(&usize::MAX).unwrap()
-                    };
-                    
-                    if ri_value == isize_to_poly(0, context) {
-                        ri_value = isize_to_poly(1, context);
-                    }
-                    else {
-                        ri_value = &ri_value - &(&(&block_poly - &isize_to_poly(1, context)) * factor);
-                    }
-                    
-                    let ri_portion = &current_portion - &last_portion;
-                    block_ri = (&ri_value.clone() * &n_ref, field.div(&ri_portion, &n_ref));
-                    
-                    if reference_vector[(*i).unsigned_abs() - 1] == 0 {
-                        coefficient = 1;
-                    }
-                    else {
-
-                        coefficient = -1;
-                    }
-                    last_portion = current_portion.clone();
-
-                    if ri_value == isize_to_poly(1, context) {
-                        ri_value =  &ri_value - &block_poly;
-                    }
-
-                    continue;
-                }
-
-                
-                let factor = if *i > 0 {
-                    reuse_factors.get( &(((*i) - 1) as usize)).unwrap()
-                }
-                else {
+                let factor = if *i != 0 {
+                    reuse_factors.get(&(*i - 1)).unwrap()
+                } else {
                     reuse_factors.get(&usize::MAX).unwrap()
                 };
-                if coefficient == -1 {
+
+                let coefficient = coefficients[coefficients.len() - 1 - place];
+
+                if last_position_of_zero_group == *i {
+                    ri_value = &ri_value + factor;
+                    ri_values.push(((&ri_value.clone() * &n_ref), (*i)));
+
+                    ri_block_poly = &ri_value * &n_ref;
+                    let block_factor = if block_position != 0 {
+                        reuse_factors.get(&(block_position - 1)).unwrap()
+                    } else {
+                        reuse_factors.get(&usize::MAX).unwrap()
+                    };
+                    ri_value = &ri_value - &(&block_poly * &block_factor);
+                } else if coefficient == -1 {
                     ri_value = &ri_value - factor;
-                    coefficient = 1;
-                    continue;
+                } else {
+                    ri_value = &ri_value + factor;
+                    ri_values.push(((&ri_value.clone() * &n_ref), (*i)));
                 }
-                ri_value = &ri_value + factor;
-                if block_ri.0 != isize_to_poly(0, context) {
-                    let without_block = if place != shrinked_ref_vec.len() - 1 {
-                        field.div(&(&current_portion - &last_portion), &n_ref)
-                    }
-                    else {
-                        field.div(&(&isize_to_poly(1, context) - &last_portion), &n_ref)
-                    };
-
-                    let ri_portion = field.div(&without_block, &block_poly);
-                    block_ri.1 = &block_ri.1 + &(&without_block - &ri_portion);
-                    ri_dist.insert(&ri_value.clone() * &n_ref, ri_portion);
-                }
-                else {
-                    let ri_portion = if place != shrinked_ref_vec.len() - 1 {
-                        field.div(&(&current_portion - &last_portion), &n_ref)
-                    }
-                    else {
-                        field.div(&(&isize_to_poly(1, context) - &last_portion), &n_ref)
-                    };
-                    ri_dist.insert(&ri_value.clone() * &n_ref, ri_portion);
-
-                }
-                last_portion = current_portion.clone();
-
-                coefficient = -1;
             }
-            if block_ri.0 != isize_to_poly(0, context) {
-                ri_dist.insert(block_ri.0, block_ri.1);
 
+            ri_values.reverse();
+
+            let mut ri_dist: HashMap<Poly, Poly> = HashMap::new();
+
+            let mut prev_portion = isize_to_poly(0, context);
+
+            let mut addition = isize_to_poly(0, context);
+
+            for (i, j) in ri_values.iter() {
+                let p_factor = portion_factors[*j].clone();
+                if *j < block_position {
+                    let without_block = &p_factor - &prev_portion;
+                    let with_block = field.div(&without_block, &block_poly);
+                    addition = &addition + &(&without_block - &with_block);
+                    ri_dist.insert(i.clone(), field.div(&with_block, &n_ref));
+                } else {
+                    let portion = &p_factor - &prev_portion;
+                    ri_dist.insert(i.clone(), field.div(&portion, &n_ref));
+                }
+                prev_portion = p_factor;
             }
+
+            *ri_dist.get_mut(&ri_block_poly).unwrap() =
+                ri_dist.get(&ri_block_poly).unwrap() + &addition;
+
             ri_dist
         }
-        
-        Tree::If { .. } => {HashMap::new()}
+
+        Tree::If { .. } => HashMap::new(),
     }
 }
