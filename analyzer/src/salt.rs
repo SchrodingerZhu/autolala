@@ -4,12 +4,14 @@ use raffine::{
     affine::{AffineExpr, AffineMap},
     tree::{Tree, ValID},
 };
-use symbolica::atom::Atom;
-use symbolica::atom::AtomCore;
-use symbolica::domains::{
-    Field, integer::IntegerRing, rational_polynomial::RationalPolynomialField,
+use serde::Serialize;
+use symbolica::{atom::Atom, domains::rational_polynomial::FromNumeratorAndDenominator};
+use symbolica::{atom::AtomCore, domains::integer::Integer};
+use symbolica::{domains::Ring, symbol};
+use symbolica::{
+    domains::{Field, integer::IntegerRing, rational_polynomial::RationalPolynomialField},
+    printer::PrintOptions,
 };
-use symbolica::symbol;
 
 use crate::{
     AnalysisContext,
@@ -26,6 +28,34 @@ fn isize_to_poly<'a>(value: isize, context: &AnalysisContext<'a>) -> Poly {
     );
     let step_converted = convert_affine_map(map, &[]).unwrap();
     step_converted[0].clone()
+}
+
+pub fn is_perfectly_nested(tree: &Tree) -> bool {
+    match tree {
+        Tree::For { body, .. } => is_perfectly_nested(body),
+        Tree::Block(trees) => {
+            if trees.len() == 1 {
+                return is_perfectly_nested(trees.first().unwrap());
+            }
+            trees
+                .iter()
+                .all(|subtree| matches!(subtree, Tree::Access { .. }))
+        }
+        Tree::Access { .. } => true,
+        Tree::If { .. } => false,
+    }
+}
+
+pub fn number_of_accesses(tree: &Tree) -> usize {
+    match tree {
+        Tree::For { body, .. } => number_of_accesses(body),
+        Tree::Block(trees) => trees
+            .iter()
+            .filter(|subtree| matches!(subtree, Tree::Access { .. }))
+            .count(),
+        Tree::Access { .. } => 1,
+        Tree::If { .. } => 0,
+    }
 }
 
 // reuse interval distribution without block
@@ -239,4 +269,79 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
 
         Tree::If { .. } => HashMap::new(),
     }
+}
+
+#[derive(Serialize)]
+struct SaltResult {
+    ri_values: Vec<String>,
+    portions: Vec<String>,
+    total_count: String,
+}
+
+pub fn get_total_count<'a, I>(accesses: usize, trip_counts: I) -> anyhow::Result<Poly>
+where
+    I: Iterator<Item = &'a Poly>,
+{
+    let ring = IntegerRing::new();
+    let field = RationalPolynomialField::new(ring);
+    let accesses = Atom::new_num(accesses as i64).to_rational_polynomial(&ring, &ring, None);
+    let total_count = trip_counts.fold(accesses, |acc, poly| field.mul(&acc, poly));
+    Ok(total_count)
+}
+
+pub fn subsitute_block_size(poly: &Poly, block_size: usize) -> Poly {
+    let vars = poly.get_variables();
+    let var_idx = vars.iter().position(|v| {
+        v.to_id()
+            .map(|id| id.get_stripped_name() == "b")
+            .unwrap_or(false)
+    });
+    match var_idx {
+        Some(idx) => {
+            let ring = IntegerRing::new();
+            let integer = Integer::Natural(block_size as i64);
+            let numerator = poly.numerator.replace(idx, &integer);
+            let denominator = poly.denominator.replace(idx, &integer);
+            Poly::from_num_den(numerator, denominator, &ring, true)
+        }
+        None => poly.clone(),
+    }
+}
+
+pub fn create_json_output<'a, I>(
+    dist: &[(Poly, Poly)],
+    accesses: usize,
+    trip_counts: I,
+) -> anyhow::Result<String>
+where
+    I: Iterator<Item = &'a Poly>,
+{
+    let total_count = get_total_count(accesses, trip_counts)?;
+    let ri_values: Vec<String> = dist
+        .iter()
+        .map(|(poly, _)| {
+            poly.to_expression()
+                .printer(PrintOptions::latex())
+                .to_string()
+        })
+        .collect();
+    let portions: Vec<String> = dist
+        .iter()
+        .map(|(_, poly)| {
+            poly.to_expression()
+                .printer(PrintOptions::latex())
+                .to_string()
+        })
+        .collect();
+    let total_count = total_count
+        .to_expression()
+        .printer(PrintOptions::latex())
+        .to_string();
+    let result = SaltResult {
+        ri_values,
+        portions,
+        total_count,
+    };
+    serde_json::to_string(&result)
+        .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {}", e))
 }
