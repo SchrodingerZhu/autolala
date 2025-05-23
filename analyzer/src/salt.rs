@@ -122,7 +122,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             for i in (0..reference_vector.len()).rev() {
                 portion_factors.push(field.div(&isize_to_poly(1, context), &p_factor.clone()));
                 if reference_vector[i] == 0 && i != 0 {
-                    p_factor = &p_factor * &trip_counts.get(&(i - 1)).unwrap()
+                    p_factor = &p_factor * trip_counts.get(&(i - 1)).unwrap()
                 }
             }
             portion_factors.reverse();
@@ -200,7 +200,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                     } else {
                         reuse_factors.get(&usize::MAX).unwrap()
                     };
-                    ri_value = &ri_value - &(&block_poly * &block_factor);
+                    ri_value = &ri_value - &(&block_poly * block_factor);
                 } else if coefficient == -1 {
                     ri_value = &ri_value - factor;
                 } else {

@@ -720,12 +720,12 @@ pub(crate) fn ensure_set_name<'a>(mut set: Set<'a>) -> Result<Set<'a>> {
     let dims = set.num_dims()?;
     for i in 0..params {
         if !set.has_dim_name(DimType::Param, i)? {
-            set = set.set_dim_name(DimType::Param, i, &format!("p{}", i))?;
+            set = set.set_dim_name(DimType::Param, i, &format!("p{i}"))?;
         }
     }
     for i in 0..dims {
         if !set.has_dim_name(DimType::Out, i)? {
-            set = set.set_dim_name(DimType::Out, i, &format!("i{}", i))?;
+            set = set.set_dim_name(DimType::Out, i, &format!("i{i}"))?;
         }
     }
     Ok(set)
@@ -736,12 +736,12 @@ pub(crate) fn ensure_map_domain_name<'a>(mut map: Map<'a>) -> Result<Map<'a>> {
     let in_dims = map.dim(DimType::In)?;
     for i in 0..params {
         if !map.has_dim_name(DimType::Param, i)? {
-            map = map.set_dim_name(DimType::Param, i, &format!("p{}", i))?;
+            map = map.set_dim_name(DimType::Param, i, &format!("p{i}"))?;
         }
     }
     for i in 0..in_dims {
         if !map.has_dim_name(DimType::In, i)? {
-            map = map.set_dim_name(DimType::In, i, &format!("i{}", i))?;
+            map = map.set_dim_name(DimType::In, i, &format!("i{i}"))?;
         }
     }
     Ok(map)

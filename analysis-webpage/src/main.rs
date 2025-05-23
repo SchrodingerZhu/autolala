@@ -113,22 +113,20 @@ pub fn get_barvinok_infinite_repeat() -> Option<bool> {
 }
 
 pub fn set_total_count(value: &str) {
-    if let Some(document) = window().and_then(|w| w.document()) {
-        if let Some(span) = document
+    if let Some(document) = window().and_then(|w| w.document())
+        && let Some(span) = document
             .get_element_by_id("total-count")
             .and_then(|el| el.dyn_into::<HtmlSpanElement>().ok())
         {
             span.set_inner_html(value);
         }
-    }
 }
 
 pub fn clear_table() {
-    if let Some(document) = window().and_then(|w| w.document()) {
-        if let Some(container) = document.get_element_by_id("ri-table") {
+    if let Some(document) = window().and_then(|w| w.document())
+        && let Some(container) = document.get_element_by_id("ri-table") {
             container.set_inner_html("");
         }
-    }
 }
 
 pub fn clear_canvas() {
@@ -402,7 +400,7 @@ fn App() -> Html {
                             anyhow::Ok(())
                         };
                         future.await.unwrap_or_else(|err| {
-                            error_message.set(format!("Error: {}", err));
+                            error_message.set(format!("Error: {err}"));
                             show_error.set(true);
                         });
                     })
@@ -432,7 +430,7 @@ fn App() -> Html {
                             anyhow::Ok(())
                         };
                         future.await.unwrap_or_else(|err| {
-                            error_message.set(format!("Error: {}", err));
+                            error_message.set(format!("Error: {err}"));
                             show_error.set(true);
                         });
                     })
@@ -448,8 +446,8 @@ fn App() -> Html {
     let example_code = include_str!("../../analyzer/misc/const_lu_decomp.mlir");
     use_effect(|| {
         // Run this only once after the component is mounted
-        if let Some(window) = window() {
-            if let Ok(ace_ns) = js_sys::Reflect::get(&window, &JsValue::from_str("ace")) {
+        if let Some(window) = window()
+            && let Ok(ace_ns) = js_sys::Reflect::get(&window, &JsValue::from_str("ace")) {
                 let editor = js_sys::Reflect::get(&ace_ns, &JsValue::from_str("edit"))
                     .ok()
                     .and_then(|edit_fn| {
@@ -484,7 +482,6 @@ fn App() -> Html {
                         });
                 }
             }
-        }
 
         || ()
     });

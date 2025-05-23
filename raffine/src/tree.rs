@@ -48,9 +48,9 @@ pub enum ValID {
 impl std::fmt::Display for ValID {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ValID::IVar(id) => write!(f, "i{}", id),
-            ValID::Symbol(id) => write!(f, "s{}", id),
-            ValID::Memref(id) => write!(f, "m{}", id),
+            ValID::IVar(id) => write!(f, "i{id}"),
+            ValID::Symbol(id) => write!(f, "s{id}"),
+            ValID::Memref(id) => write!(f, "m{id}"),
         }
     }
 }
@@ -132,7 +132,7 @@ impl<'a> std::fmt::Display for VarArrayDisplay<'a> {
             if i > 0 {
                 f.write_str(", ")?;
             }
-            write!(f, "{}", id)?;
+            write!(f, "{id}")?;
         }
         f.write_char(']')
     }

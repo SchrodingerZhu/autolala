@@ -76,10 +76,10 @@ impl AnalysisRequest {
                     command.arg("--infinite-repeat");
                 }
                 if let Some(block_size) = block_size {
-                    command.arg(&format!("--block-size={}", block_size));
+                    command.arg(&format!("--block-size={block_size}"));
                 }
                 for lower_bound in lower_bounds {
-                    command.arg(&format!("--symbol-lowerbound={}", lower_bound));
+                    command.arg(&format!("--symbol-lowerbound={lower_bound}"));
                 }
                 source
             }
