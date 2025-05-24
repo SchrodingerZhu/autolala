@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use ahash::AHashMap;
 use raffine::{
     affine::{AffineExpr, AffineMap},
     tree::{Tree, ValID},
@@ -276,6 +277,7 @@ struct SaltResult {
     ri_values: Vec<String>,
     portions: Vec<String>,
     total_count: String,
+    distribution: Box<[(isize, f64)]>,
 }
 
 pub fn get_total_count<'a, I>(accesses: usize, trip_counts: I) -> anyhow::Result<Poly>
@@ -287,6 +289,34 @@ where
     let accesses = Atom::new_num(accesses as i64).to_rational_polynomial(&ring, &ring, None);
     let total_count = trip_counts.fold(accesses, |acc, poly| field.mul(&acc, poly));
     Ok(total_count)
+}
+
+pub fn get_ri_distro(dist: &[(Poly, Poly)]) -> anyhow::Result<Vec<(isize, f64)>> {
+    let mut distro_map = AHashMap::new();
+    let empty_const_map = AHashMap::<Atom, _>::new();
+    let empty_symbol_map = AHashMap::new();
+    for (value, portion) in dist.iter() {
+        let value = value
+            .to_expression()
+            .evaluate(|x| x.to_f64(), &empty_const_map, &empty_symbol_map)
+            .map_err(|e| anyhow::anyhow!("Failed to evaluate expression: {e}"))?
+            as isize;
+        let portion = portion
+            .to_expression()
+            .evaluate(|x| x.to_f64(), &empty_const_map, &empty_symbol_map)
+            .map_err(|e| anyhow::anyhow!("Failed to evaluate expression: {e}"))?;
+        match distro_map.entry(value) {
+            std::collections::hash_map::Entry::Occupied(mut entry) => {
+                *entry.get_mut() += portion;
+            }
+            std::collections::hash_map::Entry::Vacant(entry) => {
+                entry.insert(portion);
+            }
+        }
+    }
+    let mut distro = distro_map.into_iter().collect::<Vec<_>>();
+    distro.sort_by(|a, b| a.0.cmp(&b.0));
+    Ok(distro)
 }
 
 pub fn subsitute_block_size(poly: &Poly, block_size: usize) -> Poly {
@@ -337,10 +367,12 @@ where
         .to_expression()
         .printer(PrintOptions::latex())
         .to_string();
+    let distribution = get_ri_distro(dist).unwrap_or_default().into_boxed_slice();
     let result = SaltResult {
         ri_values,
         portions,
         total_count,
+        distribution,
     };
     serde_json::to_string(&result)
         .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {}", e))

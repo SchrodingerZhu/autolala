@@ -385,6 +385,26 @@ fn main_entry() -> anyhow::Result<()> {
                 writeln!(writer, "{table}")?;
                 let total_count = salt::get_total_count(access_cnt, tc.values())?;
                 writeln!(writer, "Total: {total_count}")?;
+                match salt::get_ri_distro(&ri_dist_vec) {
+                    Ok(dist) => {
+                        let curve = denning::MissRatioCurve::new(&dist);
+                        if let Some(path) = &options.miss_ratio_curve {
+                            let svgbackend = denning::plotters::backend::SVGBackend::new(
+                                path,
+                                (
+                                    options.miss_ratio_curve_width,
+                                    options.miss_ratio_curve_height,
+                                ),
+                            );
+                            let area = svgbackend.into_drawing_area();
+                            curve.plot_miss_ratio_curve(&area)?;
+                            info!("Miss ratio curve saved to {}", path.display());
+                        }
+                    }
+                    Err(e) => {
+                        error!("Failed to get distribution: {}\n{}", e, e.backtrace());
+                    }
+                }
             }
             Ok(())
         }),
