@@ -3,7 +3,6 @@ use raffine::affine::AffineExpr;
 use raffine::affine::AffineMap;
 use raffine::tree::Tree;
 use raffine::tree::ValID;
-use serde::Serialize;
 use symbolica::atom::Atom;
 use symbolica::atom::AtomCore;
 use symbolica::domains::Field;
@@ -11,7 +10,6 @@ use symbolica::domains::Ring;
 use symbolica::domains::integer::IntegerRing;
 use symbolica::domains::rational_polynomial::RationalPolynomial;
 use symbolica::domains::rational_polynomial::RationalPolynomialField;
-use symbolica::printer::PrintOptions;
 use symbolica::symbol;
 pub type Poly = RationalPolynomial<IntegerRing, u32>;
 
@@ -195,43 +193,6 @@ pub fn convert_affine_map<'a>(map: AffineMap<'a>, operands: &'a [ValID]) -> Resu
     Ok(result.into_boxed_slice())
 }
 
-// pub fn walk_tree_print_converted_affine_map<'a>(tree: &'a Tree<'a>, indent: usize) -> Result<()> {
-//     fn print_sequence(context: &str, poly_vec: &[Poly], indent: usize) {
-//         let indent_str = "  ".repeat(indent);
-//         println!("{indent_str}{}: ", context);
-//         for poly in poly_vec.iter() {
-//             println!("\t- {}", poly);
-//         }
-//     }
-//     match tree {
-//         Tree::For {
-//             lower_bound,
-//             upper_bound,
-//             lower_bound_operands,
-//             upper_bound_operands,
-//             body,
-//             ..
-//         } => {
-//             let lower_bound_coverted = convert_affine_map(*lower_bound, lower_bound_operands)?;
-//             let upper_bound_converted = convert_affine_map(*upper_bound, upper_bound_operands)?;
-//             print_sequence("Lower bound", &lower_bound_coverted, indent);
-//             print_sequence("Upper bound", &upper_bound_converted, indent);
-//             walk_tree_print_converted_affine_map(body, indent + 1)?;
-//         }
-//         Tree::Block(trees) => {
-//             for subtree in trees.iter() {
-//                 walk_tree_print_converted_affine_map(subtree, indent + 1)?;
-//             }
-//         }
-//         Tree::Access { map, operands, .. } => {
-//             let converted_map = convert_affine_map(*map, operands)?;
-//             print_sequence("Access", &converted_map, indent);
-//         }
-//         Tree::If { .. } => return Err(anyhow::anyhow!("not implemented for conditional branch")),
-//     }
-//     Ok(())
-// }
-
 pub fn create_table(dist: &[(Poly, Poly)]) -> comfy_table::Table {
     use comfy_table::ContentArrangement;
     use comfy_table::modifiers::UTF8_ROUND_CORNERS;
@@ -248,35 +209,4 @@ pub fn create_table(dist: &[(Poly, Poly)]) -> comfy_table::Table {
         table.add_row([value, portion]);
     }
     table
-}
-
-#[derive(Serialize)]
-struct SaltResult {
-    ri_values: Vec<String>,
-    portions: Vec<String>,
-}
-
-pub fn create_json_output(dist: &[(Poly, Poly)]) -> Result<String> {
-    let ri_values: Vec<String> = dist
-        .iter()
-        .map(|(poly, _)| {
-            poly.to_expression()
-                .printer(PrintOptions::latex())
-                .to_string()
-        })
-        .collect();
-    let portions: Vec<String> = dist
-        .iter()
-        .map(|(_, poly)| {
-            poly.to_expression()
-                .printer(PrintOptions::latex())
-                .to_string()
-        })
-        .collect();
-    let result = SaltResult {
-        ri_values,
-        portions,
-    };
-    serde_json::to_string(&result)
-        .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {}", e))
 }

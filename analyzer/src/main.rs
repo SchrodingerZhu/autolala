@@ -8,6 +8,7 @@ use melior::Context as MContext;
 use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
 use raffine::Context as RContext;
 use raffine::{DominanceInfo, tree::Tree};
+use salt::is_perfectly_nested;
 use std::{collections::HashMap, io::Read, path::PathBuf};
 use tracing::{debug, error, info};
 mod isl;
@@ -72,7 +73,11 @@ enum Method {
         infinite_repeat: bool,
     },
     /// Use the PerfectTiling algorithm to compute the polyhedral model
-    Salt,
+    Salt {
+        #[clap(short = 'b', long)]
+        /// block size, if not specified, it will be represented symbolically
+        block_size: Option<usize>,
+    },
 }
 
 #[global_allocator]
@@ -331,7 +336,7 @@ fn main_entry() -> anyhow::Result<()> {
             }
             Ok(())
         }),
-        Method::Salt => AnalysisContext::start(|context| {
+        Method::Salt { block_size } => AnalysisContext::start(|context| {
             let context = &context;
             let mut source = String::new();
             let bytes = reader.read_to_string(&mut source)?;
@@ -349,25 +354,37 @@ fn main_entry() -> anyhow::Result<()> {
 
             debug!("Extracted tree: {}", tree);
 
-            let total_space = isl::get_space(context, tree)?;
+            if !is_perfectly_nested(tree) {
+                return Err(anyhow!("The loop nest is not perfectly nested"));
+            }
 
-            debug!("Total space: {:?}", total_space);
+            let access_cnt = salt::number_of_accesses(tree);
 
             //  utils::walk_tree_print_converted_affine_map(tree, 0)?;
             let mut rf = HashMap::new();
             let mut tc = HashMap::new();
             let ri_dist = salt::get_reuse_interval_distribution(tree, &mut rf, &mut tc, 1, context);
             // hashmap to vector tuple
-            let ri_dist_vec = ri_dist
-                .iter()
-                .map(|(k, v)| (k.clone(), v.clone()))
-                .collect::<Vec<_>>();
+            let ri_dist_vec = ri_dist.iter().map(|(k, v)| (k.clone(), v.clone()));
+
+            let ri_dist_vec = match block_size {
+                Some(block_size) => ri_dist_vec
+                    .map(|(x, y)| {
+                        let x = salt::subsitute_block_size(&x, *block_size);
+                        let y = salt::subsitute_block_size(&y, *block_size);
+                        (x, y)
+                    })
+                    .collect::<Vec<_>>(),
+                None => ri_dist_vec.collect::<Vec<_>>(),
+            };
             if options.json {
-                let output = utils::create_json_output(&ri_dist_vec)?;
+                let output = salt::create_json_output(&ri_dist_vec, access_cnt, tc.values())?;
                 writeln!(writer, "{output}")?;
             } else {
                 let table = create_table(&ri_dist_vec);
                 writeln!(writer, "{table}")?;
+                let total_count = salt::get_total_count(access_cnt, tc.values())?;
+                writeln!(writer, "Total: {total_count}")?;
             }
             Ok(())
         }),
@@ -381,7 +398,7 @@ fn main() {
     let res = main_entry();
     if let Err(e) = res {
         let bt = e.backtrace();
-        error!("{:#}", e);
+        error!("\n{:#}", e);
         match bt.status() {
             std::backtrace::BacktraceStatus::Disabled => {
                 error!("Backtrace is disabled -- rerun with RUST_BACKTRACE=1 to get a backtrace")
