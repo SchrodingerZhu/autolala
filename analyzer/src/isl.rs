@@ -20,6 +20,7 @@ use barvinok::{
     value::Value,
 };
 use comfy_table::Table;
+use denning::MissRatioCurve;
 use raffine::{
     affine::{AffineExpr, AffineExprKind, AffineMap},
     tree::{Tree, ValID},
@@ -917,7 +918,7 @@ struct BarvinokResult {
     counts: Box<[String]>,
     portions: Box<[String]>,
     total_count: String,
-    distribution: Box<[(isize, f64)]>,
+    miss_ratio_curve: MissRatioCurve,
     analysis_time: Duration,
 }
 
@@ -1010,13 +1011,14 @@ pub fn create_json_output<'a>(
             .to_expression()
             .printer(PrintOptions::latex())
     );
+    let miss_ratio_curve = MissRatioCurve::new(&distribution);
     let analysis_time = start_time.elapsed();
     let result = BarvinokResult {
         ri_values,
         symbol_ranges,
         counts,
         portions,
-        distribution,
+        miss_ratio_curve,
         total_count,
         analysis_time,
     };

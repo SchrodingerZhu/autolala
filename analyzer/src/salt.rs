@@ -4,6 +4,7 @@ use std::{
 };
 
 use ahash::AHashMap;
+use denning::MissRatioCurve;
 use raffine::{
     affine::{AffineExpr, AffineMap},
     tree::{Tree, ValID},
@@ -280,7 +281,7 @@ struct SaltResult {
     ri_values: Vec<String>,
     portions: Vec<String>,
     total_count: String,
-    distribution: Box<[(isize, f64)]>,
+    miss_ratio_curve: MissRatioCurve,
     analysis_time: Duration,
 }
 
@@ -373,12 +374,13 @@ where
         .printer(PrintOptions::latex())
         .to_string();
     let distribution = get_ri_distro(dist).unwrap_or_default().into_boxed_slice();
+    let miss_ratio_curve = MissRatioCurve::new(&distribution);
     let analysis_time = start_time.elapsed();
     let result = SaltResult {
         ri_values,
         portions,
         total_count,
-        distribution,
+        miss_ratio_curve,
         analysis_time,
     };
     serde_json::to_string(&result)

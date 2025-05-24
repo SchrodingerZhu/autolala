@@ -1,16 +1,18 @@
 use core::f64;
 pub use plotters;
 use plotters::{coord::Shift, prelude::*};
+use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize)]
 pub struct MissRatioCurve {
-    miss_ratio: Vec<f64>,
-    turning_points: Vec<f64>,
+    miss_ratio: Box<[f64]>,
+    turning_points: Box<[f64]>,
 }
 
 impl MissRatioCurve {
     pub fn new(ri_dist: &[(isize, f64)]) -> Self {
         let mut miss_ratio = ri_dist.iter().map(|(_, prob)| *prob).collect::<Vec<_>>();
-        let mut rolling_sum = 0.0;
+        let mut rolling_sum = 1.0 - miss_ratio.iter().sum::<f64>();
         for i in miss_ratio.iter_mut().rev() {
             let current = *i;
             *i = rolling_sum;
@@ -22,6 +24,8 @@ impl MissRatioCurve {
             *iter = prev + miss_ratio[i - 1] * (ri_dist[i].0 - ri_dist[i - 1].0) as f64;
             prev = *iter;
         }
+        let miss_ratio = miss_ratio.into_boxed_slice();
+        let turning_points = turning_points.into_boxed_slice();
         Self {
             miss_ratio,
             turning_points,

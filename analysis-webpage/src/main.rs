@@ -1,5 +1,6 @@
 use std::time::Duration;
 
+use denning::MissRatioCurve;
 use plotters::{prelude::IntoDrawingArea, style::WHITE};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::{JsCast, JsValue};
@@ -37,7 +38,7 @@ struct BarvinokResult {
     counts: Box<[String]>,
     portions: Box<[String]>,
     total_count: String,
-    distribution: Box<[(isize, f64)]>,
+    miss_ratio_curve: MissRatioCurve,
     analysis_time: Duration,
 }
 
@@ -47,7 +48,7 @@ struct SaltResult {
     ri_values: Vec<String>,
     portions: Vec<String>,
     total_count: String,
-    distribution: Box<[(isize, f64)]>,
+    miss_ratio_curve: MissRatioCurve,
     analysis_time: Duration,
 }
 
@@ -231,7 +232,7 @@ fn string_to_mathjax_inner(s: &str, buffer: &mut String) {
     }
 }
 
-pub fn render_canvas(dist: &[(isize, f64)]) {
+pub fn render_canvas(mrc: &MissRatioCurve) {
     let document = window().unwrap().document().unwrap();
     let canvas = document
         .get_element_by_id("canvas")
@@ -239,8 +240,7 @@ pub fn render_canvas(dist: &[(isize, f64)]) {
         .dyn_into::<web_sys::HtmlCanvasElement>()
         .unwrap();
     let backend = plotters_canvas::CanvasBackend::with_canvas_object(canvas).unwrap();
-    let dist = denning::MissRatioCurve::new(dist);
-    dist.plot_miss_ratio_curve(&backend.into_drawing_area())
+    mrc.plot_miss_ratio_curve(&backend.into_drawing_area())
         .unwrap();
 }
 
@@ -415,7 +415,7 @@ fn App() -> Html {
                                 set_total_count(&render_to_string(&string_to_mathjax(
                                     &result.total_count,
                                 )));
-                                render_canvas(&result.distribution);
+                                render_canvas(&result.miss_ratio_curve);
                                 update_ri_table_barvinok(
                                     &result.ri_values,
                                     &result.symbol_ranges,
@@ -461,7 +461,7 @@ fn App() -> Html {
                                     result.analysis_time.as_millis()
                                 ));
                                 update_ri_table_salt(&result.ri_values, &result.portions).unwrap();
-                                render_canvas(&result.distribution);
+                                render_canvas(&result.miss_ratio_curve);
                             } else {
                                 let body = response.text().await.unwrap_or_else(|e| format!("{e}"));
                                 let body = strip_ansi_escapes::strip_str(&body);

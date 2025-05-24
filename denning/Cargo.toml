@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 plotters = "0.3.7"
+serde = { version = "1.0.219", features = ["derive"] }
