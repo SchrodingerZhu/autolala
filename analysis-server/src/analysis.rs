@@ -14,6 +14,7 @@ pub enum AnalysisRequest {
     },
     Salt {
         source: String,
+        block_size: Option<usize>,
     },
 }
 
@@ -83,8 +84,11 @@ impl AnalysisRequest {
                 }
                 source
             }
-            AnalysisRequest::Salt { source } => {
+            AnalysisRequest::Salt { source, block_size } => {
                 command.arg("salt");
+                if let Some(block_size) = block_size {
+                    command.arg(&format!("--block-size={block_size}"));
+                }
                 source
             }
         };
