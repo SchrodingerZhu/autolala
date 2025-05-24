@@ -314,7 +314,7 @@ pub fn get_ri_distro(dist: &[(Poly, Poly)]) -> anyhow::Result<Vec<(isize, f64)>>
             }
         }
     }
-    let mut distro = distro_map.into_iter().collect::<Vec<_>>();
+    let mut distro = distro_map.into_iter().chain([(0, 0.0)]).collect::<Vec<_>>();
     distro.sort_by(|a, b| a.0.cmp(&b.0));
     Ok(distro)
 }
