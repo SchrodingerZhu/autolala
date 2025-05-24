@@ -1,4 +1,7 @@
-use std::collections::hash_map::Entry;
+use std::{
+    collections::hash_map::Entry,
+    time::{Duration, Instant},
+};
 
 use crate::utils::{Poly, get_max_array_dim};
 use ahash::AHashMap;
@@ -915,12 +918,14 @@ struct BarvinokResult {
     portions: Box<[String]>,
     total_count: String,
     distribution: Box<[(isize, f64)]>,
+    analysis_time: Duration,
 }
 
 pub fn create_json_output<'a>(
     dist: &[DistItem<'a>],
     total: PiecewiseQuasiPolynomial<'a>,
     infinite_repeat: bool,
+    start_time: Instant,
 ) -> Result<String> {
     let distribution = get_distro(dist, total.clone(), infinite_repeat).unwrap_or_default();
     let mut total_count = None;
@@ -1005,6 +1010,7 @@ pub fn create_json_output<'a>(
             .to_expression()
             .printer(PrintOptions::latex())
     );
+    let analysis_time = start_time.elapsed();
     let result = BarvinokResult {
         ri_values,
         symbol_ranges,
@@ -1012,6 +1018,7 @@ pub fn create_json_output<'a>(
         portions,
         distribution,
         total_count,
+        analysis_time,
     };
     let json = serde_json::to_string(&result)
         .map_err(|e| anyhow::anyhow!("failed to serialize to JSON: {e}"))?;

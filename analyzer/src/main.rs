@@ -226,6 +226,8 @@ fn main_entry() -> anyhow::Result<()> {
         }
     };
 
+    let start_time = std::time::Instant::now();
+
     match &options.method {
         Method::Barvinok {
             barvinok_arg,
@@ -307,7 +309,12 @@ fn main_entry() -> anyhow::Result<()> {
             let space_count = space.cardinality()?;
             let raw_distro = processor.get_distribution()?;
             if options.json {
-                let output = isl::create_json_output(&raw_distro, space_count, *infinite_repeat)?;
+                let output = isl::create_json_output(
+                    &raw_distro,
+                    space_count,
+                    *infinite_repeat,
+                    start_time,
+                )?;
                 writeln!(writer, "{output}")?;
             } else {
                 let table = isl::create_table(&raw_distro, space_count.clone(), *infinite_repeat)?;
@@ -378,7 +385,8 @@ fn main_entry() -> anyhow::Result<()> {
                 None => ri_dist_vec.collect::<Vec<_>>(),
             };
             if options.json {
-                let output = salt::create_json_output(&ri_dist_vec, access_cnt, tc.values())?;
+                let output =
+                    salt::create_json_output(&ri_dist_vec, access_cnt, tc.values(), start_time)?;
                 writeln!(writer, "{output}")?;
             } else {
                 let table = create_table(&ri_dist_vec);

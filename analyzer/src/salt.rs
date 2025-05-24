@@ -1,4 +1,7 @@
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    time::{Duration, Instant},
+};
 
 use ahash::AHashMap;
 use raffine::{
@@ -278,6 +281,7 @@ struct SaltResult {
     portions: Vec<String>,
     total_count: String,
     distribution: Box<[(isize, f64)]>,
+    analysis_time: Duration,
 }
 
 pub fn get_total_count<'a, I>(accesses: usize, trip_counts: I) -> anyhow::Result<Poly>
@@ -342,6 +346,7 @@ pub fn create_json_output<'a, I>(
     dist: &[(Poly, Poly)],
     accesses: usize,
     trip_counts: I,
+    start_time: Instant,
 ) -> anyhow::Result<String>
 where
     I: Iterator<Item = &'a Poly>,
@@ -368,11 +373,13 @@ where
         .printer(PrintOptions::latex())
         .to_string();
     let distribution = get_ri_distro(dist).unwrap_or_default().into_boxed_slice();
+    let analysis_time = start_time.elapsed();
     let result = SaltResult {
         ri_values,
         portions,
         total_count,
         distribution,
+        analysis_time,
     };
     serde_json::to_string(&result)
         .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {}", e))

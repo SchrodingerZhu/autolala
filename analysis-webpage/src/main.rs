@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 use plotters::{prelude::IntoDrawingArea, style::WHITE};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::{JsCast, JsValue};
@@ -24,6 +26,7 @@ pub enum AnalysisRequest {
     },
     Salt {
         source: String,
+        block_size: Option<usize>,
     },
 }
 
@@ -35,6 +38,7 @@ struct BarvinokResult {
     portions: Box<[String]>,
     total_count: String,
     distribution: Box<[(isize, f64)]>,
+    analysis_time: Duration,
 }
 
 #[allow(dead_code)]
@@ -42,6 +46,9 @@ struct BarvinokResult {
 struct SaltResult {
     ri_values: Vec<String>,
     portions: Vec<String>,
+    total_count: String,
+    distribution: Box<[(isize, f64)]>,
+    analysis_time: Duration,
 }
 
 pub fn get_ace_editor_text() -> Option<String> {
@@ -76,6 +83,15 @@ pub fn get_barvinok_block_size() -> Option<usize> {
     let document = window()?.document()?;
     let input = document
         .get_element_by_id("barvinok-block-size")?
+        .dyn_into::<HtmlInputElement>()
+        .ok()?;
+    input.value().parse().ok()
+}
+
+pub fn get_salt_block_size() -> Option<usize> {
+    let document = window()?.document()?;
+    let input = document
+        .get_element_by_id("salt-block-size")?
         .dyn_into::<HtmlInputElement>()
         .ok()?;
     input.value().parse().ok()
@@ -117,16 +133,27 @@ pub fn set_total_count(value: &str) {
         && let Some(span) = document
             .get_element_by_id("total-count")
             .and_then(|el| el.dyn_into::<HtmlSpanElement>().ok())
-        {
-            span.set_inner_html(value);
-        }
+    {
+        span.set_inner_html(value);
+    }
+}
+
+pub fn set_analysis_time(value: &str) {
+    if let Some(document) = window().and_then(|w| w.document())
+        && let Some(span) = document
+            .get_element_by_id("analysis-time")
+            .and_then(|el| el.dyn_into::<HtmlSpanElement>().ok())
+    {
+        span.set_inner_html(value);
+    }
 }
 
 pub fn clear_table() {
     if let Some(document) = window().and_then(|w| w.document())
-        && let Some(container) = document.get_element_by_id("ri-table") {
-            container.set_inner_html("");
-        }
+        && let Some(container) = document.get_element_by_id("ri-table")
+    {
+        container.set_inner_html("");
+    }
 }
 
 pub fn clear_canvas() {
@@ -347,6 +374,7 @@ fn App() -> Html {
         move |_| {
             clear_table();
             set_total_count("Loading...");
+            set_analysis_time("Loading...");
             clear_canvas();
             show_error.set(false);
             let text = get_ace_editor_text()
@@ -380,6 +408,10 @@ fn App() -> Html {
                             let response = response.send().await?;
                             if response.status() == 200 {
                                 let result = response.json::<BarvinokResult>().await?;
+                                set_analysis_time(&format!(
+                                    "{} ms",
+                                    result.analysis_time.as_millis()
+                                ));
                                 set_total_count(&render_to_string(&string_to_mathjax(
                                     &result.total_count,
                                 )));
@@ -393,8 +425,8 @@ fn App() -> Html {
                                 .unwrap();
                             } else {
                                 let body = response.text().await.unwrap_or_else(|e| format!("{e}"));
-                                error_message
-                                    .set(format!("Input program cannot be analyze: {body}"));
+                                let body = strip_ansi_escapes::strip_str(&body);
+                                error_message.set(body);
                                 show_error.set(true);
                             }
                             anyhow::Ok(())
@@ -406,8 +438,10 @@ fn App() -> Html {
                     })
                 }
                 Some("Salt") => {
+                    let block_size = get_salt_block_size();
                     let request = AnalysisRequest::Salt {
                         source: text.unwrap(),
+                        block_size,
                     };
                     let error_message = error_message.clone();
                     let show_error = show_error.clone();
@@ -419,12 +453,19 @@ fn App() -> Html {
                             let response = response.send().await?;
                             if response.status() == 200 {
                                 let result = response.json::<SaltResult>().await?;
-                                set_total_count("not implemented");
+                                set_total_count(&render_to_string(&string_to_mathjax(
+                                    &result.total_count,
+                                )));
+                                set_analysis_time(&format!(
+                                    "{} ms",
+                                    result.analysis_time.as_millis()
+                                ));
                                 update_ri_table_salt(&result.ri_values, &result.portions).unwrap();
+                                render_canvas(&result.distribution);
                             } else {
                                 let body = response.text().await.unwrap_or_else(|e| format!("{e}"));
-                                error_message
-                                    .set(format!("Input program cannot be analyze: {body}"));
+                                let body = strip_ansi_escapes::strip_str(&body);
+                                error_message.set(body);
                                 show_error.set(true);
                             }
                             anyhow::Ok(())
@@ -447,41 +488,42 @@ fn App() -> Html {
     use_effect(|| {
         // Run this only once after the component is mounted
         if let Some(window) = window()
-            && let Ok(ace_ns) = js_sys::Reflect::get(&window, &JsValue::from_str("ace")) {
-                let editor = js_sys::Reflect::get(&ace_ns, &JsValue::from_str("edit"))
+            && let Ok(ace_ns) = js_sys::Reflect::get(&window, &JsValue::from_str("ace"))
+        {
+            let editor = js_sys::Reflect::get(&ace_ns, &JsValue::from_str("edit"))
+                .ok()
+                .and_then(|edit_fn| {
+                    edit_fn
+                        .dyn_ref::<js_sys::Function>()
+                        .and_then(|f| f.call1(&JsValue::NULL, &JsValue::from_str("editor")).ok())
+                });
+
+            if let Some(editor_obj) = editor {
+                // editor.setTheme("ace/theme/monokai")
+                let _ = js_sys::Reflect::get(&editor_obj, &JsValue::from_str("setTheme"))
                     .ok()
-                    .and_then(|edit_fn| {
-                        edit_fn.dyn_ref::<js_sys::Function>().and_then(|f| {
-                            f.call1(&JsValue::NULL, &JsValue::from_str("editor")).ok()
+                    .and_then(|set_theme_fn| {
+                        set_theme_fn.dyn_ref::<js_sys::Function>().and_then(|f| {
+                            f.call1(&editor_obj, &JsValue::from_str("ace/theme/monokai"))
+                                .ok()
                         })
                     });
 
-                if let Some(editor_obj) = editor {
-                    // editor.setTheme("ace/theme/monokai")
-                    let _ = js_sys::Reflect::get(&editor_obj, &JsValue::from_str("setTheme"))
-                        .ok()
-                        .and_then(|set_theme_fn| {
-                            set_theme_fn.dyn_ref::<js_sys::Function>().and_then(|f| {
-                                f.call1(&editor_obj, &JsValue::from_str("ace/theme/monokai"))
-                                    .ok()
-                            })
-                        });
-
-                    // editor.session.setMode("ace/mode/javascript")
-                    let _ = js_sys::Reflect::get(&editor_obj, &JsValue::from_str("session"))
-                        .ok()
-                        .and_then(|session| {
-                            js_sys::Reflect::get(&session, &JsValue::from_str("setMode"))
-                                .ok()
-                                .and_then(|set_mode_fn| {
-                                    set_mode_fn.dyn_ref::<js_sys::Function>().and_then(|f| {
-                                        f.call1(&session, &JsValue::from_str("ace/mode/plain_text"))
-                                            .ok()
-                                    })
+                // editor.session.setMode("ace/mode/javascript")
+                let _ = js_sys::Reflect::get(&editor_obj, &JsValue::from_str("session"))
+                    .ok()
+                    .and_then(|session| {
+                        js_sys::Reflect::get(&session, &JsValue::from_str("setMode"))
+                            .ok()
+                            .and_then(|set_mode_fn| {
+                                set_mode_fn.dyn_ref::<js_sys::Function>().and_then(|f| {
+                                    f.call1(&session, &JsValue::from_str("ace/mode/plain_text"))
+                                        .ok()
                                 })
-                        });
-                }
+                            })
+                    });
             }
+        }
 
         || ()
     });
@@ -492,11 +534,11 @@ fn App() -> Html {
             // title
             <h1 class="text-center">{"Affine Loop Locality Analysis"}</h1>
             <div class="gap-3 mb-3">
-                <div id="error-message" class="alert alert-danger" role="alert" style={if *show_error { "" } else { "display: none;" }}>
+                <div id="error-message" class="alert alert-danger" role="alert" style={if *show_error { "white-space: pre-wrap;" } else { "display: none;" }}>
                     <strong id="error-message-text">{(*error_message).clone()}</strong>
                 </div>
                 <div id="error-message" class="alert alert-info" role="alert">
-                    <strong id="error-message-text">{"Symbol subscripts are in the order of introduction. Salt solver can only handle perfectly nested loop but it accept symbols appearing as coefficients. Barvinok solver can only handle pure affine expressions. Under Barvinok solver, if there is no symbolic input, a miss ratio curve will be produced."}</strong>
+                    <strong id="error-message-text">{"Symbol subscripts are in the order of introduction. Salt solver can only handle perfectly nested loop but it accept symbols appearing as coefficients. Barvinok solver can only handle pure affine expressions. If there is no symbolic input, a miss ratio curve will be produced."}</strong>
                 </div>
                 <div class="input-group">
                     <span class="input-group-text"> { "Solver" }</span>
@@ -530,6 +572,12 @@ fn App() -> Html {
                         </label>
                     </div>
                 </div>
+                <div id="salt-options" style={if *show_barvinok  { "display: none;" } else { "" }}>
+                    <div class="input-group">
+                        <span class="input-group-text"> { "Block Size" }</span>
+                        <input type="text" class="form-control" id="salt-block-size" placeholder="" required=false />
+                    </div>
+                </div>
                 <br />
                 <button type="button" class="btn btn-primary" {onclick}>{ "Analyze" }</button>
                 <hr />
@@ -539,6 +587,11 @@ fn App() -> Html {
                 <div class="input-group">
                     <span class="input-group-text"> { "Total Count" }</span>
                     <span class="form-control" id="total-count"></span>
+                </div>
+                <br />
+                <div class="input-group">
+                    <span class="input-group-text"> { "Analysis Time" }</span>
+                    <span class="form-control" id="analysis-time"></span>
                 </div>
                 <br />
                 // RI table div

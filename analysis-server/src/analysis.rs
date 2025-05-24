@@ -119,12 +119,15 @@ impl AnalysisRequest {
             Ok(stdout)
         } else {
             let stderr = String::from_utf8(output.stderr)?;
+            let stdout = String::from_utf8(output.stdout)?;
             info!(
                 "child process failed with reason: {} and {} bytes",
                 output.status.reason,
                 stderr.len()
             );
-            Err(anyhow::anyhow!("Analyzer failed: {}", stderr))
+            Err(anyhow::anyhow!(
+                "[Analysis Failed]\n- STDERR:\n{stderr}\n- STDOUT:\n{stdout}"
+            ))
         }
     }
 }
