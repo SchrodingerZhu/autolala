@@ -1,16 +1,22 @@
 use std::{
-    collections::HashMap,
+    collections::{HashMap, HashSet},
     time::{Duration, Instant},
 };
 
 use ahash::AHashMap;
 use denning::MissRatioCurve;
+use melior::ir::block;
 use raffine::{
     affine::{AffineExpr, AffineMap},
     tree::{Tree, ValID},
 };
 use serde::Serialize;
-use symbolica::{atom::Atom, domains::rational_polynomial::FromNumeratorAndDenominator};
+use symbolica::{
+    atom::Atom,
+    domains::{
+        finite_field::FiniteFieldWorkspace, rational_polynomial::FromNumeratorAndDenominator,
+    },
+};
 use symbolica::{atom::AtomCore, domains::integer::Integer};
 use symbolica::{domains::Ring, symbol};
 use symbolica::{
@@ -33,6 +39,122 @@ fn isize_to_poly<'a>(value: isize, context: &AnalysisContext<'a>) -> Poly {
     );
     let step_converted = convert_affine_map(map, &[]).unwrap();
     step_converted[0].clone()
+}
+
+pub fn no_coefficient_for_block(tree: &Tree) -> bool {
+    match tree {
+        Tree::For {
+            lower_bound,
+            upper_bound,
+            lower_bound_operands,
+            upper_bound_operands,
+            body,
+            ivar,
+            step,
+        } => no_coefficient_for_block(body),
+        Tree::Access {
+            memref,
+            map,
+            operands,
+            is_write,
+        } => {
+            let converted_map = convert_affine_map(*map, operands);
+
+            let mut has_coefficient = false;
+            let mut block_position = 0;
+            if let Result::Ok(polys) = converted_map {
+                for poly in polys {
+                    has_coefficient = false;
+                    block_position = 0;
+
+                    for (i, var) in poly.numerator.variables.iter().enumerate() {
+                        if var.to_string().starts_with('i') {
+                            let index_str = &var.to_string()[1..];
+                            let index = index_str.parse::<usize>().unwrap();
+                            if index >= block_position {
+                                if poly.numerator.coefficients[i] != 1 {
+                                    has_coefficient = true;
+                                }
+                                block_position = index;
+                            }
+                        }
+                    }
+                }
+            }
+            return !has_coefficient;
+        }
+        Tree::Block(trees) => {
+            for t in trees.iter() {
+                if !no_coefficient_for_block(t) {
+                    return false;
+                }
+            }
+            true
+        }
+        Tree::If { .. } => false,
+    }
+}
+
+fn has_reuses_helper(tree: &Tree, ivar_set: &mut HashSet<usize>) -> bool {
+    match tree {
+        Tree::For {
+            lower_bound,
+            upper_bound,
+            lower_bound_operands,
+            upper_bound_operands,
+            body,
+            ivar,
+            step,
+        } => {
+            let ValID::IVar(id) = ivar else {
+                unreachable!("not possible ")
+            };
+            ivar_set.insert(*id);
+            has_reuses_helper(body, ivar_set)
+        }
+        Tree::Access {
+            memref,
+            map,
+            operands,
+            is_write,
+        } => {
+            let mut reference_vector = vec![0; ivar_set.len()];
+            let converted_map = convert_affine_map(*map, operands);
+            if let Result::Ok(polys) = converted_map {
+                for poly in polys {
+                    for var in poly.numerator.variables.iter() {
+                        if var.to_string().starts_with('i') {
+                            let index_str = &var.to_string()[1..];
+                            let index = index_str.parse::<usize>().unwrap();
+                            reference_vector[index] = 1;
+                        }
+                    }
+                }
+            }
+            let mut has_reuse = false;
+            for i in reference_vector {
+                if i == 0 {
+                    has_reuse = true;
+                    break;
+                }
+            }
+            has_reuse
+        }
+        Tree::Block(trees) => {
+            for t in trees.iter() {
+                if !has_reuses_helper(t, ivar_set) {
+                    return false;
+                }
+            }
+            true
+        }
+        Tree::If { .. } => false,
+    }
+}
+
+pub fn has_reuses(tree: &Tree) -> bool {
+    let mut ivar_set = HashSet::new();
+    has_reuses_helper(tree, &mut ivar_set)
 }
 
 pub fn is_perfectly_nested(tree: &Tree) -> bool {
