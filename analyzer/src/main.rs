@@ -3,9 +3,9 @@ use barvinok::ContextRef as BContext;
 use barvinok::constraint::Constraint;
 use barvinok::local_space::LocalSpace;
 use clap::Parser;
-use denning::plotters::prelude::IntoDrawingArea;
 use melior::Context as MContext;
 use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
+use plotters::prelude::IntoDrawingArea;
 use raffine::Context as RContext;
 use raffine::{DominanceInfo, tree::Tree};
 use salt::is_perfectly_nested;
@@ -324,7 +324,7 @@ fn main_entry() -> anyhow::Result<()> {
                     Ok(dist) => {
                         let curve = denning::MissRatioCurve::new(&dist);
                         if let Some(path) = &options.miss_ratio_curve {
-                            let svgbackend = denning::plotters::backend::SVGBackend::new(
+                            let svgbackend = plotters::backend::SVGBackend::new(
                                 path,
                                 (
                                     options.miss_ratio_curve_width,
@@ -397,7 +397,7 @@ fn main_entry() -> anyhow::Result<()> {
                     Ok(dist) => {
                         let curve = denning::MissRatioCurve::new(&dist);
                         if let Some(path) = &options.miss_ratio_curve {
-                            let svgbackend = denning::plotters::backend::SVGBackend::new(
+                            let svgbackend = plotters::backend::SVGBackend::new(
                                 path,
                                 (
                                     options.miss_ratio_curve_width,

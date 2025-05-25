@@ -1,5 +1,12 @@
+#[cfg(feature = "charming")]
+use charming::{
+    Chart,
+    component::{Axis, Title},
+    element::{AxisType, Tooltip, Trigger},
+    series::Line,
+};
 use core::f64;
-pub use plotters;
+#[cfg(feature = "plotters")]
 use plotters::{coord::Shift, prelude::*};
 use serde::{Deserialize, Serialize};
 
@@ -31,6 +38,8 @@ impl MissRatioCurve {
             turning_points,
         }
     }
+
+    #[cfg(feature = "plotters")]
     pub fn plot_miss_ratio_curve<DB: DrawingBackend>(
         &self,
         area: &DrawingArea<DB, Shift>,
@@ -70,5 +79,55 @@ impl MissRatioCurve {
         chart.configure_series_labels().border_style(BLACK).draw()?;
 
         Ok(())
+    }
+
+    #[cfg(feature = "charming")]
+    pub fn plot_interactive_miss_ratio_curve(&self) -> Chart {
+        use charming::element::Step;
+
+        let turning_points = &self.turning_points;
+        let miss_ratio = &self.miss_ratio;
+
+        //--------------------------------------------------------------------
+        // Build coordinates so ECharts can display a true *step* line.
+        // Each turning-point is duplicated: first at the old height, then at
+        // the new one – this creates the vertical drop.
+        //--------------------------------------------------------------------
+        let mut coords: Vec<Vec<f64>> = Vec::with_capacity(turning_points.len());
+        for i in 0..turning_points.len() {
+            let x = turning_points[i];
+            let y = miss_ratio[i];
+            coords.push(vec![x, y]); // horizontal
+        }
+
+        //--------------------------------------------------------------------
+        // Compose the chart.
+        //--------------------------------------------------------------------
+        Chart::new()
+            .title(Title::new().text("Miss-ratio curve"))
+            .x_axis(
+                Axis::new()
+                    .name("Cache size")
+                    .type_(AxisType::Log) // ← logarithmic axis :contentReference[oaicite:0]{index=0}
+                    .min(Some(turning_points[0]))
+                    .max(Some(*turning_points.last().unwrap()))
+                    .scale(true)
+                    .log_base(turning_points.last().unwrap().ceil()), // use base-10 ticks; change if you prefer
+            )
+            .y_axis(
+                Axis::new()
+                    .name("Miss ratio")
+                    .type_(AxisType::Value)
+                    .min(Some(0.0))
+                    .max(Some(1.0)),
+            )
+            .tooltip(Tooltip::new().trigger(Trigger::Axis)) // hover shows (x, y)
+            .series(
+                Line::new()
+                    .name("Miss ratio")
+                    .data(coords) // (x, y) coordinate pairs
+                    .step(Step::End) // horizontal → drop at the *end* of an interval
+                    .show_symbol(false),
+            )
     }
 }

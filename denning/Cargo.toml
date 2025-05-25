@@ -4,5 +4,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-plotters = "0.3.7"
+charming = { version = "0.5", default-features = false, optional = true }
+plotters = { version = "0.3.7", optional = true }
 serde = { version = "1.0.219", features = ["derive"] }
+
+[features]
+charming = ["dep:charming"]
+plotters = ["dep:plotters"]

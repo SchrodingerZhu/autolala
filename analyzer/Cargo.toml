@@ -5,7 +5,7 @@ edition = "2024"
 
 [dependencies]
 raffine = { path = "../raffine" }
-denning = { path = "../denning" }
+denning = { path = "../denning", features = ["plotters"] }
 barvinok = { git = "https://github.com/Roc-Locality/barvinok-rs" }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing = { version = "0.1", default-features = false, features = [
@@ -26,3 +26,4 @@ tikv-jemallocator = { version = "0.6.0", features = [
     "disable_initial_exec_tls",
 ] }
 serde_json = "1.0.140"
+plotters = "0.3.7"

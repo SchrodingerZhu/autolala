@@ -16,9 +16,10 @@ web-sys = { version = "0.3.77", features = [
     "HtmlInputElement",
     "HtmlSpanElement",
 ] }
-denning = { path = "../denning" }
+denning = { path = "../denning", features = [
+    "charming",
+], default-features = false }
+charming = { version = "0.5", default-features = false, features = ["wasm"] }
 yew = { version = "0.21", features = ["csr"] }
-plotters = "0.3.7"
-plotters-canvas = "0.3.1"
 regex = "1.11.1"
 strip-ansi-escapes = "0.2.1"

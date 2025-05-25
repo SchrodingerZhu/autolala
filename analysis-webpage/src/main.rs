@@ -1,7 +1,7 @@
 use std::time::Duration;
 
+use charming::WasmRenderer;
 use denning::MissRatioCurve;
-use plotters::{prelude::IntoDrawingArea, style::WHITE};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::spawn_local;
@@ -162,15 +162,9 @@ pub fn clear_canvas() {
         .unwrap()
         .document()
         .unwrap()
-        .get_element_by_id("canvas")
-        .unwrap()
-        .dyn_into::<web_sys::HtmlCanvasElement>()
+        .get_element_by_id("mrc-container")
         .unwrap();
-    plotters_canvas::CanvasBackend::with_canvas_object(canvas)
-        .unwrap()
-        .into_drawing_area()
-        .fill(&WHITE)
-        .unwrap();
+    canvas.set_inner_html(r#"<div id="miss-ratio-curve"></div>"#);
 }
 
 fn string_to_mathjax_inner(s: &str, buffer: &mut String) {
@@ -233,15 +227,17 @@ fn string_to_mathjax_inner(s: &str, buffer: &mut String) {
 }
 
 pub fn render_canvas(mrc: &MissRatioCurve) {
-    let document = window().unwrap().document().unwrap();
-    let canvas = document
-        .get_element_by_id("canvas")
+    let mrc_container = window()
         .unwrap()
-        .dyn_into::<web_sys::HtmlCanvasElement>()
+        .document()
+        .unwrap()
+        .get_element_by_id("miss-ratio-curve")
         .unwrap();
-    let backend = plotters_canvas::CanvasBackend::with_canvas_object(canvas).unwrap();
-    mrc.plot_miss_ratio_curve(&backend.into_drawing_area())
-        .unwrap();
+    let width = mrc_container.client_width() as u32;
+    let height = (0.618 * width as f64).ceil() as u32;
+    let render = WasmRenderer::new(width, height);
+    let chart = mrc.plot_interactive_miss_ratio_curve();
+    render.render("miss-ratio-curve", &chart).unwrap();
 }
 
 fn ident_to_mathjax(s: &str) -> String {
@@ -596,8 +592,8 @@ fn App() -> Html {
                 <br />
                 // RI table div
                 <div id="ri-table"></div>
-                <div class="container text-center">
-                    <canvas id="canvas" width="800" height="600"></canvas>
+                <div id="mrc-container" class="container text-center">
+                    <div id="miss-ratio-curve"></div>
                 </div>
             </div>
         </div>
