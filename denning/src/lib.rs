@@ -108,8 +108,8 @@ impl MissRatioCurve {
             .x_axis(
                 Axis::new()
                     .name("Cache size")
-                    .type_(AxisType::Log) // ← logarithmic axis :contentReference[oaicite:0]{index=0}
-                    .min(Some(turning_points[0]))
+                    .type_(AxisType::Value) // ← logarithmic axis :contentReference[oaicite:0]{index=0}
+                    .min(0.0)
                     .max(Some(*turning_points.last().unwrap()))
                     .scale(true)
                     .log_base(turning_points.last().unwrap().ceil()), // use base-10 ticks; change if you prefer
@@ -117,9 +117,9 @@ impl MissRatioCurve {
             .y_axis(
                 Axis::new()
                     .name("Miss ratio")
+                    .min(0.0)
                     .type_(AxisType::Value)
-                    .min(Some(0.0))
-                    .max(Some(1.0)),
+                    .max(1.0),
             )
             .tooltip(Tooltip::new().trigger(Trigger::Axis)) // hover shows (x, y)
             .series(
