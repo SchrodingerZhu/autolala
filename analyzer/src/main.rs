@@ -8,7 +8,7 @@ use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
 use plotters::prelude::IntoDrawingArea;
 use raffine::Context as RContext;
 use raffine::{DominanceInfo, tree::Tree};
-use salt::is_perfectly_nested;
+use salt::{has_reuses, is_perfectly_nested, no_coefficient_for_block};
 use std::{collections::HashMap, io::Read, path::PathBuf};
 use tracing::{debug, error, info};
 mod isl;
@@ -363,6 +363,14 @@ fn main_entry() -> anyhow::Result<()> {
 
             if !is_perfectly_nested(tree) {
                 return Err(anyhow!("The loop nest is not perfectly nested"));
+            }
+            
+            if !has_reuses(tree) {
+                return Err(anyhow!("The loop nest does not have non-imaginary non-block-wise reuses"));
+            }
+            
+            if !no_coefficient_for_block(tree) {
+                return Err(anyhow!("The loop nest has non-one coefficient for block induction variable"));
             }
 
             let access_cnt = salt::number_of_accesses(tree);
