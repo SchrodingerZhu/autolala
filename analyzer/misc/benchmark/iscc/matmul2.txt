@@ -1,0 +1,21 @@
+
+
+IS     := [M, N, K] -> { [i, j, k, ii, jj, kk, s] : 0 <= i < floor(M/32) and 0 <= j < floor(N/32) and 0 <= k < floor(K/32) and 0 <= s <= 3 and M >= 512 and N >= 512 and K >= 512 and 0 <= ii < 32 and 0 <= jj < 32 and 0 <= kk < 32};
+IS2Arr := { [i, j, k, ii, jj, kk, 0] -> A[i * 32 + ii , floor((k * 32 + kk)/8)]; [i, j, k, ii, jj, kk, 1] -> B[k * 32 + kk, floor((j * 32 + jj)/8)]; [i, j, k, ii, jj, kk, 2] -> C[i * 32 + ii, floor((j * 32 + jj)/8)] } * IS;
+
+# here IS is exactly the time, so we don't need to do anything special.
+
+LT     := IS << IS;
+LE     := IS <<= IS;
+
+# convert LT to element domain and back
+LT'    := (IS2Arr . IS2Arr^-1) * (IS << IS);
+
+# next access time
+Next   := lexmin LT';
+Prev   := Next^-1;
+After  := Prev . LE;
+Before := LT^-1;
+
+# RD
+card ((After * Before) . IS2Arr);
