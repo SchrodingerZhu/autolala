@@ -244,13 +244,6 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                     }
                 }
             }
-            // check if keys add up ti 1
-            let mut sum = isize_to_poly(0, context);
-            for (_key, value) in ri_dist.iter() {
-                if *value != isize_to_poly(3, context) {
-                    sum = &sum + value;
-                }
-            }
             ri_dist
         }
         Tree::Access { map, operands, .. } => {
@@ -389,8 +382,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             }
 
             *ri_dist.get_mut(&ri_block_poly).unwrap() =
-                ri_dist.get(&ri_block_poly).unwrap() + &addition;
-
+                ri_dist.get(&ri_block_poly).unwrap() + &field.div(&addition, &n_ref);
             ri_dist
         }
 
