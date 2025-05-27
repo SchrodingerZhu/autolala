@@ -5,18 +5,12 @@ use std::{
 
 use ahash::AHashMap;
 use denning::MissRatioCurve;
-use melior::ir::block;
 use raffine::{
     affine::{AffineExpr, AffineMap},
     tree::{Tree, ValID},
 };
 use serde::Serialize;
-use symbolica::{
-    atom::Atom,
-    domains::{
-        finite_field::FiniteFieldWorkspace, rational_polynomial::FromNumeratorAndDenominator,
-    },
-};
+use symbolica::{atom::Atom, domains::rational_polynomial::FromNumeratorAndDenominator};
 use symbolica::{atom::AtomCore, domains::integer::Integer};
 use symbolica::{domains::Ring, symbol};
 use symbolica::{
@@ -43,29 +37,15 @@ fn isize_to_poly<'a>(value: isize, context: &AnalysisContext<'a>) -> Poly {
 
 pub fn no_coefficient_for_block(tree: &Tree) -> bool {
     match tree {
-        Tree::For {
-            lower_bound,
-            upper_bound,
-            lower_bound_operands,
-            upper_bound_operands,
-            body,
-            ivar,
-            step,
-        } => no_coefficient_for_block(body),
-        Tree::Access {
-            memref,
-            map,
-            operands,
-            is_write,
-        } => {
+        Tree::For { body, .. } => no_coefficient_for_block(body),
+        Tree::Access { map, operands, .. } => {
             let converted_map = convert_affine_map(*map, operands);
 
             let mut has_coefficient = false;
-            let mut block_position = 0;
             if let Result::Ok(polys) = converted_map {
                 for poly in polys {
                     has_coefficient = false;
-                    block_position = 0;
+                    let mut block_position = 0;
 
                     for (i, var) in poly.numerator.variables.iter().enumerate() {
                         if var.to_string().starts_with('i') {
@@ -81,7 +61,7 @@ pub fn no_coefficient_for_block(tree: &Tree) -> bool {
                     }
                 }
             }
-            return !has_coefficient;
+            !has_coefficient
         }
         Tree::Block(trees) => {
             for t in trees.iter() {
@@ -97,27 +77,14 @@ pub fn no_coefficient_for_block(tree: &Tree) -> bool {
 
 fn has_reuses_helper(tree: &Tree, ivar_set: &mut HashSet<usize>) -> bool {
     match tree {
-        Tree::For {
-            lower_bound,
-            upper_bound,
-            lower_bound_operands,
-            upper_bound_operands,
-            body,
-            ivar,
-            step,
-        } => {
+        Tree::For { body, ivar, .. } => {
             let ValID::IVar(id) = ivar else {
                 unreachable!("not possible ")
             };
             ivar_set.insert(*id);
             has_reuses_helper(body, ivar_set)
         }
-        Tree::Access {
-            memref,
-            map,
-            operands,
-            is_write,
-        } => {
+        Tree::Access { map, operands, .. } => {
             let mut reference_vector = vec![0; ivar_set.len()];
             let converted_map = convert_affine_map(*map, operands);
             if let Result::Ok(polys) = converted_map {
