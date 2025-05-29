@@ -1,6 +1,6 @@
-#define M 512
-#define N 512
-#define K 512
+#define M 256
+#define N 256
+#define K 256
 
 volatile float A[M][K];
 volatile float B[K][N];
@@ -16,7 +16,7 @@ void _start() {
               for (int iii = 0; iii < 32; ++iii)
                 for (int jjj = 0; jjj < 32; ++jjj)
                   for (int kkk = 0; kkk < 32; ++kkk) {
-                    C[i * 128 + ii * 32 + iii][j * 128 + jj * 32 + jjj] +=
+                    C[i * 128 + ii * 32 + iii][j * 128 + jj * 32 + jjj] =
                         A[i * 128 + ii * 32 + iii][k * 128 + kk * 32 + kkk] *
                         B[k * 128 + kk * 32 + kkk][j * 128 + jj * 32 + jjj];
                     asm volatile("" ::: "memory");

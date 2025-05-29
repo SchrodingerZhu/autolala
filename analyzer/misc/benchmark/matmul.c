@@ -1,6 +1,6 @@
-#define M 512
-#define N 512
-#define K 512
+#define M 256
+#define N 256
+#define K 256
 
 volatile float A[M][K];
 volatile float B[K][N];

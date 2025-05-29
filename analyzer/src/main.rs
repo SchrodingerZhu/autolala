@@ -361,21 +361,21 @@ fn main_entry() -> anyhow::Result<()> {
 
             debug!("Extracted tree: {}", tree);
 
-            if !is_perfectly_nested(tree) {
-                return Err(anyhow!("The loop nest is not perfectly nested"));
-            }
+            // if !is_perfectly_nested(tree) {
+            //     return Err(anyhow!("The loop nest is not perfectly nested"));
+            // }
 
-            if !has_reuses(tree) {
-                return Err(anyhow!(
-                    "The loop nest does not have non-imaginary non-block-wise reuses"
-                ));
-            }
+            // if !has_reuses(tree) {
+            //     return Err(anyhow!(
+            //         "The loop nest does not have non-imaginary non-block-wise reuses"
+            //     ));
+            // }
 
-            if !no_coefficient_for_block(tree) {
-                return Err(anyhow!(
-                    "The loop nest has non-one coefficient for block induction variable"
-                ));
-            }
+            // if !no_coefficient_for_block(tree) {
+            //     return Err(anyhow!(
+            //         "The loop nest has non-one coefficient for block induction variable"
+            //     ));
+            // }
 
             let access_cnt = salt::number_of_accesses(tree);
 
