@@ -54,6 +54,41 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
     get_timestamp_space_impl(num_params, 0, context, tree, &mut ivar_map)
 }
 
+fn align_sets<'i, 'a: 'i>(
+    longest: Set<'a>,
+    depth: usize,
+    context: &AnalysisContext<'a>,
+    iter: impl Iterator<Item = &'i mut Set<'a>>,
+    add_dim_constraint: bool,
+) -> Result<()> {
+    let space = longest.get_space()?;
+    let longest_dim = longest.num_dims()?;
+    let value_one = Value::new_si(context.bcontext(), 1);
+    let local_space = LocalSpace::try_from(space.clone())?;
+    for (idx, i) in iter.enumerate() {
+        let length = i.num_dims()?;
+        let mut s = i
+            .clone()
+            .insert_dims(DimType::Out, length, longest_dim - length)?;
+        for j in length..longest.num_dims()? {
+            // add constraint eq 0
+            let constraint = Constraint::new_equality(local_space.clone()).set_coefficient_val(
+                DimType::Out,
+                j,
+                value_one.clone(),
+            )?;
+            s = s.add_constraint(constraint)?;
+        }
+        if add_dim_constraint {
+            let current_dim_eq_i = Constraint::new_equality(local_space.clone())
+                .set_coefficient_val(DimType::Out, depth as u32, value_one.clone())?
+                .set_constant_si(-(idx as i32))?;
+            *i = s.add_constraint(current_dim_eq_i)?;
+        }
+    }
+    Ok(())
+}
+
 fn get_timestamp_space_impl<'a, 'b: 'a>(
     num_params: usize,
     depth: usize,
@@ -142,25 +177,7 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
                 .ok_or_else(|| anyhow::anyhow!("no sets found"))?
                 .clone();
             let space = longest.get_space()?;
-            let longest_dim = longest.num_dims()?;
-            let value_one = Value::new_si(context.bcontext(), 1);
-            let local_space = LocalSpace::try_from(space.clone())?;
-            for (idx, i) in sub_sets.iter_mut().enumerate() {
-                let length = i.num_dims()?;
-                let mut s = i
-                    .clone()
-                    .insert_dims(DimType::Out, length, longest_dim - length)?;
-                for j in length..longest.num_dims()? {
-                    // add constraint eq 0
-                    let constraint = Constraint::new_equality(local_space.clone())
-                        .set_coefficient_val(DimType::Out, j, value_one.clone())?;
-                    s = s.add_constraint(constraint)?;
-                }
-                let current_dim_eq_i = Constraint::new_equality(local_space.clone())
-                    .set_coefficient_val(DimType::Out, depth as u32, value_one.clone())?
-                    .set_constant_si(-(idx as i32))?;
-                *i = s.add_constraint(current_dim_eq_i)?;
-            }
+            align_sets(longest, depth, context, sub_sets.iter_mut(), true)?;
             let total_set = sub_sets
                 .into_iter()
                 .try_fold(Set::empty(space.clone())?, |acc, set| acc.union(set))?
@@ -175,7 +192,52 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
             let space = Space::set(context.bcontext(), num_params as u32, depth as u32)?;
             Ok(Set::universe(space)?)
         }
-        Tree::If { .. } => Err(anyhow::anyhow!("not implemented for conditional branch")),
+        Tree::If {
+            condition,
+            operands,
+            r#then,
+            r#else,
+        } => {
+            let r#then_set =
+                get_timestamp_space_impl(num_params, depth + 1, context, r#then, ivar_map)?;
+            let r#else_set = if let Some(r#else) = r#else {
+                get_timestamp_space_impl(num_params, depth + 1, context, r#else, ivar_map)?
+            } else {
+                Set::empty(r#then_set.get_space()?)?
+            };
+            // similar to block, align with longest set
+            let longest = if r#then_set.num_dims()? > r#else_set.num_dims()? {
+                r#then_set.clone()
+            } else {
+                r#else_set.clone()
+            };
+
+            let mut subsets = [r#then_set, r#else_set];
+            let space = longest.get_space()?;
+            align_sets(longest, depth, context, subsets.iter_mut(), false)?;
+            let conv = ExprConverter::new_with_dims(
+                space.clone(),
+                condition.num_dims(),
+                operands,
+                ivar_map,
+            )?;
+            let mut then_cond = Set::universe(space.clone())?;
+            for i in 0..condition.num_constraints() {
+                let expr = condition.get_constraint(i as isize);
+                let converted = conv.convert_polynomial(expr)?;
+                let constraint = if condition.is_constraint_equal(i as isize) {
+                    Constraint::new_equality_from_affine(converted)
+                } else {
+                    Constraint::new_inequality_from_affine(converted)
+                };
+                then_cond = then_cond.add_constraint(constraint)?;
+            }
+            let complement = then_cond.clone().complement()?;
+            let [x, y] = subsets;
+            x.intersect(then_cond)?
+                .union(y.intersect(complement)?)
+                .map_err(Into::into)
+        }
     }
 }
 
@@ -338,7 +400,7 @@ fn get_access_map_impl<'a, 'b: 'a>(
 struct ExprConverter<'isl, 'mlir, 'map> {
     local_space: LocalSpace<'isl>,
     ivar_map: &'map IVarMap<'mlir>,
-    map: AffineMap<'mlir>,
+    symbol_shift: usize,
     operands: &'mlir [ValID],
 }
 
@@ -350,9 +412,25 @@ impl<'isl, 'mlir, 'map> ExprConverter<'isl, 'mlir, 'map> {
         ivar_map: &'map IVarMap<'mlir>,
     ) -> Result<Self> {
         let local_space = LocalSpace::try_from(space)?;
+        let symbol_shift = map.num_dims();
         Ok(Self {
             local_space,
-            map,
+            symbol_shift,
+            operands,
+            ivar_map,
+        })
+    }
+
+    pub fn new_with_dims(
+        space: Space<'isl>,
+        symbol_shift: usize,
+        operands: &'mlir [ValID],
+        ivar_map: &'map IVarMap<'mlir>,
+    ) -> Result<Self> {
+        let local_space = LocalSpace::try_from(space)?;
+        Ok(Self {
+            local_space,
+            symbol_shift,
             operands,
             ivar_map,
         })
@@ -420,7 +498,7 @@ impl<'isl, 'mlir, 'map> ExprConverter<'isl, 'mlir, 'map> {
         kind: AffineExprKind,
     ) -> Result<Affine<'isl>> {
         let dim_type = if matches!(kind, raffine::affine::AffineExprKind::Symbol) {
-            position += self.map.num_dims();
+            position += self.symbol_shift;
             DimType::Param
         } else {
             DimType::Out
@@ -448,7 +526,7 @@ impl<'isl, 'mlir, 'map> ExprConverter<'isl, 'mlir, 'map> {
                 let converter = Self {
                     local_space: self.local_space.clone(),
                     ivar_map: self.ivar_map,
-                    map: self.ivar_map[n].lower_bound,
+                    symbol_shift: self.ivar_map[n].lower_bound.num_dims(),
                     operands: self.ivar_map[n].operands,
                 };
                 let lower_bound = converter.convert_polynomial(

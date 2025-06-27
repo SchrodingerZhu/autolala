@@ -8,7 +8,6 @@ use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
 use plotters::prelude::IntoDrawingArea;
 use raffine::Context as RContext;
 use raffine::{DominanceInfo, tree::Tree};
-use salt::{has_reuses, is_perfectly_nested, no_coefficient_for_block};
 use std::{collections::HashMap, io::Read, path::PathBuf};
 use tracing::{debug, error, info};
 mod isl;
