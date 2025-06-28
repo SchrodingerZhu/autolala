@@ -2,9 +2,9 @@ use anyhow::anyhow;
 use barvinok::ContextRef as BContext;
 use barvinok::constraint::Constraint;
 use barvinok::local_space::LocalSpace;
-use clap::Parser;
 use melior::Context as MContext;
 use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
+use palc::{Parser, Subcommand};
 use plotters::prelude::IntoDrawingArea;
 use raffine::Context as RContext;
 use raffine::{DominanceInfo, tree::Tree};
@@ -57,23 +57,23 @@ where
     }
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Subcommand)]
 enum Method {
     /// Use the Barvinok library to compute the polyhedral model
     Barvinok {
-        #[clap(short = 'B', long)]
+        #[arg(short = 'B', long)]
         /// barvinok options
         barvinok_arg: Vec<String>,
-        #[clap(short = 'b', long, default_value = "1")]
+        #[arg(short = 'b', long, default_value = "1")]
         block_size: usize,
-        #[clap(short = 'l', long)]
+        #[arg(short = 'l', long)]
         symbol_lowerbound: Vec<i32>,
-        #[clap(long)]
+        #[arg(long)]
         infinite_repeat: bool,
     },
     /// Use the PerfectTiling algorithm to compute the polyhedral model
     Salt {
-        #[clap(short = 'b', long)]
+        #[arg(short = 'b', long)]
         /// block size, if not specified, it will be represented symbolically
         block_size: Option<usize>,
     },
@@ -86,45 +86,45 @@ static GLOBAL: tikv_jemallocator::Jemalloc = tikv_jemallocator::Jemalloc;
 struct Options {
     /// The input file to process
     /// If not specified, the input will be read from stdin
-    #[clap(short, long)]
+    #[arg(short, long)]
     input: Option<PathBuf>,
 
     /// The output file to write
     /// If not specified, the output will be written to stdout
-    #[clap(short, long)]
+    #[arg(short, long)]
     output: Option<PathBuf>,
 
     /// name of the target function to extract
     /// if not specified, the program will try to find first function
-    #[clap(short = 'f', long)]
+    #[arg(short = 'f', long)]
     target_function: Option<String>,
 
     /// target affine loop attribute
     /// if not specified, the program will try to find first affine loop in the function
-    #[clap(short = 'l', long)]
+    #[arg(short = 'l', long)]
     target_affine_loop: Option<String>,
 
     /// Miss ratio curve output path
-    #[clap(short = 'm', long)]
+    #[arg(short = 'm', long)]
     miss_ratio_curve: Option<PathBuf>,
 
     /// Miss ratio curve width
     /// if not specified, the default value is 800
-    #[clap(short = 'W', long, default_value = "800")]
+    #[arg(short = 'W', long, default_value = "800")]
     miss_ratio_curve_width: u32,
 
     /// Miss ratio curve height
     /// if not specified, the default value is 600
-    #[clap(short = 'H', long, default_value = "600")]
+    #[arg(short = 'H', long, default_value = "600")]
     miss_ratio_curve_height: u32,
 
     /// Use bincode encoded output
     /// Requires output file to be specified
-    #[clap(long)]
+    #[arg(long)]
     json: bool,
 
     /// method to use for polyhedral model computation
-    #[clap(subcommand)]
+    #[command(subcommand)]
     method: Method,
 }
 
