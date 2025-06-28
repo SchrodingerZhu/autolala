@@ -1,3 +1,5 @@
+// TODO: fix this
+#![allow(unused)]
 use std::{
     collections::{HashMap, HashSet},
     time::{Duration, Instant},

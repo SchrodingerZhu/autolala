@@ -51,19 +51,19 @@ pub fn get_timestamp_space<'a, 'b: 'a>(
     tree: &Tree<'a>,
 ) -> Result<Set<'b>> {
     let mut ivar_map = Vec::new();
-    get_timestamp_space_impl(num_params, 0, context, tree, &mut ivar_map)
+    let res = get_timestamp_space_impl(num_params, 0, context, tree, &mut ivar_map);
+    tracing::trace!("timestamp space: {res:?}");
+    res
 }
 
 fn align_sets<'i, 'a: 'i>(
     longest: Set<'a>,
     depth: usize,
-    context: &AnalysisContext<'a>,
     iter: impl Iterator<Item = &'i mut Set<'a>>,
     add_dim_constraint: bool,
 ) -> Result<()> {
     let space = longest.get_space()?;
     let longest_dim = longest.num_dims()?;
-    let value_one = Value::new_si(context.bcontext(), 1);
     let local_space = LocalSpace::try_from(space.clone())?;
     for (idx, i) in iter.enumerate() {
         let length = i.num_dims()?;
@@ -72,16 +72,47 @@ fn align_sets<'i, 'a: 'i>(
             .insert_dims(DimType::Out, length, longest_dim - length)?;
         for j in length..longest.num_dims()? {
             // add constraint eq 0
-            let constraint = Constraint::new_equality(local_space.clone()).set_coefficient_val(
+            let constraint = Constraint::new_equality(local_space.clone()).set_coefficient_si(
                 DimType::Out,
                 j,
-                value_one.clone(),
+                1,
             )?;
             s = s.add_constraint(constraint)?;
         }
         if add_dim_constraint {
             let current_dim_eq_i = Constraint::new_equality(local_space.clone())
-                .set_coefficient_val(DimType::Out, depth as u32, value_one.clone())?
+                .set_coefficient_si(DimType::Out, depth as u32, 1)?
+                .set_constant_si(-(idx as i32))?;
+            *i = s.add_constraint(current_dim_eq_i)?;
+        }
+    }
+    Ok(())
+}
+
+fn align_maps<'i, 'a: 'i>(
+    longest: Map<'a>,
+    depth: usize,
+    iter: impl Iterator<Item = &'i mut Map<'a>>,
+    add_dim_constraint: bool,
+) -> Result<()> {
+    let space = longest.get_space()?;
+    let local_space = LocalSpace::try_from(space.clone())?;
+    let longest_length = longest.get_space()?.get_dim(DimType::In)?;
+    for (idx, i) in iter.enumerate() {
+        let length = i.get_space()?.get_dim(DimType::In)?;
+        let mut s = i.clone().add_dims(DimType::In, longest_length - length)?;
+        for j in length..longest_length {
+            // add constraint eq 0
+            let constraint = Constraint::new_equality(local_space.clone()).set_coefficient_si(
+                DimType::In,
+                j,
+                1,
+            )?;
+            s = s.add_constraint(constraint)?;
+        }
+        if add_dim_constraint {
+            let current_dim_eq_i = Constraint::new_equality(local_space.clone())
+                .set_coefficient_si(DimType::In, depth as u32, 1)?
                 .set_constant_si(-(idx as i32))?;
             *i = s.add_constraint(current_dim_eq_i)?;
         }
@@ -177,7 +208,7 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
                 .ok_or_else(|| anyhow::anyhow!("no sets found"))?
                 .clone();
             let space = longest.get_space()?;
-            align_sets(longest, depth, context, sub_sets.iter_mut(), true)?;
+            align_sets(longest, depth, sub_sets.iter_mut(), true)?;
             let total_set = sub_sets
                 .into_iter()
                 .try_fold(Set::empty(space.clone())?, |acc, set| acc.union(set))?
@@ -198,23 +229,22 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
             r#then,
             r#else,
         } => {
-            let r#then_set =
-                get_timestamp_space_impl(num_params, depth + 1, context, r#then, ivar_map)?;
-            let r#else_set = if let Some(r#else) = r#else {
-                get_timestamp_space_impl(num_params, depth + 1, context, r#else, ivar_map)?
+            let then_set = get_timestamp_space_impl(num_params, depth, context, r#then, ivar_map)?;
+            let else_set = if let Some(r#else) = r#else {
+                get_timestamp_space_impl(num_params, depth, context, r#else, ivar_map)?
             } else {
-                Set::empty(r#then_set.get_space()?)?
+                Set::empty(then_set.get_space()?)?
             };
             // similar to block, align with longest set
-            let longest = if r#then_set.num_dims()? > r#else_set.num_dims()? {
-                r#then_set.clone()
+            let longest = if then_set.num_dims()? > else_set.num_dims()? {
+                then_set.clone()
             } else {
-                r#else_set.clone()
+                else_set.clone()
             };
 
-            let mut subsets = [r#then_set, r#else_set];
+            let mut subsets = [then_set, else_set];
             let space = longest.get_space()?;
-            align_sets(longest, depth, context, subsets.iter_mut(), false)?;
+            align_sets(longest, depth, subsets.iter_mut(), false)?;
             let conv = ExprConverter::new_with_dims(
                 space.clone(),
                 condition.num_dims(),
@@ -329,25 +359,10 @@ fn get_access_map_impl<'a, 'b: 'a>(
                 .ok_or_else(|| anyhow::anyhow!("no maps found"))?
                 .clone();
             let space = longest.get_space()?;
-            let local_space = LocalSpace::try_from(space.clone())?;
-            let longest_length = longest.get_space()?.get_dim(DimType::In)?;
-            for (idx, i) in sub_maps.iter_mut().enumerate() {
-                let length = i.get_space()?.get_dim(DimType::In)?;
-                let mut s = i.clone().add_dims(DimType::In, longest_length - length)?;
-                for j in length..longest_length {
-                    // add constraint eq 0
-                    let constraint = Constraint::new_equality(local_space.clone())
-                        .set_coefficient_si(DimType::In, j, 1)?;
-                    s = s.add_constraint(constraint)?;
-                }
-                let current_dim_eq_i = Constraint::new_equality(local_space.clone())
-                    .set_coefficient_si(DimType::In, depth as u32, 1)?
-                    .set_constant_si(-(idx as i32))?;
-                *i = s.add_constraint(current_dim_eq_i)?;
-            }
+            align_maps(longest.clone(), depth, sub_maps.iter_mut(), true)?;
             let total_map = sub_maps
                 .into_iter()
-                .try_fold(Map::empty(space.clone())?, |acc, set| acc.union(set))?
+                .try_fold(Map::empty(space)?, |acc, set| acc.union(set))?
                 .set_dim_name(
                     DimType::In,
                     depth as u32,
@@ -393,7 +408,67 @@ fn get_access_map_impl<'a, 'b: 'a>(
             let basic_map = BasicMap::from_affine_list(domain_space, aff_list)?;
             Ok(basic_map.try_into()?)
         }
-        Tree::If { .. } => Err(anyhow::anyhow!("not implemented for conditional branch")),
+        Tree::If {
+            condition,
+            operands,
+            r#then,
+            r#else,
+        } => {
+            let then_map = get_access_map_impl(
+                num_params,
+                depth,
+                context,
+                r#then,
+                ivar_map,
+                block_size,
+                max_array_dim,
+            )?;
+            let else_map = if let Some(r#else) = r#else {
+                get_access_map_impl(
+                    num_params,
+                    depth,
+                    context,
+                    r#else,
+                    ivar_map,
+                    block_size,
+                    max_array_dim,
+                )?
+            } else {
+                Map::empty(then_map.get_space()?)?
+            };
+            // similar to block, align with longest set
+            let longest = if then_map.dim(DimType::In)? > else_map.dim(DimType::In)? {
+                then_map.clone()
+            } else {
+                else_map.clone()
+            };
+
+            let mut submaps = [then_map, else_map];
+            let dom_space = longest.clone().domain()?.get_space()?;
+            align_maps(longest, depth, submaps.iter_mut(), false)?;
+            let conv = ExprConverter::new_with_dims(
+                dom_space.clone(),
+                condition.num_dims(),
+                operands,
+                ivar_map,
+            )?;
+            let mut then_cond = Set::universe(dom_space)?;
+            for i in 0..condition.num_constraints() {
+                let expr = condition.get_constraint(i as isize);
+                let converted = conv.convert_polynomial(expr)?;
+                let constraint = if condition.is_constraint_equal(i as isize) {
+                    Constraint::new_equality_from_affine(converted)
+                } else {
+                    Constraint::new_inequality_from_affine(converted)
+                };
+                then_cond = then_cond.add_constraint(constraint)?;
+            }
+            let complement = then_cond.clone().complement()?;
+            let [x, y] = submaps;
+            x.intersect_domain(then_cond)?
+                .union(y.intersect_domain(complement)?)
+                .map_err(Into::into)
+        }
     }
 }
 
