@@ -492,6 +492,7 @@ fn main() {
                 .arg("--cache-sim=yes")
                 .arg(cache_string)
                 .arg(&output_path)
+                .current_dir(workdir.path())
                 .output()
                 .unwrap();
             let process_time = start.elapsed().as_nanos() as usize;
