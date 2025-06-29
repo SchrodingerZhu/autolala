@@ -1,6 +1,5 @@
 module {
-  func.func @matmul(%arg0: memref<?x?xf64>, %arg1: memref<?x?xf64>, %arg2: memref<?x?xf64>, %arg3: index, %arg4: index, %arg5: index, %inf: index) {
-    affine.for %x = 0 to %inf {
+  func.func @matmul(%arg0: memref<?x?xf64>, %arg1: memref<?x?xf64>, %arg2: memref<?x?xf64>, %arg3: index, %arg4: index, %arg5: index) {
     affine.for %arg6 = 0 to %arg3 {
       affine.for %arg7 = 0 to %arg5 {
         affine.for %arg8 = 0 to %arg4 {
@@ -12,7 +11,6 @@ module {
           affine.store %4, %arg2[%arg6, %arg7] : memref<?x?xf64>
         }
       }
-    }
     }
     return
   }
