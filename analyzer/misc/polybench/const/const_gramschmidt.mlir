@@ -1,8 +1,7 @@
-module {
- attributes { "simulation.prologue" = "volatile double ARRAY_0[200][240]; volatile double ARRAY_1[240][240]; volatile double ARRAY_2[200][240];" }
-  func.func @gramschmidt(%A: memref<200x240xf64>,
-                         %R: memref<240x240xf64>,
-                         %Q: memref<200x240xf64>) {
+module attributes { "simulation.prologue" = "volatile double ARRAY_0[200][240]; volatile double ARRAY_1[240][240]; volatile double ARRAY_2[200][240];" } {
+  func.func @gramschmidt(%A: memref<?x?xf64>,
+                         %R: memref<?x?xf64>,
+                         %Q: memref<?x?xf64>) {
     // 常量 0.0f
     %cst0 = arith.constant 0.0 : f64
 
@@ -49,6 +48,6 @@ module {
         }
       }
     }
-    return
+    func.return
   }
 }

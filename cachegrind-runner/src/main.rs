@@ -292,6 +292,10 @@ struct Cli {
     /// Database file to store the results
     #[arg(long, short = 'd', default_value = "/tmp/cachegrind.db")]
     database: PathBuf,
+
+    /// Skip existing records
+    #[arg(long)]
+    skip_existing: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -378,9 +382,10 @@ fn extract_target<'ctx>(
 }
 
 impl Record {
-    fn insert(&self, database: &Pool<SqliteConnectionManager>) -> Result<()> {
-        database.get()?.execute(
-            r#"INSERT INTO records (
+    fn insert(&self, database: &Pool<SqliteConnectionManager>) {
+        while pool_get_retry(database)
+            .execute(
+                r#"INSERT INTO records (
                 program, block_size, num_sets, set_size, cache_size, second_level,
                 miss_count, total_access, miss_ratio, process_time
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -389,20 +394,35 @@ impl Record {
                 total_access = excluded.total_access,
                 miss_ratio = excluded.miss_ratio,
                 process_time = excluded.process_time"#,
-            rusqlite::params![
-                self.program,
-                self.block_size,
-                self.num_sets,
-                self.set_size,
-                self.cache_size,
-                self.second_level,
-                self.miss_count,
-                self.total_access,
-                self.miss_ratio,
-                self.process_time
-            ],
-        )?;
-        Ok(())
+                rusqlite::params![
+                    self.program,
+                    self.block_size,
+                    self.num_sets,
+                    self.set_size,
+                    self.cache_size,
+                    self.second_level,
+                    self.miss_count,
+                    self.total_access,
+                    self.miss_ratio,
+                    self.process_time
+                ],
+            )
+            .is_err()
+        {}
+    }
+}
+
+fn pool_get_retry(
+    pool: &Pool<SqliteConnectionManager>,
+) -> r2d2::PooledConnection<SqliteConnectionManager> {
+    loop {
+        match pool.get() {
+            Ok(conn) => return conn,
+            Err(e) => {
+                debug!("Failed to get connection from pool: {e}");
+                std::thread::sleep(std::time::Duration::from_millis(100));
+            }
+        }
     }
 }
 
@@ -474,6 +494,26 @@ fn main() {
         .into_par_iter()
         .progress()
         .for_each(|set_size| {
+            if args.skip_existing {
+                let existing = pool_get_retry(&pool)
+                    .query_row(
+                        r#"SELECT COUNT(*) FROM records WHERE
+                        program = ? AND block_size = ? AND num_sets = ? AND set_size = ? AND second_level = ?"#,
+                        rusqlite::params![
+                            args.input.file_name().unwrap().to_string_lossy(),
+                            args.block_size,
+                            args.num_sets,
+                            set_size,
+                            args.second_level
+                        ],
+                        |row| row.get::<_, usize>(0),
+                    )
+                    .unwrap_or(0);
+                if existing > 0 {
+                    debug!("Skipping existing record for set size {set_size}");
+                    return;
+                }
+            }
             let program = args
                 .input
                 .file_name()
@@ -532,7 +572,7 @@ fn main() {
                 miss_ratio,
                 process_time,
             };
-            record.insert(&pool).unwrap();
+            record.insert(&pool);
         });
     let total = start.elapsed().as_nanos() as usize;
     pool.get()
