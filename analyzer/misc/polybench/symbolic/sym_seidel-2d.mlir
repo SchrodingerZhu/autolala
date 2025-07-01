@@ -6,17 +6,12 @@ module {
             %c2 = arith.constant 2 : index
             %divisor = arith.constant 9.0 : f64
             
-            %tsteps_minus_1 = arith.subi %tsteps, %c1 : index
-            %n_minus_2 = arith.subi %n, %c2 : index
-            %tsteps_upper = arith.addi %tsteps_minus_1, %c1 : index
-            %n_upper = arith.addi %n_minus_2, %c1 : index
-            
             // for (t = 0; t <= tsteps - 1; t++)
-            affine.for %t = 0 to %tsteps_upper {
+            affine.for %t = 0 to %tsteps {
                 // for (i = 1; i <= n - 2; i++)
-                affine.for %i = 1 to %n_upper {
+                affine.for %i = 1 to affine_map<()[n] -> (n - 1)>()[%n] {
                     // for (j = 1; j <= n - 2; j++)
-                    affine.for %j = 1 to %n_upper {
+                    affine.for %j = 1 to affine_map<()[n] -> (n - 1)>()[%n] {
                         // Load all 9 neighboring values
                         %A_i_minus_1_j_minus_1 = affine.load %A[%i - 1, %j - 1] : memref<?x?xf64>
                         %A_i_minus_1_j = affine.load %A[%i - 1, %j] : memref<?x?xf64>

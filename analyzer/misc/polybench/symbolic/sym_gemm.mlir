@@ -2,7 +2,6 @@ module {
   func.func @kernel_gemm(%C: memref<?x?xf64>, 
                          %A: memref<?x?xf64>, 
                          %B: memref<?x?xf64>, %NI : index, %NJ : index, %NK : index) {
-  affine.for %loop_once = 0 to 1 {
       affine.for %loop_once = 0 to 1 {
 
       %alpha = arith.constant 1.0 : f64
