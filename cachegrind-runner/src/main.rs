@@ -296,6 +296,10 @@ struct Cli {
     /// Skip existing records
     #[arg(long)]
     skip_existing: bool,
+
+    /// Single data point
+    #[arg(long)]
+    single_data_point: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -490,7 +494,12 @@ fn main() {
         )
         .unwrap();
     let start = std::time::Instant::now();
-    (2..args.set_size + 1)
+    let low = if args.single_data_point {
+        args.set_size
+    } else {
+        2
+    };
+    (low..args.set_size + 1)
         .into_par_iter()
         .progress()
         .for_each(|set_size| {

@@ -1,0 +1,7 @@
+| Command | Mean [µs] | Min [µs] | Max [µs] | Relative |
+|:---|---:|---:|---:|---:|
+| `/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_3mm.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null` | 2444273.5 ± 23670.5 | 2402633.2 | 2467900.7 | 12.08 ± 0.18 |
+| `/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_atax.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null` | 314072.2 ± 54093.6 | 287887.0 | 459331.1 | 1.55 ± 0.27 |
+| `/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_bicg.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null` | 202321.6 ± 2375.9 | 197911.6 | 206586.4 | 1.00 |
+| `/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_cholesky.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null` | 3058718.4 ± 100576.3 | 2958132.6 | 3305139.8 | 15.12 ± 0.53 |
+| `/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_convolution.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null` | 318672.6 ± 1653.2 | 316352.5 | 321460.0 | 1.58 ± 0.02 |
