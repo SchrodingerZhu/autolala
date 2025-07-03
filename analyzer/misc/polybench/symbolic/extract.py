@@ -38,7 +38,8 @@ def main():
         for row in reader:
             # 从参数字段直接取
             testname = row['parameter_testname']
-            approxmethod = row['parameter_approxmethod'].strip('=') or 'none'
+            approxmethod = row['parameter_approxmethod'].split('=')[2].strip("'"
+            ) if row['parameter_approxmethod'] else 'none'
             command = row['command']
             program = row['parameter_PROGRAM']
             script_dir = row['parameter_SCRIPT_DIR']
