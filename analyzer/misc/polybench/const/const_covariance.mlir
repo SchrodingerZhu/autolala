@@ -1,80 +1,74 @@
 module 
-attributes {"simulation.prologue" = "volatile double ARRAY_0[240]; volatile double ARRAY_1[260][240]; volatile double ARRAY_2[260][240];"}
+  attributes {
+    "simulation.prologue" =
+      "volatile double ARRAY_0[240];volatile double ARRAY_1[62400];volatile double ARRAY_2[57600];"
+  }
 {
-    func.func @kernel_covariance(%data: memref<260x240xf64>, %cov: memref<240x240xf64>, %mean: memref<240xf64>, %float_n: f64) {
-        %c0 = arith.constant 0.0 : f64
-        %c1 = arith.constant 1.0 : f64
-        %c240 = arith.constant 240 : index
-        %c260 = arith.constant 260 : index
-        affine.for %loop_once = 0 to 1 {
-        // Step 1: Calculate mean for each column
-        // for (j = 0; j < 240; j++)
-        affine.for %j = 0 to 240 {
-            // mean[j] = 0.0;
-            affine.store %c0, %mean[%j] : memref<240xf64>
-            
-            // for (i = 0; i < 260; i++)
-            affine.for %i = 0 to 260 {
-                // mean[j] += data[i][j];
-                %mean_j = affine.load %mean[%j] : memref<240xf64>
-                %data_ij = affine.load %data[%i, %j] : memref<260x240xf64>
-                %new_mean_j = arith.addf %mean_j, %data_ij : f64
-                affine.store %new_mean_j, %mean[%j] : memref<240xf64>
-            }
-            
-            // mean[j] /= float_n;
-            %final_mean_j = affine.load %mean[%j] : memref<240xf64>
-            %mean_normalized = arith.divf %final_mean_j, %float_n : f64
-            affine.store %mean_normalized, %mean[%j] : memref<240xf64>
-        }
-        
-        // Step 2: Subtract mean from each data point
-        // for (i = 0; i < 260; i++)
-        affine.for %i = 0 to 260 {
-            // for (j = 0; j < 240; j++)
-            affine.for %j = 0 to 240 {
-                // data[i][j] -= mean[j];
-                %data_ij = affine.load %data[%i, %j] : memref<260x240xf64>
-                %mean_j = affine.load %mean[%j] : memref<240xf64>
-                %centered = arith.subf %data_ij, %mean_j : f64
-                affine.store %centered, %data[%i, %j] : memref<260x240xf64>
-            }
-        }
-        
-        // Step 3: Calculate covariance matrix
-        // Calculate (float_n - 1.0) once
-        %float_n_minus_1 = arith.subf %float_n, %c1 : f64
-        
-        // for (i = 0; i < 240; i++)
-        affine.for %i = 0 to 240 {
-            // for (j = i; j < 240; j++) - using affine map for dependent loop
-            affine.for %j = affine_map<(d0) -> (d0)> (%i) to 240 {
-                // cov[i][j] = 0.0;
-                affine.store %c0, %cov[%i, %j] : memref<240x240xf64>
-                
-                // for (k = 0; k < 260; k++)
-                affine.for %k = 0 to 260 {
-                    // cov[i][j] += data[k][i] * data[k][j];
-                    %cov_ij = affine.load %cov[%i, %j] : memref<240x240xf64>
-                    %data_ki = affine.load %data[%k, %i] : memref<260x240xf64>
-                    %data_kj = affine.load %data[%k, %j] : memref<260x240xf64>
-                    %product = arith.mulf %data_ki, %data_kj : f64
-                    %new_cov_ij = arith.addf %cov_ij, %product : f64
-                    affine.store %new_cov_ij, %cov[%i, %j] : memref<240x240xf64>
-                }
-                
-                // cov[i][j] /= (float_n - 1.0);
-                %cov_sum = affine.load %cov[%i, %j] : memref<240x240xf64>
-                %cov_normalized = arith.divf %cov_sum, %float_n_minus_1 : f64
-                affine.store %cov_normalized, %cov[%i, %j] : memref<240x240xf64>
-                
-                // cov[j][i] = cov[i][j];
-                %cov_ij_final = affine.load %cov[%i, %j] : memref<240x240xf64>
-                affine.store %cov_ij_final, %cov[%j, %i] : memref<240x240xf64>
-            }
-        }
-        }{ slap.extract }
+  func.func @kernel_covariance(
+      %data     : memref<62400xf64>,   // 260*240
+      %cov      : memref<57600xf64>,   // 240*240
+      %mean     : memref<240xf64>,
+      %float_n  : f64) {
 
-        return
+    %c0   = arith.constant 0.0 : f64
+    %c1   = arith.constant 1.0 : f64
+
+    affine.for %loop_once = 0 to 1 {
+
+      // ── Step 1: mean[j] = Σ_i data[i,j] / float_n ──
+      affine.for %j = 0 to 240 {
+        affine.store %c0, %mean[%j] : memref<240xf64>
+
+        affine.for %i = 0 to 260 {
+          %sum = affine.load %mean[%j] : memref<240xf64>
+          %val = affine.load %data[%i * 240 + %j] : memref<62400xf64>
+          %new = arith.addf %sum, %val : f64
+          affine.store %new, %mean[%j] : memref<240xf64>
+        }
+
+        %tot  = affine.load %mean[%j] : memref<240xf64>
+        %norm = arith.divf %tot, %float_n : f64
+        affine.store %norm, %mean[%j] : memref<240xf64>
+      }
+
+      // ── Step 2: center data ──
+      affine.for %i = 0 to 260 {
+        affine.for %j = 0 to 240 {
+          %val = affine.load %data[%i * 240 + %j] : memref<62400xf64>
+          %m   = affine.load %mean[%j] : memref<240xf64>
+          %c   = arith.subf %val, %m : f64
+          affine.store %c, %data[%i * 240 + %j] : memref<62400xf64>
+        }
+      }
+
+      // ── Step 3: covariance ──
+      %fnm1 = arith.subf %float_n, %c1 : f64
+
+      affine.for %i = 0 to 240 {
+        affine.for %j = affine_map<(d0)->(d0)>(%i) to 240 {
+
+          // cov[i,j] 归零
+          affine.store %c0, %cov[%i * 240 + %j] : memref<57600xf64>
+
+          affine.for %k = 0 to 260 {
+            %a = affine.load %data[%k * 240 + %i] : memref<62400xf64>
+            %b = affine.load %data[%k * 240 + %j] : memref<62400xf64>
+            %p = arith.mulf %a, %b : f64
+
+            %sum = affine.load %cov[%i * 240 + %j] : memref<57600xf64>
+            %new = arith.addf %sum, %p : f64
+            affine.store %new, %cov[%i * 240 + %j] : memref<57600xf64>
+          }
+
+          %acc = affine.load %cov[%i * 240 + %j] : memref<57600xf64>
+          %nrm = arith.divf %acc, %fnm1 : f64
+          affine.store %nrm, %cov[%i * 240 + %j] : memref<57600xf64>
+
+          // 对称赋值 cov[j,i] = cov[i,j]
+          affine.store %nrm, %cov[%j * 240 + %i] : memref<57600xf64>
+        }
+      }
     }
+    return
+  }
 }

@@ -12,8 +12,6 @@ tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 melior = { version = "0.24.0" }
 tempfile = "3.20.0"
 unescaper = "0.1.6"
-rayon = "1.10.0"
 rusqlite = { version = "0.36.0", features = ["bundled-full"] }
 r2d2_sqlite = "0.30.0"
 r2d2 = "0.8.10"
-indicatif = { version = "0.17.11", features = ["rayon"] }

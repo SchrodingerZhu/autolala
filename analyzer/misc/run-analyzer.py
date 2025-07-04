@@ -5,6 +5,7 @@ import subprocess
 import json
 import glob
 from fractions import Fraction
+import time
 
 def parse_fraction(fraction_str):
     """Parse a fraction string like '\\frac{3447}{4}' or simple numbers"""
@@ -41,13 +42,13 @@ def find_closest_turning_point_index(turning_points, target=4096):
     """Find the index of the turning point value closest to and <= target"""
     closest_index = -1
     closest_value = -1
-    
+    start_time = time.time_ns()
     for i, tp in enumerate(turning_points):
         if tp <= target and tp > closest_value:
             closest_value = tp
             closest_index = i
-    
-    return closest_index 
+    elapsed_time = time.time_ns() - start_time
+    return closest_index, elapsed_time / 1e6
 
 def extract_json_from_output(output):
     """Extract JSON from output starting from the first '{'"""
@@ -75,13 +76,13 @@ def extract_json_from_output(output):
 
 def run_analyzer(file_path, approximation_method):
     """Run the analyzer command and return parsed JSON output"""
-    cmd = f'cargo run --release --bin analyzer -- -i {file_path} -m /tmp/test.svg --json barvinok --block-size=8 --barvinok-arg="--approximation-method={approximation_method}"'
+    cmd = f'cargo run --release --bin analyzer -- -i {file_path} -m /tmp/test.svg --json barvinok --block-size=8 --barvinok-arg="--approximation-method={approximation_method}" --infinite-repeat'
 
     if approximation_method == "":
         cmd = f'cargo run --release --bin analyzer -- -i {file_path} -m /tmp/test.svg --json barvinok --block-size=8'
     
     try:
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=300)
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=1000)
         if result.returncode == 0:
             return extract_json_from_output(result.stdout)
         else:
@@ -118,19 +119,28 @@ def process_file(file_path, approximation_methods):
             continue
         
         # Find closest turning point index <= 4096
-        closest_index = find_closest_turning_point_index(turning_points, 4096 // 8 // 8)
+        closest_index, duration = find_closest_turning_point_index(turning_points, 32 * 1024 // 8 // 8 * 4)
+        closest_index_ll, _ = find_closest_turning_point_index(turning_points, 256 * 1024 // 8 // 8)
         
         if closest_index == -1 or closest_index >= len(miss_ratios):
             print(f"No valid turning point found for {filename} with method {method}")
             continue
+
+        if closest_index_ll == -1 or closest_index_ll >= len(miss_ratios):
+            print(f"No valid turning point for LL found for {filename} with method {method}")
+            continue
         
         # Get corresponding miss ratio (it's already a decimal)
+        # instead of:
         miss_ratio = miss_ratios[closest_index] if closest_index else miss_ratios[0]
+        ll_miss_ratio = miss_ratios[closest_index_ll] if closest_index_ll else miss_ratios[0]
+        # we linear interpolate the miss ratio
         try:
-            total_count_num = float(total_count)
+            total_count_num = float(total_count.strip(" R"))
             # Calculate total miss count: miss_ratio * total_count
             final_value = miss_ratio * total_count_num
-            results.append((method, final_value))
+            ll_final_value = ll_miss_ratio * total_count_num
+            results.append((method, final_value, ll_final_value, duration))
             
         except ValueError:
             print(f"Error parsing total_count for {filename} with method {method}")
@@ -141,7 +151,7 @@ def process_file(file_path, approximation_methods):
 def main():
     # Configuration
     input_dir = "./analyzer/misc/polybench/const/"
-    approximation_methods = [""]
+    approximation_methods = ["scale"]
     
     # Find all files in the directory
     if not os.path.exists(input_dir):
@@ -154,6 +164,7 @@ def main():
     
     # Filter out directories
     files = [f for f in files if os.path.isfile(f)]
+    files = sorted(files, key=lambda x: os.path.basename(x))
     #files = files[:1]
     if not files:
         print(f"No files found in {input_dir}")
@@ -165,13 +176,13 @@ def main():
     all_results = []
     
     for file_path in files:
-        if not file_path.endswith('.mlir') or 'fdtd-apml' in file_path:
+        if not file_path.endswith('.mlir'):
             continue
         filename, results = process_file(file_path, approximation_methods)
-        
         if results:
-            for method, value in results:
-                all_results.append(f"{filename}_{method}, {value}")
+            for method, value, _, duration in results:
+                print(f"File: {filename}, Method: {method}, Value: {value}, Duration: {duration:.2f} ms")
+                all_results.append(f"{filename}_{method}, {value}, {duration}")
         else:
             print(f"No results for {filename}")
     

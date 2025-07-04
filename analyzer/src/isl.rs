@@ -1,5 +1,6 @@
 use std::{
     collections::hash_map::Entry,
+    num::NonZero,
     time::{Duration, Instant},
 };
 
@@ -276,6 +277,7 @@ pub fn get_access_map<'a, 'b: 'a>(
     context: &AnalysisContext<'b>,
     tree: &Tree<'a>,
     block_size: usize,
+    num_sets: NonZero<usize>,
 ) -> Result<Map<'b>> {
     let mut ivar_map = Vec::new();
     let max_array_dim = get_max_array_dim(tree)?;
@@ -287,6 +289,7 @@ pub fn get_access_map<'a, 'b: 'a>(
         &mut ivar_map,
         block_size,
         max_array_dim,
+        num_sets,
     )
 }
 
@@ -298,6 +301,7 @@ fn get_access_map_impl<'a, 'b: 'a>(
     ivar_map: &mut IVarMap<'a>,
     block_size: usize,
     max_array_dim: usize,
+    num_sets: NonZero<usize>,
 ) -> Result<Map<'b>> {
     match tree {
         Tree::For {
@@ -326,6 +330,7 @@ fn get_access_map_impl<'a, 'b: 'a>(
                 ivar_map,
                 block_size,
                 max_array_dim,
+                num_sets,
             )?;
             ivar_map.pop();
             Ok(res.set_dim_name(
@@ -346,6 +351,7 @@ fn get_access_map_impl<'a, 'b: 'a>(
                         ivar_map,
                         block_size,
                         max_array_dim,
+                        num_sets,
                     )
                 })
                 .collect::<Result<Vec<_>>>()?;
@@ -403,6 +409,13 @@ fn get_access_map_impl<'a, 'b: 'a>(
                     aff = aff.checked_div(block_size)?;
                     aff = aff.floor()?;
                 }
+                if num_sets.get() > 1 && i == map.num_results() - 1 {
+                    // add set dimension
+                    let num_sets_value =
+                        Value::new_ui(domain_space.context_ref(), num_sets.get() as u64);
+                    let set_tag = aff.clone().mod_val(num_sets_value)?;
+                    aff_list.push(set_tag);
+                }
                 aff_list.push(aff);
             }
             let basic_map = BasicMap::from_affine_list(domain_space, aff_list)?;
@@ -422,6 +435,7 @@ fn get_access_map_impl<'a, 'b: 'a>(
                 ivar_map,
                 block_size,
                 max_array_dim,
+                num_sets,
             )?;
             let else_map = if let Some(r#else) = r#else {
                 get_access_map_impl(
@@ -432,6 +446,7 @@ fn get_access_map_impl<'a, 'b: 'a>(
                     ivar_map,
                     block_size,
                     max_array_dim,
+                    num_sets,
                 )?
             } else {
                 Map::empty(then_map.get_space()?)?

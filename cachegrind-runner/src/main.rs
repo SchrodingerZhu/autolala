@@ -2,7 +2,6 @@ use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 
 use anyhow::{Result, anyhow};
-use indicatif::ParallelProgressIterator;
 use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
 use palc::Parser;
 use r2d2::Pool;
@@ -10,8 +9,7 @@ use r2d2_sqlite::SqliteConnectionManager;
 use raffine::affine::{AffineExpr, AffineMap};
 use raffine::tree::{Tree, ValID};
 use raffine::{Context, DominanceInfo};
-use rayon::iter::{IntoParallelIterator, ParallelIterator};
-use tracing::{debug, trace};
+use tracing::{debug, info, trace};
 
 struct CProgramEmitter<W: Write> {
     writer: BufWriter<W>,
@@ -273,46 +271,47 @@ struct Cli {
     #[arg(long, default_value = "valgrind")]
     valgrind_path: String,
 
-    /// block size
-    #[arg(long, default_value = "64")]
-    block_size: usize,
+    /// block size (D1)
+    #[arg(long, default_value = "64", short = 'B')]
+    d1_block_size: usize,
 
     /// associativity of the cache
-    #[arg(long, short = 'N')]
-    num_sets: usize,
-
-    /// Monitor second-level cache instead of first-level cache
-    #[arg(long, short)]
-    second_level: bool,
+    #[arg(long, short = 'A')]
+    d1_associativity: usize,
 
     /// number of blocks upper bound
-    #[arg(long, short = 'S')]
-    set_size: usize,
+    #[arg(long, short = 'C')]
+    d1_cache_size: usize,
+
+    /// block size (LL)
+    #[arg(long, default_value = "64", short = 'b')]
+    ll_block_size: usize,
+
+    /// associativity of the second level cache
+    #[arg(long, short = 'a')]
+    ll_associativity: usize,
+
+    /// cache size of the second level cache
+    #[arg(long, short = 'c')]
+    ll_cache_size: usize,
 
     /// Database file to store the results
     #[arg(long, short = 'd', default_value = "/tmp/cachegrind.db")]
     database: PathBuf,
-
-    /// Skip existing records
-    #[arg(long)]
-    skip_existing: bool,
-
-    /// Single data point
-    #[arg(long)]
-    single_data_point: bool,
 }
 
 #[derive(Debug, Clone)]
 struct Record {
     program: String,
-    block_size: usize,
-    num_sets: usize,
-    set_size: usize,
-    cache_size: usize,
-    second_level: bool,
-    miss_count: usize,
+    d1_cache_size: usize,
+    d1_associativity: usize,
+    d1_block_size: usize,
+    ll_associativity: usize,
+    ll_cache_size: usize,
+    ll_block_size: usize,
+    d1_miss_count: usize,
+    ll_miss_count: usize,
     total_access: usize,
-    miss_ratio: f64,
     process_time: usize,
 }
 
@@ -390,25 +389,35 @@ impl Record {
         while pool_get_retry(database)
             .execute(
                 r#"INSERT INTO records (
-                program, block_size, num_sets, set_size, cache_size, second_level,
-                miss_count, total_access, miss_ratio, process_time
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ON CONFLICT(program, block_size, num_sets, set_size, second_level) DO UPDATE SET
-                miss_count = excluded.miss_count,
-                total_access = excluded.total_access,
-                miss_ratio = excluded.miss_ratio,
-                process_time = excluded.process_time"#,
+                    program,
+                    d1_block_size,
+                    d1_associativity,
+                    d1_cache_size,
+                    ll_block_size,
+                    ll_associativity,
+                    ll_cache_size,
+                    d1_miss_count,
+                    ll_miss_count,
+                    total_access,
+                    process_time
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(program, d1_block_size, d1_associativity, d1_cache_size, ll_block_size, ll_associativity, ll_cache_size) DO UPDATE SET
+                    d1_miss_count = excluded.d1_miss_count,
+                    ll_miss_count = excluded.ll_miss_count,
+                    total_access = excluded.total_access,
+                    process_time = excluded.process_time"#,
                 rusqlite::params![
                     self.program,
-                    self.block_size,
-                    self.num_sets,
-                    self.set_size,
-                    self.cache_size,
-                    self.second_level,
-                    self.miss_count,
+                    self.d1_block_size,
+                    self.d1_associativity,
+                    self.d1_cache_size,
+                    self.ll_block_size,
+                    self.ll_associativity,
+                    self.ll_cache_size,
+                    self.d1_miss_count,
+                    self.ll_miss_count,
                     self.total_access,
-                    self.miss_ratio,
-                    self.process_time
+                    self.process_time,
                 ],
             )
             .is_err()
@@ -479,142 +488,81 @@ fn main() {
         .execute(
             r#"CREATE TABLE IF NOT EXISTS records (
             program TEXT NOT NULL,
-            block_size INTEGER NOT NULL,
-            num_sets INTEGER NOT NULL,
-            set_size INTEGER NOT NULL,
-            cache_size INTEGER NOT NULL,
-            second_level BOOLEAN NOT NULL,
-            miss_count INTEGER NOT NULL,
+            d1_block_size INTEGER NOT NULL,
+            d1_associativity INTEGER NOT NULL,
+            d1_cache_size INTEGER NOT NULL,
+            ll_block_size INTEGER NOT NULL,
+            ll_associativity INTEGER NOT NULL,
+            ll_cache_size INTEGER NOT NULL,
+            d1_miss_count INTEGER NOT NULL,
+            ll_miss_count INTEGER NOT NULL,
             total_access INTEGER NOT NULL,
-            miss_ratio REAL NOT NULL,
             process_time INTEGER NOT NULL,
-            PRIMARY KEY (program, block_size, num_sets, set_size, second_level)
+            PRIMARY KEY (program, d1_block_size, d1_associativity, d1_cache_size, ll_block_size, ll_associativity, ll_cache_size)
         )"#,
             (),
         )
         .unwrap();
+
+    let program = args
+        .input
+        .file_name()
+        .unwrap()
+        .to_string_lossy()
+        .to_string();
+    let d1_string = format!(
+        "--D1={},{},{}",
+        args.d1_cache_size, args.d1_associativity, args.d1_block_size,
+    );
+    let ll_string = format!(
+        "--LL={},{},{}",
+        args.ll_cache_size, args.ll_associativity, args.ll_block_size,
+    );
     let start = std::time::Instant::now();
-    let low = if args.single_data_point {
-        args.set_size
-    } else {
-        2
+    let output = std::process::Command::new(&args.valgrind_path)
+        .arg("--tool=cachegrind")
+        .arg("--cache-sim=yes")
+        .arg("-v")
+        .arg(d1_string)
+        .arg(ll_string)
+        .arg(&output_path)
+        .current_dir(workdir.path())
+        .output()
+        .unwrap();
+    let process_time = start.elapsed().as_nanos() as usize;
+    let output = String::from_utf8_lossy(&output.stderr);
+    info!("Valgrind output:\n{output}");
+    let mut total_access = 0usize;
+    let mut d1_miss_count = 0usize;
+    let mut ll_miss_count = 0usize;
+    for line in output.lines() {
+        if line.contains("D refs:") {
+            if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
+                total_access = value.trim().replace(",", "").parse().unwrap_or(0);
+            }
+        } else if line.contains("D1  misses:") {
+            if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
+                d1_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
+            }
+        } else if line.contains("LLd misses:")
+            && let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next())
+        {
+            ll_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
+        }
+    }
+
+    let record = Record {
+        program,
+        d1_cache_size: args.d1_cache_size,
+        d1_associativity: args.d1_associativity,
+        d1_block_size: args.d1_block_size,
+        ll_associativity: args.ll_associativity,
+        ll_cache_size: args.ll_cache_size,
+        ll_block_size: args.ll_block_size,
+        d1_miss_count,
+        ll_miss_count,
+        total_access,
+        process_time,
     };
-    (low..args.set_size + 1)
-        .into_par_iter()
-        .progress()
-        .for_each(|set_size| {
-            if args.skip_existing {
-                let existing = pool_get_retry(&pool)
-                    .query_row(
-                        r#"SELECT COUNT(*) FROM records WHERE
-                        program = ? AND block_size = ? AND num_sets = ? AND set_size = ? AND second_level = ?"#,
-                        rusqlite::params![
-                            args.input.file_name().unwrap().to_string_lossy(),
-                            args.block_size,
-                            args.num_sets,
-                            set_size,
-                            args.second_level
-                        ],
-                        |row| row.get::<_, usize>(0),
-                    )
-                    .unwrap_or(0);
-                if existing > 0 {
-                    debug!("Skipping existing record for set size {set_size}");
-                    return;
-                }
-            }
-            let program = args
-                .input
-                .file_name()
-                .unwrap()
-                .to_string_lossy()
-                .to_string();
-            let block_size = args.block_size;
-            let num_sets = args.num_sets;
-            let cache_size = block_size * num_sets * set_size;
-            let second_level = args.second_level;
-            let cache_name = if second_level { "LL" } else { "D1" };
-            let cache_string = format!("--{cache_name}={cache_size},{set_size},{block_size}");
-            let start = std::time::Instant::now();
-            let output = std::process::Command::new(&args.valgrind_path)
-                .arg("--tool=cachegrind")
-                .arg("--cache-sim=yes")
-                .arg(cache_string)
-                .arg(&output_path)
-                .current_dir(workdir.path())
-                .output()
-                .unwrap();
-            let process_time = start.elapsed().as_nanos() as usize;
-            let output = String::from_utf8_lossy(&output.stderr);
-            let mut total_access = 0usize;
-            let mut miss_count = 0usize;
-            for line in output.lines() {
-                if line.contains("D refs:") {
-                    if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
-                        total_access = value.trim().replace(",", "").parse().unwrap_or(0);
-                    }
-                } else if !second_level && line.contains("D1  misses:") {
-                    if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
-                        miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
-                    }
-                } else if second_level
-                    && line.contains("LLd misses:")
-                    && let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next())
-                {
-                    miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
-                }
-            }
-            let miss_ratio = if total_access > 0 {
-                miss_count as f64 / total_access as f64
-            } else {
-                0.0
-            };
-            let record = Record {
-                program,
-                block_size,
-                num_sets,
-                set_size,
-                cache_size,
-                second_level,
-                miss_count,
-                total_access,
-                miss_ratio,
-                process_time,
-            };
-            record.insert(&pool);
-        });
-    let total = start.elapsed().as_nanos() as usize;
-    pool.get()
-        .unwrap()
-        .execute(
-            r#"CREATE TABLE IF NOT EXISTS total (
-            program TEXT NOT NULL,
-            block_size INTEGER NOT NULL,
-            num_sets INTEGER NOT NULL,
-            set_size_total INTEGER NOT NULL,
-            second_level BOOLEAN NOT NULL,
-            duration INTEGER NOT NULL,
-            PRIMARY KEY (program, block_size, num_sets, set_size_total , second_level)
-        )"#,
-            (),
-        )
-        .unwrap();
-    pool.get()
-        .unwrap()
-        .execute(
-            r#"INSERT INTO total (
-                program, block_size, num_sets, set_size_total, second_level, duration
-            ) VALUES (?, ?, ?, ?, ?, ?)
-            ON CONFLICT(program, block_size, num_sets, set_size_total, second_level) DO UPDATE SET
-                duration = excluded.duration"#,
-            rusqlite::params![
-                args.input.file_name().unwrap().to_string_lossy(),
-                args.block_size,
-                args.num_sets,
-                args.set_size,
-                args.second_level,
-                total
-            ],
-        )
-        .unwrap();
+    record.insert(&pool);
 }

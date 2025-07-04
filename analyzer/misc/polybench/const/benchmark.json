@@ -1,201 +1,1011 @@
 {
   "results": [
     {
-      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_3mm.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null",
-      "mean": 2.44427348708,
-      "stddev": 0.0236705006983253,
-      "median": 2.44794195378,
-      "user": 2.41968596,
-      "system": 0.020475979999999998,
-      "min": 2.40263319528,
-      "max": 2.46790072128,
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_3mm.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 10.483525710733334,
+      "stddev": 0.20412098223457384,
+      "median": 10.4512060964,
+      "user": 10.446333853333334,
+      "system": 0.017278099999999998,
+      "min": 10.2974926464,
+      "max": 10.701878389400001,
       "times": [
-        2.4651664162799998,
-        2.45278959828,
-        2.44840710828,
-        2.44351435228,
-        2.46790072128,
-        2.4676229732799997,
-        2.44747679928,
-        2.4437923592799997,
-        2.4034313472799997,
-        2.40263319528
+        10.701878389400001,
+        10.4512060964,
+        10.2974926464
       ],
       "exit_codes": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0
       ],
       "parameters": {
-        "approxmethod": "=drop",
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
         "testname": "3mm"
       }
     },
     {
-      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_atax.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null",
-      "mean": 0.31407217387999997,
-      "stddev": 0.054093569139888546,
-      "median": 0.29200441928,
-      "user": 0.3023752599999999,
-      "system": 0.01150338,
-      "min": 0.28788695128,
-      "max": 0.45933109228,
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_atax.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 1.1827214840666667,
+      "stddev": 0.003976532626078445,
+      "median": 1.1812000804,
+      "user": 1.17188652,
+      "system": 0.0090591,
+      "min": 1.1797302784,
+      "max": 1.1872340934,
       "times": [
-        0.29612129528000003,
-        0.29026359628000004,
-        0.29103570028000003,
-        0.28788695128,
-        0.29096656828,
-        0.34825540728000004,
-        0.45933109228,
-        0.29297313828,
-        0.29080319728000004,
-        0.29308479228
+        1.1812000804,
+        1.1872340934,
+        1.1797302784
       ],
       "exit_codes": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0
       ],
       "parameters": {
-        "approxmethod": "=drop",
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
         "testname": "atax"
       }
     },
     {
-      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_bicg.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null",
-      "mean": 0.20232161606571428,
-      "stddev": 0.0023759371491806425,
-      "median": 0.20151785778000003,
-      "user": 0.19230954571428568,
-      "system": 0.010133394285714286,
-      "min": 0.19791163628,
-      "max": 0.20658640028,
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_bicg.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 1.0031617807333333,
+      "stddev": 0.004073162457780816,
+      "median": 1.0048344514,
+      "user": 0.9938995199999999,
+      "system": 0.007862433333333333,
+      "min": 0.9985185724,
+      "max": 1.0061323184000002,
       "times": [
-        0.20066140328,
-        0.20089033928000002,
-        0.20130765728000002,
-        0.20658640028,
-        0.20361126228,
-        0.20166850528000002,
-        0.20350127328,
-        0.20451366528,
-        0.20334636728000002,
-        0.20006005628,
-        0.20594605928,
-        0.19791163628,
-        0.20113078928,
-        0.20136721028000001
+        1.0048344514,
+        0.9985185724,
+        1.0061323184000002
       ],
       "exit_codes": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0
       ],
       "parameters": {
-        "approxmethod": "=drop",
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
         "testname": "bicg"
       }
     },
     {
-      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_cholesky.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null",
-      "mean": 3.0587183707800003,
-      "stddev": 0.1005763021994712,
-      "median": 3.07070885228,
-      "user": 3.0345715600000003,
-      "system": 0.019065679999999998,
-      "min": 2.95813263828,
-      "max": 3.3051398272799997,
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_cholesky.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 9.132468946733335,
+      "stddev": 0.17149133601125058,
+      "median": 9.221975782400001,
+      "user": 9.096400853333334,
+      "system": 0.020784766666666663,
+      "min": 8.934742743400001,
+      "max": 9.2406883144,
       "times": [
-        3.08100733628,
-        3.08002955728,
-        3.07528237528,
-        3.0029435792799997,
-        2.95813263828,
-        2.97460538028,
-        2.96704535728,
-        3.3051398272799997,
-        3.0661353292799998,
-        3.0768623272799998
+        8.934742743400001,
+        9.221975782400001,
+        9.2406883144
       ],
       "exit_codes": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0
       ],
       "parameters": {
-        "approxmethod": "=drop",
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
         "testname": "cholesky"
       }
     },
     {
-      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_convolution.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=drop' -m /dev/null",
-      "mean": 0.31867259438,
-      "stddev": 0.001653249876056015,
-      "median": 0.31874107478,
-      "user": 0.30936175999999993,
-      "system": 0.00902968,
-      "min": 0.31635249128000004,
-      "max": 0.32145995928000004,
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_convolution.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 1.6015813570666666,
+      "stddev": 0.005489517960478529,
+      "median": 1.6003047094,
+      "user": 1.58934352,
+      "system": 0.009599433333333332,
+      "min": 1.5968426524000001,
+      "max": 1.6075967094,
       "times": [
-        0.31875192928,
-        0.31963892328000004,
-        0.31767100728000003,
-        0.31635249128000004,
-        0.32145995928000004,
-        0.31775687228,
-        0.32025348628,
-        0.31969883828,
-        0.31641221628,
-        0.31873022028000003
+        1.5968426524000001,
+        1.6075967094,
+        1.6003047094
       ],
       "exit_codes": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0
       ],
       "parameters": {
-        "approxmethod": "=drop",
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
         "testname": "convolution"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_correlation.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 52.51230456506667,
+      "stddev": 0.6611432734528764,
+      "median": 52.281706279400005,
+      "user": 52.385134853333334,
+      "system": 0.0389331,
+      "min": 51.9973428484,
+      "max": 53.257864567400006,
+      "times": [
+        51.9973428484,
+        53.257864567400006,
+        52.281706279400005
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "correlation"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_covariance.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 16.5443428614,
+      "stddev": 0.05043907248056974,
+      "median": 16.518634716399998,
+      "user": 16.499484853333332,
+      "system": 0.017922766666666663,
+      "min": 16.5119374764,
+      "max": 16.6024563914,
+      "times": [
+        16.6024563914,
+        16.518634716399998,
+        16.5119374764
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "covariance"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_doitgen.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 2.9188471253999997,
+      "stddev": 0.019253707246916524,
+      "median": 2.9205454814,
+      "user": 2.906736853333333,
+      "system": 0.007654433333333333,
+      "min": 2.8988005014000002,
+      "max": 2.9371953934,
+      "times": [
+        2.8988005014000002,
+        2.9371953934,
+        2.9205454814
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "doitgen"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_floyd_warshall.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 6.2340658934,
+      "stddev": 0.028302362468092396,
+      "median": 6.2359902984,
+      "user": 6.207655853333333,
+      "system": 0.0163161,
+      "min": 6.2048504393999995,
+      "max": 6.2613569424,
+      "times": [
+        6.2613569424,
+        6.2048504393999995,
+        6.2359902984
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "floyd_warshall"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_gemm.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 0.6996305950666667,
+      "stddev": 0.003536693787132594,
+      "median": 0.7014037514,
+      "user": 0.6896908533333331,
+      "system": 0.009041433333333333,
+      "min": 0.6955580884,
+      "max": 0.7019299454,
+      "times": [
+        0.7019299454,
+        0.6955580884,
+        0.7014037514
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "gemm"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_gemver.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 5.3796558344,
+      "stddev": 0.007704938246773886,
+      "median": 5.379387996399999,
+      "user": 5.358572186666667,
+      "system": 0.011964433333333335,
+      "min": 5.372088307399999,
+      "max": 5.387491199399999,
+      "times": [
+        5.379387996399999,
+        5.372088307399999,
+        5.387491199399999
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "gemver"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_gesummv.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 2.0997953357333334,
+      "stddev": 0.010978084607041265,
+      "median": 2.0942822534,
+      "user": 2.08536052,
+      "system": 0.011058766666666666,
+      "min": 2.0926663934,
+      "max": 2.1124373604,
+      "times": [
+        2.0942822534,
+        2.1124373604,
+        2.0926663934
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "gesummv"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_gramschmidt.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 7.4869900604,
+      "stddev": 0.04251642147119543,
+      "median": 7.5074801454,
+      "user": 7.45198752,
+      "system": 0.022933433333333333,
+      "min": 7.4381087214,
+      "max": 7.5153813144,
+      "times": [
+        7.5074801454,
+        7.4381087214,
+        7.5153813144
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "gramschmidt"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_lu.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 7.127951619066667,
+      "stddev": 0.019192628259143703,
+      "median": 7.1295681663999995,
+      "user": 7.0849331866666665,
+      "system": 0.0307051,
+      "min": 7.1080018443999995,
+      "max": 7.1462848463999995,
+      "times": [
+        7.1462848463999995,
+        7.1295681663999995,
+        7.1080018443999995
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "lu"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_mvt.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 0.7652792774,
+      "stddev": 0.0037426576777994307,
+      "median": 0.7667195314,
+      "user": 0.7548201866666666,
+      "system": 0.009392766666666668,
+      "min": 0.7610304484,
+      "max": 0.7680878524,
+      "times": [
+        0.7667195314,
+        0.7680878524,
+        0.7610304484
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "mvt"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_seidel-2d.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 8.832347512066667,
+      "stddev": 0.040045189589134056,
+      "median": 8.8103027054,
+      "user": 8.802688853333335,
+      "system": 0.014773766666666667,
+      "min": 8.8081685364,
+      "max": 8.8785712944,
+      "times": [
+        8.8103027054,
+        8.8785712944,
+        8.8081685364
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "seidel-2d"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_symm.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 4.2354230884,
+      "stddev": 0.023459181726114463,
+      "median": 4.222736782399999,
+      "user": 4.2135231866666665,
+      "system": 0.014282766666666663,
+      "min": 4.2210388093999995,
+      "max": 4.2624936734,
+      "times": [
+        4.2624936734,
+        4.2210388093999995,
+        4.222736782399999
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "symm"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_syr2k.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 2.6521499410666665,
+      "stddev": 0.040890374388184283,
+      "median": 2.6387333684,
+      "user": 2.63392952,
+      "system": 0.013260099999999999,
+      "min": 2.6196533884,
+      "max": 2.6980630664,
+      "times": [
+        2.6980630664,
+        2.6387333684,
+        2.6196533884
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "syr2k"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_syrk.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 0.8503901743999999,
+      "stddev": 0.0036877634712827166,
+      "median": 0.8513620314,
+      "user": 0.8396241866666666,
+      "system": 0.0091061,
+      "min": 0.8463138114,
+      "max": 0.8534946804,
+      "times": [
+        0.8463138114,
+        0.8513620314,
+        0.8534946804
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "syrk"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_trisolve.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 1.2854065580666667,
+      "stddev": 0.014978689684156726,
+      "median": 1.2797947524,
+      "user": 1.2725291866666666,
+      "system": 0.010282433333333334,
+      "min": 1.2740441204000001,
+      "max": 1.3023808014,
+      "times": [
+        1.2740441204000001,
+        1.3023808014,
+        1.2797947524
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "trisolve"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_trmm.mlir barvinok --block-size=8 --barvinok-arg='--approximation-method=scale' --infinite-repeat -m /dev/null",
+      "mean": 1.3027637404000003,
+      "stddev": 0.005451832603774463,
+      "median": 1.3039580824,
+      "user": 1.2900721866666665,
+      "system": 0.010059766666666666,
+      "min": 1.2968137534000002,
+      "max": 1.3075193854,
+      "times": [
+        1.3075193854,
+        1.3039580824,
+        1.2968137534000002
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "--barvinok-arg='--approximation-method=scale'",
+        "testname": "trmm"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_3mm.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 10.059827235066667,
+      "stddev": 0.07056294447068664,
+      "median": 10.0344163424,
+      "user": 10.023072853333332,
+      "system": 0.019381433333333333,
+      "min": 10.0054890834,
+      "max": 10.1395762794,
+      "times": [
+        10.1395762794,
+        10.0344163424,
+        10.0054890834
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "3mm"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_atax.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 1.1649722777333333,
+      "stddev": 0.016410887581432474,
+      "median": 1.1609218134000001,
+      "user": 1.1518848533333332,
+      "system": 0.011089766666666667,
+      "min": 1.1509658994,
+      "max": 1.1830291204,
+      "times": [
+        1.1509658994,
+        1.1609218134000001,
+        1.1830291204
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "atax"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_bicg.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 0.9799506470666666,
+      "stddev": 0.006174798622858579,
+      "median": 0.9829277744,
+      "user": 0.9691618533333332,
+      "system": 0.0092851,
+      "min": 0.9728513194,
+      "max": 0.9840728474,
+      "times": [
+        0.9840728474,
+        0.9728513194,
+        0.9829277744
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "bicg"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_cholesky.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 8.901947778066669,
+      "stddev": 0.023648846495466024,
+      "median": 8.9119050844,
+      "user": 8.86204952,
+      "system": 0.022277099999999994,
+      "min": 8.8749485214,
+      "max": 8.918989728400001,
+      "times": [
+        8.918989728400001,
+        8.9119050844,
+        8.8749485214
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "cholesky"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_convolution.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 1.5041012734,
+      "stddev": 0.0835600537494008,
+      "median": 1.4640978554000001,
+      "user": 1.4918791866666667,
+      "system": 0.009994766666666667,
+      "min": 1.4480630094000002,
+      "max": 1.6001429554,
+      "times": [
+        1.4640978554000001,
+        1.4480630094000002,
+        1.6001429554
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "convolution"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_correlation.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 52.155629909733335,
+      "stddev": 0.5864387289521822,
+      "median": 51.9492114624,
+      "user": 52.03068385333333,
+      "system": 0.04066076666666667,
+      "min": 51.700310753400004,
+      "max": 52.8173675134,
+      "times": [
+        51.9492114624,
+        51.700310753400004,
+        52.8173675134
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "correlation"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_covariance.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 16.662631401400002,
+      "stddev": 0.04189238179832685,
+      "median": 16.639250914399998,
+      "user": 16.61857285333333,
+      "system": 0.017271433333333332,
+      "min": 16.6376475904,
+      "max": 16.710995699399998,
+      "times": [
+        16.639250914399998,
+        16.6376475904,
+        16.710995699399998
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "covariance"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_doitgen.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 2.7206693004000004,
+      "stddev": 0.023230533726543937,
+      "median": 2.7340353364000003,
+      "user": 2.7028681866666666,
+      "system": 0.013319433333333332,
+      "min": 2.6938450434,
+      "max": 2.7341275214,
+      "times": [
+        2.7340353364000003,
+        2.7341275214,
+        2.6938450434
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "doitgen"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_floyd_warshall.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 6.2652055990666655,
+      "stddev": 0.1076067804211481,
+      "median": 6.208369408399999,
+      "user": 6.24190352,
+      "system": 0.0129561,
+      "min": 6.1979343284,
+      "max": 6.389313060399999,
+      "times": [
+        6.1979343284,
+        6.208369408399999,
+        6.389313060399999
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "floyd_warshall"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_gemm.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 0.6500325034,
+      "stddev": 0.003132230490370097,
+      "median": 0.6492730634,
+      "user": 0.6403568533333334,
+      "system": 0.0089551,
+      "min": 0.6473498214,
+      "max": 0.6534746254,
+      "times": [
+        0.6473498214,
+        0.6534746254,
+        0.6492730634
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "gemm"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_gemver.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 5.312161556733333,
+      "stddev": 0.021058517676396105,
+      "median": 5.3238086644,
+      "user": 5.289472186666667,
+      "system": 0.0139911,
+      "min": 5.2878523373999995,
+      "max": 5.3248236684,
+      "times": [
+        5.3248236684,
+        5.3238086644,
+        5.2878523373999995
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "gemver"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_gesummv.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 2.105421414733333,
+      "stddev": 0.003398379902872266,
+      "median": 2.1037221004,
+      "user": 2.0925665199999997,
+      "system": 0.009944766666666667,
+      "min": 2.1032078654,
+      "max": 2.1093342784,
+      "times": [
+        2.1093342784,
+        2.1037221004,
+        2.1032078654
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "gesummv"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_gramschmidt.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 10.9555167954,
+      "stddev": 0.0546174643507207,
+      "median": 10.9869612894,
+      "user": 10.882194853333331,
+      "system": 0.05630443333333333,
+      "min": 10.8924500634,
+      "max": 10.9871390334,
+      "times": [
+        10.9871390334,
+        10.9869612894,
+        10.8924500634
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "gramschmidt"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_lu.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 15.7769574414,
+      "stddev": 0.1536132258518033,
+      "median": 15.7538150234,
+      "user": 15.680234853333332,
+      "system": 0.07288876666666667,
+      "min": 15.6362284714,
+      "max": 15.940828829400001,
+      "times": [
+        15.940828829400001,
+        15.7538150234,
+        15.6362284714
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "lu"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_mvt.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 0.7364023124,
+      "stddev": 0.005862189900079213,
+      "median": 0.7355512734,
+      "user": 0.7273878533333332,
+      "system": 0.008145766666666667,
+      "min": 0.7310121574,
+      "max": 0.7426435064,
+      "times": [
+        0.7426435064,
+        0.7355512734,
+        0.7310121574
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "mvt"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_seidel-2d.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 8.627199337066667,
+      "stddev": 0.03095540697677663,
+      "median": 8.6378867974,
+      "user": 8.602062853333331,
+      "system": 0.011955766666666666,
+      "min": 8.5923162964,
+      "max": 8.651394917400001,
+      "times": [
+        8.651394917400001,
+        8.5923162964,
+        8.6378867974
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "seidel-2d"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_symm.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 4.107461361733333,
+      "stddev": 0.023723880415982404,
+      "median": 4.0938312973999995,
+      "user": 4.090227853333334,
+      "system": 0.010651100000000002,
+      "min": 4.0936975574,
+      "max": 4.1348552303999995,
+      "times": [
+        4.1348552303999995,
+        4.0938312973999995,
+        4.0936975574
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "symm"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_syr2k.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 2.496525281733333,
+      "stddev": 0.016348670589740957,
+      "median": 2.4967699434,
+      "user": 2.482442853333333,
+      "system": 0.010288766666666666,
+      "min": 2.4800556534,
+      "max": 2.5127502484,
+      "times": [
+        2.4967699434,
+        2.5127502484,
+        2.4800556534
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "syr2k"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_syrk.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 0.8015121284000001,
+      "stddev": 0.004412261594839182,
+      "median": 0.8024488924,
+      "user": 0.78911152,
+      "system": 0.011320766666666668,
+      "min": 0.7967067074,
+      "max": 0.8053807854,
+      "times": [
+        0.7967067074,
+        0.8053807854,
+        0.8024488924
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "syrk"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_trisolve.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 1.2783892220666668,
+      "stddev": 0.005962864831534127,
+      "median": 1.2804560744,
+      "user": 1.2676921866666666,
+      "system": 0.008764433333333333,
+      "min": 1.2716679274,
+      "max": 1.2830436644,
+      "times": [
+        1.2804560744,
+        1.2716679274,
+        1.2830436644
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "trisolve"
+      }
+    },
+    {
+      "command": "/home/schrodingerzy/Documents/autolala/target/release/analyzer -i /home/schrodingerzy/Documents/autolala/analyzer/misc/polybench/const/const_trmm.mlir barvinok --block-size=8  --infinite-repeat -m /dev/null",
+      "mean": 1.1460413463999999,
+      "stddev": 0.008185516336386903,
+      "median": 1.1460321954000001,
+      "user": 1.1321975199999998,
+      "system": 0.0120571,
+      "min": 1.1378604094,
+      "max": 1.1542314344,
+      "times": [
+        1.1542314344,
+        1.1460321954000001,
+        1.1378604094
+      ],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
+      "parameters": {
+        "approxmethod": "",
+        "testname": "trmm"
       }
     }
   ]

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -x
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
-PROGRAM=$(realpath "$SCRIPT_DIR/../../../../target/release/analyzer")
+PROGRAM=$(realpath "$SCRIPT_DIR/../../../../target/release/mrc")
 
 echo "Program path: $PROGRAM"
 
@@ -17,8 +17,8 @@ for i in "$SCRIPT_DIR"/const_*.mlir; do
 done
 
 echo "All testnames: $testnames"
+echo "Program,Predicted Miss Count,Prediction Time (ms)"> "$SCRIPT_DIR/results.csv"
 for testname in $testnames; do
   echo "Running test: $testname"
-  $PROGRAM --json -i "$SCRIPT_DIR/const_$testname.mlir" -o "$SCRIPT_DIR/const_$testname.json" barvinok --block-size=8 --infinite-repeat \
-    --barvinok-arg='--approximation-method=scale' -m /dev/null
+  $PROGRAM --input "$SCRIPT_DIR/const_$testname.json" -c 32768 -b 64 >> "$SCRIPT_DIR/results.csv" 
 done

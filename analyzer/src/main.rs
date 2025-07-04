@@ -8,6 +8,7 @@ use palc::{Parser, Subcommand};
 use plotters::prelude::IntoDrawingArea;
 use raffine::Context as RContext;
 use raffine::{DominanceInfo, tree::Tree};
+use std::num::NonZero;
 use std::{collections::HashMap, io::Read, path::PathBuf};
 use tracing::{debug, error, info};
 mod isl;
@@ -70,6 +71,8 @@ enum Method {
         symbol_lowerbound: Vec<i32>,
         #[arg(long)]
         infinite_repeat: bool,
+        #[arg(short = 's', long, default_value = "1")]
+        num_sets: NonZero<usize>,
     },
     /// Use the PerfectTiling algorithm to compute the polyhedral model
     Salt {
@@ -233,6 +236,7 @@ fn main_entry() -> anyhow::Result<()> {
             block_size,
             symbol_lowerbound,
             infinite_repeat,
+            num_sets,
         } => AnalysisContext::start_with_args(barvinok_arg.as_slice(), |context| {
             let context = &context;
             let mut source = String::new();
@@ -281,8 +285,13 @@ fn main_entry() -> anyhow::Result<()> {
                 debug!("space with infinite repeat: {space:?}");
             }
             space = isl::ensure_set_name(space)?;
-            let mut access_map =
-                isl::get_access_map((max_param + 1).try_into()?, context, tree, *block_size)?;
+            let mut access_map = isl::get_access_map(
+                (max_param + 1).try_into()?,
+                context,
+                tree,
+                *block_size,
+                *num_sets,
+            )?;
             if *infinite_repeat {
                 let num_params = access_map.get_space()?.get_dim(barvinok::DimType::Param)?;
                 access_map = access_map
