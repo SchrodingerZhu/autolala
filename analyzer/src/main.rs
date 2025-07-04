@@ -301,14 +301,14 @@ fn main_entry() -> anyhow::Result<()> {
             }
             let access_map = isl::ensure_map_domain_name(access_map)?;
             let access_map = access_map.intersect_domain(space.clone())?;
+            let gt = space.clone().lex_gt_set(space.clone())?;
             let lt = space.clone().lex_lt_set(space.clone())?;
-            let le = space.clone().lex_le_set(space.clone())?;
+            let ge = space.clone().lex_ge_set(space.clone())?;
             let access_rev = access_map.clone().reverse()?;
             let same_element = access_map.clone().apply_range(access_rev)?;
-            let consecutive_access = same_element.intersect(lt.clone())?.lexmin()?;
-            let prev = consecutive_access.reverse()?;
-            let after = prev.apply_range(le.clone())?;
-            let ri = after.intersect(lt.reverse()?)?;
+            let immediate_pred = same_element.intersect(gt.clone())?.lexmax()?;
+            let after = immediate_pred.apply_range(lt)?;
+            let ri = after.intersect(ge)?;
             let ri_values = ri.cardinality()?;
             debug!("Timestamp space: {:?}", space);
             debug!("Access map: {:?}", access_map);
