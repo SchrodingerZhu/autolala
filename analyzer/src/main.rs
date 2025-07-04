@@ -302,7 +302,7 @@ fn main_entry() -> anyhow::Result<()> {
             let access_map = isl::ensure_map_domain_name(access_map)?;
             let access_map = access_map.intersect_domain(space.clone())?;
             let gt = space.clone().lex_gt_set(space.clone())?;
-            let lt = space.clone().lex_lt_set(space.clone())?;
+            let lt = gt.clone().reverse()?;
             let ge = space.clone().lex_ge_set(space.clone())?;
             let access_rev = access_map.clone().reverse()?;
             let same_element = access_map.clone().apply_range(access_rev)?;
