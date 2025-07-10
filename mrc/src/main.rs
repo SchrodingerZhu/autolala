@@ -48,26 +48,24 @@ fn main() {
         .iter()
         .map(|&v| v * total_count)
         .collect::<Vec<_>>();
-
-    let start_time = std::time::Instant::now();
     let sequence = turning_points
         .iter()
         .zip(miss_count.iter())
         .map(|(k, v)| Key::new(*k, *v, splines::Interpolation::CatmullRom))
         .collect::<Vec<_>>();
     let spline = splines::Spline::from_vec(sequence);
-    let target0 = (option.cache_size / option.block_size) as f64 / 2.0;
-    let target1 = (option.cache_size / option.block_size) as f64;
-    let target2 = (option.cache_size / option.block_size) as f64 * 2.0;
-    let sample0 = spline.clamped_sample(target0).unwrap();
-    let sample1 = spline.clamped_sample(target1).unwrap();
-    let sample2 = spline.clamped_sample(target2).unwrap();
-    let elapsed = start_time.elapsed().as_nanos() as f64 / 1E6;
+    let target = (option.cache_size / option.block_size) as f64;
+    let sample = spline.clamped_sample(target).unwrap();
     let program_name = option
         .input
         .file_name()
         .and_then(|s| s.to_str())
         .unwrap_or("unknown");
-    let sample = (sample0 + sample1 + sample2) / 3.0;
-    println!("{program_name},{},{:.4}", sample.round(), elapsed);
+    println!(
+        "{program_name},{},{},{},{}",
+        sample.round(),
+        total_count.round(),
+        sample / total_count,
+        option.cache_size,
+    );
 }
