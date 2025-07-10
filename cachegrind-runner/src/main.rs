@@ -2,6 +2,7 @@ use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 
 use anyhow::{Result, anyhow};
+use indicatif::ParallelProgressIterator;
 use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
 use palc::Parser;
 use r2d2::Pool;
@@ -9,6 +10,8 @@ use r2d2_sqlite::SqliteConnectionManager;
 use raffine::affine::{AffineExpr, AffineMap};
 use raffine::tree::{Tree, ValID};
 use raffine::{Context, DominanceInfo};
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
+
 use tracing::{debug, info, trace};
 
 struct CProgramEmitter<W: Write> {
@@ -276,8 +279,9 @@ struct Cli {
     d1_block_size: usize,
 
     /// associativity of the cache
+    /// if not specified, the program will assume fully associative
     #[arg(long, short = 'A')]
-    d1_associativity: usize,
+    d1_associativity: Option<usize>,
 
     /// number of blocks upper bound
     #[arg(long, short = 'C')]
@@ -294,6 +298,10 @@ struct Cli {
     /// cache size of the second level cache
     #[arg(long, short = 'c')]
     ll_cache_size: usize,
+
+    /// Do batched run from block size to cache size, stepping by block size
+    #[arg(long)]
+    batched: bool,
 
     /// Database file to store the results
     #[arg(long, short = 'd', default_value = "/tmp/cachegrind.db")]
@@ -462,7 +470,7 @@ fn main() {
     }
     let emitter = CProgramEmitter::new(program_file);
     emitter.emit(target_tree).unwrap();
-    trace!("C program emitted:{}", {
+    info!("C program emitted:{}", {
         std::fs::read_to_string(&program_path).unwrap()
     });
     let output_path = workdir.path().join("test.exe");
@@ -510,59 +518,73 @@ fn main() {
         .unwrap()
         .to_string_lossy()
         .to_string();
-    let d1_string = format!(
-        "--D1={},{},{}",
-        args.d1_cache_size, args.d1_associativity, args.d1_block_size,
-    );
-    let ll_string = format!(
-        "--LL={},{},{}",
-        args.ll_cache_size, args.ll_associativity, args.ll_block_size,
-    );
-    let start = std::time::Instant::now();
-    let output = std::process::Command::new(&args.valgrind_path)
-        .arg("--tool=cachegrind")
-        .arg("--cache-sim=yes")
-        .arg("-v")
-        .arg(d1_string)
-        .arg(ll_string)
-        .arg(&output_path)
-        .current_dir(workdir.path())
-        .output()
-        .unwrap();
-    let process_time = start.elapsed().as_nanos() as usize;
-    let output = String::from_utf8_lossy(&output.stderr);
-    info!("Valgrind output:\n{output}");
-    let mut total_access = 0usize;
-    let mut d1_miss_count = 0usize;
-    let mut ll_miss_count = 0usize;
-    for line in output.lines() {
-        if line.contains("D refs:") {
-            if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
-                total_access = value.trim().replace(",", "").parse().unwrap_or(0);
-            }
-        } else if line.contains("D1  misses:") {
-            if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
-                d1_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
-            }
-        } else if line.contains("LLd misses:")
-            && let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next())
-        {
-            ll_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
-        }
-    }
-
-    let record = Record {
-        program,
-        d1_cache_size: args.d1_cache_size,
-        d1_associativity: args.d1_associativity,
-        d1_block_size: args.d1_block_size,
-        ll_associativity: args.ll_associativity,
-        ll_cache_size: args.ll_cache_size,
-        ll_block_size: args.ll_block_size,
-        d1_miss_count,
-        ll_miss_count,
-        total_access,
-        process_time,
+    let range = if args.batched {
+        let block_size = args.d1_block_size;
+        let cache_size = args.d1_cache_size;
+        (block_size..=cache_size)
+            .step_by(block_size)
+            .collect::<Vec<_>>()
+    } else {
+        vec![args.d1_cache_size]
     };
-    record.insert(&pool);
+    range.into_par_iter().progress().for_each(|cache_size| {
+        let associativity = args
+            .d1_associativity
+            .unwrap_or_else(|| cache_size / args.d1_block_size);
+        let d1_string = format!(
+            "--D1={},{},{}",
+            cache_size, associativity, args.d1_block_size,
+        );
+        let ll_string = format!(
+            "--LL={},{},{}",
+            args.ll_cache_size, args.ll_associativity, args.ll_block_size,
+        );
+        let start = std::time::Instant::now();
+        let output = std::process::Command::new(&args.valgrind_path)
+            .arg("--tool=cachegrind")
+            .arg("--cache-sim=yes")
+            .arg("-v")
+            .arg(d1_string)
+            .arg(ll_string)
+            .arg(&output_path)
+            .current_dir(workdir.path())
+            .output()
+            .unwrap();
+        let process_time = start.elapsed().as_nanos() as usize;
+        let output = String::from_utf8_lossy(&output.stderr);
+        info!("Valgrind output:\n{output}");
+        let mut total_access = 0usize;
+        let mut d1_miss_count = 0usize;
+        let mut ll_miss_count = 0usize;
+        for line in output.lines() {
+            if line.contains("D refs:") {
+                if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
+                    total_access = value.trim().replace(",", "").parse().unwrap_or(0);
+                }
+            } else if line.contains("D1  misses:") {
+                if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
+                    d1_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
+                }
+            } else if line.contains("LLd misses:")
+                && let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next())
+            {
+                ll_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
+            }
+        }
+
+        let record = Record {
+            program: program.clone(),
+            d1_cache_size: cache_size,
+            d1_associativity: associativity,
+            d1_block_size: args.d1_block_size,
+            ll_associativity: args.ll_associativity,
+            ll_cache_size: args.ll_cache_size,
+            ll_block_size: args.ll_block_size,
+            d1_miss_count,
+            ll_miss_count,
+            total_access,
+            process_time,
+        };
+        record.insert(&pool);
+    });
 }

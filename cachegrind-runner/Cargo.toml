@@ -15,3 +15,5 @@ unescaper = "0.1.6"
 rusqlite = { version = "0.36.0", features = ["bundled-full"] }
 r2d2_sqlite = "0.30.0"
 r2d2 = "0.8.10"
+indicatif = { version = "0.18.0", features = ["rayon"] }
+rayon = "1.10.0"
