@@ -293,7 +293,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             let n_ref = isize_to_poly(ref_count as isize, context);
             let mut ri_value = isize_to_poly(0, context);
 
-            let block_atom = Atom::new_var(symbol!("b"));
+            let block_atom = Atom::var(symbol!("b"));
             let block_poly =
                 block_atom.to_rational_polynomial(&IntegerRing::new(), &IntegerRing::new(), None);
             let mut ri_values: Vec<(Poly, usize)> = vec![];
@@ -374,7 +374,7 @@ where
 {
     let ring = IntegerRing::new();
     let field = RationalPolynomialField::new(ring);
-    let accesses = Atom::new_num(accesses as i64).to_rational_polynomial(&ring, &ring, None);
+    let accesses = Atom::num(accesses as i64).to_rational_polynomial(&ring, &ring, None);
     let total_count = trip_counts.fold(accesses, |acc, poly| field.mul(&acc, poly));
     Ok(total_count)
 }

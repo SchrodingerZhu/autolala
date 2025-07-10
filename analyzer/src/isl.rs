@@ -830,11 +830,37 @@ impl<'a> QpolyConverter<'a> {
     fn value_to_rational_poly(&self, value: Value<'a>) -> Poly {
         let num = value.numerator();
         let denom = value.denominator();
-        let num: Atom = Atom::new_num(num);
-        let denom: Atom = Atom::new_num(denom);
+        let num: Atom = Atom::num(num);
+        let denom: Atom = Atom::num(denom);
         let num = num.to_rational_polynomial(&self.ring, &self.ring, None);
         let denom = denom.to_rational_polynomial(&self.ring, &self.ring, None);
         self.field.div(&num, &denom)
+    }
+
+    fn aff_to_rational_poly(&self, aff: Affine<'a>) -> Result<Poly, barvinok::Error> {
+        let den = self.value_to_rational_poly(aff.get_denominator_val()?);
+        let mut num = self.field.zero();
+        let cst = self.value_to_rational_poly(aff.get_constant_val()?);
+        if !cst.is_zero() {
+            num = self.field.add(&num, &cst);
+        }
+        for ty in [DimType::Param, DimType::In] {
+            let n = aff.dim(ty)?;
+            for i in 0..n {
+                let coeff = aff.get_coefficient_val(ty, i as u32)?;
+                let coeff = self.value_to_rational_poly(coeff);
+                if coeff.is_zero() {
+                    continue;
+                }
+                let v = Atom::var(symbol!(self.space.get_dim_name(ty, i)?));
+                let term = self.field.mul(
+                    &coeff,
+                    &v.to_rational_polynomial(&self.ring, &self.ring, None),
+                );
+                num = self.field.add(&num, &term);
+            }
+        }
+        Ok(self.field.div(&num, &den))
     }
 
     fn term_to_rational_poly(&self, term: Term<'a>) -> std::result::Result<Poly, barvinok::Error> {
@@ -854,10 +880,20 @@ impl<'a> QpolyConverter<'a> {
                 };
                 let name = self.space.get_dim_name(ty, i as u32)?;
                 let symbol = symbol!(name);
-                let exp = Atom::new_num(exp as i64);
-                let atom = Atom::new_var(symbol).pow(exp);
+                let exp = Atom::num(exp as i64);
+                let atom = Atom::var(symbol).pow(exp);
                 let atom = atom.to_rational_polynomial(&self.ring, &self.ring, None);
                 poly = self.field.mul(&poly, &atom);
+            }
+        }
+        let div_dims = term.dim(DimType::Div)?;
+        for i in 0..div_dims {
+            let exp = term.exponent(DimType::Div, i)?;
+            if exp > 0 {
+                let div_aff = term.get_div(i)?;
+                let div_poly = self.aff_to_rational_poly(div_aff)?;
+                let p = self.field.pow(&div_poly, exp as u64);
+                poly = self.field.mul(&poly, &p);
             }
         }
         Ok(poly)
@@ -867,7 +903,7 @@ impl<'a> QpolyConverter<'a> {
         &self,
         qpoly: QuasiPolynomial<'a>,
     ) -> std::result::Result<Poly, barvinok::Error> {
-        let mut poly = Atom::new_num(0).to_rational_polynomial(&self.ring, &self.ring, None);
+        let mut poly = Atom::num(0).to_rational_polynomial(&self.ring, &self.ring, None);
         qpoly.foreach_term(|term| {
             let term_poly = self.term_to_rational_poly(term)?;
             poly = self.field.add(&poly, &term_poly);
@@ -949,7 +985,7 @@ fn evaluate_poly<'a>(poly: &Poly, point: &Point<'a>) -> Result<f64> {
         .iter()
         .filter_map(|x| {
             x.to_id()
-                .map(|x| (x.get_stripped_name().to_string(), Atom::new_var(x)))
+                .map(|x| (x.get_stripped_name().to_string(), Atom::var(x)))
         })
         .collect::<AHashMap<String, Atom>>();
     let space = point.get_space()?;

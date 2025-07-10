@@ -145,7 +145,7 @@ impl<'b> ExprConverter<'b> {
                     ValID::IVar(n) => symbol!(format!("i{n}")),
                     _ => return Err(anyhow::anyhow!("invalid affine expression")),
                 };
-                let atom = Atom::new_var(symbol);
+                let atom = Atom::var(symbol);
                 let poly =
                     atom.to_rational_polynomial(&self.integer_ring, &self.integer_ring, None);
                 Ok(poly)
@@ -178,7 +178,7 @@ impl<'b> ExprConverter<'b> {
                 let val = affine_expr
                     .get_value()
                     .ok_or_else(|| anyhow::anyhow!("invalid affine expression: missing value"))?;
-                let atom = Atom::new_num(val);
+                let atom = Atom::num(val);
                 let poly =
                     atom.to_rational_polynomial(&self.integer_ring, &self.integer_ring, None);
                 Ok(poly)

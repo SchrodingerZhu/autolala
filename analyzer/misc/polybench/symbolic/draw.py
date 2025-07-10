@@ -49,7 +49,8 @@ def main():
 
     # 删除原来的两列（如果不再需要）
     df_all = df_all.drop(columns=['approxmethod', 'source'])
-
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+        print(df_all)
 
     # === seaborn 分组条形图 ===
     plt.figure(figsize=(12, 6))

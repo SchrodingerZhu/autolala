@@ -20,11 +20,10 @@ done < "$SCRIPT_DIR/command.txt"
 
 echo "All testnames: $testnames"
 
-hyperfine -r 3 --export-markdown "$SCRIPT_DIR/benchmark.md" \
+hyperfine -r 1 --export-markdown "$SCRIPT_DIR/benchmark.md" \
   --export-csv "$SCRIPT_DIR/benchmark.csv" \
   --export-json "$SCRIPT_DIR/benchmark.json" \
   -L testname "$testnames" \
-  -L approxmethod "--barvinok-arg='--approximation-method=scale'," \
   -L SCRIPT_DIR "$SCRIPT_DIR" \
   -L PROGRAM "$PROGRAM" \
   -u microsecond \
@@ -38,5 +37,5 @@ hyperfine -r 3 --export-markdown "$SCRIPT_DIR/benchmark.md" \
       symbols=\"\$symbols --symbol-lowerbound=\$p\"
     done
 
-    {PROGRAM} -i {SCRIPT_DIR}/sym_{testname}.mlir barvinok --block-size=8 \$symbols --infinite-repeat {approxmethod} -m /dev/null
+    {PROGRAM} -i {SCRIPT_DIR}/sym_{testname}.mlir barvinok --block-size=8 \$symbols --infinite-repeat -m /dev/null
   '"

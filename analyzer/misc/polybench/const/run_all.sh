@@ -9,6 +9,10 @@ testnames=""
 for i in "$SCRIPT_DIR"/const_*.mlir; do
   basename=$(basename "$i" .mlir)
   testname="${basename#const_}"
+  if [[ "$testname" == "fdtd-apml" ]]; then
+    echo "Skipping $testname"
+    continue
+  fi
   if [ -z "$testnames" ]; then
     testnames="$testname"
   else
@@ -19,6 +23,5 @@ done
 echo "All testnames: $testnames"
 for testname in $testnames; do
   echo "Running test: $testname"
-  $PROGRAM --json -i "$SCRIPT_DIR/const_$testname.mlir" -o "$SCRIPT_DIR/const_$testname.json" barvinok --block-size=8 --infinite-repeat \
-    --barvinok-arg='--approximation-method=scale' -m /dev/null
+  $PROGRAM --json -i "$SCRIPT_DIR/const_$testname.mlir" -o "$SCRIPT_DIR/const_$testname.json" barvinok --block-size=8 -m /dev/null --infinite-repeat
 done

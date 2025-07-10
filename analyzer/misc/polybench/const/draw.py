@@ -24,6 +24,7 @@ def main():
 
     # === 排序 ===
     df = df.sort_values(['testname', 'approxmethod'])
+    print(df)
 
     # === seaborn 分组条形图 ===
     plt.figure(figsize=(12, 6))
