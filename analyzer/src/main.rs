@@ -309,8 +309,7 @@ fn main_entry() -> anyhow::Result<()> {
             let immediate_pred = same_element.intersect(gt.clone())?.lexmax()?;
             let after = immediate_pred.apply_range(lt)?;
             let ri = after.intersect(ge)?;
-            let rd = ri.apply_range(access_map.clone())?;
-            let ri_values = rd.cardinality()?;
+            let ri_values = ri.cardinality()?;
             debug!("Timestamp space: {:?}", space);
             debug!("Access map: {:?}", access_map);
             debug!("RI values: {:?}", ri_values);
