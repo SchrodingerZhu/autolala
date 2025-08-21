@@ -321,7 +321,9 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                     };
                     ri_value = &ri_value - &(&block_poly * block_factor);
                 } else if coefficient == -1 {
-                    ri_value = &ri_value - factor;
+                    if ri_values.len() > 1 {
+                        ri_value = &ri_value - factor;
+                    }
                 } else {
                     ri_value = &ri_value + factor;
                     ri_values.push(((&ri_value.clone() * &n_ref), (*i)));
