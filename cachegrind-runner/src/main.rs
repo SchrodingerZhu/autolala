@@ -38,10 +38,25 @@ impl<W: Write> CProgramEmitter<W> {
         writeln!(self.writer, "extern \"C\" void _start() {{")?;
         self.emit_tree(tree)?;
         self.emit_indent()?;
-        writeln!(
-            self.writer,
-            r#"asm volatile("xor %edi, %edi\n\tmov $60, %eax\n\tsyscall");"#
-        )?;
+
+        // x86_64: exit(0) => eax=60 (sys_exit), edi=0, syscall
+        #[cfg(target_arch = "x86_64")]
+        {
+            writeln!(
+                self.writer,
+                r#"asm volatile("xor %edi, %edi\n\tmov $60, %eax\n\tsyscall");"#
+            )?;
+        }
+
+        // aarch64 (Linux): exit(0) => x8=93 (sys_exit), x0=0, svc #0
+        #[cfg(target_arch = "aarch64")]
+        {
+            writeln!(
+                self.writer,
+                r#"asm volatile("mov x0, #0\n\tmov x8, #93\n\tsvc #0");"#
+            )?;
+        }
+
         Ok(writeln!(self.writer, "}}")?)
     }
 
@@ -483,7 +498,7 @@ fn main() {
             "-nostdlib",
             "-fno-stack-protector",
             "-fno-pic",
-            "-O3",
+            "-Os",
             "-ffreestanding",
         ])
         .current_dir(workdir.path())
