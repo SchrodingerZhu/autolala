@@ -534,11 +534,22 @@ fn main() {
         .to_string_lossy()
         .to_string();
     let range = if args.batched {
-        let block_size = args.d1_block_size;
-        let cache_size = args.d1_cache_size;
-        (block_size..=cache_size)
-            .step_by(block_size)
-            .collect::<Vec<_>>()
+        if let Some(associativity) = args.d1_associativity  {
+            let factor = args.d1_block_size * associativity;
+            let mut cache_sizes = vec![];
+            let mut exp = 1;
+            while factor * exp <= args.d1_cache_size {
+                cache_sizes.push(factor * exp);
+                exp *= 2;
+            }
+            cache_sizes
+        } else{
+            let block_size = args.d1_block_size;
+            let cache_size = args.d1_cache_size;
+            (block_size..=cache_size)
+                .step_by(block_size)
+                .collect::<Vec<_>>()
+        }
     } else {
         vec![args.d1_cache_size]
     };
