@@ -38,10 +38,25 @@ impl<W: Write> CProgramEmitter<W> {
         writeln!(self.writer, "extern \"C\" void _start() {{")?;
         self.emit_tree(tree)?;
         self.emit_indent()?;
-        writeln!(
-            self.writer,
-            r#"asm volatile("xor %edi, %edi\n\tmov $60, %eax\n\tsyscall");"#
-        )?;
+
+        // x86_64: exit(0) => eax=60 (sys_exit), edi=0, syscall
+        #[cfg(target_arch = "x86_64")]
+        {
+            writeln!(
+                self.writer,
+                r#"asm volatile("xor %edi, %edi\n\tmov $60, %eax\n\tsyscall");"#
+            )?;
+        }
+
+        // aarch64 (Linux): exit(0) => x8=93 (sys_exit), x0=0, svc #0
+        #[cfg(target_arch = "aarch64")]
+        {
+            writeln!(
+                self.writer,
+                r#"asm volatile("mov x0, #0\n\tmov x8, #93\n\tsvc #0");"#
+            )?;
+        }
+
         Ok(writeln!(self.writer, "}}")?)
     }
 
@@ -483,7 +498,7 @@ fn main() {
             "-nostdlib",
             "-fno-stack-protector",
             "-fno-pic",
-            "-O3",
+            "-Os",
             "-ffreestanding",
         ])
         .current_dir(workdir.path())
@@ -519,11 +534,22 @@ fn main() {
         .to_string_lossy()
         .to_string();
     let range = if args.batched {
-        let block_size = args.d1_block_size;
-        let cache_size = args.d1_cache_size;
-        (block_size..=cache_size)
-            .step_by(block_size)
-            .collect::<Vec<_>>()
+        if let Some(associativity) = args.d1_associativity  {
+            let factor = args.d1_block_size * associativity;
+            let mut cache_sizes = vec![];
+            let mut exp = 1;
+            while factor * exp <= args.d1_cache_size {
+                cache_sizes.push(factor * exp);
+                exp *= 2;
+            }
+            cache_sizes
+        } else{
+            let block_size = args.d1_block_size;
+            let cache_size = args.d1_cache_size;
+            (block_size..=cache_size)
+                .step_by(block_size)
+                .collect::<Vec<_>>()
+        }
     } else {
         vec![args.d1_cache_size]
     };
