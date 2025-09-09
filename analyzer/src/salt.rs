@@ -220,6 +220,7 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             let mut reference_vector = vec![0; reuse_factors.len()];
             let converted_map = convert_affine_map(*map, operands);
             let mut block_position = 0;
+            let mut access_poly = isize_to_poly(1, context);
             if let Result::Ok(polys) = converted_map {
                 for poly in polys {
                     block_position = 0;
@@ -229,19 +230,23 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                             let index = index_str.parse::<usize>().unwrap();
                             block_position = block_position.max(index + 1);
                             reference_vector[index + 1] = 1;
+                            access_poly = &access_poly * trip_counts.get(&index).unwrap();
                         }
                     }
                 }
             }
-
             reference_vector[block_position] = 1;
 
             let mut portion_factors = vec![];
             let mut p_factor = isize_to_poly(1, context);
+            let mut total_access = isize_to_poly(1, context);
             for i in (0..reference_vector.len()).rev() {
                 portion_factors.push(field.div(&isize_to_poly(1, context), &p_factor.clone()));
                 if reference_vector[i] == 0 && i != 0 {
                     p_factor = &p_factor * trip_counts.get(&(i - 1)).unwrap()
+                }
+                if i != 0 {
+                    total_access = &total_access * trip_counts.get(&(i - 1)).unwrap()
                 }
             }
             portion_factors.reverse();
@@ -321,7 +326,9 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
                     };
                     ri_value = &ri_value - &(&block_poly * block_factor);
                 } else if coefficient == -1 {
-                    ri_value = &ri_value - factor;
+                    if ri_values.len() > 1 {
+                        ri_value = &ri_value - factor;
+                    }
                 } else {
                     ri_value = &ri_value + factor;
                     ri_values.push(((&ri_value.clone() * &n_ref), (*i)));
@@ -335,19 +342,43 @@ pub fn get_reuse_interval_distribution<'a, 'b: 'a>(
             let mut prev_portion = isize_to_poly(0, context);
 
             let mut addition = isize_to_poly(0, context);
-
+            let mut real = false;
             for (i, j) in ri_values.iter() {
                 let p_factor = portion_factors[*j].clone();
-                if *j < block_position {
-                    let without_block = &p_factor - &prev_portion;
-                    let with_block = field.div(&without_block, &block_poly);
-                    addition = &addition + &(&without_block - &with_block);
-                    ri_dist.insert(i.clone(), field.div(&with_block, &n_ref));
+                if real {
+                    if *j < block_position {
+                        let without_block = &p_factor - &prev_portion;
+                        let with_block = field.div(&without_block, &block_poly);
+                        addition = &addition + &(&without_block - &with_block);
+                        ri_dist.insert(i.clone(), field.div(&with_block, &n_ref));
+                    } else {
+                        let portion = &p_factor - &prev_portion;
+                        ri_dist.insert(i.clone(), field.div(&portion, &n_ref));
+                    }
+                    prev_portion = p_factor;
                 } else {
-                    let portion = &p_factor - &prev_portion;
-                    ri_dist.insert(i.clone(), field.div(&portion, &n_ref));
+                    real = true;
+                    let imaginary_portion = field.div(
+                        &field.div(&field.div(&access_poly, &total_access), &n_ref),
+                        &block_poly,
+                    );
+                    if *j < block_position {
+                        let without_block = &p_factor - &prev_portion;
+                        let with_block = field.div(&without_block, &block_poly);
+                        addition = &addition + &(&without_block - &with_block);
+                        let tmp = &field.div(&with_block, &n_ref) - &imaginary_portion;
+                        if tmp != isize_to_poly(0, context) {
+                            ri_dist.insert(i.clone(), tmp);
+                        }
+                    } else {
+                        let portion = &p_factor - &prev_portion;
+                        let tmp = &field.div(&portion, &n_ref) - &imaginary_portion;
+                        if tmp != isize_to_poly(0, context) {
+                            ri_dist.insert(i.clone(), tmp);
+                        }
+                    }
+                    prev_portion = p_factor;
                 }
-                prev_portion = p_factor;
             }
 
             *ri_dist.get_mut(&ri_block_poly).unwrap() =
