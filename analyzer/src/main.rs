@@ -309,11 +309,12 @@ fn main_entry() -> anyhow::Result<()> {
             let immediate_pred = same_element.intersect(gt.clone())?.lexmax()?;
             let after = immediate_pred.apply_range(lt)?;
             let ri = after.intersect(ge)?;
-            let ri_values = ri.cardinality()?;
+            let rd = ri.apply_range(access_map.clone())?;
+            let rd_values = rd.cardinality()?;
             debug!("Timestamp space: {:?}", space);
             debug!("Access map: {:?}", access_map);
-            debug!("RI values: {:?}", ri_values);
-            let processor = isl::RIProcessor::new(ri_values);
+            debug!("RI values: {:?}", rd_values);
+            let processor = isl::RIProcessor::new(rd_values);
             let space_count = space.cardinality()?;
             let raw_distro = processor.get_distribution()?;
             if options.json {

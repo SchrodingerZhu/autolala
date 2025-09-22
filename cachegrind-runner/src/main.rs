@@ -498,7 +498,7 @@ fn main() {
             "-nostdlib",
             "-fno-stack-protector",
             "-fno-pic",
-            "-Os",
+            "-O3",
             "-ffreestanding",
         ])
         .current_dir(workdir.path())
