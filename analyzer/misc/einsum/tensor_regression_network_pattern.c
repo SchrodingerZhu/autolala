@@ -23,26 +23,21 @@ void kernel_tensor_regression_network_pattern(size_t A, size_t B, size_t C, size
     for (k = 0; k < K; k++)
       result[a][k] = 0;
   
-  // Access pattern for tensor regression network contraction
+  // Actual computation for tensor regression network contraction
   for (a = 0; a < A; a++) {
     for (k = 0; k < K; k++) {
-      result[a][k] = 0; // Access output result[a][k]
+      result[a][k] = 0.0f; // Initialize output result[a][k]
       for (b = 0; b < B; b++) {
-        M1[b][f] = 0; // Access M1[b][f] (f will be looped)
         for (c = 0; c < C; c++) {
-          M2[c][g] = 0; // Access M2[c][g] (g will be looped)  
           for (d = 0; d < D; d++) {
-            M3[d][h] = 0; // Access M3[d][h] (h will be looped)
             for (e = 0; e < E; e++) {
-              X[a][b][c][d][e] = 0; // Access X[a][b][c][d][e]
-              M4[e][i] = 0; // Access M4[e][i] (i will be looped)
               for (f = 0; f < F; f++) {
                 for (g = 0; g < G; g++) {
                   for (h = 0; h < H; h++) {
                     for (i = 0; i < I; i++) {
                       for (j = 0; j < J; j++) {
-                        Y[f][g][h][i][j] = 0; // Access Y[f][g][h][i][j]
-                        M5[k][j] = 0; // Access M5[k][j]
+                        result[a][k] += X[a][b][c][d][e] * Y[f][g][h][i][j] * 
+                                        M1[b][f] * M2[c][g] * M3[d][h] * M4[e][i] * M5[k][j];
                       }
                     }
                   }

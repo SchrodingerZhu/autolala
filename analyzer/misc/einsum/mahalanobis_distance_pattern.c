@@ -12,13 +12,11 @@ void kernel_mahalanobis_distance_pattern(size_t N,
                                         DATA_TYPE *result) {
   int i, j;
   
-  // Access pattern for: sum_i sum_j x[i] * S_inv[i][j] * y[j]
+  // Actual computation for: sum_i sum_j x[i] * S_inv[i][j] * y[j]
+  *result = 0.0f; // Initialize scalar result
   for (i = 0; i < N; i++) {
-    x[i] = 0; // Access x[i]
     for (j = 0; j < N; j++) {
-      S_inv[i][j] = 0; // Access S_inv[i][j] 
-      y[j] = 0; // Access y[j]
+      *result += x[i] * S_inv[i][j] * y[j];
     }
   }
-  *result = 0; // Final scalar result
 }

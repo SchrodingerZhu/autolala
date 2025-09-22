@@ -17,15 +17,13 @@ void kernel_bilinear_transformation_pattern(size_t I, size_t K, size_t L, size_t
     for (j = 0; j < J; j++)
       D[i][j] = 0;
   
-  // Access pattern for: sum_k sum_l A[i][k] * B[k][l][j] * C[i][l] -> D[i][j]
+  // Actual computation for: sum_k sum_l A[i][k] * B[k][l][j] * C[i][l] -> D[i][j]
   for (i = 0; i < I; i++) {
     for (j = 0; j < J; j++) {
-      D[i][j] = 0; // Access output D[i][j]
+      D[i][j] = 0.0f; // Initialize output D[i][j]
       for (k = 0; k < K; k++) {
-        A[i][k] = 0; // Access A[i][k]
         for (l = 0; l < L; l++) {
-          B[k][l][j] = 0; // Access B[k][l][j]
-          C[i][l] = 0; // Access C[i][l]
+          D[i][j] += A[i][k] * B[k][l][j] * C[i][l];
         }
       }
     }

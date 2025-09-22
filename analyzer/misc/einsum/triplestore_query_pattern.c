@@ -16,14 +16,12 @@ void kernel_triplestore_query_pattern(size_t I, size_t J, size_t K,
   for (k = 0; k < K; k++)
     D[k] = 0;
   
-  // Access pattern for: sum_i sum_j A[i][j] * B[i] * C[j][k] -> D[k]
+  // Actual computation for: sum_i sum_j A[i][j] * B[i] * C[j][k] -> D[k]
   for (k = 0; k < K; k++) {
-    D[k] = 0; // Access output D[k]
+    D[k] = 0.0f; // Initialize output D[k]
     for (i = 0; i < I; i++) {
-      B[i] = 0; // Access B[i]
       for (j = 0; j < J; j++) {
-        A[i][j] = 0; // Access A[i][j]
-        C[j][k] = 0; // Access C[j][k]
+        D[k] += A[i][j] * B[i] * C[j][k];
       }
     }
   }

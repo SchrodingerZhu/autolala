@@ -17,22 +17,17 @@ void kernel_tensor_network_2x3_pattern(size_t I, size_t J, size_t M, size_t L,
                                        DATA_TYPE *result) {
   int i, j, m, l, k, n, o;
   
-  *result = 0;
+  *result = 0.0f;
   
-  // Access pattern for: sum over all indices A[i][j] * B[i][m][l] * C[l][o] * D[j][k] * E[k][m][n] * F[n][o] -> scalar
+  // Actual computation for: sum over all indices A[i][j] * B[i][m][l] * C[l][o] * D[j][k] * E[k][m][n] * F[n][o] -> scalar
   for (i = 0; i < I; i++) {
     for (j = 0; j < J; j++) {
-      A[i][j] = 0; // Access A[i][j]
-      D[j][k] = 0; // Access D[j][k] (k will be looped)
       for (m = 0; m < M; m++) {
-        B[i][m][l] = 0; // Access B[i][m][l] (l will be looped)
         for (l = 0; l < L; l++) {
-          C[l][o] = 0; // Access C[l][o] (o will be looped)
           for (k = 0; k < K; k++) {
             for (n = 0; n < N; n++) {
-              E[k][m][n] = 0; // Access E[k][m][n]
               for (o = 0; o < O; o++) {
-                F[n][o] = 0; // Access F[n][o]
+                *result += A[i][j] * B[i][m][l] * C[l][o] * D[j][k] * E[k][m][n] * F[n][o];
               }
             }
           }

@@ -16,9 +16,9 @@ void kernel_marginalization_pattern(size_t I, size_t J, size_t K, size_t L,
   for (m = 0; m < M; m++)
     result[m] = 0;
   
-  // Access pattern for: sum_i sum_j sum_k sum_l sum_n sum_o sum_p A[i][j][k][l][m][n][o][p] -> result[m]
+  // Actual computation for: sum_i sum_j sum_k sum_l sum_n sum_o sum_p A[i][j][k][l][m][n][o][p] -> result[m]
   for (m = 0; m < M; m++) {
-    result[m] = 0; // Access output result[m]
+    result[m] = 0.0f; // Initialize output result[m]
     for (i = 0; i < I; i++)
       for (j = 0; j < J; j++)
         for (k = 0; k < K; k++)
@@ -26,6 +26,6 @@ void kernel_marginalization_pattern(size_t I, size_t J, size_t K, size_t L,
             for (n = 0; n < N; n++)
               for (o = 0; o < O; o++)
                 for (p = 0; p < P; p++)
-                  A[i][j][k][l][m][n][o][p] = 0; // Access A[i][j][k][l][m][n][o][p]
+                  result[m] += A[i][j][k][l][m][n][o][p];
   }
 }
