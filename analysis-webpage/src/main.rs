@@ -480,7 +480,7 @@ fn App() -> Html {
         }
     };
 
-    let example_code = include_str!("../../analyzer/misc/const_lu_decomp.mlir");
+    let example_code = include_str!("../../analyzer/misc/const_matmul_4acc.mlir");
     use_effect(|| {
         // Run this only once after the component is mounted
         if let Some(window) = window()
