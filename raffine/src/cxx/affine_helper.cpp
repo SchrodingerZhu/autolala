@@ -156,4 +156,29 @@ rust::Vec<MlirValue> ifOpGetConditionOperands(MlirOperation ifOp) {
       "Expected an AffineIfOp, but got a different operation.");
 }
 
+bool definedInAnyLoop(MlirValue value) {
+  Value val = unwrap(value);
+  
+  Operation *op = nullptr;
+  
+  // If the value is a block argument, get its block parent
+  if (auto blockArg = dyn_cast<BlockArgument>(val)) {
+    Block *block = blockArg.getOwner();
+    // Check if the block itself is from an affine for op
+    if (block->getParentOp() && isa<affine::AffineForOp>(block->getParentOp()))
+      return true;
+    op = block->getParentOp();
+  } else
+    op = val.getDefiningOp();
+  
+  
+  // If no op found in either case, return false
+  if (!op) 
+    return false;
+  
+  
+  // Return true iff the op has an affine for op as its parent
+  return op->getParentOfType<affine::AffineForOp>() != nullptr;
+}
+
 } // namespace raffine

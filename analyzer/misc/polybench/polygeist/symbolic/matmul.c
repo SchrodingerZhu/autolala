@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 void matmul(size_t n, size_t k, size_t m, DATA_TYPE A[LIMIT][LIMIT], DATA_TYPE B[LIMIT][LIMIT], DATA_TYPE C[LIMIT][LIMIT]) {
     for (size_t i = 0; i < n; i++) {

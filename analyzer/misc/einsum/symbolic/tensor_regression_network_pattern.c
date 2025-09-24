@@ -1,8 +1,7 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
 #define TINY_LIMIT 8
+typedef __SIZE_TYPE__ size_t;
 
 // Tensor regression network: abcde,fghij,bf,cg,dh,ei,kj->ak
 // Memory access pattern: complex tensor network with multiple contractions

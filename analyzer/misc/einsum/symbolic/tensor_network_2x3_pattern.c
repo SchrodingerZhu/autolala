@@ -1,8 +1,7 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
 #define SMALL_LIMIT 16  // Use very small dimensions for complex tensor networks
+typedef __SIZE_TYPE__ size_t;
 
 // 2×3-tensor network: ij,iml,lo,jk,kmn,no->
 // Memory access pattern: complex tensor contraction to scalar

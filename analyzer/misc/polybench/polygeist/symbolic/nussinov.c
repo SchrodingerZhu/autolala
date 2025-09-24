@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE int
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_nussinov(size_t N, DATA_TYPE seq[LIMIT], DATA_TYPE table[LIMIT][LIMIT]) {
   int i, j, k;

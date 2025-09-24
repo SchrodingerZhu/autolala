@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 // Triplestore query: ij,i,jk->k
 // Memory access pattern: A[i][j] * B[i] * C[j][k] -> D[k]

@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_doitgen(size_t R, size_t Q, size_t P, DATA_TYPE A[LIMIT][LIMIT][LIMIT], DATA_TYPE C4[LIMIT][LIMIT], DATA_TYPE sum[LIMIT]) {
   int r, q, p, s;

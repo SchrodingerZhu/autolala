@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_trisolv(size_t N, DATA_TYPE L[LIMIT][LIMIT], DATA_TYPE x[LIMIT], DATA_TYPE b[LIMIT]) {
   int i, j;

@@ -24,4 +24,5 @@ bool mlirValueProperlyDominatesOperation(MlirValue value,
                                          const mlir::DominanceInfo &dom);
 rust::Vec<MlirValue> loadStoreOpGetAffineOperands(MlirOperation target);
 rust::Vec<MlirValue> ifOpGetConditionOperands(MlirOperation ifOp);
+bool definedInAnyLoop(MlirValue value);
 } // namespace raffine

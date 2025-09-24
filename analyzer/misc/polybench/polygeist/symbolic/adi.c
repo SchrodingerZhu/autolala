@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_adi(size_t TSTEPS, size_t N, DATA_TYPE u[LIMIT][LIMIT], DATA_TYPE v[LIMIT][LIMIT], DATA_TYPE p[LIMIT][LIMIT], DATA_TYPE q[LIMIT][LIMIT]) {
   int t, i, j;

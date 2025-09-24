@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_fdtd_2d(size_t TMAX, size_t NX, size_t NY, DATA_TYPE ex[LIMIT][LIMIT], DATA_TYPE ey[LIMIT][LIMIT], DATA_TYPE hz[LIMIT][LIMIT], DATA_TYPE _fict_[LIMIT]) {
   int t, i, j;

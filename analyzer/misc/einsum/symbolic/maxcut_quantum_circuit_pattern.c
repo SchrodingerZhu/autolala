@@ -1,8 +1,7 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
 #define TINY_LIMIT 4   // Use extremely small dimensions for highly complex patterns
+typedef __SIZE_TYPE__ size_t;
 
 // Max-Cut quantum circuit: a,b,c,da,eb,fc,ghde,ijgf,klhj,i,k,l->
 // Memory access pattern: quantum circuit tensor network contraction

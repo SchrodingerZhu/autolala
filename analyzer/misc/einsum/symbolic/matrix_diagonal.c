@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 // Matrix diagonal: ii->i  
 void kernel_matrix_diagonal(size_t N, DATA_TYPE A[LIMIT][LIMIT], DATA_TYPE diag[LIMIT]) {

@@ -126,6 +126,10 @@ mod ffi {
         #[namespace = "raffine"]
         #[cxx_name = "ifOpGetConditionOperands"]
         fn if_op_get_condition_operands(if_op: MlirOperation) -> Result<Vec<MlirValue>>;
+
+        #[namespace = "raffine"]
+        #[cxx_name = "definedInAnyLoop"]
+        fn defined_in_any_loop(value: MlirValue) -> bool;
     }
 
     impl Vec<MlirValue> {}
@@ -264,4 +268,8 @@ pub(crate) fn if_op_get_condition_operands<'a, 'b>(
         .into_iter()
         .map(|v| unsafe { Value::from_raw(v.0) })
         .collect())
+}
+
+pub(crate) fn defined_in_any_loop(value: Value) -> bool {
+    ffi::defined_in_any_loop(MlirValue(value.to_raw()))
 }

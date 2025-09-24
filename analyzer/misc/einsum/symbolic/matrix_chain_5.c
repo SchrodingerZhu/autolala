@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 // Matrix chain multiplication: ik,kl,lm,mn,nj->ij
 void kernel_matrix_chain_5(size_t I, size_t K, size_t L, size_t M, size_t N, size_t J,

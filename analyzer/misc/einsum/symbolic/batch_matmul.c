@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 // Batch matrix multiplication: bik,bkj->bij
 void kernel_batch_matmul(size_t B, size_t I, size_t K, size_t J, 

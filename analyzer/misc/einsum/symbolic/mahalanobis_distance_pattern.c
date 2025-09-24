@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 // Mahalanobis distance: i,ij,j->
 // Memory access pattern: x[i] * S_inv[i][j] * y[j] -> scalar

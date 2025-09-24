@@ -1,9 +1,8 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
 #define ALPHA 1.5f
 #define BETA 1.2f
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_symm(size_t M, size_t N, DATA_TYPE C[LIMIT][LIMIT], DATA_TYPE A[LIMIT][LIMIT], DATA_TYPE B[LIMIT][LIMIT]) {
   int i, j, k;

@@ -1,8 +1,7 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
 #define SMALL_LIMIT 16  // Use smaller dimension for 8D tensor
+typedef __SIZE_TYPE__ size_t;
 
 // Marginalization: ijklmnop->m
 // Memory access pattern: sum over all indices except m

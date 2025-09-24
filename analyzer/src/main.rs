@@ -126,6 +126,9 @@ struct Options {
     #[arg(long)]
     json: bool,
 
+    #[arg(long)]
+    start_from_loop: bool,
+
     /// method to use for polyhedral model computation
     #[command(subcommand)]
     method: Method,
@@ -197,9 +200,13 @@ where
             .first_block()
             .ok_or_else(|| anyhow!("function does not have block"))?
             .first_operation();
-        locate_loop(cursor, options, move |for_loop| {
-            Ok(context.rcontext().build_tree(for_loop, dom)?)
-        })
+        if options.start_from_loop || options.target_affine_loop.is_some() {
+            return locate_loop(cursor, options, move |for_loop| {
+                Ok(context.rcontext().build_tree(for_loop, dom)?)
+            });
+        } else {
+            Ok(context.rcontext().build_func_tree(func, dom)?)
+        }
     })
 }
 

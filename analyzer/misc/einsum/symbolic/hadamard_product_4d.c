@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 // Hadamard product: ijkl,ijkl->ijkl
 void kernel_hadamard_product_4d(size_t N1, size_t N2, size_t N3, size_t N4, 

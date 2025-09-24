@@ -1,7 +1,6 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_3mm(size_t NI, size_t NJ, size_t NK, size_t NL, size_t NM, DATA_TYPE A[LIMIT][LIMIT], DATA_TYPE B[LIMIT][LIMIT], DATA_TYPE C[LIMIT][LIMIT], DATA_TYPE D[LIMIT][LIMIT], DATA_TYPE E[LIMIT][LIMIT], DATA_TYPE F[LIMIT][LIMIT], DATA_TYPE G[LIMIT][LIMIT]) {
   int i, j, k;

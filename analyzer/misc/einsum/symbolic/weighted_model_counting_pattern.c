@@ -1,8 +1,7 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
 #define TINY_LIMIT 8   // Use very small dimensions for extremely complex patterns
+typedef __SIZE_TYPE__ size_t;
 
 // Weighted model counting: b,c,d,e,f,ef,eg,bc,cdc->
 // Memory access pattern: complex boolean/probabilistic tensor contraction

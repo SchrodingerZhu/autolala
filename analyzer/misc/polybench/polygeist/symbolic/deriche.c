@@ -1,8 +1,8 @@
-#include <stddef.h>
 #include <math.h>
 
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_deriche(size_t W, size_t H, DATA_TYPE alpha, DATA_TYPE imgIn[LIMIT][LIMIT], DATA_TYPE imgOut[LIMIT][LIMIT], DATA_TYPE y1[LIMIT][LIMIT], DATA_TYPE y2[LIMIT][LIMIT]) {
   int i, j;

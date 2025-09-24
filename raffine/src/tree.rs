@@ -10,6 +10,7 @@ use rustc_hash::FxHashMapRand;
 use crate::{
     Context, DominanceInfo,
     affine::{AffineMap, IntegerSet},
+    cxx::defined_in_any_loop,
 };
 
 #[derive(Debug)]
@@ -84,7 +85,9 @@ impl<'a, 'b> TranslationContext<'a, 'b> {
         match values.entry(id) {
             Entry::Occupied(entry) => *entry.get(),
             Entry::Vacant(entry) => {
-                if self.dom_info.properly_dominates(value, self.toplevel) {
+                if self.dom_info.properly_dominates(value, self.toplevel)
+                    || !defined_in_any_loop(value)
+                {
                     let id = self.symbol_counter.get();
                     self.symbol_counter.set(id + 1);
                     let value = ValID::Symbol(id);
@@ -265,6 +268,19 @@ impl Context {
     ) -> Result<&'a Tree<'a>, crate::Error> {
         let ctx = TranslationContext::new(entry, dom_info);
         self.build_tree_from_loop(entry, &ctx)
+    }
+
+    pub fn build_func_tree<'a, 'b>(
+        &'a self,
+        entry: OperationRef<'a, 'b>,
+        dom_info: &'a DominanceInfo<'a>,
+    ) -> Result<&'a Tree<'a>, crate::Error> {
+        let ctx = TranslationContext::new(entry, dom_info);
+        let region = entry.region(0)?;
+        let body = region
+            .first_block()
+            .ok_or(crate::Error::InvalidLoopNest("invalid function body"))?;
+        self.build_tree_from_block(body, &ctx)
     }
 
     fn build_tree_from_loop<'a, 'b, 'c: 'b>(

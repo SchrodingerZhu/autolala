@@ -1,9 +1,9 @@
-#include <stddef.h>
 #include <math.h>
 
 #define DATA_TYPE float
 #define LIMIT 1024
 #define EPS 0.005f
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_correlation(size_t M, size_t N, DATA_TYPE data[LIMIT][LIMIT], DATA_TYPE corr[LIMIT][LIMIT], DATA_TYPE mean[LIMIT], DATA_TYPE stddev[LIMIT]) {
   int i, j, k;

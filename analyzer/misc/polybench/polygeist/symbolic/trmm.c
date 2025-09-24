@@ -1,8 +1,7 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
 #define ALPHA 1.5f
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_trmm(size_t M, size_t N, DATA_TYPE A[LIMIT][LIMIT], DATA_TYPE B[LIMIT][LIMIT]) {
   int i, j, k;

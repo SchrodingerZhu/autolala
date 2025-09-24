@@ -1,8 +1,8 @@
-#include <stddef.h>
 #include <math.h>
 
 #define DATA_TYPE float
 #define LIMIT 1024
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_cholesky(size_t N, DATA_TYPE A[LIMIT][LIMIT]) {
   int i, j, k;

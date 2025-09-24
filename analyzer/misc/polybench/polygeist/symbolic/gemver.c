@@ -1,9 +1,8 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
 #define ALPHA 1.5f
 #define BETA 1.2f
+typedef __SIZE_TYPE__ size_t;
 
 void kernel_gemver(size_t N, DATA_TYPE A[LIMIT][LIMIT], DATA_TYPE u1[LIMIT], DATA_TYPE v1[LIMIT], DATA_TYPE u2[LIMIT], DATA_TYPE v2[LIMIT], DATA_TYPE w[LIMIT], DATA_TYPE x[LIMIT], DATA_TYPE y[LIMIT], DATA_TYPE z[LIMIT]) {
   int i, j;

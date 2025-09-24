@@ -1,8 +1,7 @@
-#include <stddef.h>
-
 #define DATA_TYPE float
 #define LIMIT 1024
 #define SMALL_LIMIT 32  // Use smaller dimensions for higher-order tensors
+typedef __SIZE_TYPE__ size_t;
 
 // Tucker decomposition: ijkl,ai,bj,ck,dl->abcd
 // Memory access pattern: sum_i sum_j sum_k sum_l X[i][j][k][l] * A[a][i] * B[b][j] * C[c][k] * D[d][l] -> Y[a][b][c][d]
