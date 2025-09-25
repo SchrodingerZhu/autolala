@@ -1,0 +1,10 @@
+[package]
+name = "assoc-conv"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+palc = { git = "https://github.com/oxalica/palc.git" }
+denning = { path = "../denning" }
+serde = { version = "1.0.226", features = ["derive"] }
+simd-json = "0.16.0"

@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-palc = { version = "0.0.1", features = ["derive"] }
+palc = { git = "https://github.com/oxalica/palc.git" }
 serde = { version = "1.0.219", features = ["derive"] }
 simd-json = "0.15.1"
 splines = "5.0.0"

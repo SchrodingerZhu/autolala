@@ -6,8 +6,10 @@ use charming::{
     series::Line,
 };
 use core::f64;
+use indicatif::{ProgressBar, ProgressStyle};
 #[cfg(feature = "plotters")]
 use plotters::{coord::Shift, prelude::*};
+use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
@@ -17,6 +19,95 @@ pub struct MissRatioCurve {
 }
 
 impl MissRatioCurve {
+    fn binomial(n: usize, k: usize) -> f64 {
+        if k > n {
+            return 0.0;
+        }
+        if k == 0 || k == n {
+            return 1.0;
+        }
+
+        let mut result = 1.0;
+        for i in 0..k {
+            result = result * (n - i) as f64 / (i + 1) as f64;
+        }
+        result
+    }
+
+    pub fn compute_assoc(&self, associativity: usize) -> Self {
+        let len = self.turning_points.len();
+        // Step 1: Calculate RD distribution (q_j values) from miss ratios
+        let mut rd_portions = vec![0.0; len];
+        for i in 0..len {
+            if i == 0 {
+                rd_portions[i] = 1.0 - self.miss_ratio[i];
+            } else {
+                let tmp = 1.0 - self.miss_ratio[i];
+                rd_portions[i] = tmp - (1.0 - self.miss_ratio[i - 1]);
+            }
+        }
+
+        let max_tp_usize = self.turning_points[len - 1].ceil() as usize;
+        let cache_sizes: Vec<_> = (associativity..(max_tp_usize + associativity))
+            .step_by(associativity)
+            .collect();
+
+        // Calculate all miss ratios in parallel and show progress
+        let pb = ProgressBar::new(cache_sizes.len() as u64);
+        pb.set_style(
+            ProgressStyle::with_template(
+                "{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} ({eta})",
+            )
+            .unwrap()
+            .tick_chars("◐◓◑◒ "),
+        );
+
+        let parallel_results: Vec<(f64, f64)> = cache_sizes
+            .par_iter()
+            .map_with(pb.clone(), |pb, &cache_size| {
+                let mut miss_ratio = 1.0;
+                let number_of_sets = (cache_size / associativity) as f64;
+                for i in 1..associativity + 1 {
+                    for j in 0..len {
+                        if self.turning_points[j].ceil() as usize >= i {
+                            miss_ratio -= rd_portions[j]
+                                * (1.0 / number_of_sets).powi(i as i32 - 1)
+                                * ((number_of_sets - 1.0) / number_of_sets)
+                                    .powi((self.turning_points[j].ceil() as usize - i) as i32)
+                                * MissRatioCurve::binomial(
+                                    self.turning_points[j].ceil() as usize - 1,
+                                    i,
+                                );
+                        }
+                    }
+                }
+                pb.inc(1);
+                (miss_ratio, cache_size as f64)
+            })
+            .collect();
+
+        pb.finish_and_clear();
+
+        // Create the final vectors with initial values
+        let mut new_miss_ratio = vec![1.0];
+        let mut new_turning_points = vec![0.0];
+
+        // Extend with parallel results
+        new_miss_ratio.extend(parallel_results.iter().map(|(ratio, _)| *ratio));
+        new_turning_points.extend(parallel_results.iter().map(|(_, size)| *size));
+
+        // find where miss ratio becomes negative, and remove those results, and repective turning points
+        if let Some(pos) = new_miss_ratio.iter().position(|&x| x < 0.0) {
+            new_miss_ratio.truncate(pos);
+            new_turning_points.truncate(pos);
+        }
+
+        Self {
+            miss_ratio: new_miss_ratio.into_boxed_slice(),
+            turning_points: new_turning_points.into_boxed_slice(),
+        }
+    }
+
     pub fn new(ri_dist: &[(isize, f64)]) -> Self {
         let mut miss_ratio = ri_dist.iter().map(|(_, prob)| *prob).collect::<Vec<_>>();
         let mut rolling_sum = 1.0 - miss_ratio.iter().sum::<f64>();
