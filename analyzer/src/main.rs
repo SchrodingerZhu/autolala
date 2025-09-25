@@ -126,8 +126,8 @@ struct Options {
     #[arg(long)]
     json: bool,
 
-    #[arg(long)]
-    start_from_loop: bool,
+    #[arg(short = 'A', long, default_value = "1")]
+    associativity: NonZero<usize>,
 
     /// method to use for polyhedral model computation
     #[command(subcommand)]
@@ -200,13 +200,9 @@ where
             .first_block()
             .ok_or_else(|| anyhow!("function does not have block"))?
             .first_operation();
-        if options.start_from_loop || options.target_affine_loop.is_some() {
-            return locate_loop(cursor, options, move |for_loop| {
-                Ok(context.rcontext().build_tree(for_loop, dom)?)
-            });
-        } else {
-            Ok(context.rcontext().build_func_tree(func, dom)?)
-        }
+        locate_loop(cursor, options, move |for_loop| {
+            Ok(context.rcontext().build_tree(for_loop, dom)?)
+        })
     })
 }
 
@@ -337,7 +333,11 @@ fn main_entry() -> anyhow::Result<()> {
                 writeln!(writer, "Total: {space_count:?}")?;
                 match isl::get_distro(&raw_distro, space_count, *infinite_repeat) {
                     Ok(dist) => {
-                        let curve = denning::MissRatioCurve::new(&dist);
+                        let mut curve = denning::MissRatioCurve::new(&dist);
+                        if let Some(associativity) = Some(options.associativity) {
+                            curve = curve.compute_assoc(associativity.get());
+                        }
+
                         if let Some(path) = &options.miss_ratio_curve {
                             let svgbackend = plotters::backend::SVGBackend::new(
                                 path,
@@ -422,7 +422,11 @@ fn main_entry() -> anyhow::Result<()> {
                 writeln!(writer, "Total: {total_count}")?;
                 match salt::get_ri_distro(&ri_dist_vec) {
                     Ok(dist) => {
-                        let curve = denning::MissRatioCurve::new(&dist);
+                        let mut curve = denning::MissRatioCurve::new(&dist);
+                        if let Some(associativity) = Some(options.associativity) {
+                            curve = curve.compute_assoc(associativity.get());
+                        }
+
                         if let Some(path) = &options.miss_ratio_curve {
                             let svgbackend = plotters::backend::SVGBackend::new(
                                 path,
