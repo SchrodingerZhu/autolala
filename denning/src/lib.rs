@@ -10,6 +10,7 @@ use core::f64;
 use plotters::{coord::Shift, prelude::*};
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
+use indicatif::{ProgressBar, ProgressStyle};
 
 #[derive(Serialize, Deserialize)]
 pub struct MissRatioCurve {
@@ -35,7 +36,6 @@ impl MissRatioCurve {
 
     pub fn compute_assoc(&self, associativity: usize) -> Self {
         let len = self.turning_points.len();
-
         // Step 1: Calculate RD distribution (q_j values) from miss ratios
         let mut rd_portions = vec![0.0; len];
         for i in 0..len {
@@ -47,14 +47,22 @@ impl MissRatioCurve {
             }
         }
 
-        let cache_sizes: Vec<_> = (associativity..(self.turning_points[len - 1] + 12.0) as usize)
+        let max_tp_usize = self.turning_points[len - 1].ceil() as usize;
+        let cache_sizes: Vec<_> = (associativity..(max_tp_usize + associativity))
             .step_by(associativity)
             .collect();
 
-        // Calculate all miss ratios in parallel
+        // Calculate all miss ratios in parallel and show progress
+        let pb = ProgressBar::new(cache_sizes.len() as u64);
+        pb.set_style(
+            ProgressStyle::with_template("{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} ({eta})")
+                .unwrap()
+                .tick_chars("◐◓◑◒ "),
+        );
+
         let parallel_results: Vec<(f64, f64)> = cache_sizes
             .par_iter()
-            .map(|&cache_size| {
+            .map_with(pb.clone(), |pb, &cache_size| {
                 let mut miss_ratio = 1.0;
                 let number_of_sets = (cache_size / associativity) as f64;
                 for i in 1..associativity + 1 {
@@ -71,9 +79,12 @@ impl MissRatioCurve {
                         }
                     }
                 }
+                pb.inc(1);
                 (miss_ratio, cache_size as f64)
             })
             .collect();
+
+        pb.finish_and_clear();
 
         // Create the final vectors with initial values
         let mut new_miss_ratio = vec![1.0];
