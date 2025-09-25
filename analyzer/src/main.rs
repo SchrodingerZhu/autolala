@@ -334,8 +334,9 @@ fn main_entry() -> anyhow::Result<()> {
                 match isl::get_distro(&raw_distro, space_count, *infinite_repeat) {
                     Ok(dist) => {
                         let mut curve = denning::MissRatioCurve::new(&dist);
-                        if let Some(associativity) = Some(options.associativity) {
-                            curve = curve.compute_assoc(associativity.get());
+                        // apply associativity only when it's greater than 1
+                        if options.associativity.get() > 1 {
+                            curve = curve.compute_assoc(options.associativity.get());
                         }
 
                         if let Some(path) = &options.miss_ratio_curve {
@@ -420,11 +421,12 @@ fn main_entry() -> anyhow::Result<()> {
                 writeln!(writer, "{table}")?;
                 let total_count = salt::get_total_count(access_cnt, tc.values())?;
                 writeln!(writer, "Total: {total_count}")?;
-                match salt::get_ri_distro(&ri_dist_vec) {
+                        match salt::get_ri_distro(&ri_dist_vec) {
                     Ok(dist) => {
                         let mut curve = denning::MissRatioCurve::new(&dist);
-                        if let Some(associativity) = Some(options.associativity) {
-                            curve = curve.compute_assoc(associativity.get());
+                        // apply associativity only when it's greater than 1
+                        if options.associativity.get() > 1 {
+                            curve = curve.compute_assoc(options.associativity.get());
                         }
 
                         if let Some(path) = &options.miss_ratio_curve {
