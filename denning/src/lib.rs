@@ -6,11 +6,11 @@ use charming::{
     series::Line,
 };
 use core::f64;
+use indicatif::{ProgressBar, ProgressStyle};
 #[cfg(feature = "plotters")]
 use plotters::{coord::Shift, prelude::*};
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
-use indicatif::{ProgressBar, ProgressStyle};
 
 #[derive(Serialize, Deserialize)]
 pub struct MissRatioCurve {
@@ -55,9 +55,11 @@ impl MissRatioCurve {
         // Calculate all miss ratios in parallel and show progress
         let pb = ProgressBar::new(cache_sizes.len() as u64);
         pb.set_style(
-            ProgressStyle::with_template("{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} ({eta})")
-                .unwrap()
-                .tick_chars("◐◓◑◒ "),
+            ProgressStyle::with_template(
+                "{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} ({eta})",
+            )
+            .unwrap()
+            .tick_chars("◐◓◑◒ "),
         );
 
         let parallel_results: Vec<(f64, f64)> = cache_sizes
@@ -93,6 +95,12 @@ impl MissRatioCurve {
         // Extend with parallel results
         new_miss_ratio.extend(parallel_results.iter().map(|(ratio, _)| *ratio));
         new_turning_points.extend(parallel_results.iter().map(|(_, size)| *size));
+
+        // find where miss ratio becomes negative, and remove those results, and repective turning points
+        if let Some(pos) = new_miss_ratio.iter().position(|&x| x < 0.0) {
+            new_miss_ratio.truncate(pos);
+            new_turning_points.truncate(pos);
+        }
 
         Self {
             miss_ratio: new_miss_ratio.into_boxed_slice(),
