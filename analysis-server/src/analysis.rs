@@ -34,7 +34,7 @@ impl AnalysisRequest {
             .unshare(Namespace::Uts);
 
         container
-            .rootfs("/")
+            .rootfs("/")?
             .devfsmount("/dev")
             .tmpfsmount("/tmp")
             .bindmount_ro(analyzer_path, "/analyzer");

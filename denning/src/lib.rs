@@ -38,7 +38,7 @@ impl MissRatioCurve {
         let len = self.turning_points.len();
         // Step 1: Calculate RD distribution (q_j values) from miss ratios
         let mut rd_portions = vec![0.0; len];
-        for i in 0..len {
+        for i in 1..len {
             if i == 0 {
                 rd_portions[i] = 1.0 - self.miss_ratio[i];
             } else {
@@ -61,8 +61,11 @@ impl MissRatioCurve {
             .unwrap()
             .tick_chars("◐◓◑◒ "),
         );
-
-        let parallel_results: Vec<(f64, f64)> = cache_sizes
+        let pool = rayon::ThreadPoolBuilder::new()
+            .num_threads(std::thread::available_parallelism().unwrap().get())
+            .build()
+            .unwrap();
+        let parallel_results: Vec<(f64, f64)> = pool.install(||cache_sizes
             .par_iter()
             .map_with(pb.clone(), |pb, &cache_size| {
                 let mut miss_ratio = 1.0;
@@ -76,7 +79,7 @@ impl MissRatioCurve {
                                     .powi((self.turning_points[j].ceil() as usize - i) as i32)
                                 * MissRatioCurve::binomial(
                                     self.turning_points[j].ceil() as usize - 1,
-                                    i,
+                                    i - 1,
                                 );
                         }
                     }
@@ -84,7 +87,7 @@ impl MissRatioCurve {
                 pb.inc(1);
                 (miss_ratio, cache_size as f64)
             })
-            .collect();
+            .collect());
 
         pb.finish_and_clear();
 
