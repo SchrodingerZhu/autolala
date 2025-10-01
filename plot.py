@@ -343,7 +343,7 @@ def main():
     for name, db_file in simulation:
         try:
             cache_sizes, miss_ratios = extract_simulation_data(db_file, block_size_bytes)
-            plt.plot(cache_sizes, miss_ratios, 'o-', drawstyle='steps-post', label=f'Simulation - {name}', linewidth=2, markersize=6)
+            plt.plot(cache_sizes, miss_ratios, 'o-', label=f'Simulation - {name}', linewidth=2, markersize=6, alpha=0.7)
             print(f"{Colors.GREEN}✅ Loaded simulation data for {name}: {len(cache_sizes)} points{Colors.RESET}")
         except Exception as e:
             print(f"{Colors.RED}❌ Error loading simulation data from {db_file}: {e}{Colors.RESET}")
@@ -352,7 +352,7 @@ def main():
     for name, json_file in prediction:
         try:
             cache_sizes, miss_ratios = extract_prediction_data(json_file)
-            plt.plot(cache_sizes, miss_ratios, 's--', drawstyle='steps-post', label=f'Prediction - {name}', linewidth=2, markersize=4)
+            plt.plot(cache_sizes, miss_ratios, 's--', drawstyle='steps-post', label=f'Prediction - {name}', linewidth=2, markersize=4, alpha=0.7)
             print(f"{Colors.GREEN}✅ Loaded prediction data for {name}: {len(cache_sizes)} points{Colors.RESET}")
         except Exception as e:
             print(f"{Colors.RED}❌ Error loading prediction data from {json_file}: {e}{Colors.RESET}")

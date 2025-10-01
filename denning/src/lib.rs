@@ -1,3 +1,4 @@
+#![feature(float_gamma)]
 #[cfg(feature = "charming")]
 use charming::{
     Chart,
@@ -11,6 +12,7 @@ use indicatif::{ProgressBar, ProgressStyle};
 use plotters::{coord::Shift, prelude::*};
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
+use statrs::distribution::{DiscreteCDF, Poisson};
 
 #[derive(Serialize, Deserialize)]
 pub struct MissRatioCurve {
@@ -19,26 +21,20 @@ pub struct MissRatioCurve {
 }
 
 impl MissRatioCurve {
-    fn binomial(n: usize, k: usize) -> f64 {
-        if k > n {
-            return 0.0;
-        }
-        if k == 0 || k == n {
-            return 1.0;
-        }
-
-        let mut result = 1.0;
-        for i in 0..k {
-            result = result * (n - i) as f64 / (i + 1) as f64;
-        }
-        result
+    fn binomialf(n: f64, k: f64) -> f64 {
+        let (x, sgn_x) = (n + 1.0).ln_gamma();
+        let (y, sgn_y) = (k + 1.0).ln_gamma();
+        let (z, sgn_z) = ((n - k) + 1.0).ln_gamma();
+        let sgn = (sgn_x / (sgn_y * sgn_z)) as f64;
+        sgn * (x - y - z).exp()
     }
 
     pub fn compute_assoc(&self, associativity: usize) -> Self {
         let len = self.turning_points.len();
+        let rd = &self.turning_points;
         // Step 1: Calculate RD distribution (q_j values) from miss ratios
         let mut rd_portions = vec![0.0; len];
-        for i in 1..len {
+        for i in 0..len {
             if i == 0 {
                 rd_portions[i] = 1.0 - self.miss_ratio[i];
             } else {
@@ -47,9 +43,9 @@ impl MissRatioCurve {
             }
         }
 
-        let max_tp_usize = self.turning_points[len - 1].ceil() as usize;
+        let max_tp_usize = rd.last().unwrap().ceil() as usize;
         let cache_sizes: Vec<_> = (associativity..(max_tp_usize + associativity))
-            .step_by(associativity)
+            .step_by(1)
             .collect();
 
         // Calculate all miss ratios in parallel and show progress
@@ -65,39 +61,50 @@ impl MissRatioCurve {
             .num_threads(std::thread::available_parallelism().unwrap().get())
             .build()
             .unwrap();
-        let parallel_results: Vec<(f64, f64)> = pool.install(||cache_sizes
-            .par_iter()
-            .map_with(pb.clone(), |pb, &cache_size| {
-                let mut miss_ratio = 1.0;
-                let number_of_sets = (cache_size / associativity) as f64;
-                for i in 1..associativity + 1 {
-                    for j in 0..len {
-                        if self.turning_points[j].ceil() as usize >= i {
-                            miss_ratio -= rd_portions[j]
-                                * (1.0 / number_of_sets).powi(i as i32 - 1)
-                                * ((number_of_sets - 1.0) / number_of_sets)
-                                    .powi((self.turning_points[j].ceil() as usize - i) as i32)
-                                * MissRatioCurve::binomial(
-                                    self.turning_points[j].ceil() as usize - 1,
-                                    i - 1,
-                                );
+
+        let parallel_results: Vec<(f64, f64)> = pool.install(|| {
+            cache_sizes
+                .par_iter()
+                .map_with(pb.clone(), |pb, &cache_size| {
+                    let mut miss_ratio = 0.0;
+                    let number_of_sets = cache_size as f64 / associativity as f64;
+
+                    for (r, w) in rd.iter().copied().zip(rd_portions.iter().copied()) {
+                        // miss_ratio -= rd_p
+                        //     * (1.0 / number_of_sets).powf(new_rd)
+                        //     * ((number_of_sets - 1.0) / number_of_sets)
+                        //         .powf(rd_val - new_rd)
+                        //     * MissRatioCurve::binomialf(rd_val, new_rd);
+                        if r == 0.0 {
+                            continue;
                         }
+                        if cache_size == associativity && cache_size as f64 <= r {
+                            miss_ratio += w;
+                            continue;
+                        }
+                        let lambda = r / number_of_sets;
+                        let pos = Poisson::new(lambda).unwrap();
+                        let hit_prob = pos.cdf(associativity as u64 - 1) as f64;
+                        miss_ratio += w * (1.0 - hit_prob);
                     }
-                }
-                pb.inc(1);
-                (miss_ratio, cache_size as f64)
-            })
-            .collect());
+
+                    pb.inc(1);
+                    (miss_ratio, cache_size as f64)
+                })
+                .collect()
+        });
 
         pb.finish_and_clear();
 
         // Create the final vectors with initial values
-        let mut new_miss_ratio = vec![1.0];
-        let mut new_turning_points = vec![0.0];
-
-        // Extend with parallel results
-        new_miss_ratio.extend(parallel_results.iter().map(|(ratio, _)| *ratio));
-        new_turning_points.extend(parallel_results.iter().map(|(_, size)| *size));
+        let mut new_miss_ratio = parallel_results
+            .iter()
+            .map(|(ratio, _)| *ratio)
+            .collect::<Vec<_>>();
+        let mut new_turning_points = parallel_results
+            .iter()
+            .map(|(_, size)| *size)
+            .collect::<Vec<_>>();
 
         // find where miss ratio becomes negative, and remove those results, and repective turning points
         if let Some(pos) = new_miss_ratio.iter().position(|&x| x < 0.0) {
