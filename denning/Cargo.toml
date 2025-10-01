@@ -4,11 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-charming = { version = "0.5", default-features = false, optional = true }
+charming = { version = "0.6", default-features = false, optional = true }
 plotters = { version = "0.3.7", optional = true }
 rayon = "1.11.0"
 serde = { version = "1.0.219", features = ["derive"] }
-indicatif = { version = "0.17", features = ["rayon"] }
+indicatif = { version = "0.18", features = ["rayon"] }
 
 [features]
 charming = ["dep:charming"]
