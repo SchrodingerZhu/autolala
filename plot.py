@@ -135,6 +135,7 @@ def extract_prediction_data(json_path):
     # Get turning points (already in number of blocks)
     turning_points = miss_ratio_curve.get("turning_points", [])
     miss_ratios = miss_ratio_curve.get("miss_ratio", [])
+    miss_ratios = [min(max(mr, 0.0), 1.0) for mr in miss_ratios]  # Clamp to [0, 1]
     
     # If no turning points, generate based on miss_ratios length
     if not turning_points and miss_ratios:
