@@ -2,9 +2,13 @@
 #define N 120
 #define DATA_TYPE float
 
-void kernel_heat_3d(DATA_TYPE A[N][N][N], DATA_TYPE B[N][N][N]) {
+
+volatile DATA_TYPE A[N][N][N];
+volatile DATA_TYPE B[N][N][N];
+
+void kernel_heat_3d() {
   int t, i, j, k;
-  
+
   for (t = 1; t <= TSTEPS; t++) {
     for (i = 1; i < N-1; i++) {
       for (j = 1; j < N-1; j++) {

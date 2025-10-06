@@ -4,7 +4,12 @@
 #define N 600
 #define DATA_TYPE float
 
-void kernel_gramschmidt(DATA_TYPE A[M][N], DATA_TYPE R[N][N], DATA_TYPE Q[M][N]) {
+
+volatile DATA_TYPE A[M][N];
+volatile DATA_TYPE R[N][N];
+volatile DATA_TYPE Q[M][N];
+
+void kernel_gramschmidt() {
   int i, j, k;
   DATA_TYPE nrm;
 

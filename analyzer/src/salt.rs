@@ -498,5 +498,5 @@ where
         analysis_time,
     };
     serde_json::to_string(&result)
-        .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {}", e))
+        .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {e}"))
 }

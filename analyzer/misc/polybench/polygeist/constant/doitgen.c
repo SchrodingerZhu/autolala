@@ -3,7 +3,12 @@
 #define P 160
 #define DATA_TYPE float
 
-void kernel_doitgen(DATA_TYPE A[R][Q][P], DATA_TYPE C4[P][P], DATA_TYPE sum[P]) {
+
+volatile DATA_TYPE A[R][Q][P];
+volatile DATA_TYPE C4[P][P];
+volatile DATA_TYPE sum[P];
+
+void kernel_doitgen() {
   int r, q, p, s;
 
   for (r = 0; r < R; r++)

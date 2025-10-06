@@ -4,7 +4,11 @@
 #define ALPHA 1.5f
 #define BETA 1.2f
 
-void kernel_syrk(DATA_TYPE C[N][N], DATA_TYPE A[N][M]) {
+
+volatile DATA_TYPE C[N][N];
+volatile DATA_TYPE A[N][M];
+
+void kernel_syrk() {
   int i, j, k;
 
   for (i = 0; i < N; i++)

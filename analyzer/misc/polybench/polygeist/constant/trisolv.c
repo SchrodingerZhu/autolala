@@ -1,7 +1,12 @@
 #define N 2000
 #define DATA_TYPE float
 
-void kernel_trisolv(DATA_TYPE L[N][N], DATA_TYPE x[N], DATA_TYPE b[N]) {
+
+volatile DATA_TYPE L[N][N];
+volatile DATA_TYPE x[N];
+volatile DATA_TYPE b[N];
+
+void kernel_trisolv() {
   int i, j;
 
   for (i = 0; i < N; i++) {

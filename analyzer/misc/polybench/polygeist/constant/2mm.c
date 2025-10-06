@@ -6,9 +6,16 @@
 #define ALPHA 1.5f
 #define BETA 1.2f
 
-void kernel_2mm(DATA_TYPE A[NI][NK], DATA_TYPE B[NK][NJ], DATA_TYPE C[NJ][NL], DATA_TYPE D[NI][NL], DATA_TYPE tmp[NI][NJ]) {
+
+volatile DATA_TYPE A[NI][NK];
+volatile DATA_TYPE B[NK][NJ];
+volatile DATA_TYPE C[NJ][NL];
+volatile DATA_TYPE D[NI][NL];
+volatile DATA_TYPE tmp[NI][NJ];
+
+void kernel_2mm() {
   int i, j, k;
-  
+
   /* tmp := alpha * A * B */
   for (i = 0; i < NI; i++)
     for (j = 0; j < NJ; j++) {
@@ -16,7 +23,7 @@ void kernel_2mm(DATA_TYPE A[NI][NK], DATA_TYPE B[NK][NJ], DATA_TYPE C[NJ][NL], D
       for (k = 0; k < NK; ++k)
         tmp[i][j] += ALPHA * A[i][k] * B[k][j];
     }
-  
+
   /* D := beta * tmp * C + D */
   for (i = 0; i < NI; i++)
     for (j = 0; j < NL; j++) {

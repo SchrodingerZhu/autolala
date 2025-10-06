@@ -1,7 +1,14 @@
 #define N 2000
 #define DATA_TYPE float
 
-void kernel_mvt(DATA_TYPE x1[N], DATA_TYPE x2[N], DATA_TYPE y_1[N], DATA_TYPE y_2[N], DATA_TYPE A[N][N]) {
+
+volatile DATA_TYPE x1[N];
+volatile DATA_TYPE x2[N];
+volatile DATA_TYPE y_1[N];
+volatile DATA_TYPE y_2[N];
+volatile DATA_TYPE A[N][N];
+
+void kernel_mvt() {
   int i, j;
 
   for (i = 0; i < N; i++)

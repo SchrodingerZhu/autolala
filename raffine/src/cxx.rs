@@ -1,5 +1,6 @@
 use crate::affine::{AffineMap, IntegerSet};
 use melior::ir::{BlockRef, Module, OperationRef, Value, ValueLike};
+use std::ffi::{CString, c_char};
 
 #[repr(transparent)]
 struct MlirAffineMap(mlir_sys::MlirAffineMap);
@@ -181,8 +182,21 @@ pub(crate) fn for_op_get_step(for_op: OperationRef) -> Result<isize, crate::Erro
     ffi::for_op_get_step(MlirOperation(for_op.to_raw())).map_err(Into::into)
 }
 
-pub(crate) fn load_store_op_get_access_id(op: OperationRef) -> Result<usize, crate::Error> {
-    ffi::load_store_op_get_access_id(MlirOperation(op.to_raw())).map_err(Into::into)
+pub(crate) enum AccessId {
+    Local(usize),
+    Global(CString),
+}
+
+pub(crate) fn load_store_op_get_access_id(op: OperationRef) -> Result<AccessId, crate::Error> {
+    let id = ffi::load_store_op_get_access_id(MlirOperation(op.to_raw()))?;
+    const SIGN_BIT: usize = isize::MIN as usize;
+    if (id & SIGN_BIT) != 0 {
+        let ptr = (id & !SIGN_BIT) as *mut c_char;
+        let cstring = unsafe { std::ffi::CString::from_raw(ptr) };
+        Ok(AccessId::Global(cstring))
+    } else {
+        Ok(AccessId::Local(id))
+    }
 }
 
 pub(crate) fn load_store_op_get_access_map<'a>(
@@ -272,4 +286,11 @@ pub(crate) fn if_op_get_condition_operands<'a, 'b>(
 
 pub(crate) fn defined_in_any_loop(value: Value) -> bool {
     ffi::defined_in_any_loop(MlirValue(value.to_raw()))
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn raffine_cstring_create(data: *const c_char, len: usize) -> *mut c_char {
+    let s = unsafe { std::slice::from_raw_parts(data as *const u8, len) };
+    let string = std::ffi::CString::new(s).unwrap();
+    string.into_raw()
 }

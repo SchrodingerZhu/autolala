@@ -3,7 +3,11 @@
 #define DATA_TYPE float
 #define ALPHA 1.5f
 
-void kernel_trmm(DATA_TYPE A[M][M], DATA_TYPE B[M][N]) {
+
+volatile DATA_TYPE A[M][M];
+volatile DATA_TYPE B[M][N];
+
+void kernel_trmm() {
   int i, j, k;
 
   for (i = 0; i < M; i++)

@@ -3,7 +3,9 @@ use std::path::PathBuf;
 
 use anyhow::{Result, anyhow};
 use indicatif::ParallelProgressIterator;
-use melior::ir::{BlockLike, Module, OperationRef, RegionLike};
+use melior::ir::attribute::{StringAttribute, TypeAttribute};
+use melior::ir::r#type::MemRefType;
+use melior::ir::{BlockLike, Module, OperationRef, ShapedTypeLike};
 use palc::Parser;
 use r2d2::Pool;
 use r2d2_sqlite::SqliteConnectionManager;
@@ -105,11 +107,8 @@ impl<W: Write> CProgramEmitter<W> {
                 operands,
                 ..
             } => {
-                let ValID::Memref(array) = *memref else {
-                    return Err(anyhow!("expected memref access, found: {memref}"));
-                };
                 self.emit_indent()?;
-                self.emit_access(array, operands, *map)?;
+                self.emit_access(*memref, operands, *map)?;
             }
             Tree::If {
                 condition,
@@ -155,7 +154,10 @@ impl<W: Write> CProgramEmitter<W> {
             let operands = operands
                 .iter()
                 .map(|&operand| match operand {
-                    ValID::IVar(x) | ValID::Symbol(x) | ValID::Memref(x) => x,
+                    ValID::IVar(x) | ValID::Symbol(x) => x,
+                    ValID::Global(_) | ValID::Memref(_) => {
+                        unreachable!("global/memref cannot be used as operand")
+                    }
                 })
                 .collect::<Vec<_>>();
             self.emit_affine_expr(expr, &operands)?;
@@ -177,7 +179,10 @@ impl<W: Write> CProgramEmitter<W> {
         let operands = operands
             .iter()
             .map(|&operand| match operand {
-                ValID::IVar(x) | ValID::Symbol(x) | ValID::Memref(x) => x,
+                ValID::IVar(x) | ValID::Symbol(x) => x,
+                ValID::Global(_) | ValID::Memref(_) => {
+                    unreachable!("global/memref cannot be used as operand")
+                }
             })
             .collect::<Vec<_>>();
         for i in 0..map.num_results() {
@@ -192,8 +197,12 @@ impl<W: Write> CProgramEmitter<W> {
         Ok(())
     }
 
-    fn emit_access(&mut self, array: usize, operands: &[ValID], map: AffineMap) -> Result<()> {
-        write!(self.writer, "{{ ARRAY_{array}[")?;
+    fn emit_access(&mut self, array: ValID, operands: &[ValID], map: AffineMap) -> Result<()> {
+        match array {
+            ValID::Memref(id) => write!(self.writer, "{{ ARRAY_{id}[")?,
+            ValID::Global(id) => write!(self.writer, "{{ {id}[")?,
+            _ => return Err(anyhow!("expected memref/global in access, found: {array}")),
+        }
         self.emit_affine_map(&map, operands)?;
         write!(
             self.writer,
@@ -280,11 +289,10 @@ struct Cli {
     #[arg(short = 'f', long)]
     target_function: Option<String>,
 
-    /// target affine loop attribute
-    /// if not specified, the program will try to find first affine loop in the function
-    #[arg(short = 'l', long)]
-    target_affine_loop: Option<String>,
-
+    // /// target affine loop attribute
+    // /// if not specified, the program will try to find first affine loop in the function
+    // #[arg(short = 'l', long)]
+    // target_affine_loop: Option<String>,
     /// valgrind path
     #[arg(long, default_value = "valgrind")]
     valgrind_path: String,
@@ -370,40 +378,33 @@ fn extract_target<'ctx>(
         }
         locate_function(op.next_in_block(), options, conti)
     }
-    fn locate_loop<'a, 'b, F>(
-        cursor: Option<OperationRef<'a, 'b>>,
-        options: &'_ Cli,
-        conti: F,
-    ) -> anyhow::Result<&'a Tree<'a>>
-    where
-        F: for<'c> FnOnce(OperationRef<'a, 'c>) -> anyhow::Result<&'a Tree<'a>>,
-    {
-        let Some(op) = cursor else {
-            return Err(anyhow!("No operation found"));
-        };
-        if op.name().as_string_ref().as_str()? == "affine.for" {
-            if let Some(name) = options.target_affine_loop.as_deref() {
-                if op.has_attribute(name) {
-                    debug!("Found target affine loop: {}", name);
-                    return conti(op);
-                }
-            } else {
-                return conti(op);
-            }
-        }
-        locate_loop(op.next_in_block(), options, conti)
-    }
+    // fn locate_loop<'a, 'b, F>(
+    //     cursor: Option<OperationRef<'a, 'b>>,
+    //     options: &'_ Cli,
+    //     conti: F,
+    // ) -> anyhow::Result<&'a Tree<'a>>
+    // where
+    //     F: for<'c> FnOnce(OperationRef<'a, 'c>) -> anyhow::Result<&'a Tree<'a>>,
+    // {
+    //     let Some(op) = cursor else {
+    //         return Err(anyhow!("No operation found"));
+    //     };
+    //     if op.name().as_string_ref().as_str()? == "affine.for" {
+    //         if let Some(name) = options.target_affine_loop.as_deref() {
+    //             if op.has_attribute(name) {
+    //                 debug!("Found target affine loop: {}", name);
+    //                 return conti(op);
+    //             }
+    //         } else {
+    //             return conti(op);
+    //         }
+    //     }
+    //     locate_loop(op.next_in_block(), options, conti)
+    // }
 
     let cursor = body.first_operation();
     locate_function(cursor, options, move |func| {
-        let cursor = func
-            .region(0)?
-            .first_block()
-            .ok_or_else(|| anyhow!("function does not have block"))?
-            .first_operation();
-        locate_loop(cursor, options, move |for_loop| {
-            Ok(context.build_tree(for_loop, dom)?)
-        })
+        Ok(context.build_func_tree(func, dom)?)
     })
 }
 
@@ -462,6 +463,50 @@ fn pool_get_retry(
     }
 }
 
+struct GlobalArrayDeclaration {
+    name: String,
+    size: Box<[usize]>,
+}
+
+fn extract_global_arrays(module: &Module) -> anyhow::Result<Vec<GlobalArrayDeclaration>> {
+    let mut arrays = vec![];
+    let body = module.body();
+    let op = body.first_operation();
+    fn collect_arrays(
+        operation: OperationRef,
+        arrays: &mut Vec<GlobalArrayDeclaration>,
+    ) -> anyhow::Result<()> {
+        if operation.name().as_string_ref().as_str()? == "memref.global" {
+            let sym_name = operation.attribute("sym_name")?;
+            let sym_name = StringAttribute::try_from(sym_name)?
+                .to_string()
+                .trim_matches('"')
+                .to_string();
+            let type_attr = operation.attribute("type")?;
+            let type_attr = TypeAttribute::try_from(type_attr)?;
+            let memref_type = type_attr.value();
+            let memref_type = MemRefType::try_from(memref_type)?;
+            let rank = memref_type.rank();
+            let mut shape = Vec::with_capacity(rank);
+            for dim in 0..rank {
+                shape.push(memref_type.dim_size(dim)?);
+            }
+            arrays.push(GlobalArrayDeclaration {
+                name: sym_name,
+                size: shape.into_boxed_slice(),
+            });
+        }
+        if let Some(next_op) = operation.next_in_block() {
+            collect_arrays(next_op, arrays)?;
+        }
+        Ok(())
+    }
+    if let Some(op) = op {
+        collect_arrays(op, &mut arrays)?;
+    }
+    Ok(arrays)
+}
+
 fn main() {
     tracing_subscriber::fmt()
         .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
@@ -482,6 +527,17 @@ fn main() {
         write!(program_file, "// Simulation Prologue:\n{unescaped}\n\n").unwrap();
     } else {
         trace!("No simulation prologue found");
+    }
+    let global_arrays = extract_global_arrays(&module).unwrap();
+    for array in &global_arrays {
+        write!(program_file, "double {}[", array.name).unwrap();
+        for (i, dim) in array.size.iter().enumerate() {
+            if i > 0 {
+                write!(program_file, "][").unwrap();
+            }
+            write!(program_file, "{dim}").unwrap();
+        }
+        writeln!(program_file, "];").unwrap();
     }
     let emitter = CProgramEmitter::new(program_file);
     emitter.emit(target_tree).unwrap();
@@ -534,7 +590,7 @@ fn main() {
         .to_string_lossy()
         .to_string();
     let range = if args.batched {
-        if let Some(associativity) = args.d1_associativity  {
+        if let Some(associativity) = args.d1_associativity {
             let factor = args.d1_block_size * associativity;
             let mut cache_sizes = vec![];
             let mut exp = 1;
@@ -543,7 +599,7 @@ fn main() {
                 exp *= 2;
             }
             cache_sizes
-        } else{
+        } else {
             let block_size = args.d1_block_size;
             let cache_size = args.d1_cache_size;
             (block_size..=cache_size)

@@ -1,7 +1,10 @@
 #define N 2000
 #define DATA_TYPE float
 
-void kernel_lu(DATA_TYPE A[N][N]) {
+
+volatile DATA_TYPE A[N][N];
+
+void kernel_lu() {
   int i, j, k;
 
   for (i = 0; i < N; i++) {

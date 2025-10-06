@@ -5,7 +5,13 @@
 #define DATA_TYPE float
 #define EPS 0.005f
 
-void kernel_correlation(DATA_TYPE data[N][M], DATA_TYPE corr[M][M], DATA_TYPE mean[M], DATA_TYPE stddev[M]) {
+
+volatile DATA_TYPE data[N][M];
+volatile DATA_TYPE corr[M][M];
+volatile DATA_TYPE mean[M];
+volatile DATA_TYPE stddev[M];
+
+void kernel_correlation() {
   int i, j, k;
   DATA_TYPE float_n = (DATA_TYPE)N;
 

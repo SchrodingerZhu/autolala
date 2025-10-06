@@ -847,7 +847,7 @@ impl<'a> QpolyConverter<'a> {
         for ty in [DimType::Param, DimType::In] {
             let n = aff.dim(ty)?;
             for i in 0..n {
-                let coeff = aff.get_coefficient_val(ty, i as u32)?;
+                let coeff = aff.get_coefficient_val(ty, i)?;
                 let coeff = self.value_to_rational_poly(coeff);
                 if coeff.is_zero() {
                     continue;

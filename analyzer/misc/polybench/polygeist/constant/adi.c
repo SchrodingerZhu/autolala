@@ -2,7 +2,13 @@
 #define N 1000
 #define DATA_TYPE float
 
-void kernel_adi(DATA_TYPE u[N][N], DATA_TYPE v[N][N], DATA_TYPE p[N][N], DATA_TYPE q[N][N]) {
+
+volatile DATA_TYPE u[N][N];
+volatile DATA_TYPE v[N][N];
+volatile DATA_TYPE p[N][N];
+volatile DATA_TYPE q[N][N];
+
+void kernel_adi() {
   int t, i, j;
   DATA_TYPE DX = 1.0f / (DATA_TYPE)N;
   DATA_TYPE DY = 1.0f / (DATA_TYPE)N;
@@ -23,8 +29,8 @@ void kernel_adi(DATA_TYPE u[N][N], DATA_TYPE v[N][N], DATA_TYPE p[N][N], DATA_TY
     for (i = 1; i < N-1; i++)
       for (j = 1; j < N-1; j++)
         v[i][j] = -d * u[j][i-1] + e * u[j][i] - f * u[j][i+1];
-    
-    /* Row Sweep */  
+
+    /* Row Sweep */
     for (i = 1; i < N-1; i++)
       for (j = 1; j < N-1; j++)
         u[i][j] = -a * v[i-1][j] + b * v[i][j] - c * v[i+1][j];

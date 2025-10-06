@@ -1,7 +1,11 @@
 #define N 2000
 #define DATA_TYPE float
 
-void kernel_durbin(DATA_TYPE r[N], DATA_TYPE y[N]) {
+
+volatile DATA_TYPE r[N];
+volatile DATA_TYPE y[N];
+
+void kernel_durbin() {
   DATA_TYPE z[N];
   DATA_TYPE alpha;
   DATA_TYPE beta;

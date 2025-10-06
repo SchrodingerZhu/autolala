@@ -2,7 +2,10 @@
 #define N 2000
 #define DATA_TYPE float
 
-void kernel_seidel_2d(DATA_TYPE A[N][N]) {
+
+volatile DATA_TYPE A[N][N];
+
+void kernel_seidel_2d() {
   int t, i, j;
 
   for (t = 0; t <= TSTEPS - 1; t++)

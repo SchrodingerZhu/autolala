@@ -5,9 +5,18 @@
 #define NM 600
 #define DATA_TYPE float
 
-void kernel_3mm(DATA_TYPE A[NI][NK], DATA_TYPE B[NK][NJ], DATA_TYPE C[NJ][NM], DATA_TYPE D[NM][NL], DATA_TYPE E[NI][NJ], DATA_TYPE F[NJ][NL], DATA_TYPE G[NI][NL]) {
+
+volatile DATA_TYPE A[NI][NK];
+volatile DATA_TYPE B[NK][NJ];
+volatile DATA_TYPE C[NJ][NM];
+volatile DATA_TYPE D[NM][NL];
+volatile DATA_TYPE E[NI][NJ];
+volatile DATA_TYPE F[NJ][NL];
+volatile DATA_TYPE G[NI][NL];
+
+void kernel_3mm() {
   int i, j, k;
-  
+
   /* E := A*B */
   for (i = 0; i < NI; i++)
     for (j = 0; j < NJ; j++) {
@@ -15,7 +24,7 @@ void kernel_3mm(DATA_TYPE A[NI][NK], DATA_TYPE B[NK][NJ], DATA_TYPE C[NJ][NM], D
       for (k = 0; k < NK; ++k)
         E[i][j] += A[i][k] * B[k][j];
     }
-  
+
   /* F := C*D */
   for (i = 0; i < NJ; i++)
     for (j = 0; j < NL; j++) {
@@ -23,7 +32,7 @@ void kernel_3mm(DATA_TYPE A[NI][NK], DATA_TYPE B[NK][NJ], DATA_TYPE C[NJ][NM], D
       for (k = 0; k < NM; ++k)
         F[i][j] += C[i][k] * D[k][j];
     }
-  
+
   /* G := E*F */
   for (i = 0; i < NI; i++)
     for (j = 0; j < NL; j++) {

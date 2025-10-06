@@ -1,7 +1,11 @@
 #define N 2500
 #define DATA_TYPE int
 
-void kernel_nussinov(DATA_TYPE seq[N], DATA_TYPE table[N][N]) {
+
+volatile DATA_TYPE seq[N];
+volatile DATA_TYPE table[N][N];
+
+void kernel_nussinov() {
   int i, j, k;
 
   for (i = N-1; i >= 0; i--) {

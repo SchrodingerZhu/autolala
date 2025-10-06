@@ -7,6 +7,7 @@
 #include <mlir/CAPI/IR.h>
 #include <mlir/CAPI/IntegerSet.h>
 #include <mlir/Dialect/Affine/IR/AffineOps.h>
+#include <mlir/Dialect/MemRef/IR/MemRef.h>
 #include <mlir/IR/Block.h>
 #include <mlir/IR/Dominance.h>
 #include <rust/cxx.h>
@@ -16,6 +17,8 @@
 
 using namespace mlir;
 namespace raffine {
+
+extern "C" char *raffine_cstring_create(const char *data, size_t size);
 
 MlirAffineMap forOpGetLowerBoundMap(MlirOperation forOp) {
   Operation *op = unwrap(forOp);
@@ -42,11 +45,31 @@ ssize_t forOpGetStep(MlirOperation forOp) {
 }
 
 size_t loadStoreOpGetAccessId(MlirOperation target) {
+  const size_t SIGN_BIT =
+      static_cast<size_t>(std::numeric_limits<ssize_t>::min());
   Operation *op = unwrap(target);
-  if (auto loadOp = dyn_cast<affine::AffineLoadOp>(op))
+  if (auto loadOp = dyn_cast<affine::AffineLoadOp>(op)) {
+    auto memref = loadOp.getMemref();
+    if (auto gv = memref.getDefiningOp<mlir::memref::GetGlobalOp>()) {
+      // If the memref is defined by a GlobalOp, use its name's pointer as ID
+      auto name = gv.getName();
+      return llvm::bit_cast<size_t>(
+                 raffine_cstring_create(name.data(), name.size())) |
+             SIGN_BIT;
+    }
     return llvm::bit_cast<size_t>(loadOp.getMemref().getAsOpaquePointer());
-  if (auto storeOp = dyn_cast<affine::AffineStoreOp>(op))
+  }
+  if (auto storeOp = dyn_cast<affine::AffineStoreOp>(op)) {
+    auto memref = storeOp.getMemref();
+    if (auto gv = memref.getDefiningOp<mlir::memref::GetGlobalOp>()) {
+      // If the memref is defined by a GlobalOp, use its name's pointer as ID
+      auto name = gv.getName();
+      return llvm::bit_cast<size_t>(
+                 raffine_cstring_create(name.data(), name.size())) |
+             SIGN_BIT;
+    }
     return llvm::bit_cast<size_t>(storeOp.getMemref().getAsOpaquePointer());
+  }
   throw std::invalid_argument(
       "Expected an AffineLoadOp/AffineStoreOp, but got a different operation.");
 }
@@ -158,9 +181,9 @@ rust::Vec<MlirValue> ifOpGetConditionOperands(MlirOperation ifOp) {
 
 bool definedInAnyLoop(MlirValue value) {
   Value val = unwrap(value);
-  
+
   Operation *op = nullptr;
-  
+
   // If the value is a block argument, get its block parent
   if (auto blockArg = dyn_cast<BlockArgument>(val)) {
     Block *block = blockArg.getOwner();
@@ -170,13 +193,11 @@ bool definedInAnyLoop(MlirValue value) {
     op = block->getParentOp();
   } else
     op = val.getDefiningOp();
-  
-  
+
   // If no op found in either case, return false
-  if (!op) 
+  if (!op)
     return false;
-  
-  
+
   // Return true iff the op has an affine for op as its parent
   return op->getParentOfType<affine::AffineForOp>() != nullptr;
 }

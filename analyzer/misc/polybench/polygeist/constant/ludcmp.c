@@ -1,7 +1,13 @@
 #define N 2000
 #define DATA_TYPE float
 
-void kernel_ludcmp(DATA_TYPE A[N][N], DATA_TYPE b[N], DATA_TYPE x[N], DATA_TYPE y[N]) {
+
+volatile DATA_TYPE A[N][N];
+volatile DATA_TYPE b[N];
+volatile DATA_TYPE x[N];
+volatile DATA_TYPE y[N];
+
+void kernel_ludcmp() {
   int i, j, k;
 
   for (i = 0; i < N; i++) {

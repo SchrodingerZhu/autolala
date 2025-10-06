@@ -4,7 +4,12 @@
 #define ALPHA 1.5f
 #define BETA 1.2f
 
-void kernel_symm(DATA_TYPE C[M][N], DATA_TYPE A[M][M], DATA_TYPE B[M][N]) {
+
+volatile DATA_TYPE C[M][N];
+volatile DATA_TYPE A[M][M];
+volatile DATA_TYPE B[M][N];
+
+void kernel_symm() {
   int i, j, k;
   DATA_TYPE temp2;
 

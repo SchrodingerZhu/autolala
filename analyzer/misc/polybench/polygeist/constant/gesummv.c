@@ -3,7 +3,14 @@
 #define ALPHA 1.5f
 #define BETA 1.2f
 
-void kernel_gesummv(DATA_TYPE A[N][N], DATA_TYPE B[N][N], DATA_TYPE tmp[N], DATA_TYPE x[N], DATA_TYPE y[N]) {
+
+volatile DATA_TYPE A[N][N];
+volatile DATA_TYPE B[N][N];
+volatile DATA_TYPE tmp[N];
+volatile DATA_TYPE x[N];
+volatile DATA_TYPE y[N];
+
+void kernel_gesummv() {
   int i, j;
 
   for (i = 0; i < N; i++) {

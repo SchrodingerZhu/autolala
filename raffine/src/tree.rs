@@ -6,11 +6,12 @@ use std::{
 
 use melior::ir::{BlockLike, BlockRef, OperationRef, RegionLike, Value, ValueLike};
 use rustc_hash::FxHashMapRand;
+pub use ustr::Ustr;
 
 use crate::{
     Context, DominanceInfo,
     affine::{AffineMap, IntegerSet},
-    cxx::defined_in_any_loop,
+    cxx::{AccessId, defined_in_any_loop},
 };
 
 #[derive(Debug)]
@@ -44,6 +45,7 @@ pub enum ValID {
     IVar(usize),
     Symbol(usize),
     Memref(usize),
+    Global(Ustr),
 }
 
 impl std::fmt::Display for ValID {
@@ -52,6 +54,7 @@ impl std::fmt::Display for ValID {
             ValID::IVar(id) => write!(f, "i{id}"),
             ValID::Symbol(id) => write!(f, "s{id}"),
             ValID::Memref(id) => write!(f, "m{id}"),
+            ValID::Global(name) => write!(f, "{}", name),
         }
     }
 }
@@ -103,17 +106,22 @@ impl<'a, 'b> TranslationContext<'a, 'b> {
             }
         }
     }
-    fn get_memref(&self, memref: usize) -> ValID {
-        let mut values = self.values.borrow_mut();
-        match values.entry(memref) {
-            Entry::Occupied(entry) => *entry.get(),
-            Entry::Vacant(entry) => {
-                let id = self.memref_counter.get();
-                self.memref_counter.set(id + 1);
-                let value = ValID::Memref(id);
-                entry.insert(value);
-                value
+    fn get_memref(&self, memref: AccessId) -> ValID {
+        match memref {
+            AccessId::Local(memref) => {
+                let mut values = self.values.borrow_mut();
+                match values.entry(memref) {
+                    Entry::Occupied(entry) => *entry.get(),
+                    Entry::Vacant(entry) => {
+                        let id = self.memref_counter.get();
+                        self.memref_counter.set(id + 1);
+                        let value = ValID::Memref(id);
+                        entry.insert(value);
+                        value
+                    }
+                }
             }
+            AccessId::Global(name) => ValID::Global(Ustr::from(name.to_str().unwrap())),
         }
     }
     fn loop_scope<R>(&self, f: impl FnOnce(&Self) -> R) -> R {

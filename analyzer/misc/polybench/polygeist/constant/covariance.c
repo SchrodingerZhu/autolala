@@ -2,7 +2,12 @@
 #define N 500
 #define DATA_TYPE float
 
-void kernel_covariance(DATA_TYPE data[N][M], DATA_TYPE cov[M][M], DATA_TYPE mean[M]) {
+
+volatile DATA_TYPE data[N][M];
+volatile DATA_TYPE cov[M][M];
+volatile DATA_TYPE mean[M];
+
+void kernel_covariance() {
   int i, j, k;
   DATA_TYPE float_n = (DATA_TYPE)N;
 

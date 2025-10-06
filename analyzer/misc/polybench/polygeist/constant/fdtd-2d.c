@@ -3,7 +3,13 @@
 #define NY 1200
 #define DATA_TYPE float
 
-void kernel_fdtd_2d(DATA_TYPE ex[NX][NY], DATA_TYPE ey[NX][NY], DATA_TYPE hz[NX][NY], DATA_TYPE _fict_[TMAX]) {
+
+volatile DATA_TYPE ex[NX][NY];
+volatile DATA_TYPE ey[NX][NY];
+volatile DATA_TYPE hz[NX][NY];
+volatile DATA_TYPE _fict_[TMAX];
+
+void kernel_fdtd_2d() {
   int t, i, j;
 
   for (t = 0; t < TMAX; t++) {

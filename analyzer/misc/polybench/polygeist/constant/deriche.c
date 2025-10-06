@@ -4,13 +4,19 @@
 #define H 2160
 #define DATA_TYPE float
 
-void kernel_deriche(DATA_TYPE alpha, DATA_TYPE imgIn[W][H], DATA_TYPE imgOut[W][H], DATA_TYPE y1[W][H], DATA_TYPE y2[W][H]) {
+
+volatile DATA_TYPE imgIn[W][H];
+volatile DATA_TYPE imgOut[W][H];
+volatile DATA_TYPE y1[W][H];
+volatile DATA_TYPE y2[W][H];
+
+void kernel_deriche(DATA_TYPE alpha) {
   int i, j;
   DATA_TYPE xm1, tm1, ym1, ym2;
   DATA_TYPE xp1, xp2;
   DATA_TYPE tp1, tp2;
   DATA_TYPE yp1, yp2;
-  
+
   DATA_TYPE k = (1.0f - expf(-alpha)) * (1.0f - expf(-alpha)) / (1.0f + 2.0f * alpha * expf(-alpha) - expf(2.0f * alpha));
   DATA_TYPE a1 = k;
   DATA_TYPE a2 = k * expf(-alpha) * (alpha - 1.0f);
