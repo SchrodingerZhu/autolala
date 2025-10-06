@@ -1,6 +1,7 @@
-#define NI 1000
-#define NJ 1100
-#define NK 900
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/blas/gemm/gemm.h
+#define NI 200
+#define NJ 220
+#define NK 240
 #define DATA_TYPE float
 #define ALPHA 1.5f
 #define BETA 1.2f

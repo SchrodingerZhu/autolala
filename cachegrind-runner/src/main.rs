@@ -1,6 +1,3 @@
-use std::io::{BufWriter, Write};
-use std::path::PathBuf;
-
 use anyhow::{Result, anyhow};
 use indicatif::ParallelProgressIterator;
 use melior::ir::attribute::{StringAttribute, TypeAttribute};
@@ -13,8 +10,57 @@ use raffine::affine::{AffineExpr, AffineMap};
 use raffine::tree::{Tree, ValID};
 use raffine::{Context, DominanceInfo};
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
+use std::io::{BufWriter, Write};
+use std::path::PathBuf;
+use std::sync::Mutex;
+use std::sync::atomic::AtomicBool;
+use sysinfo::Components;
 
-use tracing::{debug, info, trace};
+use tracing::{debug, info, trace, warn};
+
+struct CoolDown {
+    flag: AtomicBool,
+    finished: AtomicBool,
+    components: Mutex<Components>,
+}
+
+impl CoolDown {
+    fn wait(&self) {
+        while !self.flag.load(std::sync::atomic::Ordering::SeqCst) {
+            std::thread::sleep(std::time::Duration::from_secs(1));
+        }
+    }
+    fn finish(&self) {
+        self.finished
+            .store(true, std::sync::atomic::Ordering::SeqCst);
+    }
+    fn monitor_loop(&self) {
+        let mut components = self.components.lock().unwrap();
+        'waiting: loop {
+            if self.finished.load(std::sync::atomic::Ordering::SeqCst) {
+                break;
+            }
+            components.iter_mut().for_each(|c| c.refresh());
+            let average = components
+                .iter()
+                .filter(|c| c.label().contains("Tccd") || c.label().contains("Tctl"))
+                .filter_map(|c| c.temperature())
+                .collect::<Vec<_>>();
+            let average = average.iter().copied().sum::<f32>() / average.len() as f32;
+            if average >= 60.0 {
+                warn!(
+                    "High temperature detected: {:.2}°C, cooling down...",
+                    average
+                );
+                self.flag.store(false, std::sync::atomic::Ordering::SeqCst);
+                std::thread::sleep(std::time::Duration::from_secs(1));
+                continue 'waiting;
+            }
+            self.flag.store(true, std::sync::atomic::Ordering::SeqCst);
+            std::thread::sleep(std::time::Duration::from_secs(1));
+        }
+    }
+}
 
 struct CProgramEmitter<W: Write> {
     writer: BufWriter<W>,
@@ -609,64 +655,74 @@ fn main() {
     } else {
         vec![args.d1_cache_size]
     };
-    range.into_par_iter().progress().for_each(|cache_size| {
-        let associativity = args
-            .d1_associativity
-            .unwrap_or_else(|| cache_size / args.d1_block_size);
-        let d1_string = format!(
-            "--D1={},{},{}",
-            cache_size, associativity, args.d1_block_size,
-        );
-        let ll_string = format!(
-            "--LL={},{},{}",
-            args.ll_cache_size, args.ll_associativity, args.ll_block_size,
-        );
-        let start = std::time::Instant::now();
-        let output = std::process::Command::new(&args.valgrind_path)
-            .arg("--tool=cachegrind")
-            .arg("--cache-sim=yes")
-            .arg("-v")
-            .arg(d1_string)
-            .arg(ll_string)
-            .arg(&output_path)
-            .current_dir(workdir.path())
-            .output()
-            .unwrap();
-        let process_time = start.elapsed().as_nanos() as usize;
-        let output = String::from_utf8_lossy(&output.stderr);
-        info!("Valgrind output:\n{output}");
-        let mut total_access = 0usize;
-        let mut d1_miss_count = 0usize;
-        let mut ll_miss_count = 0usize;
-        for line in output.lines() {
-            if line.contains("D refs:") {
-                if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
-                    total_access = value.trim().replace(",", "").parse().unwrap_or(0);
+    let cool_down = CoolDown {
+        flag: AtomicBool::new(false),
+        finished: AtomicBool::new(false),
+        components: Mutex::new(Components::new_with_refreshed_list()),
+    };
+    std::thread::scope(|s| {
+        s.spawn(|| cool_down.monitor_loop());
+        range.into_par_iter().progress().for_each(|cache_size| {
+            cool_down.wait();
+            let associativity = args
+                .d1_associativity
+                .unwrap_or_else(|| cache_size / args.d1_block_size);
+            let d1_string = format!(
+                "--D1={},{},{}",
+                cache_size, associativity, args.d1_block_size,
+            );
+            let ll_string = format!(
+                "--LL={},{},{}",
+                args.ll_cache_size, args.ll_associativity, args.ll_block_size,
+            );
+            let start = std::time::Instant::now();
+            let output = std::process::Command::new(&args.valgrind_path)
+                .arg("--tool=cachegrind")
+                .arg("--cache-sim=yes")
+                .arg("-v")
+                .arg(d1_string)
+                .arg(ll_string)
+                .arg(&output_path)
+                .current_dir(workdir.path())
+                .output()
+                .unwrap();
+            let process_time = start.elapsed().as_nanos() as usize;
+            let output = String::from_utf8_lossy(&output.stderr);
+            info!("Valgrind output:\n{output}");
+            let mut total_access = 0usize;
+            let mut d1_miss_count = 0usize;
+            let mut ll_miss_count = 0usize;
+            for line in output.lines() {
+                if line.contains("D refs:") {
+                    if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
+                        total_access = value.trim().replace(",", "").parse().unwrap_or(0);
+                    }
+                } else if line.contains("D1  misses:") {
+                    if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
+                        d1_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
+                    }
+                } else if line.contains("LLd misses:")
+                    && let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next())
+                {
+                    ll_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
                 }
-            } else if line.contains("D1  misses:") {
-                if let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next()) {
-                    d1_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
-                }
-            } else if line.contains("LLd misses:")
-                && let Some(value) = line.split(':').nth(1).and_then(|s| s.split('(').next())
-            {
-                ll_miss_count = value.trim().replace(",", "").parse().unwrap_or(0);
             }
-        }
 
-        let record = Record {
-            program: program.clone(),
-            d1_cache_size: cache_size,
-            d1_associativity: associativity,
-            d1_block_size: args.d1_block_size,
-            ll_associativity: args.ll_associativity,
-            ll_cache_size: args.ll_cache_size,
-            ll_block_size: args.ll_block_size,
-            d1_miss_count,
-            ll_miss_count,
-            total_access,
-            process_time,
-        };
-        record.insert(&pool);
+            let record = Record {
+                program: program.clone(),
+                d1_cache_size: cache_size,
+                d1_associativity: associativity,
+                d1_block_size: args.d1_block_size,
+                ll_associativity: args.ll_associativity,
+                ll_cache_size: args.ll_cache_size,
+                ll_block_size: args.ll_block_size,
+                d1_miss_count,
+                ll_miss_count,
+                total_access,
+                process_time,
+            };
+            record.insert(&pool);
+        });
+        cool_down.finish();
     });
 }

@@ -1,8 +1,9 @@
-#define NI 200
-#define NJ 300
-#define NK 400
-#define NL 500
-#define NM 600
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/3mm/3mm.h
+#define NI 180
+#define NJ 190
+#define NK 200
+#define NL 210
+#define NM 220
 #define DATA_TYPE float
 
 

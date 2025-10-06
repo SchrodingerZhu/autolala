@@ -1,7 +1,8 @@
-#define NI 200
-#define NJ 300
-#define NK 400
-#define NL 500
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/2mm/2mm.h
+#define NI 180
+#define NJ 190
+#define NK 210
+#define NL 220
 #define DATA_TYPE float
 #define ALPHA 1.5f
 #define BETA 1.2f

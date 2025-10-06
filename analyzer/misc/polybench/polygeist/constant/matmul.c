@@ -3,7 +3,11 @@
 #define K 400
 #define DATA_TYPE float
 
-void matmul(DATA_TYPE A[N][K], DATA_TYPE B[K][M], DATA_TYPE C[N][M]) {
+volatile DATA_TYPE A[N][K];
+volatile DATA_TYPE B[K][M];
+volatile DATA_TYPE C[N][M];
+
+void matmul() {
   int i, j, k;
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < M; j++) {

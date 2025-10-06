@@ -1,3 +1,4 @@
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/doitgen/doitgen.h
 #define R 150
 #define Q 140
 #define P 160

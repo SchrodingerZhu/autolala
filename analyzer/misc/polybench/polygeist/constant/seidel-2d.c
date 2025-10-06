@@ -1,5 +1,6 @@
-#define TSTEPS 500
-#define N 2000
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/stencils/seidel-2d/seidel-2d.h
+#define TSTEPS 100
+#define N 400
 #define DATA_TYPE float
 
 

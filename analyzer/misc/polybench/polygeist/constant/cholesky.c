@@ -1,6 +1,7 @@
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/solvers/cholesky/cholesky.h
 #include <math.h>
 
-#define N 2000
+#define N 400
 #define DATA_TYPE float
 
 

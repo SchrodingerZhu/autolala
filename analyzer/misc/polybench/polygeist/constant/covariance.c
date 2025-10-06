@@ -1,5 +1,6 @@
-#define M 500
-#define N 500
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/datamining/covariance/covariance.h
+#define M 240
+#define N 260
 #define DATA_TYPE float
 
 

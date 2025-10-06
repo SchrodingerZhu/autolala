@@ -1,5 +1,6 @@
-#define TSTEPS 500
-#define N 1300
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/stencils/jacobi-2d/jacobi-2d.h
+#define TSTEPS 100
+#define N 250
 #define DATA_TYPE float
 
 

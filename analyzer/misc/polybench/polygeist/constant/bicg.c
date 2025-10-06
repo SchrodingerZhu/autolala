@@ -1,3 +1,4 @@
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/bicg/bicg.h
 #define M 390
 #define N 410
 #define DATA_TYPE float

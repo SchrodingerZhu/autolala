@@ -1,6 +1,7 @@
-#define TMAX 500
-#define NX 1000
-#define NY 1200
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/stencils/fdtd-2d/fdtd-2d.h
+#define TMAX 100
+#define NX 200
+#define NY 240
 #define DATA_TYPE float
 
 

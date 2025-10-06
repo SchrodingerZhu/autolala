@@ -1,4 +1,5 @@
-#define N 2000
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/solvers/durbin/durbin.h
+#define N 400
 #define DATA_TYPE float
 
 

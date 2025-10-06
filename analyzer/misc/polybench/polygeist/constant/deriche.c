@@ -1,13 +1,14 @@
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/medley/deriche/deriche.h
 #include <math.h>
 
-#define W 4096
-#define H 2160
+#define W 720
+#define H 480
 #define DATA_TYPE float
 
 
 volatile DATA_TYPE imgIn[W][H];
 volatile DATA_TYPE imgOut[W][H];
-volatile DATA_TYPE y1[W][H];
+volatile DATA_TYPE Y1[W][H];
 volatile DATA_TYPE y2[W][H];
 
 void kernel_deriche(DATA_TYPE alpha) {
@@ -32,10 +33,10 @@ void kernel_deriche(DATA_TYPE alpha) {
     ym2 = 0.0f;
     xm1 = 0.0f;
     for (j = 0; j < H; j++) {
-      y1[i][j] = a1 * imgIn[i][j] + a2 * xm1 + b1 * ym1 + b2 * ym2;
+      Y1[i][j] = a1 * imgIn[i][j] + a2 * xm1 + b1 * ym1 + b2 * ym2;
       xm1 = imgIn[i][j];
       ym2 = ym1;
-      ym1 = y1[i][j];
+      ym1 = Y1[i][j];
     }
   }
 
@@ -55,7 +56,7 @@ void kernel_deriche(DATA_TYPE alpha) {
 
   for (i = 0; i < W; i++)
     for (j = 0; j < H; j++) {
-      imgOut[i][j] = c1 * (y1[i][j] + y2[i][j]);
+      imgOut[i][j] = c1 * (Y1[i][j] + y2[i][j]);
     }
 
   for (j = 0; j < H; j++) {
@@ -63,10 +64,10 @@ void kernel_deriche(DATA_TYPE alpha) {
     ym1 = 0.0f;
     ym2 = 0.0f;
     for (i = 0; i < W; i++) {
-      y1[i][j] = a1 * imgOut[i][j] + a2 * tm1 + b1 * ym1 + b2 * ym2;
+      Y1[i][j] = a1 * imgOut[i][j] + a2 * tm1 + b1 * ym1 + b2 * ym2;
       tm1 = imgOut[i][j];
       ym2 = ym1;
-      ym1 = y1[i][j];
+      ym1 = Y1[i][j];
     }
   }
 
@@ -86,5 +87,5 @@ void kernel_deriche(DATA_TYPE alpha) {
 
   for (i = 0; i < W; i++)
     for (j = 0; j < H; j++)
-      imgOut[i][j] = c2 * (y1[i][j] + y2[i][j]);
+      imgOut[i][j] = c2 * (Y1[i][j] + y2[i][j]);
 }

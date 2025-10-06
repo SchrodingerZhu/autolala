@@ -1,5 +1,6 @@
-#define TSTEPS 500
-#define N 120
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/stencils/heat-3d/heat-3d.h
+#define TSTEPS 100
+#define N 40
 #define DATA_TYPE float
 
 

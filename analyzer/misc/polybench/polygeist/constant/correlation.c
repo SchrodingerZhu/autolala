@@ -1,7 +1,8 @@
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/datamining/correlation/correlation.h
 #include <math.h>
 
-#define M 500
-#define N 500
+#define M 240
+#define N 260
 #define DATA_TYPE float
 #define EPS 0.005f
 

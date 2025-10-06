@@ -1,5 +1,6 @@
-#define M 1000
-#define N 1200
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/blas/symm/symm.h
+#define M 200
+#define N 240
 #define DATA_TYPE float
 #define ALPHA 1.5f
 #define BETA 1.2f

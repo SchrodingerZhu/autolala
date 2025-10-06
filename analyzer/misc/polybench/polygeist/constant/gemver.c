@@ -1,4 +1,5 @@
-#define N 4000
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/blas/gemver/gemver.h
+#define N 400
 #define DATA_TYPE float
 #define ALPHA 1.5f
 #define BETA 1.2f

@@ -1,4 +1,5 @@
-#define N 2500
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/medley/nussinov/nussinov.h
+#define N 500
 #define DATA_TYPE int
 
 

@@ -1,5 +1,6 @@
-#define TSTEPS 500
-#define N 1000
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/stencils/adi/adi.h
+#define TSTEPS 100
+#define N 200
 #define DATA_TYPE float
 
 
