@@ -21,7 +21,7 @@ pub struct MissRatioCurve {
 }
 
 impl MissRatioCurve {
-    pub fn compute_assoc(&self, associativity: usize) -> Self {
+    pub fn compute_assoc(&self, associativity: usize, skewness: f64) -> Self {
         let len = self.turning_points.len();
         let rd = &self.turning_points;
         // Step 1: Calculate RD distribution (q_j values) from miss ratios
@@ -69,7 +69,7 @@ impl MissRatioCurve {
                             miss_ratio += w;
                             continue;
                         }
-                        let lambda = r / number_of_sets;
+                        let lambda = r.min(r * skewness / number_of_sets);
                         let pos = Poisson::new(lambda).unwrap();
                         let hit_prob = pos.cdf(associativity as u64 - 1) as f64;
                         miss_ratio += w * (1.0 - hit_prob);

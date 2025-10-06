@@ -19,6 +19,9 @@ struct Cli {
     /// Associativity to convert to
     #[arg(short, long)]
     assoc: usize,
+    /// Skewness factor for the conversion model
+    #[arg(short, long, default_value_t = 1.0)]
+    skewness: f64,
 }
 
 fn main() {
@@ -27,7 +30,9 @@ fn main() {
         simd_json::from_reader(std::fs::File::open(&cli.input).expect("Failed to open input file"))
             .expect("Failed to parse input JSON");
     let data = Data {
-        miss_ratio_curve: input.miss_ratio_curve.compute_assoc(cli.assoc),
+        miss_ratio_curve: input
+            .miss_ratio_curve
+            .compute_assoc(cli.assoc, cli.skewness),
     };
     let output: Box<dyn std::io::Write> = if let Some(output_path) = cli.output {
         let file = std::fs::File::create(output_path).expect("Failed to create output file");

@@ -5,14 +5,24 @@
             "path": "results/12-way.db",
             "name": "12-way associative (simulation)",
             "linestyle": "o-",
-            "color": "red"
+            "color": "#d62728",
+            "alpha": 0.8
         },
         {
             "type": "sqlite",
             "path": "results/fully-associative.db",
             "name": "Fully associative (simulation)",
             "linestyle": "o-",
-            "color": "blue"
+            "color": "#1f77b4",
+            "alpha": 0.8
+        },
+        {
+            "type": "json-directory",
+            "path": "results/fully-associative",
+            "name": "Fully associative (analytical)",
+            "linestyle": "s--",
+            "color": "#2ca02c",
+            "alpha": 0.9
         }
     ]
 }

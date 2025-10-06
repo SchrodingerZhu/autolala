@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """
-Script to plot miss counts from multiple SQLite databases based on configuration.
+Script to plot miss counts from multiple data sources based on configuration.
 Creates a grid of subplots showing d1_miss_count vs d1_cache_size for each program.
 Different associativities are plotted together in the same subplot.
 Each row contains 4 plots maximum.
+
+Supports both SQLite databases and JSON directory sources.
+For JSON directories, loads miss_ratio_curve data and converts to miss counts.
 
 Usage: python3 plot_miss_counts.py <plot_settings.json> [output_file]
        python3 plot_miss_counts.py scripts/plot_settings.json
@@ -16,6 +19,7 @@ import pandas as pd
 import sys
 import math
 import json
+import os
 from pathlib import Path
 
 def load_settings(settings_path):
@@ -24,9 +28,10 @@ def load_settings(settings_path):
         settings = json.load(f)
     
     # Validate input data entries
+    supported_types = {'sqlite', 'json-directory'}
     for entry in settings['input-data']:
-        if entry['type'] != 'sqlite':
-            raise NotImplementedError(f"Input type '{entry['type']}' is not yet implemented. Only 'sqlite' is supported.")
+        if entry['type'] not in supported_types:
+            raise NotImplementedError(f"Input type '{entry['type']}' is not yet implemented. Supported types: {supported_types}")
     
     return settings
 
@@ -40,7 +45,125 @@ def load_data_from_sqlite(db_path):
     """
     df = pd.read_sql_query(query, conn)
     conn.close()
+    
+    # Remove .mlir suffix from program names to match JSON files
+    df['program'] = df['program'].str.replace('.mlir', '', regex=False)
+    
     return df
+
+def load_total_counts_from_directory(base_dir):
+    """Load total counts from base directory JSON files."""
+    total_counts = {}
+    
+    if not os.path.exists(base_dir):
+        print(f"Warning: Base directory '{base_dir}' not found for total counts")
+        return total_counts
+    
+    for json_file in os.listdir(base_dir):
+        if json_file.endswith('.json'):
+            program_name = json_file.replace('.json', '')
+            json_path = os.path.join(base_dir, json_file)
+            
+            try:
+                with open(json_path, 'r') as f:
+                    data = json.load(f)
+                    
+                # Extract total count from the JSON data
+                total_count_str = data.get('total_count', '0')
+                
+                # Parse the total count (may contain 'R' for symbolic values)
+                # For now, extract the numeric part
+                if ' ' in total_count_str:
+                    # Format like "96000000 R" - extract the coefficient
+                    total_count = int(total_count_str.split()[0])
+                else:
+                    total_count = int(total_count_str)
+                
+                total_counts[program_name] = total_count
+                
+            except (json.JSONDecodeError, ValueError, KeyError) as e:
+                print(f"Warning: Could not parse total count from {json_path}: {e}")
+                
+    return total_counts
+
+def load_data_from_json_directory(json_dir_path, total_size_from_dir=None):
+    """Load data from JSON directory containing miss ratio curves."""
+    all_data = []
+    
+    if not os.path.exists(json_dir_path):
+        print(f"Warning: JSON directory '{json_dir_path}' not found")
+        return pd.DataFrame()
+    
+    # Load total counts if we need them from another directory
+    total_counts = {}
+    if total_size_from_dir:
+        total_counts = load_total_counts_from_directory(total_size_from_dir)
+    
+    # Process each JSON file in the directory
+    for json_file in os.listdir(json_dir_path):
+        if not json_file.endswith('.json'):
+            continue
+            
+        program_name = json_file.replace('.json', '')
+        json_path = os.path.join(json_dir_path, json_file)
+        
+        try:
+            with open(json_path, 'r') as f:
+                data = json.load(f)
+            
+            miss_ratio_curve = data.get('miss_ratio_curve', {})
+            
+            if not miss_ratio_curve:
+                print(f"Warning: No miss_ratio_curve found in {json_file}")
+                continue
+                
+            turning_points = miss_ratio_curve.get('turning_points', [])
+            miss_ratios = miss_ratio_curve.get('miss_ratio', [])
+            
+            if not turning_points or not miss_ratios:
+                print(f"Warning: Empty miss ratio curve in {json_file}")
+                continue
+            
+            # Get total count
+            if total_size_from_dir and program_name in total_counts:
+                # Use total count from base directory
+                total_count = total_counts[program_name]
+            else:
+                # Try to get total count from current file
+                total_count_str = data.get('total_count', '0')
+                if ' ' in total_count_str:
+                    # Format like "96000000 R" - extract the coefficient
+                    total_count = int(total_count_str.split()[0])
+                else:
+                    total_count = int(total_count_str)
+            
+            if total_count == 0:
+                print(f"Warning: Zero total count for {program_name}, skipping")
+                continue
+            
+            # Convert data to miss counts
+            for i, (turning_point, miss_ratio) in enumerate(zip(turning_points, miss_ratios)):
+                # Convert turning point from blocks to bytes (multiply by 64 = 8x8)
+                cache_size_bytes = turning_point * 64
+                
+                # Convert miss ratio to miss count
+                miss_count = miss_ratio * total_count
+                
+                all_data.append({
+                    'program': program_name,
+                    'd1_cache_size': cache_size_bytes,
+                    'd1_miss_count': miss_count,
+                    'd1_associativity': 'from_json'  # Placeholder
+                })
+                
+        except (json.JSONDecodeError, ValueError, KeyError) as e:
+            print(f"Warning: Could not parse {json_path}: {e}")
+            continue
+    
+    if not all_data:
+        return pd.DataFrame()
+        
+    return pd.DataFrame(all_data)
 
 def load_all_data(settings):
     """Load data from all configured sources."""
@@ -49,16 +172,34 @@ def load_all_data(settings):
     for entry in settings['input-data']:
         if entry['type'] == 'sqlite':
             df = load_data_from_sqlite(entry['path'])
-            df['source_name'] = entry['name']
-            df['linestyle'] = entry['linestyle']
-            df['color'] = entry['color']
-            all_data.append(df)
+            if not df.empty:
+                df['source_name'] = entry['name']
+                df['linestyle'] = entry['linestyle']
+                df['color'] = entry['color']
+                df['alpha'] = entry.get('alpha', 0.8)  # Default alpha if not specified
+                df['plot_style'] = 'line'  # Regular line plot for simulation data
+                all_data.append(df)
+                
+        elif entry['type'] == 'json-directory':
+            total_size_from = entry.get('total-size-from')
+            df = load_data_from_json_directory(entry['path'], total_size_from)
+            if not df.empty:
+                df['source_name'] = entry['name']
+                df['linestyle'] = entry['linestyle']
+                df['color'] = entry['color']
+                df['alpha'] = entry.get('alpha', 0.8)  # Default alpha if not specified
+                df['plot_style'] = 'step'  # Step plot for turning point curves
+                all_data.append(df)
+                
         else:
             raise NotImplementedError(f"Input type '{entry['type']}' is not yet implemented.")
     
     # Combine all dataframes
-    combined_df = pd.concat(all_data, ignore_index=True)
-    return combined_df
+    if all_data:
+        combined_df = pd.concat(all_data, ignore_index=True)
+        return combined_df
+    else:
+        return pd.DataFrame()
 
 def create_plots(df, output_path=None):
     """Create grid plots for all programs with different associativities."""
@@ -108,19 +249,48 @@ def create_plots(df, output_path=None):
                     # Get styling from the data
                     linestyle = source_data['linestyle'].iloc[0]
                     color = source_data['color'].iloc[0]
+                    plot_style = source_data['plot_style'].iloc[0]
+                    
+                    # Get alpha value if available
+                    alpha = source_data.get('alpha', pd.Series([0.8])).iloc[0]
                     
                     # Parse linestyle (e.g., "o-" means marker='o', linestyle='-')
-                    marker = 'o' if 'o' in linestyle else None
-                    line_style = '-' if '-' in linestyle else 'None'
+                    if 'o' in linestyle:
+                        marker = 'o'
+                    elif 's' in linestyle:
+                        marker = 's'
+                    else:
+                        marker = None
                     
-                    line, = ax.plot(source_data['d1_cache_size'], source_data['d1_miss_count'], 
-                                   marker=marker, linestyle=line_style, linewidth=2, markersize=4,
-                                   color=color, label=source)
+                    # Parse line style - check for dashed first, then solid
+                    if '--' in linestyle:
+                        line_style = '--'
+                    elif '-' in linestyle:
+                        line_style = '-'
+                    else:
+                        line_style = 'None'
+                    
+                    # Plot based on style
+                    if plot_style == 'step':
+                        # Use step plot for turning point curves
+                        line, = ax.step(source_data['d1_cache_size'], source_data['d1_miss_count'], 
+                                       where='post', marker=marker, linestyle=line_style, 
+                                       linewidth=2, markersize=4, color=color, alpha=alpha, label=source)
+                    else:
+                        # Regular line plot for simulation data
+                        line, = ax.plot(source_data['d1_cache_size'], source_data['d1_miss_count'], 
+                                       marker=marker, linestyle=line_style, linewidth=2, markersize=4,
+                                       color=color, alpha=alpha, label=source)
                     
                     # Add to global legend (avoid duplicates)
                     if source not in legend_labels:
                         legend_elements.append(line)
                         legend_labels.append(source)
+                        
+                else:
+                    # Handle empty curves with error annotation
+                    ax.annotate(f'{source}: Empty curve', xy=(0.5, 0.1), 
+                               xycoords='axes fraction', fontsize=8, color='red', alpha=0.7)
         
         # Set labels and title
         ax.set_xlabel('Cache Size (bytes)')
@@ -131,7 +301,8 @@ def create_plots(df, output_path=None):
         # Use log scale for x-axis if cache sizes span multiple orders of magnitude
         if not program_data.empty:
             cache_sizes = program_data['d1_cache_size'].unique()
-            if len(cache_sizes) > 1 and max(cache_sizes) / min(cache_sizes) > 10:
+            cache_sizes = cache_sizes[cache_sizes > 0]  # Filter out zero values
+            if len(cache_sizes) > 1 and min(cache_sizes) > 0 and max(cache_sizes) / min(cache_sizes) > 10:
                 ax.set_xscale('log')
         
         # Format y-axis for readability
@@ -174,6 +345,7 @@ def main():
         print()
         print("The script creates a grid plot showing d1_miss_count vs d1_cache_size")
         print("for each program, comparing different associativities on the same plot.")
+        print("Supports both SQLite databases and JSON directories with miss ratio curves.")
         sys.exit(0 if len(sys.argv) > 1 and sys.argv[1] in ['-h', '--help'] else 1)
     
     settings_path = sys.argv[1]
@@ -226,6 +398,8 @@ def main():
         sys.exit(1)
     except Exception as e:
         print(f"Error: {e}")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
 if __name__ == "__main__":
