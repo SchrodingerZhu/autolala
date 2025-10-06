@@ -6,12 +6,14 @@ members = [
     "denning",
     "analysis-server",
     "analysis-webpage",
-    "cachegrind-runner", "mrc",
-    "assoc-conv"
+    "cachegrind-runner",
+    "mrc",
+    "assoc-conv",
 ]
 
 [profile.release]
 #lto = "thin"
+debug = true
 opt-level = 3
 
 [profile.wasm-release]

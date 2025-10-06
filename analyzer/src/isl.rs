@@ -231,7 +231,9 @@ fn get_timestamp_space_impl<'a, 'b: 'a>(
             r#else,
         } => {
             let then_set = get_timestamp_space_impl(num_params, depth, context, r#then, ivar_map)?;
-            let else_set = if let Some(r#else) = r#else {
+            let else_set = if let Some(r#else) =
+                r#else.filter(|x| !matches!(**x, Tree::Block(ref v) if v.is_empty()))
+            {
                 get_timestamp_space_impl(num_params, depth, context, r#else, ivar_map)?
             } else {
                 Set::empty(then_set.get_space()?)?
@@ -437,7 +439,9 @@ fn get_access_map_impl<'a, 'b: 'a>(
                 max_array_dim,
                 num_sets,
             )?;
-            let else_map = if let Some(r#else) = r#else {
+            let else_map = if let Some(r#else) =
+                r#else.filter(|x| !matches!(**x, Tree::Block(ref v) if v.is_empty()))
+            {
                 get_access_map_impl(
                     num_params,
                     depth,
