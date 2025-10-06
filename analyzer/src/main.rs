@@ -203,24 +203,12 @@ where
             .first_block()
             .ok_or_else(|| anyhow!("function does not have block"))?
             .first_operation();
-         if options.start_from_loop || options.target_affine_loop.is_some() {
-
-
-            locate_loop(cursor, options, move |for_loop| {
-
-
-                Ok(context.rcontext().build_tree(for_loop, dom)?)
-
-
-            })
-
-
+        if options.start_from_loop || options.target_affine_loop.is_some() {
+            return locate_loop(cursor, options, move |for_loop| {
+                Ok(context.rcontext().build_tree(for_loop, dom, true)?)
+            });
         } else {
-
-
-            Ok(context.rcontext().build_func_tree(func, dom)?)
-
-
+            Ok(context.rcontext().build_func_tree(func, dom, true)?)
         }
     })
 }
@@ -440,7 +428,7 @@ fn main_entry() -> anyhow::Result<()> {
                 writeln!(writer, "{table}")?;
                 let total_count = salt::get_total_count(access_cnt, tc.values())?;
                 writeln!(writer, "Total: {total_count}")?;
-                        match salt::get_ri_distro(&ri_dist_vec) {
+                match salt::get_ri_distro(&ri_dist_vec) {
                     Ok(dist) => {
                         let mut curve = denning::MissRatioCurve::new(&dist);
                         // apply associativity only when it's greater than 1

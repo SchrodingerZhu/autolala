@@ -21,14 +21,6 @@ pub struct MissRatioCurve {
 }
 
 impl MissRatioCurve {
-    fn binomialf(n: f64, k: f64) -> f64 {
-        let (x, sgn_x) = (n + 1.0).ln_gamma();
-        let (y, sgn_y) = (k + 1.0).ln_gamma();
-        let (z, sgn_z) = ((n - k) + 1.0).ln_gamma();
-        let sgn = (sgn_x / (sgn_y * sgn_z)) as f64;
-        sgn * (x - y - z).exp()
-    }
-
     pub fn compute_assoc(&self, associativity: usize) -> Self {
         let len = self.turning_points.len();
         let rd = &self.turning_points;
@@ -70,11 +62,6 @@ impl MissRatioCurve {
                     let number_of_sets = cache_size as f64 / associativity as f64;
 
                     for (r, w) in rd.iter().copied().zip(rd_portions.iter().copied()) {
-                        // miss_ratio -= rd_p
-                        //     * (1.0 / number_of_sets).powf(new_rd)
-                        //     * ((number_of_sets - 1.0) / number_of_sets)
-                        //         .powf(rd_val - new_rd)
-                        //     * MissRatioCurve::binomialf(rd_val, new_rd);
                         if r == 0.0 {
                             continue;
                         }

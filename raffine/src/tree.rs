@@ -66,10 +66,15 @@ struct TranslationContext<'a, 'b> {
     values: RefCell<FxHashMapRand<usize, ValID>>,
     toplevel: OperationRef<'a, 'b>,
     dom_info: &'a DominanceInfo<'a>,
+    symbolic_memref: bool,
 }
 
 impl<'a, 'b> TranslationContext<'a, 'b> {
-    fn new(toplevel: OperationRef<'a, 'b>, dom_info: &'a DominanceInfo<'a>) -> Self {
+    fn new(
+        toplevel: OperationRef<'a, 'b>,
+        dom_info: &'a DominanceInfo<'a>,
+        symbolic_memref: bool,
+    ) -> Self {
         Self {
             values: RefCell::new(FxHashMapRand::default()),
             ivar_counter: Cell::new(0),
@@ -77,6 +82,7 @@ impl<'a, 'b> TranslationContext<'a, 'b> {
             memref_counter: Cell::new(0),
             toplevel,
             dom_info,
+            symbolic_memref,
         }
     }
     fn get_affine_operand<'c>(&self, value: Value<'a, 'c>) -> ValID
@@ -121,7 +127,25 @@ impl<'a, 'b> TranslationContext<'a, 'b> {
                     }
                 }
             }
-            AccessId::Global(name) => ValID::Global(Ustr::from(name.to_str().unwrap())),
+            AccessId::Global(name) => {
+                let unique_name = Ustr::from(name.to_str().unwrap());
+                if self.symbolic_memref {
+                    let mut values = self.values.borrow_mut();
+                    let id = unique_name.as_ptr() as usize;
+                    match values.entry(id) {
+                        Entry::Occupied(entry) => *entry.get(),
+                        Entry::Vacant(entry) => {
+                            let id = self.memref_counter.get();
+                            self.memref_counter.set(id + 1);
+                            let value = ValID::Memref(id);
+                            entry.insert(value);
+                            value
+                        }
+                    }
+                } else {
+                    ValID::Global(Ustr::from(name.to_str().unwrap()))
+                }
+            }
         }
     }
     fn loop_scope<R>(&self, f: impl FnOnce(&Self) -> R) -> R {
@@ -273,8 +297,9 @@ impl Context {
         &'a self,
         entry: OperationRef<'a, 'b>,
         dom_info: &'a DominanceInfo<'a>,
+        symbolic_memref: bool,
     ) -> Result<&'a Tree<'a>, crate::Error> {
-        let ctx = TranslationContext::new(entry, dom_info);
+        let ctx = TranslationContext::new(entry, dom_info, symbolic_memref);
         self.build_tree_from_loop(entry, &ctx)
     }
 
@@ -282,8 +307,9 @@ impl Context {
         &'a self,
         entry: OperationRef<'a, 'b>,
         dom_info: &'a DominanceInfo<'a>,
+        symbolic_memref: bool,
     ) -> Result<&'a Tree<'a>, crate::Error> {
-        let ctx = TranslationContext::new(entry, dom_info);
+        let ctx = TranslationContext::new(entry, dom_info, symbolic_memref);
         let region = entry.region(0)?;
         let body = region
             .first_block()
@@ -471,7 +497,7 @@ mod tests {
         let first_op = body.first_operation().unwrap();
         println!("First operation: {}", first_op);
         let dom = crate::DominanceInfo::new(&module);
-        let tree = context.build_tree(first_op, &dom).unwrap();
+        let tree = context.build_tree(first_op, &dom, false).unwrap();
         tracing::debug!("Tree: {:#}", tree);
     }
 
@@ -509,7 +535,7 @@ mod tests {
         let first_op = body.first_operation().unwrap();
         println!("First operation: {}", first_op);
         let dom = crate::DominanceInfo::new(&module);
-        let tree = context.build_tree(first_op, &dom).unwrap();
+        let tree = context.build_tree(first_op, &dom, false).unwrap();
         tracing::debug!("Tree: {:#}", tree);
     }
 }

@@ -450,7 +450,7 @@ fn extract_target<'ctx>(
 
     let cursor = body.first_operation();
     locate_function(cursor, options, move |func| {
-        Ok(context.build_func_tree(func, dom)?)
+        Ok(context.build_func_tree(func, dom, false)?)
     })
 }
 
