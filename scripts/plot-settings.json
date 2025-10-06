@@ -1,0 +1,18 @@
+{
+    "input-data": [
+        {
+            "type": "sqlite",
+            "path": "results/12-way.db",
+            "name": "12-way associative (simulation)",
+            "linestyle": "o-",
+            "color": "red"
+        },
+        {
+            "type": "sqlite",
+            "path": "results/fully-associative.db",
+            "name": "Fully associative (simulation)",
+            "linestyle": "o-",
+            "color": "blue"
+        }
+    ]
+}
