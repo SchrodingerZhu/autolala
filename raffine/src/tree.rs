@@ -412,9 +412,6 @@ impl Context {
         if let Some(op) = entry.first_operation() {
             collect_op(self, op, &mut subtrees, ctx)?;
         }
-        if subtrees.is_empty() {
-            return Err(crate::Error::InvalidLoopNest("empty block"));
-        }
         if subtrees.len() == 1 {
             return Ok(subtrees[0]);
         }

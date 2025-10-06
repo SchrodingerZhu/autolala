@@ -47,7 +47,7 @@ impl CoolDown {
                 .filter_map(|c| c.temperature())
                 .collect::<Vec<_>>();
             let average = average.iter().copied().sum::<f32>() / average.len() as f32;
-            if average >= 60.0 {
+            if average >= 70.0 {
                 warn!(
                     "High temperature detected: {:.2}°C, cooling down...",
                     average
