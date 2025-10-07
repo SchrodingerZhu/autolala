@@ -70,7 +70,7 @@ pub(crate) fn get_max_param_ivar<'a>(tree: &Tree<'a>) -> Result<(isize, isize)> 
             let (then_param, then_ivar) = get_max_param_ivar(then)?;
             let (else_param, else_ivar) = r#else
                 .map(|r| get_max_param_ivar(r))
-                .unwrap_or(Ok((0, 0)))?;
+                .unwrap_or(Ok((-1, -1)))?;
             max_param = max_param.max(then_param).max(else_param);
             max_ivar = max_ivar.max(then_ivar).max(else_ivar);
         }
