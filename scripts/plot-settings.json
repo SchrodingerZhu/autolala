@@ -18,9 +18,18 @@
         },
         {
             "type": "json-directory",
+            "path": "results/12-way",
+            "total-size-from": "results/fully-associative",
+            "name": "12-way associative (analytical)",
+            "linestyle": "--",
+            "color": "#ff7f0e",
+            "alpha": 0.9
+        },
+        {
+            "type": "json-directory",
             "path": "results/fully-associative",
             "name": "Fully associative (analytical)",
-            "linestyle": "s--",
+            "linestyle": "--",
             "color": "#2ca02c",
             "alpha": 0.9
         }
