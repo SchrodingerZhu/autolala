@@ -21,6 +21,9 @@ import math
 import json
 import os
 from pathlib import Path
+import numpy as np
+from scipy import stats
+from tabulate import tabulate
 
 def load_settings(settings_path):
     """Load plot settings from JSON file."""
@@ -331,6 +334,289 @@ def create_plots(df, output_path=None):
     
     return fig
 
+def get_total_accesses(base_data, total_size_from_dir=None, program_name=None):
+    """Get total accesses for calculating relative error.
+    
+    Priority order:
+    1. If total_size_from_dir is specified, load total_count from that directory
+    2. Otherwise, estimate from base_data (miss count at smallest cache size)
+    """
+    if total_size_from_dir and program_name:
+        try:
+            json_path = os.path.join(total_size_from_dir, f"{program_name}.json")
+            if os.path.exists(json_path):
+                with open(json_path, 'r') as f:
+                    data = json.load(f)
+                    total_count_str = data.get('total_count', '0')
+                    
+                    # Parse the total count (may contain 'R' for symbolic values)
+                    if ' ' in total_count_str:
+                        # Format like "96000000 R" - extract the coefficient
+                        total_count = int(total_count_str.split()[0])
+                    else:
+                        total_count = int(total_count_str)
+                    
+                    if total_count > 0:
+                        return total_count
+        except (json.JSONDecodeError, ValueError, FileNotFoundError, KeyError):
+            pass  # Fall back to estimation
+    
+    # Fallback: estimate from base data
+    if base_data.empty:
+        return 1  # Default to avoid division by zero
+    
+    # Sort by cache size and get the miss count at smallest cache size
+    sorted_data = base_data.sort_values('d1_cache_size')
+    max_miss_count = sorted_data['d1_miss_count'].iloc[0]  # Smallest cache = most misses
+    
+    # Use the maximum miss count as an approximation of total accesses
+    # This is reasonable since at very small cache sizes, miss rate approaches 1
+    return max(max_miss_count, 1)  # Ensure non-zero
+
+def calculate_metrics(base_data, compare_data, total_size_from_dir=None, program_name=None):
+    """Calculate relative error between base and compare datasets.
+    
+    Uses new alignment strategy:
+    1. Find minimum of maximum cache sizes from both datasets
+    2. Step through cache sizes using powers of 2 for reasonable coverage
+    3. Interpolate both datasets at each step
+    4. Calculate relative error = |base - compare| / total_accesses
+    """
+    if base_data.empty or compare_data.empty:
+        return {'relative_error': np.nan, 'num_points': 0}
+    
+    # Sort both datasets by cache size
+    base_sorted = base_data.sort_values('d1_cache_size').copy()
+    compare_sorted = compare_data.sort_values('d1_cache_size').copy()
+    
+    # Find the minimum of maximum cache sizes
+    base_max = base_sorted['d1_cache_size'].max()
+    compare_max = compare_sorted['d1_cache_size'].max()
+    max_cache_size = min(base_max, compare_max)
+    
+    if max_cache_size < 1:
+        return {'relative_error': np.nan, 'num_points': 0}
+    
+    # Get total accesses (try from total_size_from_dir first, then estimate)
+    total_accesses = get_total_accesses(base_sorted, total_size_from_dir, program_name)
+    
+    # Use base dataset's cache sizes as comparison points (only those within compare range)
+    base_cache_sizes = base_sorted['d1_cache_size'].tolist()
+    compare_min = compare_sorted['d1_cache_size'].min()
+    compare_max = compare_sorted['d1_cache_size'].max()
+    
+    # Filter base cache sizes to only those within the compare dataset's range
+    # to ensure we can interpolate accurately
+    cache_sizes = [size for size in base_cache_sizes if compare_min <= size <= compare_max]
+    
+    if len(cache_sizes) < 2:
+        return {'relative_error': np.nan, 'num_points': 0}
+    
+    # Get base values for the filtered cache sizes (no interpolation needed)
+    base_data_filtered = base_sorted[base_sorted['d1_cache_size'].isin(cache_sizes)].sort_values('d1_cache_size')
+    
+    # Interpolate compare dataset to match the filtered base cache sizes  
+    compare_interp = interpolate_data(compare_sorted, cache_sizes)
+    
+    if base_data_filtered.empty or compare_interp.empty:
+        return {'relative_error': np.nan, 'num_points': 0}
+    
+    # Create mappings for easier lookup
+    base_dict = dict(zip(base_data_filtered['d1_cache_size'], base_data_filtered['d1_miss_count']))
+    compare_dict = dict(zip(compare_interp['d1_cache_size'], compare_interp['d1_miss_count']))
+    
+    # Calculate relative errors for common cache sizes
+    relative_errors = []
+    
+    for cache_size in cache_sizes:
+        if cache_size in base_dict and cache_size in compare_dict:
+            base_val = base_dict[cache_size]
+            compare_val = compare_dict[cache_size]
+            
+            # Calculate relative error = |base - compare| / total_accesses
+            if np.isfinite(base_val) and np.isfinite(compare_val):
+                rel_error = abs(base_val - compare_val) / total_accesses
+                relative_errors.append(rel_error)
+    
+    if not relative_errors:
+        return {'relative_error': np.nan, 'num_points': 0}
+    
+    # Calculate mean relative error
+    mean_relative_error = np.mean(relative_errors)
+    
+    return {'relative_error': mean_relative_error, 'num_points': len(relative_errors)}
+
+def interpolate_data(df, cache_sizes):
+    """Interpolate miss counts for common cache sizes."""
+    if df.empty or not cache_sizes:
+        return pd.DataFrame(columns=['d1_cache_size', 'd1_miss_count'])
+    
+    # Sort the input data by cache size
+    df_sorted = df.sort_values('d1_cache_size').copy()
+    
+    interpolated_data = []
+    
+    for cache_size in cache_sizes:
+        # Find the closest cache size points for interpolation
+        smaller = df_sorted[df_sorted['d1_cache_size'] <= cache_size]
+        larger = df_sorted[df_sorted['d1_cache_size'] >= cache_size]
+        
+        if smaller.empty and larger.empty:
+            # No data available, skip
+            continue
+        elif smaller.empty:
+            # Use the smallest available value (extrapolate)
+            miss_count = larger['d1_miss_count'].iloc[0]
+        elif larger.empty:
+            # Use the largest available value (extrapolate)
+            miss_count = smaller['d1_miss_count'].iloc[-1]
+        elif cache_size in df_sorted['d1_cache_size'].values:
+            # Exact match
+            miss_count = df_sorted[df_sorted['d1_cache_size'] == cache_size]['d1_miss_count'].iloc[0]
+        else:
+            # Interpolation between two points
+            x1, y1 = smaller['d1_cache_size'].iloc[-1], smaller['d1_miss_count'].iloc[-1]
+            x2, y2 = larger['d1_cache_size'].iloc[0], larger['d1_miss_count'].iloc[0]
+            
+            # Handle edge cases
+            if x1 == x2:
+                miss_count = (y1 + y2) / 2
+            elif y1 > 0 and y2 > 0 and x1 > 0 and x2 > 0:
+                # Logarithmic interpolation (works well for cache miss curves)
+                try:
+                    log_y1, log_y2 = np.log(y1), np.log(y2)
+                    log_x1, log_x2 = np.log(x1), np.log(x2)
+                    log_cache_size = np.log(cache_size)
+                    
+                    log_miss_count = log_y1 + (log_y2 - log_y1) * (log_cache_size - log_x1) / (log_x2 - log_x1)
+                    miss_count = np.exp(log_miss_count)
+                except (ValueError, OverflowError):
+                    # Fallback to linear interpolation
+                    miss_count = y1 + (y2 - y1) * (cache_size - x1) / (x2 - x1)
+            else:
+                # Linear interpolation fallback
+                miss_count = y1 + (y2 - y1) * (cache_size - x1) / (x2 - x1)
+        
+        # Ensure the result is valid
+        if np.isfinite(miss_count):
+            interpolated_data.append({
+                'd1_cache_size': cache_size,
+                'd1_miss_count': max(0, miss_count)  # Ensure non-negative
+            })
+    
+    return pd.DataFrame(interpolated_data)
+
+def process_comparisons(df, comparisons):
+    """Process all comparison configurations and calculate metrics."""
+    results = []
+    
+    for comparison in comparisons:
+        base_name = comparison['base']
+        compare_name = comparison['compare']
+        requested_metrics = comparison.get('metric', ['relative_error'])  # Default to relative_error
+        summarize_methods = comparison.get('summarize', ['geomean', 'mean'])
+        total_size_from_dir = comparison.get('total-size-from')  # Get total size directory
+        
+        # Get data for base and compare sources
+        base_df = df[df['source_name'] == base_name]
+        compare_df = df[df['source_name'] == compare_name]
+        
+        if base_df.empty or compare_df.empty:
+            print(f"Warning: Missing data for comparison {base_name} vs {compare_name}")
+            continue
+        
+        # Calculate metrics for each program
+        programs = set(base_df['program'].unique()).intersection(set(compare_df['program'].unique()))
+        
+        program_metrics = {}
+        for program in programs:
+            base_program = base_df[base_df['program'] == program]
+            compare_program = compare_df[compare_df['program'] == program]
+            
+            metrics = calculate_metrics(base_program, compare_program, total_size_from_dir, program)
+            program_metrics[program] = metrics
+        
+        # Summarize relative error across programs
+        metric_values = [program_metrics[prog]['relative_error'] for prog in program_metrics 
+                        if not np.isnan(program_metrics[prog]['relative_error'])]
+        
+        if metric_values:
+            for summary_method in summarize_methods:
+                if summary_method == 'mean':
+                    summary_value = np.mean(metric_values)
+                elif summary_method == 'geomean':
+                    # Geometric mean (use only positive values)
+                    positive_values = [v for v in metric_values if v > 0]
+                    if positive_values:
+                        summary_value = stats.gmean(positive_values)
+                    else:
+                        summary_value = np.nan
+                else:
+                    summary_value = np.nan
+                
+                results.append({
+                    'comparison': f"{base_name} vs {compare_name}",
+                    'metric': 'RELATIVE_ERROR',
+                    'summary_method': summary_method,
+                    'value': summary_value,
+                    'num_programs': len(metric_values),
+                    'program_details': program_metrics
+                })
+    
+    return results
+
+def print_comparison_results(results):
+    """Print comparison results in fancy unicode tables."""
+    if not results:
+        print("No comparison results to display.")
+        return
+    
+    # Print summary table
+    print("\n" + "="*80)
+    print("📊 COMPARISON METRICS SUMMARY")
+    print("="*80)
+    
+    summary_data = []
+    for result in results:
+        summary_data.append([
+            result['comparison'],
+            result['metric'],
+            result['summary_method'].title(),
+            f"{result['value']:.6e}" if not np.isnan(result['value']) else "N/A",
+            result['num_programs']
+        ])
+    
+    headers = ['Comparison', 'Metric', 'Summary', 'Value', '# Programs']
+    print(tabulate(summary_data, headers=headers, tablefmt='fancy_grid', floatfmt='.6e'))
+    
+    # Print detailed per-program results
+    print("\n" + "="*80)
+    print("📋 DETAILED PER-PROGRAM METRICS")
+    print("="*80)
+    
+    # Group results by comparison
+    comparison_groups = {}
+    for result in results:
+        comp_key = result['comparison']
+        if comp_key not in comparison_groups:
+            comparison_groups[comp_key] = result['program_details']
+    
+    for comparison, program_details in comparison_groups.items():
+        print(f"\n🔍 {comparison}")
+        print("-" * len(f"🔍 {comparison}"))
+        
+        detailed_data = []
+        for program, metrics in program_details.items():
+            rel_error_val = f"{metrics['relative_error']:.6e}" if not np.isnan(metrics['relative_error']) else "N/A"
+            detailed_data.append([
+                program,
+                rel_error_val,
+                metrics['num_points']
+            ])
+        
+        detailed_headers = ['Program', 'Relative Error', 'Points']
+        print(tabulate(detailed_data, headers=detailed_headers, tablefmt='fancy_grid'))
+
 def main():
     if len(sys.argv) < 2 or len(sys.argv) > 3 or sys.argv[1] in ['-h', '--help']:
         print("Usage: python3 plot_miss_counts.py <plot_settings.json> [output_file]")
@@ -384,6 +670,12 @@ def main():
         # Create plots
         print("Creating comparison plots...")
         fig = create_plots(df, output_path)
+        
+        # Process comparisons if specified in settings
+        if 'comparison' in settings and settings['comparison']:
+            print("\nProcessing comparison metrics...")
+            comparison_results = process_comparisons(df, settings['comparison'])
+            print_comparison_results(comparison_results)
         
         print("Done!")
         
