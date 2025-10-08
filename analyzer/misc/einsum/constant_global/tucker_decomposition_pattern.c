@@ -1,4 +1,4 @@
-#define DATA_TYPE float
+#define DATA_TYPE double
 #define I_SIZE 64
 #define J_SIZE 64
 #define K_SIZE 64
@@ -8,18 +8,19 @@
 #define C_DIM 64
 #define D_DIM 64
 
+
+
+volatile DATA_TYPE X[I_SIZE][J_SIZE][K_SIZE][L_SIZE];
+volatile DATA_TYPE A[A_DIM][I_SIZE];
+volatile DATA_TYPE B[B_DIM][J_SIZE];
+volatile DATA_TYPE C[C_DIM][K_SIZE];
+volatile DATA_TYPE D[D_DIM][L_SIZE];
+volatile DATA_TYPE tmp1[A_DIM][J_SIZE][K_SIZE][L_SIZE];
+volatile DATA_TYPE tmp2[A_DIM][B_DIM][K_SIZE][L_SIZE];
+volatile DATA_TYPE tmp3[A_DIM][B_DIM][C_DIM][L_SIZE];
+volatile DATA_TYPE Y[A_DIM][B_DIM][C_DIM][D_DIM];
 // Optimized Tucker decomposition: stepwise mode contractions
-void kernel_tucker_decomposition_pattern_opt(
-    const DATA_TYPE X[I_SIZE][J_SIZE][K_SIZE][L_SIZE],
-    const DATA_TYPE A[A_DIM][I_SIZE],
-    const DATA_TYPE B[B_DIM][J_SIZE],
-    const DATA_TYPE C[C_DIM][K_SIZE],
-    const DATA_TYPE D[D_DIM][L_SIZE],
-    DATA_TYPE tmp1[A_DIM][J_SIZE][K_SIZE][L_SIZE],
-    DATA_TYPE tmp2[A_DIM][B_DIM][K_SIZE][L_SIZE],
-    DATA_TYPE tmp3[A_DIM][B_DIM][C_DIM][L_SIZE],
-    DATA_TYPE Y[A_DIM][B_DIM][C_DIM][D_DIM])
-{
+void kernel_tucker_decomposition_pattern_opt() {
     int a,b,c,d,i,j,k,l;
 
     // --- Step 1: contract mode-i with A ---

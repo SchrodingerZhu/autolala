@@ -1,4 +1,4 @@
-#define DATA_TYPE float
+#define DATA_TYPE double
 #define B_SIZE 64
 #define C_SIZE 64
 #define D_SIZE 64
@@ -6,23 +6,24 @@
 #define F_SIZE 64
 #define G_SIZE 64
 
+
+
+volatile DATA_TYPE b[B_SIZE];
+volatile DATA_TYPE c[C_SIZE];
+volatile DATA_TYPE d[D_SIZE];
+volatile DATA_TYPE e[E_SIZE];
+volatile DATA_TYPE f[F_SIZE];
+volatile DATA_TYPE ef[E_SIZE][F_SIZE];
+volatile DATA_TYPE eg[E_SIZE][G_SIZE];
+volatile DATA_TYPE bc[B_SIZE][C_SIZE];
+volatile DATA_TYPE cdc[C_SIZE][D_SIZE][C_SIZE];
+volatile DATA_TYPE tmp_bc[B_SIZE][C_SIZE];
+volatile DATA_TYPE tmp_cd[C_SIZE][D_SIZE];
+volatile DATA_TYPE tmp_ef[E_SIZE][F_SIZE];
+volatile DATA_TYPE tmp_eg[E_SIZE][G_SIZE];
+volatile DATA_TYPE result;
 // Optimized weighted model counting kernel
-void kernel_weighted_model_counting_pattern_opt(
-    const DATA_TYPE b[B_SIZE],
-    const DATA_TYPE c[C_SIZE],
-    const DATA_TYPE d[D_SIZE],
-    const DATA_TYPE e[E_SIZE],
-    const DATA_TYPE f[F_SIZE],
-    const DATA_TYPE ef[E_SIZE][F_SIZE],
-    const DATA_TYPE eg[E_SIZE][G_SIZE],
-    const DATA_TYPE bc[B_SIZE][C_SIZE],
-    const DATA_TYPE cdc[C_SIZE][D_SIZE][C_SIZE],
-    DATA_TYPE tmp_bc[B_SIZE][C_SIZE],
-    DATA_TYPE tmp_cd[C_SIZE][D_SIZE],
-    DATA_TYPE tmp_ef[E_SIZE][F_SIZE],
-    DATA_TYPE tmp_eg[E_SIZE][G_SIZE],
-    DATA_TYPE *result)
-{
+void kernel_weighted_model_counting_pattern_opt() {
     int bi, ci, di, ei, fi, gi;
 
     // --- 1. Combine unary b,c with pair bc
@@ -49,13 +50,13 @@ void kernel_weighted_model_counting_pattern_opt(
             tmp_eg[ei][gi] = e[ei] * eg[ei][gi];
 
     // --- 4. Accumulate partial sums
-    DATA_TYPE sum_bc_cd = 0.0f;
+    DATA_TYPE sum_bc_cd = 0.0;
     for (bi = 0; bi < B_SIZE; ++bi)
         for (ci = 0; ci < C_SIZE; ++ci)
             for (di = 0; di < D_SIZE; ++di)
                 sum_bc_cd += tmp_bc[bi][ci] * tmp_cd[ci][di];
 
-    DATA_TYPE sum_ef_eg = 0.0f;
+    DATA_TYPE sum_ef_eg = 0.0;
     for (ei = 0; ei < E_SIZE; ++ei) {
         DATA_TYPE s1 = 0, s2 = 0;
         for (fi = 0; fi < F_SIZE; ++fi)
@@ -66,5 +67,5 @@ void kernel_weighted_model_counting_pattern_opt(
     }
 
     // --- 5. Final contraction
-    *result = sum_bc_cd * sum_ef_eg;
+    result = sum_bc_cd * sum_ef_eg;
 }

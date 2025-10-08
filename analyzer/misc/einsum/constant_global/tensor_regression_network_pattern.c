@@ -1,4 +1,4 @@
-#define DATA_TYPE float
+#define DATA_TYPE double
 #define TINY_SIZE 4
 #define A_SIZE 4
 #define B_SIZE 4
@@ -12,22 +12,23 @@
 #define J_SIZE 4
 #define K_SIZE 4
 
+
+
+volatile DATA_TYPE X[A_SIZE][B_SIZE][C_SIZE][D_SIZE][E_SIZE];
+volatile DATA_TYPE Y[F_SIZE][G_SIZE][H_SIZE][I_SIZE][J_SIZE];
+volatile DATA_TYPE M1[B_SIZE][F_SIZE];
+volatile DATA_TYPE M2[C_SIZE][G_SIZE];
+volatile DATA_TYPE M3[D_SIZE][H_SIZE];
+volatile DATA_TYPE M4[E_SIZE][I_SIZE];
+volatile DATA_TYPE M5[K_SIZE][J_SIZE];
+volatile DATA_TYPE tmp1[A_SIZE][F_SIZE][C_SIZE][D_SIZE][E_SIZE];
+volatile DATA_TYPE tmp2[A_SIZE][F_SIZE][G_SIZE][D_SIZE][E_SIZE];
+volatile DATA_TYPE tmp3[A_SIZE][F_SIZE][G_SIZE][H_SIZE][E_SIZE];
+volatile DATA_TYPE tmp4[A_SIZE][F_SIZE][G_SIZE][H_SIZE][I_SIZE];
+volatile DATA_TYPE Y1[F_SIZE][G_SIZE][H_SIZE][I_SIZE][K_SIZE];
+volatile DATA_TYPE result[A_SIZE][K_SIZE];
 // Optimized tensor regression network contraction: stepwise version
-void kernel_tensor_regression_network_pattern_opt(
-    const DATA_TYPE X[A_SIZE][B_SIZE][C_SIZE][D_SIZE][E_SIZE],
-    const DATA_TYPE Y[F_SIZE][G_SIZE][H_SIZE][I_SIZE][J_SIZE],
-    const DATA_TYPE M1[B_SIZE][F_SIZE],
-    const DATA_TYPE M2[C_SIZE][G_SIZE],
-    const DATA_TYPE M3[D_SIZE][H_SIZE],
-    const DATA_TYPE M4[E_SIZE][I_SIZE],
-    const DATA_TYPE M5[K_SIZE][J_SIZE],
-    DATA_TYPE tmp1[A_SIZE][F_SIZE][C_SIZE][D_SIZE][E_SIZE],
-    DATA_TYPE tmp2[A_SIZE][F_SIZE][G_SIZE][D_SIZE][E_SIZE],
-    DATA_TYPE tmp3[A_SIZE][F_SIZE][G_SIZE][H_SIZE][E_SIZE],
-    DATA_TYPE tmp4[A_SIZE][F_SIZE][G_SIZE][H_SIZE][I_SIZE],
-    DATA_TYPE Y1[F_SIZE][G_SIZE][H_SIZE][I_SIZE][K_SIZE],
-    DATA_TYPE result[A_SIZE][K_SIZE]) 
-{
+void kernel_tensor_regression_network_pattern_opt() {
     int a,b,c,d,e,f,g,h,i,j,k;
 
     // Initialize result

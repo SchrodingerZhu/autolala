@@ -1,28 +1,29 @@
-#define DATA_TYPE float
+#define DATA_TYPE double
 #define SIZE 64
 
+
+
+volatile DATA_TYPE a[SIZE];
+volatile DATA_TYPE b[SIZE];
+volatile DATA_TYPE c[SIZE];
+volatile DATA_TYPE da[SIZE][SIZE];
+volatile DATA_TYPE eb[SIZE][SIZE];
+volatile DATA_TYPE fc[SIZE][SIZE];
+volatile DATA_TYPE ghde[SIZE][SIZE][SIZE][SIZE];
+volatile DATA_TYPE ijgf[SIZE][SIZE][SIZE][SIZE];
+volatile DATA_TYPE klhj[SIZE][SIZE][SIZE][SIZE];
+volatile DATA_TYPE i_vec[SIZE];
+volatile DATA_TYPE k_vec[SIZE];
+volatile DATA_TYPE l_vec[SIZE];
+volatile DATA_TYPE tmp_da[SIZE];
+volatile DATA_TYPE tmp_eb[SIZE];
+volatile DATA_TYPE tmp_fc[SIZE];
+volatile DATA_TYPE tmp_gh[SIZE][SIZE];
+volatile DATA_TYPE tmp_ij[SIZE][SIZE];
+volatile DATA_TYPE tmp_kl[SIZE][SIZE];
+volatile DATA_TYPE result;
 // Contract tensors step by step; all arrays passed in are preallocated.
-void kernel_maxcut_quantum_circuit_pattern(
-    const DATA_TYPE a[SIZE],
-    const DATA_TYPE b[SIZE],
-    const DATA_TYPE c[SIZE],
-    const DATA_TYPE da[SIZE][SIZE],
-    const DATA_TYPE eb[SIZE][SIZE],
-    const DATA_TYPE fc[SIZE][SIZE],
-    const DATA_TYPE ghde[SIZE][SIZE][SIZE][SIZE],
-    const DATA_TYPE ijgf[SIZE][SIZE][SIZE][SIZE],
-    const DATA_TYPE klhj[SIZE][SIZE][SIZE][SIZE],
-    const DATA_TYPE i_vec[SIZE],
-    const DATA_TYPE k_vec[SIZE],
-    const DATA_TYPE l_vec[SIZE],
-    DATA_TYPE tmp_da[SIZE],
-    DATA_TYPE tmp_eb[SIZE],
-    DATA_TYPE tmp_fc[SIZE],
-    DATA_TYPE tmp_gh[SIZE][SIZE],
-    DATA_TYPE tmp_ij[SIZE][SIZE],
-    DATA_TYPE tmp_kl[SIZE][SIZE],
-    DATA_TYPE *result)
-{
+void kernel_maxcut_quantum_circuit_pattern() {
     // step 1: combine 1D + 2D
     for (int d = 0; d < SIZE; ++d) {
         DATA_TYPE s = 0;
@@ -74,11 +75,11 @@ void kernel_maxcut_quantum_circuit_pattern(
         }
 
     // step 5: final scalar contraction
-    *result = 0;
+    result = 0;
     for (int ii = 0; ii < SIZE; ++ii)
         for (int jj = 0; jj < SIZE; ++jj)
             for (int kk = 0; kk < SIZE; ++kk)
                 for (int ll = 0; ll < SIZE; ++ll)
-                    *result += tmp_ij[ii][jj] * tmp_kl[kk][ll]
+                    result += tmp_ij[ii][jj] * tmp_kl[kk][ll]
                               * i_vec[ii] * k_vec[kk] * l_vec[ll];
 }
