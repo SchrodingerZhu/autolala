@@ -20,8 +20,92 @@ pub struct MissRatioCurve {
     turning_points: Box<[f64]>,
 }
 
+#[derive(Debug, Clone, Copy)]
+pub enum SkewDecay {
+    // Exponential: 1 + (alpha - 1) * exp(-k * t)
+    Exponential { k: f64 },
+    // Gaussian:  f(alpha, t) = 1 + (alpha - 1) * exp(-(t / tau) ^ 2)
+    Gaussian { tau: f64 },
+    // Rational:  f(alpha, t) = 1 + (alpha - 1) / (1 + (t / tau) ^ p)
+    Rational { tau: f64, p: f64 },
+    // Logistic: f(alpha, t) = 1 + (alpha - 1) * (2 / (1 + exp(k * t)))
+    Logistic { k: f64 },
+    // Constant: f(alpha, t) = alpha
+    Constant,
+}
+
+impl std::str::FromStr for SkewDecay {
+    type Err = String;
+
+    // Accepted formats (case-insensitive, spaces ignored around commas):
+    // - "exp,<k>" or "exponential,<k>"
+    // - "gaussian,<tau>" or "gauss,<tau>"
+    // - "rational,<tau>,<p>" or "rat,<tau>,<p>"
+    // - "logistic,<k>"
+    // - "constant" or "const" (no parameter; an optional trailing number is ignored)
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let s = s.trim();
+        if s.is_empty() {
+            return Err("SkewDecay: empty input".into());
+        }
+
+        let parts: Vec<&str> = s.split(',').map(|p| p.trim()).collect();
+        if parts.is_empty() {
+            return Err("SkewDecay: failed to split input".into());
+        }
+
+        let kind = parts[0].to_ascii_lowercase();
+        let vals = &parts[1..];
+
+        let parse_f64 = |idx: usize, what: &str| -> Result<f64, String> {
+            let raw = vals
+                .get(idx)
+                .ok_or_else(|| format!("SkewDecay: expected {} parameter", what))?;
+            raw.parse::<f64>()
+                .map_err(|_| format!("SkewDecay: invalid {}: '{}'", what, raw))
+        };
+
+        match kind.as_str() {
+            "exp" | "exponential" => {
+                let k = parse_f64(0, "k")?;
+                Ok(SkewDecay::Exponential { k })
+            }
+            "gaussian" | "gauss" => {
+                let tau = parse_f64(0, "tau")?;
+                Ok(SkewDecay::Gaussian { tau })
+            }
+            "rational" | "rat" => {
+                let tau = parse_f64(0, "tau")?;
+                let p = parse_f64(1, "p")?;
+                Ok(SkewDecay::Rational { tau, p })
+            }
+            "logistic" => {
+                let k = parse_f64(0, "k")?;
+                Ok(SkewDecay::Logistic { k })
+            }
+            "constant" | "const" => Ok(SkewDecay::Constant),
+            other => Err(format!(
+                "SkewDecay: unknown kind '{}'. Expected one of exp, gaussian, rational, logistic, constant",
+                other
+            )),
+        }
+    }
+}
+
+impl SkewDecay {
+    pub fn value(&self, alpha: f64, t: f64) -> f64 {
+        match self {
+            SkewDecay::Exponential { k } => 1.0 + (alpha - 1.0) * (-k * t).exp(),
+            SkewDecay::Gaussian { tau } => 1.0 + (alpha - 1.0) * (-(t / tau).powi(2)).exp(),
+            SkewDecay::Rational { tau, p } => 1.0 + (alpha - 1.0) / (1.0 + (t / tau).powf(*p)),
+            SkewDecay::Logistic { k } => 1.0 + (alpha - 1.0) * (2.0 / (1.0 + (k * t).exp())),
+            SkewDecay::Constant => alpha,
+        }
+    }
+}
+
 impl MissRatioCurve {
-    pub fn compute_assoc(&self, associativity: usize, skewness: f64) -> Self {
+    pub fn compute_assoc(&self, associativity: usize, skewness: f64, decay: SkewDecay) -> Self {
         let len = self.turning_points.len();
         let rd = &self.turning_points;
         // Step 1: Calculate RD distribution (q_j values) from miss ratios
@@ -69,6 +153,7 @@ impl MissRatioCurve {
                             miss_ratio += w;
                             continue;
                         }
+                        let skewness = decay.value(skewness, r);
                         let lambda = r.min(r * skewness / number_of_sets);
                         let pos = Poisson::new(lambda).unwrap();
                         let hit_prob = pos.cdf(associativity as u64 - 1) as f64;

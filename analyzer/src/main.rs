@@ -343,7 +343,11 @@ fn main_entry() -> anyhow::Result<()> {
                         let mut curve = denning::MissRatioCurve::new(&dist);
                         // apply associativity only when it's greater than 1
                         if options.associativity.get() > 1 {
-                            curve = curve.compute_assoc(options.associativity.get(), 1.0);
+                            curve = curve.compute_assoc(
+                                options.associativity.get(),
+                                1.0,
+                                denning::SkewDecay::Constant,
+                            );
                         }
 
                         if let Some(path) = &options.miss_ratio_curve {
@@ -433,7 +437,11 @@ fn main_entry() -> anyhow::Result<()> {
                         let mut curve = denning::MissRatioCurve::new(&dist);
                         // apply associativity only when it's greater than 1
                         if options.associativity.get() > 1 {
-                            curve = curve.compute_assoc(options.associativity.get(), 1.0);
+                            curve = curve.compute_assoc(
+                                options.associativity.get(),
+                                1.0,
+                                denning::SkewDecay::Constant,
+                            );
                         }
 
                         if let Some(path) = &options.miss_ratio_curve {
