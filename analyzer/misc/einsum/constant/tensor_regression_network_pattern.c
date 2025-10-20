@@ -14,19 +14,19 @@
 
 // Optimized tensor regression network contraction: stepwise version
 void kernel_tensor_regression_network_pattern_opt(
-    const DATA_TYPE X[A_SIZE][B_SIZE][C_SIZE][D_SIZE][E_SIZE],
-    const DATA_TYPE Y[F_SIZE][G_SIZE][H_SIZE][I_SIZE][J_SIZE],
-    const DATA_TYPE M1[B_SIZE][F_SIZE],
-    const DATA_TYPE M2[C_SIZE][G_SIZE],
-    const DATA_TYPE M3[D_SIZE][H_SIZE],
-    const DATA_TYPE M4[E_SIZE][I_SIZE],
-    const DATA_TYPE M5[K_SIZE][J_SIZE],
-    DATA_TYPE tmp1[A_SIZE][F_SIZE][C_SIZE][D_SIZE][E_SIZE],
-    DATA_TYPE tmp2[A_SIZE][F_SIZE][G_SIZE][D_SIZE][E_SIZE],
-    DATA_TYPE tmp3[A_SIZE][F_SIZE][G_SIZE][H_SIZE][E_SIZE],
-    DATA_TYPE tmp4[A_SIZE][F_SIZE][G_SIZE][H_SIZE][I_SIZE],
-    DATA_TYPE Y1[F_SIZE][G_SIZE][H_SIZE][I_SIZE][K_SIZE],
-    DATA_TYPE result[A_SIZE][K_SIZE]) 
+    const DATA_TYPE X[A_SIZE][B_SIZE][C_SIZE][D_SIZE][12],  // E_SIZE=4 padded to 12
+    const DATA_TYPE Y[F_SIZE][G_SIZE][H_SIZE][I_SIZE][12],  // J_SIZE=4 padded to 12
+    const DATA_TYPE M1[B_SIZE][12],  // F_SIZE=4 padded to 12
+    const DATA_TYPE M2[C_SIZE][12],  // G_SIZE=4 padded to 12
+    const DATA_TYPE M3[D_SIZE][12],  // H_SIZE=4 padded to 12
+    const DATA_TYPE M4[E_SIZE][12],  // I_SIZE=4 padded to 12
+    const DATA_TYPE M5[K_SIZE][12],  // J_SIZE=4 padded to 12
+    DATA_TYPE tmp1[A_SIZE][F_SIZE][C_SIZE][D_SIZE][12],  // E_SIZE=4 padded to 12
+    DATA_TYPE tmp2[A_SIZE][F_SIZE][G_SIZE][D_SIZE][12],  // E_SIZE=4 padded to 12
+    DATA_TYPE tmp3[A_SIZE][F_SIZE][G_SIZE][H_SIZE][12],  // E_SIZE=4 padded to 12
+    DATA_TYPE tmp4[A_SIZE][F_SIZE][G_SIZE][H_SIZE][12],  // I_SIZE=4 padded to 12
+    DATA_TYPE Y1[F_SIZE][G_SIZE][H_SIZE][I_SIZE][12],  // K_SIZE=4 padded to 12
+    DATA_TYPE result[A_SIZE][12])  // K_SIZE=4 padded to 12 
 {
     int a,b,c,d,e,f,g,h,i,j,k;
 

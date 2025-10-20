@@ -6,10 +6,10 @@
 
 // Bilinear transformation: ik,klj,il->ij
 // Memory access pattern: sum_k sum_l A[i][k] * B[k][l][j] * C[i][l] -> D[i][j]
-void kernel_bilinear_transformation_pattern(DATA_TYPE A[I_SIZE][K_SIZE], 
-                                           DATA_TYPE B[K_SIZE][L_SIZE][J_SIZE], 
-                                           DATA_TYPE C[I_SIZE][L_SIZE], 
-                                           DATA_TYPE D[I_SIZE][J_SIZE]) {
+void kernel_bilinear_transformation_pattern(DATA_TYPE A[I_SIZE][24],  // K_SIZE=24 already multiple of 12
+                                           DATA_TYPE B[K_SIZE][L_SIZE][36],  // J_SIZE=32 padded to 36
+                                           DATA_TYPE C[I_SIZE][24],  // L_SIZE=24 already multiple of 12
+                                           DATA_TYPE D[I_SIZE][36]) {  // J_SIZE=32 padded to 36
   int i, j, k, l;
   
   // Initialize output

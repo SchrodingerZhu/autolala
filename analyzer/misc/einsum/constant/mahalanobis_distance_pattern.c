@@ -3,9 +3,9 @@
 
 // Mahalanobis distance: i,ij,j->
 // Memory access pattern: x[i] * S_inv[i][j] * y[j] -> scalar
-void kernel_mahalanobis_distance_pattern(DATA_TYPE x[N_SIZE], 
-                                        DATA_TYPE S_inv[N_SIZE][N_SIZE], 
-                                        DATA_TYPE y[N_SIZE], 
+void kernel_mahalanobis_distance_pattern(DATA_TYPE x[72],  // N_SIZE=64 padded to 72
+                                        DATA_TYPE S_inv[N_SIZE][72],  // N_SIZE=64 padded to 72
+                                        DATA_TYPE y[72],  // N_SIZE=64 padded to 72
                                         DATA_TYPE *result) {
   int i, j;
   

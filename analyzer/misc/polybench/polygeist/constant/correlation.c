@@ -7,8 +7,8 @@
 #define EPS 0.005f
 
 
-volatile DATA_TYPE data[N][M];
-volatile DATA_TYPE corr[M][M];
+volatile DATA_TYPE data[N][240];  // M=240 already multiple of 12
+volatile DATA_TYPE corr[M][240];  // M=240 already multiple of 12
 volatile DATA_TYPE mean[M];
 volatile DATA_TYPE stddev[M];
 

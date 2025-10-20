@@ -7,13 +7,13 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[NI][NK];
-volatile DATA_TYPE B[NK][NJ];
-volatile DATA_TYPE C[NJ][NM];
-volatile DATA_TYPE D[NM][NL];
-volatile DATA_TYPE E[NI][NJ];
-volatile DATA_TYPE F[NJ][NL];
-volatile DATA_TYPE G[NI][NL];
+volatile DATA_TYPE A[NI][204];  // NK=200 padded to 204
+volatile DATA_TYPE B[NK][192];  // NJ=190 padded to 192
+volatile DATA_TYPE C[NJ][228];  // NM=220 padded to 228
+volatile DATA_TYPE D[NM][216];  // NL=210 padded to 216
+volatile DATA_TYPE E[NI][192];  // NJ=190 padded to 192
+volatile DATA_TYPE F[NJ][216];  // NL=210 padded to 216
+volatile DATA_TYPE G[NI][216];  // NL=210 padded to 216
 
 void kernel_3mm() {
   int i, j, k;

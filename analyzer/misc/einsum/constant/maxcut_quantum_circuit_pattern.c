@@ -3,24 +3,24 @@
 
 // Contract tensors step by step; all arrays passed in are preallocated.
 void kernel_maxcut_quantum_circuit_pattern(
-    const DATA_TYPE a[SIZE],
-    const DATA_TYPE b[SIZE],
-    const DATA_TYPE c[SIZE],
-    const DATA_TYPE da[SIZE][SIZE],
-    const DATA_TYPE eb[SIZE][SIZE],
-    const DATA_TYPE fc[SIZE][SIZE],
-    const DATA_TYPE ghde[SIZE][SIZE][SIZE][SIZE],
-    const DATA_TYPE ijgf[SIZE][SIZE][SIZE][SIZE],
-    const DATA_TYPE klhj[SIZE][SIZE][SIZE][SIZE],
-    const DATA_TYPE i_vec[SIZE],
-    const DATA_TYPE k_vec[SIZE],
-    const DATA_TYPE l_vec[SIZE],
-    DATA_TYPE tmp_da[SIZE],
-    DATA_TYPE tmp_eb[SIZE],
-    DATA_TYPE tmp_fc[SIZE],
-    DATA_TYPE tmp_gh[SIZE][SIZE],
-    DATA_TYPE tmp_ij[SIZE][SIZE],
-    DATA_TYPE tmp_kl[SIZE][SIZE],
+    const DATA_TYPE a[72],  // SIZE=64 padded to 72
+    const DATA_TYPE b[72],  // SIZE=64 padded to 72
+    const DATA_TYPE c[72],  // SIZE=64 padded to 72
+    const DATA_TYPE da[SIZE][72],  // SIZE=64 padded to 72
+    const DATA_TYPE eb[SIZE][72],  // SIZE=64 padded to 72
+    const DATA_TYPE fc[SIZE][72],  // SIZE=64 padded to 72
+    const DATA_TYPE ghde[SIZE][SIZE][SIZE][72],  // SIZE=64 padded to 72
+    const DATA_TYPE ijgf[SIZE][SIZE][SIZE][72],  // SIZE=64 padded to 72
+    const DATA_TYPE klhj[SIZE][SIZE][SIZE][72],  // SIZE=64 padded to 72
+    const DATA_TYPE i_vec[72],  // SIZE=64 padded to 72
+    const DATA_TYPE k_vec[72],  // SIZE=64 padded to 72
+    const DATA_TYPE l_vec[72],  // SIZE=64 padded to 72
+    DATA_TYPE tmp_da[72],  // SIZE=64 padded to 72
+    DATA_TYPE tmp_eb[72],  // SIZE=64 padded to 72
+    DATA_TYPE tmp_fc[72],  // SIZE=64 padded to 72
+    DATA_TYPE tmp_gh[SIZE][72],  // SIZE=64 padded to 72
+    DATA_TYPE tmp_ij[SIZE][72],  // SIZE=64 padded to 72
+    DATA_TYPE tmp_kl[SIZE][72],  // SIZE=64 padded to 72
     DATA_TYPE *result)
 {
     // step 1: combine 1D + 2D

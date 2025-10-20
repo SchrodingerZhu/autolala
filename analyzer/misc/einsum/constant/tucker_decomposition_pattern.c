@@ -10,15 +10,15 @@
 
 // Optimized Tucker decomposition: stepwise mode contractions
 void kernel_tucker_decomposition_pattern_opt(
-    const DATA_TYPE X[I_SIZE][J_SIZE][K_SIZE][L_SIZE],
-    const DATA_TYPE A[A_DIM][I_SIZE],
-    const DATA_TYPE B[B_DIM][J_SIZE],
-    const DATA_TYPE C[C_DIM][K_SIZE],
-    const DATA_TYPE D[D_DIM][L_SIZE],
-    DATA_TYPE tmp1[A_DIM][J_SIZE][K_SIZE][L_SIZE],
-    DATA_TYPE tmp2[A_DIM][B_DIM][K_SIZE][L_SIZE],
-    DATA_TYPE tmp3[A_DIM][B_DIM][C_DIM][L_SIZE],
-    DATA_TYPE Y[A_DIM][B_DIM][C_DIM][D_DIM])
+    const DATA_TYPE X[I_SIZE][J_SIZE][K_SIZE][72],  // L_SIZE=64 padded to 72
+    const DATA_TYPE A[A_DIM][72],  // I_SIZE=64 padded to 72
+    const DATA_TYPE B[B_DIM][72],  // J_SIZE=64 padded to 72
+    const DATA_TYPE C[C_DIM][72],  // K_SIZE=64 padded to 72
+    const DATA_TYPE D[D_DIM][72],  // L_SIZE=64 padded to 72
+    DATA_TYPE tmp1[A_DIM][J_SIZE][K_SIZE][72],  // L_SIZE=64 padded to 72
+    DATA_TYPE tmp2[A_DIM][B_DIM][K_SIZE][72],  // L_SIZE=64 padded to 72
+    DATA_TYPE tmp3[A_DIM][B_DIM][C_DIM][72],  // L_SIZE=64 padded to 72
+    DATA_TYPE Y[A_DIM][B_DIM][C_DIM][72])  // D_DIM=64 padded to 72
 {
     int a,b,c,d,i,j,k,l;
 

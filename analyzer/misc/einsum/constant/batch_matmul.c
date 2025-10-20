@@ -5,9 +5,9 @@
 #define J_SIZE 32
 
 // Batch matrix multiplication: bik,bkj->bij
-void kernel_batch_matmul(DATA_TYPE A[B_SIZE][I_SIZE][K_SIZE], 
-                        DATA_TYPE B_mat[B_SIZE][K_SIZE][J_SIZE], 
-                        DATA_TYPE C[B_SIZE][I_SIZE][J_SIZE]) {
+void kernel_batch_matmul(DATA_TYPE A[B_SIZE][I_SIZE][36],  // K_SIZE=32 padded to 36
+                        DATA_TYPE B_mat[B_SIZE][K_SIZE][36],  // J_SIZE=32 padded to 36
+                        DATA_TYPE C[B_SIZE][I_SIZE][36]) {  // J_SIZE=32 padded to 36
   int b, i, j, k;
   
   for (b = 0; b < B_SIZE; b++)

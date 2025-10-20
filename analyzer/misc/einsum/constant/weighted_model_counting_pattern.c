@@ -8,19 +8,19 @@
 
 // Optimized weighted model counting kernel
 void kernel_weighted_model_counting_pattern_opt(
-    const DATA_TYPE b[B_SIZE],
-    const DATA_TYPE c[C_SIZE],
-    const DATA_TYPE d[D_SIZE],
-    const DATA_TYPE e[E_SIZE],
-    const DATA_TYPE f[F_SIZE],
-    const DATA_TYPE ef[E_SIZE][F_SIZE],
-    const DATA_TYPE eg[E_SIZE][G_SIZE],
-    const DATA_TYPE bc[B_SIZE][C_SIZE],
-    const DATA_TYPE cdc[C_SIZE][D_SIZE][C_SIZE],
-    DATA_TYPE tmp_bc[B_SIZE][C_SIZE],
-    DATA_TYPE tmp_cd[C_SIZE][D_SIZE],
-    DATA_TYPE tmp_ef[E_SIZE][F_SIZE],
-    DATA_TYPE tmp_eg[E_SIZE][G_SIZE],
+    const DATA_TYPE b[72],  // B_SIZE=64 padded to 72
+    const DATA_TYPE c[72],  // C_SIZE=64 padded to 72
+    const DATA_TYPE d[72],  // D_SIZE=64 padded to 72
+    const DATA_TYPE e[72],  // E_SIZE=64 padded to 72
+    const DATA_TYPE f[72],  // F_SIZE=64 padded to 72
+    const DATA_TYPE ef[E_SIZE][72],  // F_SIZE=64 padded to 72
+    const DATA_TYPE eg[E_SIZE][72],  // G_SIZE=64 padded to 72
+    const DATA_TYPE bc[B_SIZE][72],  // C_SIZE=64 padded to 72
+    const DATA_TYPE cdc[C_SIZE][D_SIZE][72],  // C_SIZE=64 padded to 72
+    DATA_TYPE tmp_bc[B_SIZE][72],  // C_SIZE=64 padded to 72
+    DATA_TYPE tmp_cd[C_SIZE][72],  // D_SIZE=64 padded to 72
+    DATA_TYPE tmp_ef[E_SIZE][72],  // F_SIZE=64 padded to 72
+    DATA_TYPE tmp_eg[E_SIZE][72],  // G_SIZE=64 padded to 72
     DATA_TYPE *result)
 {
     int bi, ci, di, ei, fi, gi;

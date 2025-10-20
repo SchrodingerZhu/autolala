@@ -4,7 +4,7 @@
 
 // Marginalization: ijklmnop->m
 // Memory access pattern: sum over all indices except m
-void kernel_marginalization_pattern(DATA_TYPE A[SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE], 
+void kernel_marginalization_pattern(DATA_TYPE A[SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][12],  // SMALL_SIZE=8 padded to 12
                                    DATA_TYPE result[M_SIZE]) {
   int i, j, k, l, m, n, o, p;
   
