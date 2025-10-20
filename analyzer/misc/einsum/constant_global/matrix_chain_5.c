@@ -1,10 +1,10 @@
 #define DATA_TYPE double
-#define I_SIZE 32
-#define K_SIZE 24
-#define L_SIZE 20
-#define M_SIZE 16
-#define N_SIZE 28
-#define J_SIZE 32
+#define I_SIZE 64
+#define K_SIZE 64
+#define L_SIZE 64
+#define M_SIZE 64
+#define N_SIZE 64
+#define J_SIZE 64
 
 
 

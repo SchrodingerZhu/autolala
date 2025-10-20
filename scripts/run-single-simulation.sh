@@ -2,7 +2,7 @@
 
 POLY_PATH=/home/schrodingerzy/Documents/Polygeist/build/bin
 export SYMBOLICA_HIDE_BANNER=1
-export RUST_LOG=info
+export RUST_LOG=warn
 PROGRAM_NAME=$(basename $1 .c)
 $POLY_PATH/cgeist $1 -S -raise-scf-to-affine | \
     $POLY_PATH/polygeist-opt --strip-dlti-attributes > /tmp/"${PROGRAM_NAME}.mlir"

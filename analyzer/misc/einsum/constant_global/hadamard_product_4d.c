@@ -1,8 +1,8 @@
 #define DATA_TYPE double
-#define N1_SIZE 16
-#define N2_SIZE 16
-#define N3_SIZE 16
-#define N4_SIZE 16
+#define N1_SIZE 64
+#define N2_SIZE 64
+#define N3_SIZE 64
+#define N4_SIZE 64
 
 
 

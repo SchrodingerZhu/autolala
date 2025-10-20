@@ -1,8 +1,8 @@
 #define DATA_TYPE double
-#define I_SIZE 32
-#define K_SIZE 24
-#define L_SIZE 24
-#define J_SIZE 32
+#define I_SIZE 64
+#define K_SIZE 64
+#define L_SIZE 64
+#define J_SIZE 64
 
 
 

@@ -60,7 +60,7 @@ void kernel_maxcut_quantum_circuit_pattern() {
             DATA_TYPE s = 0;
             for (int g = 0; g < SIZE; ++g)
                 for (int f = 0; f < SIZE; ++f)
-                    s += ijgf[ii][jj][g][f] * tmp_gh[g][jj % SIZE] * tmp_fc[f];
+                    s += ijgf[ii][jj][g][f] * tmp_gh[g][jj] * tmp_fc[f];
             tmp_ij[ii][jj] = s;
         }
 

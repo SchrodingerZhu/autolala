@@ -1,6 +1,6 @@
 #define DATA_TYPE double
-#define M_SIZE 32
-#define N_SIZE 32
+#define M_SIZE 64
+#define N_SIZE 64
 
 
 

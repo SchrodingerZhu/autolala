@@ -1,16 +1,16 @@
 #define DATA_TYPE double
-#define TINY_SIZE 4
-#define A_SIZE 4
-#define B_SIZE 4
-#define C_SIZE 4
-#define D_SIZE 4
-#define E_SIZE 4
-#define F_SIZE 4
-#define G_SIZE 4
-#define H_SIZE 4
-#define I_SIZE 4
-#define J_SIZE 4
-#define K_SIZE 4
+#define TINY_SIZE 16
+#define A_SIZE 16
+#define B_SIZE 16
+#define C_SIZE 16
+#define D_SIZE 16
+#define E_SIZE 16
+#define F_SIZE 16
+#define G_SIZE 16
+#define H_SIZE 16
+#define I_SIZE 16
+#define J_SIZE 16
+#define K_SIZE 16
 
 
 

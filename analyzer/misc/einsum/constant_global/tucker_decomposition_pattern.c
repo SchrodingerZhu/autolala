@@ -1,12 +1,12 @@
 #define DATA_TYPE double
-#define I_SIZE 64
-#define J_SIZE 64
-#define K_SIZE 64
-#define L_SIZE 64
-#define A_DIM 64
-#define B_DIM 64
-#define C_DIM 64
-#define D_DIM 64
+#define I_SIZE 16
+#define J_SIZE 16
+#define K_SIZE 16
+#define L_SIZE 16
+#define A_DIM 16
+#define B_DIM 16
+#define C_DIM 16
+#define D_DIM 16
 
 
 
