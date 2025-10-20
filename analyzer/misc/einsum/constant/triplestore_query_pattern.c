@@ -5,10 +5,10 @@
 
 // Triplestore query: ij,i,jk->k
 // Memory access pattern: A[i][j] * B[i] * C[j][k] -> D[k]
-void kernel_triplestore_query_pattern(DATA_TYPE A[I_SIZE][J_SIZE], 
-                                     DATA_TYPE B[I_SIZE], 
-                                     DATA_TYPE C[J_SIZE][K_SIZE], 
-                                     DATA_TYPE D[K_SIZE]) {
+void kernel_triplestore_query_pattern(DATA_TYPE A[I_SIZE][36],  // J_SIZE=32 padded to 36
+                                     DATA_TYPE B[36],  // I_SIZE=32 padded to 36
+                                     DATA_TYPE C[J_SIZE][36],  // K_SIZE=32 padded to 36
+                                     DATA_TYPE D[36]) {  // K_SIZE=32 padded to 36
   int i, j, k;
   
   // Initialize output

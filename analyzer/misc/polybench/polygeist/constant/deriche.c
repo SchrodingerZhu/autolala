@@ -6,10 +6,10 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE imgIn[W][H];
-volatile DATA_TYPE imgOut[W][H];
-volatile DATA_TYPE Y1[W][H];
-volatile DATA_TYPE y2[W][H];
+volatile DATA_TYPE imgIn[W][480];  // H=480 already multiple of 12
+volatile DATA_TYPE imgOut[W][480];  // H=480 already multiple of 12
+volatile DATA_TYPE Y1[W][480];  // H=480 already multiple of 12
+volatile DATA_TYPE y2[W][480];  // H=480 already multiple of 12
 
 void kernel_deriche(DATA_TYPE alpha) {
   int i, j;

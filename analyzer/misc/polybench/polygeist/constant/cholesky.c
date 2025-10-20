@@ -5,7 +5,7 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[N][N];
+volatile DATA_TYPE A[N][408];  // N=400 padded to 408
 
 void kernel_cholesky() {
   int i, j, k;

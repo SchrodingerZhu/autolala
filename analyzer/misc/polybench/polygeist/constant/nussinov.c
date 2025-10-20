@@ -3,8 +3,8 @@
 #define DATA_TYPE int
 
 
-volatile DATA_TYPE seq[N];
-volatile DATA_TYPE table[N][N];
+volatile DATA_TYPE seq[504];  // N=500 padded to 504
+volatile DATA_TYPE table[N][504];  // N=500 padded to 504
 
 void kernel_nussinov() {
   int i, j, k;

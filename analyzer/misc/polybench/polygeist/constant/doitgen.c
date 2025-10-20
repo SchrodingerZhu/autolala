@@ -5,9 +5,9 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[R][Q][P];
-volatile DATA_TYPE C4[P][P];
-volatile DATA_TYPE sum[P];
+volatile DATA_TYPE A[R][Q][168];  // P=160 padded to 168
+volatile DATA_TYPE C4[P][168];  // P=160 padded to 168
+volatile DATA_TYPE sum[168];  // P=160 padded to 168
 
 void kernel_doitgen() {
   int r, q, p, s;

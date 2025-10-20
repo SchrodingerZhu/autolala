@@ -6,9 +6,9 @@
 #define BETA 1.2f
 
 
-volatile DATA_TYPE C[N][N];
-volatile DATA_TYPE A[N][M];
-volatile DATA_TYPE B[N][M];
+volatile DATA_TYPE C[N][240];  // N=240 already multiple of 12
+volatile DATA_TYPE A[N][204];  // M=200 padded to 204
+volatile DATA_TYPE B[N][204];  // M=200 padded to 204
 
 void kernel_syr2k() {
   int i, j, k;

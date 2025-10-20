@@ -5,11 +5,11 @@
 #define BETA 1.2f
 
 
-volatile DATA_TYPE A[N][N];
-volatile DATA_TYPE B[N][N];
-volatile DATA_TYPE tmp[N];
-volatile DATA_TYPE x[N];
-volatile DATA_TYPE y[N];
+volatile DATA_TYPE A[N][252];  // N=250 padded to 252
+volatile DATA_TYPE B[N][252];  // N=250 padded to 252
+volatile DATA_TYPE tmp[252];  // N=250 padded to 252
+volatile DATA_TYPE x[252];  // N=250 padded to 252
+volatile DATA_TYPE y[252];  // N=250 padded to 252
 
 void kernel_gesummv() {
   int i, j;

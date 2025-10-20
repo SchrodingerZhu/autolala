@@ -7,15 +7,15 @@
 #define J_SIZE 32
 
 // Matrix chain multiplication: ik,kl,lm,mn,nj->ij
-void kernel_matrix_chain_5(DATA_TYPE A[I_SIZE][K_SIZE], 
-                          DATA_TYPE B[K_SIZE][L_SIZE], 
-                          DATA_TYPE C[L_SIZE][M_SIZE], 
-                          DATA_TYPE D[M_SIZE][N_SIZE], 
-                          DATA_TYPE E[N_SIZE][J_SIZE], 
-                          DATA_TYPE result[I_SIZE][J_SIZE], 
-                          DATA_TYPE tmp1[I_SIZE][L_SIZE], 
-                          DATA_TYPE tmp2[I_SIZE][M_SIZE], 
-                          DATA_TYPE tmp3[I_SIZE][N_SIZE]) {
+void kernel_matrix_chain_5(DATA_TYPE A[I_SIZE][24],  // K_SIZE=24 already multiple of 12
+                          DATA_TYPE B[K_SIZE][24],  // L_SIZE=20 padded to 24
+                          DATA_TYPE C[L_SIZE][24],  // M_SIZE=16 padded to 24
+                          DATA_TYPE D[M_SIZE][36],  // N_SIZE=28 padded to 36
+                          DATA_TYPE E[N_SIZE][36],  // J_SIZE=32 padded to 36
+                          DATA_TYPE result[I_SIZE][36],  // J_SIZE=32 padded to 36
+                          DATA_TYPE tmp1[I_SIZE][24],  // L_SIZE=20 padded to 24
+                          DATA_TYPE tmp2[I_SIZE][24],  // M_SIZE=16 padded to 24
+                          DATA_TYPE tmp3[I_SIZE][36]) {  // N_SIZE=28 padded to 36
   int i, j, k, l, m, n;
   
   // tmp1 := A * B (ik,kl->il)

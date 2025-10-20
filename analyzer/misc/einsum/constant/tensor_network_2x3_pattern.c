@@ -9,12 +9,12 @@
 
 // 2×3-tensor network: ij,iml,lo,jk,kmn,no->
 // Memory access pattern: complex tensor contraction to scalar
-void kernel_tensor_network_2x3_pattern(DATA_TYPE A[I_SIZE][J_SIZE],           // ij
-                                       DATA_TYPE B[I_SIZE][M_SIZE][L_SIZE], // iml
-                                       DATA_TYPE C[L_SIZE][O_SIZE],           // lo
-                                       DATA_TYPE D[J_SIZE][K_SIZE],           // jk
-                                       DATA_TYPE E[K_SIZE][M_SIZE][N_SIZE], // kmn
-                                       DATA_TYPE F[N_SIZE][O_SIZE],           // no
+void kernel_tensor_network_2x3_pattern(DATA_TYPE A[I_SIZE][12],           // J_SIZE=8 padded to 12
+                                       DATA_TYPE B[I_SIZE][M_SIZE][12], // L_SIZE=8 padded to 12
+                                       DATA_TYPE C[L_SIZE][12],           // O_SIZE=8 padded to 12
+                                       DATA_TYPE D[J_SIZE][12],           // K_SIZE=8 padded to 12
+                                       DATA_TYPE E[K_SIZE][M_SIZE][12], // N_SIZE=8 padded to 12
+                                       DATA_TYPE F[N_SIZE][12],           // O_SIZE=8 padded to 12
                                        DATA_TYPE *result) {
   int i, j, m, l, k, n, o;
   

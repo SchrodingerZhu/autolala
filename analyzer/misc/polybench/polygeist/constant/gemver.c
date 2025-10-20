@@ -5,15 +5,15 @@
 #define BETA 1.2f
 
 
-volatile DATA_TYPE A[N][N];
-volatile DATA_TYPE u1[N];
-volatile DATA_TYPE v1[N];
-volatile DATA_TYPE u2[N];
-volatile DATA_TYPE v2[N];
-volatile DATA_TYPE w[N];
-volatile DATA_TYPE x[N];
-volatile DATA_TYPE y[N];
-volatile DATA_TYPE z[N];
+volatile DATA_TYPE A[N][408];  // N=400 padded to 408
+volatile DATA_TYPE u1[408];  // N=400 padded to 408
+volatile DATA_TYPE v1[408];  // N=400 padded to 408
+volatile DATA_TYPE u2[408];  // N=400 padded to 408
+volatile DATA_TYPE v2[408];  // N=400 padded to 408
+volatile DATA_TYPE w[408];  // N=400 padded to 408
+volatile DATA_TYPE x[408];  // N=400 padded to 408
+volatile DATA_TYPE y[408];  // N=400 padded to 408
+volatile DATA_TYPE z[408];  // N=400 padded to 408
 
 void kernel_gemver() {
   int i, j;

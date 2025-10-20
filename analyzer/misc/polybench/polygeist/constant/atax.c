@@ -4,9 +4,9 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[M][N];
-volatile DATA_TYPE x[N];
-volatile DATA_TYPE y[N];
+volatile DATA_TYPE A[M][420];  // N=410 padded to 420
+volatile DATA_TYPE x[420];  // N=410 padded to 420
+volatile DATA_TYPE y[420];  // N=410 padded to 420
 volatile DATA_TYPE tmp[M];
 
 void kernel_atax() {

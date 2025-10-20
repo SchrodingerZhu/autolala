@@ -3,9 +3,9 @@
 #define N_SIZE 64
 
 // Hadamard product (2D): ij,ij->ij
-void kernel_hadamard_product_2d(DATA_TYPE A[M_SIZE][N_SIZE], 
-                               DATA_TYPE B[M_SIZE][N_SIZE], 
-                               DATA_TYPE C[M_SIZE][N_SIZE]) {
+void kernel_hadamard_product_2d(DATA_TYPE A[M_SIZE][72],  // N_SIZE=64 padded to 72
+                               DATA_TYPE B[M_SIZE][72],  // N_SIZE=64 padded to 72
+                               DATA_TYPE C[M_SIZE][72]) {  // N_SIZE=64 padded to 72
   int i, j;
   
   for (i = 0; i < M_SIZE; i++)

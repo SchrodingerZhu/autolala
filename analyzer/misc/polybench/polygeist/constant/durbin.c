@@ -3,9 +3,9 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE r[N];
-volatile DATA_TYPE y[N];
-volatile DATA_TYPE z[N];
+volatile DATA_TYPE r[408];  // N=400 padded to 408
+volatile DATA_TYPE y[408];  // N=400 padded to 408
+volatile DATA_TYPE z[408];  // N=400 padded to 408
 
 void kernel_durbin() {
   DATA_TYPE alpha;

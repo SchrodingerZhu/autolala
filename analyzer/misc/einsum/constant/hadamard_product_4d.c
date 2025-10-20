@@ -5,9 +5,9 @@
 #define N4_SIZE 16
 
 // Hadamard product: ijkl,ijkl->ijkl
-void kernel_hadamard_product_4d(DATA_TYPE A[N1_SIZE][N2_SIZE][N3_SIZE][N4_SIZE], 
-                                DATA_TYPE B[N1_SIZE][N2_SIZE][N3_SIZE][N4_SIZE], 
-                                DATA_TYPE C[N1_SIZE][N2_SIZE][N3_SIZE][N4_SIZE]) {
+void kernel_hadamard_product_4d(DATA_TYPE A[N1_SIZE][N2_SIZE][N3_SIZE][24],  // N4_SIZE=16 padded to 24
+                                DATA_TYPE B[N1_SIZE][N2_SIZE][N3_SIZE][24],  // N4_SIZE=16 padded to 24
+                                DATA_TYPE C[N1_SIZE][N2_SIZE][N3_SIZE][24]) {  // N4_SIZE=16 padded to 24
   int i, j, k, l;
   
   for (i = 0; i < N1_SIZE; i++)

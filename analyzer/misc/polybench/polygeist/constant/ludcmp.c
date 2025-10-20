@@ -3,10 +3,10 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[N][N];
-volatile DATA_TYPE b[N];
-volatile DATA_TYPE x[N];
-volatile DATA_TYPE y[N];
+volatile DATA_TYPE A[N][408];  // N=400 padded to 408
+volatile DATA_TYPE b[408];  // N=400 padded to 408
+volatile DATA_TYPE x[408];  // N=400 padded to 408
+volatile DATA_TYPE y[408];  // N=400 padded to 408
 
 void kernel_ludcmp() {
   int i, j, k;

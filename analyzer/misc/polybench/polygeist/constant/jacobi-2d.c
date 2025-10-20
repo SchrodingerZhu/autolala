@@ -4,8 +4,8 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[N][N];
-volatile DATA_TYPE B[N][N];
+volatile DATA_TYPE A[N][252];  // N=250 padded to 252
+volatile DATA_TYPE B[N][252];  // N=250 padded to 252
 
 void kernel_jacobi_2d() {
   int t, i, j;

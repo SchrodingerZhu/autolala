@@ -5,9 +5,9 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE ex[NX][NY];
-volatile DATA_TYPE ey[NX][NY];
-volatile DATA_TYPE hz[NX][NY];
+volatile DATA_TYPE ex[NX][240];  // NY=240 already multiple of 12
+volatile DATA_TYPE ey[NX][240];  // NY=240 already multiple of 12
+volatile DATA_TYPE hz[NX][240];  // NY=240 already multiple of 12
 volatile DATA_TYPE _fict_[TMAX];
 
 void kernel_fdtd_2d() {

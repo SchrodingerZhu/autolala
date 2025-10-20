@@ -6,9 +6,9 @@
 #define BETA 1.2f
 
 
-volatile DATA_TYPE C[M][N];
-volatile DATA_TYPE A[M][M];
-volatile DATA_TYPE B[M][N];
+volatile DATA_TYPE C[M][240];  // N=240 already multiple of 12
+volatile DATA_TYPE A[M][204];  // M=200 padded to 204
+volatile DATA_TYPE B[M][240];  // N=240 already multiple of 12
 
 void kernel_symm() {
   int i, j, k;

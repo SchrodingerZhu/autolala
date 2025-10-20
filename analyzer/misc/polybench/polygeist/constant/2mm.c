@@ -8,11 +8,11 @@
 #define BETA 1.2f
 
 
-volatile DATA_TYPE A[NI][NK];
-volatile DATA_TYPE B[NK][NJ];
-volatile DATA_TYPE C[NJ][NL];
-volatile DATA_TYPE D[NI][NL];
-volatile DATA_TYPE tmp[NI][NJ];
+volatile DATA_TYPE A[NI][216];  // NK=210 padded to 216
+volatile DATA_TYPE B[NK][192];  // NJ=190 padded to 192
+volatile DATA_TYPE C[NJ][228];  // NL=220 padded to 228
+volatile DATA_TYPE D[NI][228];  // NL=220 padded to 228
+volatile DATA_TYPE tmp[NI][192];  // NJ=190 padded to 192
 
 void kernel_2mm() {
   int i, j, k;
