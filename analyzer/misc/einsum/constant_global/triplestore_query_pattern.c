@@ -5,10 +5,10 @@
 
 
 
-volatile DATA_TYPE A[I_SIZE][J_SIZE];
-volatile DATA_TYPE B[I_SIZE];
-volatile DATA_TYPE C[J_SIZE][K_SIZE];
-volatile DATA_TYPE D[K_SIZE];
+volatile DATA_TYPE A[I_SIZE][72];
+volatile DATA_TYPE B[72];
+volatile DATA_TYPE C[J_SIZE][72];
+volatile DATA_TYPE D[72];
 // Triplestore query: ij,i,jk->k
 // Memory access pattern: A[i][j] * B[i] * C[j][k] -> D[k]
 void kernel_triplestore_query_pattern() {

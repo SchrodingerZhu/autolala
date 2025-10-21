@@ -10,15 +10,15 @@
 
 
 
-volatile DATA_TYPE X[I_SIZE][J_SIZE][K_SIZE][L_SIZE];
-volatile DATA_TYPE A[A_DIM][I_SIZE];
-volatile DATA_TYPE B[B_DIM][J_SIZE];
-volatile DATA_TYPE C[C_DIM][K_SIZE];
-volatile DATA_TYPE D[D_DIM][L_SIZE];
-volatile DATA_TYPE tmp1[A_DIM][J_SIZE][K_SIZE][L_SIZE];
-volatile DATA_TYPE tmp2[A_DIM][B_DIM][K_SIZE][L_SIZE];
-volatile DATA_TYPE tmp3[A_DIM][B_DIM][C_DIM][L_SIZE];
-volatile DATA_TYPE Y[A_DIM][B_DIM][C_DIM][D_DIM];
+volatile DATA_TYPE X[I_SIZE][J_SIZE][K_SIZE][24];
+volatile DATA_TYPE A[A_DIM][24];
+volatile DATA_TYPE B[B_DIM][24];
+volatile DATA_TYPE C[C_DIM][24];
+volatile DATA_TYPE D[D_DIM][24];
+volatile DATA_TYPE tmp1[A_DIM][J_SIZE][K_SIZE][24];
+volatile DATA_TYPE tmp2[A_DIM][B_DIM][K_SIZE][24];
+volatile DATA_TYPE tmp3[A_DIM][B_DIM][C_DIM][24];
+volatile DATA_TYPE Y[A_DIM][B_DIM][C_DIM][24];
 // Optimized Tucker decomposition: stepwise mode contractions
 void kernel_tucker_decomposition_pattern_opt() {
     int a,b,c,d,i,j,k,l;

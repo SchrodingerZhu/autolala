@@ -3,8 +3,8 @@
 
 
 
-volatile DATA_TYPE A[N_SIZE][N_SIZE];
-volatile DATA_TYPE diag[N_SIZE];
+volatile DATA_TYPE A[N_SIZE][72];
+volatile DATA_TYPE diag[72];
 // Matrix diagonal: ii->i  
 void kernel_matrix_diagonal() {
   int i;

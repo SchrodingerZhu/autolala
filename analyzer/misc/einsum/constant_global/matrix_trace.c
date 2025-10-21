@@ -3,7 +3,7 @@
 
 
 
-volatile DATA_TYPE A[N_SIZE][N_SIZE];
+volatile DATA_TYPE A[N_SIZE][72];
 volatile DATA_TYPE trace;
 // Matrix trace: ii->
 void kernel_matrix_trace() {

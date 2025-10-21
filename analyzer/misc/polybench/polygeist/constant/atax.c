@@ -7,7 +7,7 @@
 volatile DATA_TYPE A[M][420];  // N=410 padded to 420
 volatile DATA_TYPE x[420];  // N=410 padded to 420
 volatile DATA_TYPE y[420];  // N=410 padded to 420
-volatile DATA_TYPE tmp[M];
+volatile DATA_TYPE tmp[408];
 
 void kernel_atax() {
   int i, j;

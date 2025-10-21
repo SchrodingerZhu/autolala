@@ -8,7 +8,7 @@
 volatile DATA_TYPE ex[NX][240];  // NY=240 already multiple of 12
 volatile DATA_TYPE ey[NX][240];  // NY=240 already multiple of 12
 volatile DATA_TYPE hz[NX][240];  // NY=240 already multiple of 12
-volatile DATA_TYPE _fict_[TMAX];
+volatile DATA_TYPE _fict_[120];
 
 void kernel_fdtd_2d() {
   int t, i, j;

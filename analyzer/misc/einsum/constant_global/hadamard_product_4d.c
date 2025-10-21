@@ -6,9 +6,9 @@
 
 
 
-volatile DATA_TYPE A[N1_SIZE][N2_SIZE][N3_SIZE][N4_SIZE];
-volatile DATA_TYPE B[N1_SIZE][N2_SIZE][N3_SIZE][N4_SIZE];
-volatile DATA_TYPE C[N1_SIZE][N2_SIZE][N3_SIZE][N4_SIZE];
+volatile DATA_TYPE A[N1_SIZE][N2_SIZE][N3_SIZE][72];
+volatile DATA_TYPE B[N1_SIZE][N2_SIZE][N3_SIZE][72];
+volatile DATA_TYPE C[N1_SIZE][N2_SIZE][N3_SIZE][72];
 // Hadamard product: ijkl,ijkl->ijkl
 void kernel_hadamard_product_4d() {
   int i, j, k, l;

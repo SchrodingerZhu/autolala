@@ -6,9 +6,9 @@
 
 
 
-volatile DATA_TYPE A[B_SIZE][I_SIZE][K_SIZE];
-volatile DATA_TYPE B_mat[B_SIZE][K_SIZE][J_SIZE];
-volatile DATA_TYPE C[B_SIZE][I_SIZE][J_SIZE];
+volatile DATA_TYPE A[B_SIZE][I_SIZE][72];
+volatile DATA_TYPE B_mat[B_SIZE][K_SIZE][72];
+volatile DATA_TYPE C[B_SIZE][I_SIZE][72];
 // Batch matrix multiplication: bik,bkj->bij
 void kernel_batch_matmul() {
   int b, i, j, k;

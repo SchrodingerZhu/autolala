@@ -3,24 +3,24 @@
 
 
 
-volatile DATA_TYPE a[SIZE];
-volatile DATA_TYPE b[SIZE];
-volatile DATA_TYPE c[SIZE];
-volatile DATA_TYPE da[SIZE][SIZE];
-volatile DATA_TYPE eb[SIZE][SIZE];
-volatile DATA_TYPE fc[SIZE][SIZE];
-volatile DATA_TYPE ghde[SIZE][SIZE][SIZE][SIZE];
-volatile DATA_TYPE ijgf[SIZE][SIZE][SIZE][SIZE];
-volatile DATA_TYPE klhj[SIZE][SIZE][SIZE][SIZE];
-volatile DATA_TYPE i_vec[SIZE];
-volatile DATA_TYPE k_vec[SIZE];
-volatile DATA_TYPE l_vec[SIZE];
-volatile DATA_TYPE tmp_da[SIZE];
-volatile DATA_TYPE tmp_eb[SIZE];
-volatile DATA_TYPE tmp_fc[SIZE];
-volatile DATA_TYPE tmp_gh[SIZE][SIZE];
-volatile DATA_TYPE tmp_ij[SIZE][SIZE];
-volatile DATA_TYPE tmp_kl[SIZE][SIZE];
+volatile DATA_TYPE a[72];
+volatile DATA_TYPE b[72];
+volatile DATA_TYPE c[72];
+volatile DATA_TYPE da[SIZE][72];
+volatile DATA_TYPE eb[SIZE][72];
+volatile DATA_TYPE fc[SIZE][72];
+volatile DATA_TYPE ghde[SIZE][SIZE][SIZE][72];
+volatile DATA_TYPE ijgf[SIZE][SIZE][SIZE][72];
+volatile DATA_TYPE klhj[SIZE][SIZE][SIZE][72];
+volatile DATA_TYPE i_vec[72];
+volatile DATA_TYPE k_vec[72];
+volatile DATA_TYPE l_vec[72];
+volatile DATA_TYPE tmp_da[72];
+volatile DATA_TYPE tmp_eb[72];
+volatile DATA_TYPE tmp_fc[72];
+volatile DATA_TYPE tmp_gh[SIZE][72];
+volatile DATA_TYPE tmp_ij[SIZE][72];
+volatile DATA_TYPE tmp_kl[SIZE][72];
 volatile DATA_TYPE result;
 // Contract tensors step by step; all arrays passed in are preallocated.
 void kernel_maxcut_quantum_circuit_pattern() {

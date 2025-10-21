@@ -8,15 +8,15 @@
 
 
 
-volatile DATA_TYPE A[I_SIZE][K_SIZE];
-volatile DATA_TYPE B[K_SIZE][L_SIZE];
-volatile DATA_TYPE C[L_SIZE][M_SIZE];
-volatile DATA_TYPE D[M_SIZE][N_SIZE];
-volatile DATA_TYPE E[N_SIZE][J_SIZE];
-volatile DATA_TYPE result[I_SIZE][J_SIZE];
-volatile DATA_TYPE tmp1[I_SIZE][L_SIZE];
-volatile DATA_TYPE tmp2[I_SIZE][M_SIZE];
-volatile DATA_TYPE tmp3[I_SIZE][N_SIZE];
+volatile DATA_TYPE A[I_SIZE][72];
+volatile DATA_TYPE B[K_SIZE][72];
+volatile DATA_TYPE C[L_SIZE][72];
+volatile DATA_TYPE D[M_SIZE][72];
+volatile DATA_TYPE E[N_SIZE][72];
+volatile DATA_TYPE result[I_SIZE][72];
+volatile DATA_TYPE tmp1[I_SIZE][72];
+volatile DATA_TYPE tmp2[I_SIZE][72];
+volatile DATA_TYPE tmp3[I_SIZE][72];
 // Matrix chain multiplication: ik,kl,lm,mn,nj->ij
 void kernel_matrix_chain_5() {
   int i, j, k, l, m, n;

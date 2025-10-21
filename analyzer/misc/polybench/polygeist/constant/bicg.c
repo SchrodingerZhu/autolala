@@ -5,9 +5,9 @@
 
 
 volatile DATA_TYPE A[M][420];  // N=410 padded to 420
-volatile DATA_TYPE s[M];
+volatile DATA_TYPE s[408];
 volatile DATA_TYPE q[420];  // N=410 padded to 420
-volatile DATA_TYPE p[M];
+volatile DATA_TYPE p[408];
 volatile DATA_TYPE r[420];  // N=410 padded to 420
 
 void kernel_bicg() {

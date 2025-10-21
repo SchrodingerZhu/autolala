@@ -14,19 +14,19 @@
 
 
 
-volatile DATA_TYPE X[A_SIZE][B_SIZE][C_SIZE][D_SIZE][E_SIZE];
-volatile DATA_TYPE Y[F_SIZE][G_SIZE][H_SIZE][I_SIZE][J_SIZE];
-volatile DATA_TYPE M1[B_SIZE][F_SIZE];
-volatile DATA_TYPE M2[C_SIZE][G_SIZE];
-volatile DATA_TYPE M3[D_SIZE][H_SIZE];
-volatile DATA_TYPE M4[E_SIZE][I_SIZE];
-volatile DATA_TYPE M5[K_SIZE][J_SIZE];
-volatile DATA_TYPE tmp1[A_SIZE][F_SIZE][C_SIZE][D_SIZE][E_SIZE];
-volatile DATA_TYPE tmp2[A_SIZE][F_SIZE][G_SIZE][D_SIZE][E_SIZE];
-volatile DATA_TYPE tmp3[A_SIZE][F_SIZE][G_SIZE][H_SIZE][E_SIZE];
-volatile DATA_TYPE tmp4[A_SIZE][F_SIZE][G_SIZE][H_SIZE][I_SIZE];
-volatile DATA_TYPE Y1[F_SIZE][G_SIZE][H_SIZE][I_SIZE][K_SIZE];
-volatile DATA_TYPE result[A_SIZE][K_SIZE];
+volatile DATA_TYPE X[A_SIZE][B_SIZE][C_SIZE][D_SIZE][24];
+volatile DATA_TYPE Y[F_SIZE][G_SIZE][H_SIZE][I_SIZE][24];
+volatile DATA_TYPE M1[B_SIZE][24];
+volatile DATA_TYPE M2[C_SIZE][24];
+volatile DATA_TYPE M3[D_SIZE][24];
+volatile DATA_TYPE M4[E_SIZE][24];
+volatile DATA_TYPE M5[K_SIZE][24];
+volatile DATA_TYPE tmp1[A_SIZE][F_SIZE][C_SIZE][D_SIZE][24];
+volatile DATA_TYPE tmp2[A_SIZE][F_SIZE][G_SIZE][D_SIZE][24];
+volatile DATA_TYPE tmp3[A_SIZE][F_SIZE][G_SIZE][H_SIZE][24];
+volatile DATA_TYPE tmp4[A_SIZE][F_SIZE][G_SIZE][H_SIZE][24];
+volatile DATA_TYPE Y1[F_SIZE][G_SIZE][H_SIZE][I_SIZE][24];
+volatile DATA_TYPE result[A_SIZE][24];
 // Optimized tensor regression network contraction: stepwise version
 void kernel_tensor_regression_network_pattern_opt() {
     int a,b,c,d,e,f,g,h,i,j,k;

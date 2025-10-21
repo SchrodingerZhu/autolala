@@ -8,19 +8,19 @@
 
 
 
-volatile DATA_TYPE b[B_SIZE];
-volatile DATA_TYPE c[C_SIZE];
-volatile DATA_TYPE d[D_SIZE];
-volatile DATA_TYPE e[E_SIZE];
-volatile DATA_TYPE f[F_SIZE];
-volatile DATA_TYPE ef[E_SIZE][F_SIZE];
-volatile DATA_TYPE eg[E_SIZE][G_SIZE];
-volatile DATA_TYPE bc[B_SIZE][C_SIZE];
-volatile DATA_TYPE cdc[C_SIZE][D_SIZE][C_SIZE];
-volatile DATA_TYPE tmp_bc[B_SIZE][C_SIZE];
-volatile DATA_TYPE tmp_cd[C_SIZE][D_SIZE];
-volatile DATA_TYPE tmp_ef[E_SIZE][F_SIZE];
-volatile DATA_TYPE tmp_eg[E_SIZE][G_SIZE];
+volatile DATA_TYPE b[72];
+volatile DATA_TYPE c[72];
+volatile DATA_TYPE d[72];
+volatile DATA_TYPE e[72];
+volatile DATA_TYPE f[72];
+volatile DATA_TYPE ef[E_SIZE][72];
+volatile DATA_TYPE eg[E_SIZE][72];
+volatile DATA_TYPE bc[B_SIZE][72];
+volatile DATA_TYPE cdc[C_SIZE][D_SIZE][72];
+volatile DATA_TYPE tmp_bc[B_SIZE][72];
+volatile DATA_TYPE tmp_cd[C_SIZE][72];
+volatile DATA_TYPE tmp_ef[E_SIZE][72];
+volatile DATA_TYPE tmp_eg[E_SIZE][72];
 volatile DATA_TYPE result;
 // Optimized weighted model counting kernel
 void kernel_weighted_model_counting_pattern_opt() {

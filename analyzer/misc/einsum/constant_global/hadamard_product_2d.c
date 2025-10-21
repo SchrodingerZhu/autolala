@@ -4,9 +4,9 @@
 
 
 
-volatile DATA_TYPE A[M_SIZE][N_SIZE];
-volatile DATA_TYPE B[M_SIZE][N_SIZE];
-volatile DATA_TYPE C[M_SIZE][N_SIZE];
+volatile DATA_TYPE A[M_SIZE][72];
+volatile DATA_TYPE B[M_SIZE][72];
+volatile DATA_TYPE C[M_SIZE][72];
 // Hadamard product (2D): ij,ij->ij
 void kernel_hadamard_product_2d() {
   int i, j;

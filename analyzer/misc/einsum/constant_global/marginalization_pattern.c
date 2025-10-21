@@ -4,8 +4,8 @@
 
 
 
-volatile DATA_TYPE A[SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE];
-volatile DATA_TYPE result[M_SIZE];
+volatile DATA_TYPE A[SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][SMALL_SIZE][24];
+volatile DATA_TYPE result[24];
 // Marginalization: ijklmnop->m
 // Memory access pattern: sum over all indices except m
 void kernel_marginalization_pattern() {

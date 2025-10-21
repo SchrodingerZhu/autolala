@@ -3,9 +3,9 @@
 
 
 
-volatile DATA_TYPE x[N_SIZE];
-volatile DATA_TYPE S_inv[N_SIZE][N_SIZE];
-volatile DATA_TYPE y[N_SIZE];
+volatile DATA_TYPE x[72];
+volatile DATA_TYPE S_inv[N_SIZE][72];
+volatile DATA_TYPE y[72];
 volatile DATA_TYPE result;
 // Mahalanobis distance: i,ij,j->
 // Memory access pattern: x[i] * S_inv[i][j] * y[j] -> scalar

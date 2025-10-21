@@ -6,10 +6,10 @@
 
 
 
-volatile DATA_TYPE A[I_SIZE][K_SIZE];
-volatile DATA_TYPE B[K_SIZE][L_SIZE][J_SIZE];
-volatile DATA_TYPE C[I_SIZE][L_SIZE];
-volatile DATA_TYPE D[I_SIZE][J_SIZE];
+volatile DATA_TYPE A[I_SIZE][72];
+volatile DATA_TYPE B[K_SIZE][L_SIZE][72];
+volatile DATA_TYPE C[I_SIZE][72];
+volatile DATA_TYPE D[I_SIZE][72];
 // Bilinear transformation: ik,klj,il->ij
 // Memory access pattern: sum_k sum_l A[i][k] * B[k][l][j] * C[i][l] -> D[i][j]
 void kernel_bilinear_transformation_pattern() {

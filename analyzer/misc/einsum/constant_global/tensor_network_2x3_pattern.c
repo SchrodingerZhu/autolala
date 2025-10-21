@@ -7,17 +7,17 @@
 #define N_SIZE 64
 #define O_SIZE 64
 
-extern volatile DATA_TYPE A[I_SIZE][J_SIZE];
-extern volatile DATA_TYPE B[I_SIZE][M_SIZE][L_SIZE];
-extern volatile DATA_TYPE C[L_SIZE][O_SIZE];
-extern volatile DATA_TYPE D[J_SIZE][K_SIZE];
-extern volatile DATA_TYPE E[K_SIZE][M_SIZE][N_SIZE];
-extern volatile DATA_TYPE F[N_SIZE][O_SIZE];
-extern volatile DATA_TYPE CF[N_SIZE][L_SIZE];
-extern volatile DATA_TYPE ECF[K_SIZE][M_SIZE][L_SIZE];
-extern volatile DATA_TYPE DECF[J_SIZE][M_SIZE][L_SIZE];
-extern volatile DATA_TYPE ADECF[I_SIZE][M_SIZE][L_SIZE];
-extern volatile DATA_TYPE BMerged[M_SIZE][L_SIZE];
+extern volatile DATA_TYPE A[I_SIZE][72];
+extern volatile DATA_TYPE B[I_SIZE][M_SIZE][72];
+extern volatile DATA_TYPE C[L_SIZE][72];
+extern volatile DATA_TYPE D[J_SIZE][72];
+extern volatile DATA_TYPE E[K_SIZE][M_SIZE][72];
+extern volatile DATA_TYPE F[N_SIZE][72];
+extern volatile DATA_TYPE CF[N_SIZE][72];
+extern volatile DATA_TYPE ECF[K_SIZE][M_SIZE][72];
+extern volatile DATA_TYPE DECF[J_SIZE][M_SIZE][72];
+extern volatile DATA_TYPE ADECF[I_SIZE][M_SIZE][72];
+extern volatile DATA_TYPE BMerged[M_SIZE][72];
 extern volatile DATA_TYPE result[1];
 
 // temporaries passed by caller

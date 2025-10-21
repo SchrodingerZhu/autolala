@@ -4,9 +4,9 @@
 
 
 
-volatile DATA_TYPE a[M_SIZE];
-volatile DATA_TYPE b[N_SIZE];
-volatile DATA_TYPE C[M_SIZE][N_SIZE];
+volatile DATA_TYPE a[72];
+volatile DATA_TYPE b[72];
+volatile DATA_TYPE C[M_SIZE][72];
 // Vector outer product: i,j->ij
 void kernel_vector_outer_product() {
   int i, j;
