@@ -17,7 +17,10 @@ tracing = { version = "0.1", default-features = false, features = [
 palc = { git = "https://github.com/oxalica/palc" }
 melior = { version = "0.24.0" }
 anyhow = { version = "1.0.98", features = ["backtrace"] }
-symbolica = { version = "0.18.0", default-features = false }
+symbolica = { version = "0.19", default-features = false, features = [
+    "bincode",
+    "serde",
+] }
 comfy-table = "7.1.4"
 ahash = "0.8.12"
 gmp-mpfr-sys = { version = "1.6.5", features = ["use-system-libs"] }
@@ -25,3 +28,4 @@ serde = { version = "1.0.219", features = ["derive"] }
 mimalloc = { version = "0.1.48", features = ["override", "v3"] }
 serde_json = "1.0.140"
 plotters = "0.3.7"
+bincode = "2.0.1"

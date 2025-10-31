@@ -1,9 +1,3 @@
-use std::{
-    collections::hash_map::Entry,
-    num::NonZero,
-    time::{Duration, Instant},
-};
-
 use crate::utils::{Poly, get_max_array_dim};
 use ahash::AHashMap;
 use anyhow::Result;
@@ -25,6 +19,12 @@ use denning::MissRatioCurve;
 use raffine::{
     affine::{AffineExpr, AffineExprKind, AffineMap},
     tree::{Tree, ValID},
+};
+use std::path::Path;
+use std::{
+    collections::hash_map::Entry,
+    num::NonZero,
+    time::{Duration, Instant},
 };
 
 use serde::Serialize;
@@ -954,6 +954,42 @@ struct ConvertedDistItem<'a> {
     value: Poly,
     portion: Poly,
     domain: Set<'a>,
+}
+
+#[derive(serde::Serialize)]
+struct SerializableDistItem {
+    qpoly: String,
+    cardinality: String,
+}
+
+#[derive(serde::Serialize)]
+struct SerializableDistro {
+    total: String,
+    items: Vec<SerializableDistItem>,
+}
+
+pub fn save_all_dist_items<'a>(
+    dist: &[DistItem<'a>],
+    total: PiecewiseQuasiPolynomial<'a>,
+    path: &Path,
+) -> Result<()> {
+    let mut items = Vec::new();
+    for item in dist.iter() {
+        let cardinality_str = format!("{:?}", item.cardinality);
+        let qpoly_str = format!("{:?}", item.qpoly);
+        items.push(SerializableDistItem {
+            qpoly: qpoly_str,
+            cardinality: cardinality_str,
+        });
+    }
+    let total_str = format!("{:?}", total);
+    let distro = SerializableDistro {
+        total: total_str,
+        items,
+    };
+    let mut file = std::fs::File::create(path)?;
+    serde_json::to_writer_pretty(&mut file, &distro)?;
+    Ok(())
 }
 
 impl<'a> ConvertedDistItem<'a> {

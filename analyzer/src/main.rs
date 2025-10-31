@@ -73,6 +73,9 @@ enum Method {
         infinite_repeat: bool,
         #[arg(short = 's', long, default_value = "1")]
         num_sets: NonZero<usize>,
+        #[arg(long)]
+        /// path to save the raw distribution bincode
+        save_distro: Option<PathBuf>,
     },
     /// Use the PerfectTiling algorithm to compute the polyhedral model
     Salt {
@@ -247,6 +250,7 @@ fn main_entry() -> anyhow::Result<()> {
             symbol_lowerbound,
             infinite_repeat,
             num_sets,
+            save_distro,
         } => AnalysisContext::start_with_args(barvinok_arg.as_slice(), |context| {
             let context = &context;
             let mut source = String::new();
@@ -326,6 +330,10 @@ fn main_entry() -> anyhow::Result<()> {
             let processor = isl::RIProcessor::new(ri_values);
             let space_count = space.cardinality()?;
             let raw_distro = processor.get_distribution()?;
+            if let Some(path) = save_distro {
+                isl::save_all_dist_items(&raw_distro, space_count.clone(), path)?;
+                info!("Raw distribution saved to {}", path.display());
+            }
             if options.json {
                 let output = isl::create_json_output(
                     &raw_distro,

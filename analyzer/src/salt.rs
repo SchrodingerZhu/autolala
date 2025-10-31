@@ -448,7 +448,7 @@ pub fn subsitute_block_size(poly: &Poly, block_size: usize) -> Poly {
     match var_idx {
         Some(idx) => {
             let ring = IntegerRing::new();
-            let integer = Integer::Natural(block_size as i64);
+            let integer = Integer::Single(block_size as i64);
             let numerator = poly.numerator.replace(idx, &integer);
             let denominator = poly.denominator.replace(idx, &integer);
             Poly::from_num_den(numerator, denominator, &ring, true)
@@ -497,6 +497,5 @@ where
         miss_ratio_curve,
         analysis_time,
     };
-    serde_json::to_string(&result)
-        .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {e}"))
+    serde_json::to_string(&result).map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {e}"))
 }
