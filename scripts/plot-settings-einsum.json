@@ -2,7 +2,7 @@
     "input-data": [
         {
             "type": "sqlite",
-            "path": "results/12-way.db",
+            "path": "results/12-way-einsum.db",
             "name": "12-way associative (simulation)",
             "linestyle": "X",
             "color": "#d62728",
@@ -10,7 +10,7 @@
         },
         {
             "type": "sqlite",
-            "path": "results/fully-associative.db",
+            "path": "results/fully-associative-einsum.db",
             "name": "Fully associative (simulation)",
             "linestyle": "o-",
             "color": "#1f77b4",
@@ -18,8 +18,8 @@
         },
         {
             "type": "json-directory",
-            "path": "results/12-way",
-            "total-size-from": "results/fully-associative",
+            "path": "results/12-way-einsum",
+            "total-size-from": "results/fully-associative-einsum",
             "name": "12-way associative (analytical)",
             "linestyle": "--",
             "color": "#ff7f0e",
@@ -27,8 +27,8 @@
         },
         {
             "type": "json-directory",
-            "path": "results/12-way-skew-1.5",
-            "total-size-from": "results/fully-associative",
+            "path": "results/12-way-einsum-1.5",
+            "total-size-from": "results/fully-associative-einsum",
             "name": "12-way associative (analytical, skew=1.5)",
             "linestyle": "--",
             "color": "#9467bd",
@@ -36,7 +36,7 @@
         },
         {
             "type": "json-directory",
-            "path": "results/fully-associative",
+            "path": "results/fully-associative-einsum",
             "name": "Fully associative (analytical)",
             "linestyle": "--",
             "color": "#2ca02c",
@@ -47,26 +47,16 @@
         {
             "base": "12-way associative (simulation)",
             "compare": "12-way associative (analytical)",
-            "total-size-from": "results/fully-associative",
+            "total-size-from": "results/fully-associative-einsum",
             "summarize": [
                 "geomean",
                 "mean"
             ]
         },
         {
-            "base": "12-way associative (simulation)",
-            "compare": "12-way associative (analytical, skew=1.5)",
-            "total-size-from": "results/fully-associative",
-            "summarize": [
-                "geomean",
-                "mean",
-                "median"
-            ]
-        },
-        {
             "base": "Fully associative (simulation)",
             "compare": "Fully associative (analytical)",
-            "total-size-from": "results/fully-associative",
+            "total-size-from": "results/fully-associative-einsum",
             "summarize": [
                 "geomean",
                 "mean",

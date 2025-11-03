@@ -262,6 +262,8 @@ def create_plots(df, output_path=None):
                         marker = 'o'
                     elif 's' in linestyle:
                         marker = 's'
+                    elif 'x' in linestyle or 'X' in linestyle:
+                        marker = 'X'
                     else:
                         marker = None
                     
@@ -280,10 +282,19 @@ def create_plots(df, output_path=None):
                                        where='post', marker=marker, linestyle=line_style, 
                                        linewidth=2, markersize=4, color=color, alpha=alpha, label=source)
                     else:
-                        # Regular line plot for simulation data
-                        line, = ax.plot(source_data['d1_cache_size'], source_data['d1_miss_count'], 
-                                       marker=marker, linestyle=line_style, linewidth=2, markersize=4,
-                                       color=color, alpha=alpha, label=source)
+                        # For simulation data: use scatter with X markers if it's set-associative (not fully associative)
+                        # Identify set-associative by checking for keywords in the source name
+                        is_set_associative = 'way associative' in source.lower() and 'fully' not in source.lower()
+                        
+                        if is_set_associative:
+                            # Scatter plot with X markers for set-associative simulation
+                            line = ax.scatter(source_data['d1_cache_size'], source_data['d1_miss_count'],
+                                            marker='X', s=100, color=color, alpha=alpha, label=source, zorder=3)
+                        else:
+                            # Regular line plot for fully associative simulation data
+                            line, = ax.plot(source_data['d1_cache_size'], source_data['d1_miss_count'], 
+                                           marker=marker, linestyle=line_style, linewidth=2, markersize=4,
+                                           color=color, alpha=alpha, label=source)
                     
                     # Add to global legend (avoid duplicates)
                     if source not in legend_labels:

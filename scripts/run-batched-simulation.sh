@@ -9,7 +9,7 @@ for file in analyzer/misc/polybench/polygeist/constant/*.c; do
     /usr/bin/time -f "%E" -a -o results/runtimes.txt bash $SCRIPT_DIR/run-single-simulation.sh "$file" -C$CACHE_LIMIT -B64 -c$CACHE_LIMIT -b64 -a16 --database  results/fully-associative.db --batched
     echo "$file, 12-way" >> results/runtimes.txt
     /usr/bin/time -f "%E" -a -o results/runtimes.txt bash $SCRIPT_DIR/run-single-simulation.sh "$file" -C$CACHE_LIMIT -B64 -A12 -c$CACHE_LIMIT -b64 -a16 --database  results/12-way.db --batched
-    echo "$file, 16-way" >> results/runtimes.txt
-    /usr/bin/time -f "%E" -a -o results/runtimes.txt bash $SCRIPT_DIR/run-single-simulation.sh "$file" -C$CACHE_LIMIT -B64 -A16 -c$CACHE_LIMIT -b64 -a16 --database  results/16-way.db --batched
+    # echo "$file, 16-way" >> results/runtimes.txt
+    # /usr/bin/time -f "%E" -a -o results/runtimes.txt bash $SCRIPT_DIR/run-single-simulation.sh "$file" -C$CACHE_LIMIT -B64 -A16 -c$CACHE_LIMIT -b64 -a16 --database  results/16-way.db --batched
 done
 
