@@ -1,19 +1,19 @@
-// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/blas/gemver/gemver.h
+// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/gemver/gemver.h
 #define N 400
 #define DATA_TYPE float
 #define ALPHA 1.5f
 #define BETA 1.2f
 
 
-volatile DATA_TYPE A[N][408];  // N=400 padded to 408
-volatile DATA_TYPE u1[408];  // N=400 padded to 408
-volatile DATA_TYPE v1[408];  // N=400 padded to 408
-volatile DATA_TYPE u2[408];  // N=400 padded to 408
-volatile DATA_TYPE v2[408];  // N=400 padded to 408
-volatile DATA_TYPE w[408];  // N=400 padded to 408
-volatile DATA_TYPE x[408];  // N=400 padded to 408
-volatile DATA_TYPE y[408];  // N=400 padded to 408
-volatile DATA_TYPE z[408];  // N=400 padded to 408
+volatile DATA_TYPE A[401][424];  // N=400 padded to 401 (prime) for first dim, N=400 padded to 424 (8×53)
+volatile DATA_TYPE u1[424];  // N=400 padded to 424 (8×53)
+volatile DATA_TYPE v1[424];  // N=400 padded to 424 (8×53)
+volatile DATA_TYPE u2[424];  // N=400 padded to 424 (8×53)
+volatile DATA_TYPE v2[424];  // N=400 padded to 424 (8×53)
+volatile DATA_TYPE w[424];  // N=400 padded to 424 (8×53)
+volatile DATA_TYPE x[424];  // N=400 padded to 424 (8×53)
+volatile DATA_TYPE y[424];  // N=400 padded to 424 (8×53)
+volatile DATA_TYPE z[424];  // N=400 padded to 424 (8×53)
 
 void kernel_gemver() {
   int i, j;

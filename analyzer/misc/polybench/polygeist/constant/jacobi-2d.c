@@ -4,8 +4,8 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[N][252];  // N=250 padded to 252
-volatile DATA_TYPE B[N][252];  // N=250 padded to 252
+volatile DATA_TYPE A[251][296];  // N=250 padded to 251 (prime) for first dim, N=250 padded to 296 (8×37)
+volatile DATA_TYPE B[251][296];  // N=250 padded to 251 (prime) for first dim, N=250 padded to 296 (8×37)
 
 void kernel_jacobi_2d() {
   int t, i, j;

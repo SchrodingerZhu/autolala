@@ -4,8 +4,8 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[N][N][48];  // N=40 padded to 48
-volatile DATA_TYPE B[N][N][48];  // N=40 padded to 48
+volatile DATA_TYPE A[41][41][56];  // N=40 padded to 41 (prime) for first two dims, N=40 padded to 56 (8×7)
+volatile DATA_TYPE B[41][41][56];  // N=40 padded to 41 (prime) for first two dims, N=40 padded to 56 (8×7)
 
 void kernel_heat_3d() {
   int t, i, j, k;

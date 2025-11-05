@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+CACHE_LIMIT=65536
+mkdir -p results
+export RUST_LOG=warn
+SCRIPT_DIR=$(dirname "$0")
+for file in analyzer/misc/polybench/polygeist/constant/*.c; do
+    echo "Running $file"
+    echo "$file, fully" >> results/runtimes-fusion.txt
+    /usr/bin/time -f "%E" -a -o results/runtimes.txt bash $SCRIPT_DIR/run-single-simulation-fusion.sh "$file" -C$CACHE_LIMIT -B64 -c$CACHE_LIMIT -b64 -a16 --database  results/fully-associative-fusion.db --batched
+    echo "$file, 12-way" >> results/runtimes-fusion.txt
+    /usr/bin/time -f "%E" -a -o results/runtimes-fusion.txt bash $SCRIPT_DIR/run-single-simulation-fusion.sh "$file" -C$CACHE_LIMIT -B64 -A12 -c$CACHE_LIMIT -b64 -a16 --database  results/12-way-fusion.db --batched
+    # echo "$file, 16-way" >> results/runtimes.txt
+    # /usr/bin/time -f "%E" -a -o results/runtimes.txt bash $SCRIPT_DIR/run-single-simulation.sh "$file" -C$CACHE_LIMIT -B64 -A16 -c$CACHE_LIMIT -b64 -a16 --database  results/16-way.db --batched
+done
+

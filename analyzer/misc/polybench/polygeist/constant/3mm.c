@@ -1,4 +1,5 @@
-// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/3mm/3mm.h
+// Configuration from:
+// https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/3mm/3mm.h
 #define NI 180
 #define NJ 190
 #define NK 200
@@ -6,14 +7,20 @@
 #define NM 220
 #define DATA_TYPE float
 
-
-volatile DATA_TYPE A[NI][204];  // NK=200 padded to 204
-volatile DATA_TYPE B[NK][192];  // NJ=190 padded to 192
-volatile DATA_TYPE C[NJ][228];  // NM=220 padded to 228
-volatile DATA_TYPE D[NM][216];  // NL=210 padded to 216
-volatile DATA_TYPE E[NI][192];  // NJ=190 padded to 192
-volatile DATA_TYPE F[NJ][216];  // NL=210 padded to 216
-volatile DATA_TYPE G[NI][216];  // NL=210 padded to 216
+volatile DATA_TYPE
+    A[181][232]; // NI=180 padded to 181 (prime), NK=200 padded to 232 (8×29)
+volatile DATA_TYPE
+    B[211][232]; // NK=200 padded to 211 (prime), NJ=190 padded to 232 (8×29)
+volatile DATA_TYPE
+    C[191][232]; // NJ=190 padded to 191 (prime), NM=220 padded to 232 (8×29)
+volatile DATA_TYPE
+    D[223][232]; // NM=220 padded to 223 (prime), NL=210 padded to 232 (8×29)
+volatile DATA_TYPE
+    E[181][232]; // NI=180 padded to 181 (prime), NJ=190 padded to 232 (8×29)
+volatile DATA_TYPE
+    F[191][232]; // NJ=190 padded to 191 (prime), NL=210 padded to 232 (8×29)
+volatile DATA_TYPE
+    G[181][232]; // NI=180 padded to 181 (prime), NL=210 padded to 232 (8×29)
 
 void kernel_3mm() {
   int i, j, k;

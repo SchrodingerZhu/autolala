@@ -4,10 +4,10 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE u[N][204];  // N=200 padded to 204
-volatile DATA_TYPE v[N][204];  // N=200 padded to 204
-volatile DATA_TYPE p[N][204];  // N=200 padded to 204
-volatile DATA_TYPE q[N][204];  // N=200 padded to 204
+volatile DATA_TYPE u[211][232];  // First dim: N=200 padded to 211 (prime), Second dim: N=200 padded to 232 (8×29)
+volatile DATA_TYPE v[211][232];  // First dim: N=200 padded to 211 (prime), Second dim: N=200 padded to 232 (8×29)
+volatile DATA_TYPE p[211][232];  // First dim: N=200 padded to 211 (prime), Second dim: N=200 padded to 232 (8×29)
+volatile DATA_TYPE q[211][232];  // First dim: N=200 padded to 211 (prime), Second dim: N=200 padded to 232 (8×29)
 
 void kernel_adi() {
   int t, i, j;

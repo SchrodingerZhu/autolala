@@ -6,9 +6,9 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[M][240];  // N=240 already multiple of 12
-volatile DATA_TYPE R[N][240];  // N=240 already multiple of 12
-volatile DATA_TYPE Q[M][240];  // N=240 already multiple of 12
+volatile DATA_TYPE A[211][248];  // M=200 padded to 211 (prime), N=240 padded to 248 (8×31)
+volatile DATA_TYPE R[241][248];  // N=240 padded to 241 (prime), N=240 padded to 248 (8×31)
+volatile DATA_TYPE Q[211][248];  // M=200 padded to 211 (prime), N=240 padded to 248 (8×31)
 
 void kernel_gramschmidt() {
   int i, j, k;

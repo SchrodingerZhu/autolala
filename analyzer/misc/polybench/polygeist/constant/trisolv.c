@@ -3,9 +3,9 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE L[N][408];  // N=400 padded to 408
-volatile DATA_TYPE x[408];  // N=400 padded to 408
-volatile DATA_TYPE b[408];  // N=400 padded to 408
+volatile DATA_TYPE L[401][424];  // N=400 padded to 401 (prime) for first dim, N=400 padded to 424 (8×53)
+volatile DATA_TYPE x[401];  // N=400 padded to 401 (prime)
+volatile DATA_TYPE b[401];  // N=400 padded to 401 (prime)
 
 void kernel_trisolv() {
   int i, j;

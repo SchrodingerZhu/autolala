@@ -4,9 +4,9 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE data[N][240];  // M=240 already multiple of 12
-volatile DATA_TYPE cov[M][240];  // M=240 already multiple of 12
-volatile DATA_TYPE mean[M];
+volatile DATA_TYPE data[263][248];  // N=260 padded to 263 (prime), M=240 padded to 248 (8×31)
+volatile DATA_TYPE cov[241][248];  // M=240 padded to 241 (prime), M=240 padded to 248 (8×31)
+volatile DATA_TYPE mean[241];  // M=240 padded to 241 (prime)
 
 void kernel_covariance() {
   int i, j, k;

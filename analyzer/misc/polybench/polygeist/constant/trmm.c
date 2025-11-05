@@ -5,8 +5,8 @@
 #define ALPHA 1.5f
 
 
-volatile DATA_TYPE A[M][204];  // M=200 padded to 204
-volatile DATA_TYPE B[M][240];  // N=240 already multiple of 12
+volatile DATA_TYPE A[211][232];  // M=200 padded to 211 (prime), M=200 padded to 232 (8×29)
+volatile DATA_TYPE B[211][248];  // M=200 padded to 211 (prime), N=240 padded to 248 (8×31)
 
 void kernel_trmm() {
   int i, j, k;

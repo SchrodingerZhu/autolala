@@ -3,11 +3,11 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE x1[408];  // N=400 padded to 408
-volatile DATA_TYPE x2[408];  // N=400 padded to 408
-volatile DATA_TYPE y_1[408];  // N=400 padded to 408
-volatile DATA_TYPE y_2[408];  // N=400 padded to 408
-volatile DATA_TYPE A[N][408];  // N=400 padded to 408
+volatile DATA_TYPE x1[401];  // N=400 padded to 401 (prime)
+volatile DATA_TYPE x2[401];  // N=400 padded to 401 (prime)
+volatile DATA_TYPE y_1[424];  // N=400 padded to 424 (8×53)
+volatile DATA_TYPE y_2[424];  // N=400 padded to 424 (8×53)
+volatile DATA_TYPE A[401][424];  // N=400 padded to 401 (prime) for first dim, N=400 padded to 424 (8×53)
 
 void kernel_mvt() {
   int i, j;

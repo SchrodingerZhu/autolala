@@ -4,8 +4,8 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[408];  // N=400 padded to 408
-volatile DATA_TYPE B[408];  // N=400 padded to 408
+volatile DATA_TYPE A[401];  // N=400 padded to 401 (prime)
+volatile DATA_TYPE B[401];  // N=400 padded to 401 (prime)
 
 void kernel_jacobi_1d() {
   int t, i;

@@ -6,8 +6,8 @@
 #define BETA 1.2f
 
 
-volatile DATA_TYPE C[N][240];  // N=240 already multiple of 12
-volatile DATA_TYPE A[N][204];  // M=200 padded to 204
+volatile DATA_TYPE C[241][248];  // N=240 padded to 241 (prime), N=240 padded to 248 (8×31)
+volatile DATA_TYPE A[241][232];  // N=240 padded to 241 (prime), M=200 padded to 232 (8×29)
 
 void kernel_syrk() {
   int i, j, k;

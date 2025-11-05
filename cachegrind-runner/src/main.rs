@@ -2,7 +2,7 @@ use anyhow::{Result, anyhow};
 use indicatif::ParallelProgressIterator;
 use melior::ir::attribute::{StringAttribute, TypeAttribute};
 use melior::ir::r#type::MemRefType;
-use melior::ir::{BlockLike, Module, OperationRef, ShapedTypeLike};
+use melior::ir::{BlockLike, Module, OperationRef, RegionLike, ShapedTypeLike, ValueLike};
 use palc::Parser;
 use r2d2::Pool;
 use r2d2_sqlite::SqliteConnectionManager;
@@ -552,6 +552,59 @@ fn extract_global_arrays(module: &Module) -> anyhow::Result<Vec<GlobalArrayDecla
     }
     Ok(arrays)
 }
+fn extract_func_alloc_arrays(module: &Module) -> anyhow::Result<Vec<GlobalArrayDeclaration>> {
+    let body = module.body();
+    fn extract_func_op(operation: OperationRef) -> anyhow::Result<Vec<GlobalArrayDeclaration>> {
+        if operation.name().as_string_ref().as_str()? == "func.func" {
+            return collect_allocs(operation);
+        }
+        if let Some(next_op) = operation.next_in_block() {
+            extract_func_op(next_op)
+        } else {
+            Err(anyhow!("No function found"))
+        }
+    }
+    extract_func_op(
+        body.first_operation()
+            .ok_or_else(|| anyhow!("No operation found"))?,
+    )
+}
+fn collect_allocs(func: OperationRef) -> anyhow::Result<Vec<GlobalArrayDeclaration>> {
+    let mut arrays = vec![];
+    let body = func
+        .region(0)?
+        .first_block()
+        .ok_or_else(|| anyhow::anyhow!("No block found"))?;
+    let op = body.first_operation();
+    fn collect_arrays(
+        operation: OperationRef,
+        arrays: &mut Vec<GlobalArrayDeclaration>,
+        mut allocated: usize,
+    ) -> anyhow::Result<()> {
+        if operation.name().as_string_ref().as_str()? == "memref.alloc" {
+            let type_attr = operation.result(0)?.r#type();
+            let memref_type = MemRefType::try_from(type_attr)?;
+            let rank = memref_type.rank();
+            let mut shape = Vec::with_capacity(rank);
+            for dim in 0..rank {
+                shape.push(memref_type.dim_size(dim)?);
+            }
+            arrays.push(GlobalArrayDeclaration {
+                name: format!("ARRAY_{}", allocated),
+                size: shape.into_boxed_slice(),
+            });
+            allocated += 1;
+        }
+        if let Some(next_op) = operation.next_in_block() {
+            collect_arrays(next_op, arrays, allocated)?;
+        }
+        Ok(())
+    }
+    if let Some(op) = op {
+        collect_arrays(op, &mut arrays, 0)?;
+    }
+    Ok(arrays)
+}
 
 fn main() {
     tracing_subscriber::fmt()
@@ -574,7 +627,8 @@ fn main() {
     } else {
         trace!("No simulation prologue found");
     }
-    let global_arrays = extract_global_arrays(&module).unwrap();
+    let mut global_arrays = extract_global_arrays(&module).unwrap();
+    global_arrays.extend(extract_func_alloc_arrays(&module).unwrap());
     for array in &global_arrays {
         write!(program_file, "double {}[", array.name).unwrap();
         for (i, dim) in array.size.iter().enumerate() {

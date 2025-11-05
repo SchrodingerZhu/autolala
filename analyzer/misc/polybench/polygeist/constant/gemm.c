@@ -7,9 +7,9 @@
 #define BETA 1.2f
 
 
-volatile DATA_TYPE C[NI][228];  // NJ=220 padded to 228
-volatile DATA_TYPE A[NI][240];  // NK=240 already multiple of 12
-volatile DATA_TYPE B[NK][228];  // NJ=220 padded to 228
+volatile DATA_TYPE C[211][232];  // NI=200 padded to 211 (prime), NJ=220 padded to 232 (8×29)
+volatile DATA_TYPE A[211][248];  // NI=200 padded to 211 (prime), NK=240 padded to 248 (8×31)
+volatile DATA_TYPE B[241][232];  // NK=240 padded to 241 (prime), NJ=220 padded to 232 (8×29)
 
 void kernel_gemm() {
   int i, j, k;

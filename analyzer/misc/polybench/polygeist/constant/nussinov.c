@@ -3,8 +3,8 @@
 #define DATA_TYPE int
 
 
-volatile DATA_TYPE seq[504];  // N=500 padded to 504
-volatile DATA_TYPE table[N][504];  // N=500 padded to 504
+volatile DATA_TYPE seq[503];  // N=500 padded to 503 (prime)
+volatile DATA_TYPE table[503][536];  // N=500 padded to 503 (prime) for first dim, N=500 padded to 536 (8×67)
 
 void kernel_nussinov() {
   int i, j, k;

@@ -1,4 +1,5 @@
-// Configuration from: https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/2mm/2mm.h
+// Configuration from:
+// https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/2mm/2mm.h
 #define NI 180
 #define NJ 190
 #define NK 210
@@ -7,12 +8,16 @@
 #define ALPHA 1.5f
 #define BETA 1.2f
 
-
-volatile DATA_TYPE A[NI][216];  // NK=210 padded to 216
-volatile DATA_TYPE B[NK][192];  // NJ=190 padded to 192
-volatile DATA_TYPE C[NJ][228];  // NL=220 padded to 228
-volatile DATA_TYPE D[NI][228];  // NL=220 padded to 228
-volatile DATA_TYPE tmp[NI][192];  // NJ=190 padded to 192
+volatile DATA_TYPE
+    A[181][232]; // NI=180 padded to 181 (prime), NK=210 padded to 232 (8×29)
+volatile DATA_TYPE
+    B[211][232]; // NK=210 padded to 211 (prime), NJ=190 padded to 232 (8×29)
+volatile DATA_TYPE
+    C[191][232]; // NJ=190 padded to 191 (prime), NL=220 padded to 232 (8×29)
+volatile DATA_TYPE
+    D[181][232]; // NI=180 padded to 181 (prime), NL=220 padded to 232 (8×29)
+volatile DATA_TYPE
+    tmp[181][232]; // NI=180 padded to 181 (prime), NJ=190 padded to 232 (8×29)
 
 void kernel_2mm() {
   int i, j, k;

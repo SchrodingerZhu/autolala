@@ -4,11 +4,11 @@
 #define DATA_TYPE float
 
 
-volatile DATA_TYPE A[M][420];  // N=410 padded to 420
-volatile DATA_TYPE s[408];
-volatile DATA_TYPE q[420];  // N=410 padded to 420
-volatile DATA_TYPE p[408];
-volatile DATA_TYPE r[420];  // N=410 padded to 420
+volatile DATA_TYPE A[397][424];  // M=390 padded to 397 (prime), N=410 padded to 424 (8×53)
+volatile DATA_TYPE s[397];  // M=390 padded to 397 (prime)
+volatile DATA_TYPE q[424];  // N=410 padded to 424 (8×53)
+volatile DATA_TYPE p[397];  // M=390 padded to 397 (prime)
+volatile DATA_TYPE r[424];  // N=410 padded to 424 (8×53)
 
 void kernel_bicg() {
   int i, j;
