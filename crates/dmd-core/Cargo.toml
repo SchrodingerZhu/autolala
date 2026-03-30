@@ -1,0 +1,22 @@
+[package]
+name = "dmd-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+build = "build.rs"
+
+[dependencies]
+barvinok.workspace = true
+lalrpop-util.workspace = true
+logos.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+[build-dependencies]
+lalrpop = "0.22.1"
+
+[lints]
+workspace = true

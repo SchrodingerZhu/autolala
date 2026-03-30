@@ -1,0 +1,40 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/dmd-core",
+    "crates/dmd-cli",
+    "crates/dmd-playground",
+]
+
+[workspace.package]
+edition = "2024"
+version = "0.1.0"
+license = "MIT OR Apache-2.0"
+rust-version = "1.92"
+
+[workspace.dependencies]
+axum = { version = "0.8.4", features = ["http1", "json", "macros", "tokio"] }
+barvinok = { git = "https://github.com/Roc-Locality/barvinok-rs", rev = "cc72f5071bb7a1a9ec11e228fcb1686c2f8d3f6c" }
+clap = { version = "4.5.39", features = ["derive"] }
+dashmap = "6.1.0"
+http = "1.3.1"
+lalrpop-util = "0.22.1"
+logos = "0.15.1"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+thiserror = "2.0.17"
+tokio = { version = "1.47.1", features = ["macros", "rt-multi-thread", "signal", "sync", "time"] }
+tower-http = { version = "0.6.6", features = ["compression-gzip", "trace"] }
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter", "fmt"] }
+uuid = { version = "1.18.1", features = ["serde", "v7"] }
+
+[workspace.lints.clippy]
+dbg_macro = "deny"
+todo = "deny"
+unwrap_used = "deny"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "debuginfo"

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DMD Playground</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Symbolic Locality Workbench</p>
+        <h1>DMD Playground</h1>
+        <p class="lede">Submit loop-tree DSL programs, run bounded symbolic analysis jobs, and inspect RI, RD, and DMD formulas without dragging MLIR into the flow.</p>
+      </div>
+      <div class="hero-panel">
+        <div class="hero-metric">
+          <span>Sandbox</span>
+          <strong>Queued + Timed</strong>
+        </div>
+        <div class="hero-metric">
+          <span>Solver</span>
+          <strong>Barvinok / ISL</strong>
+        </div>
+        <div class="hero-metric">
+          <span>Focus</span>
+          <strong>RI, RD, DMD</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <form id="job-form" class="editor-card">
+        <div class="card-header">
+          <h2>Program</h2>
+          <button type="submit" id="run-button">Run Analysis</button>
+        </div>
+        <div class="editor-shell">
+          <div class="editor-toolbar">
+            <div>
+              <p class="editor-mode-label">Loop-Tree DSL</p>
+              <p class="editor-hint">Cmd/Ctrl+Enter submits the current program. Highlighting mirrors the `dmd-core` lexer and grammar.</p>
+            </div>
+            <span id="editor-status" class="editor-status" data-tone="loading">Loading Monaco</span>
+          </div>
+          <div class="editor-surface">
+            <div id="source-editor" aria-label="Loop-tree DSL editor"></div>
+            <textarea id="source-fallback" spellcheck="false" aria-label="Loop-tree DSL source"></textarea>
+          </div>
+        </div>
+        <div class="controls">
+          <label>
+            <span>Block Size</span>
+            <input id="block-size" type="number" min="1" value="1">
+          </label>
+          <label>
+            <span>Num Sets</span>
+            <input id="num-sets" type="number" min="1" value="1">
+          </label>
+          <label>
+            <span>Max Operations</span>
+            <input id="max-operations" type="number" min="1000" value="5000000">
+          </label>
+        </div>
+        <div class="guide-grid">
+          <article class="guide-card">
+            <p class="label">Syntax Landmarks</p>
+            <ul class="guide-list">
+              <li><code>params</code> declares symbolic extents.</li>
+              <li><code>array</code> introduces tensor shapes.</li>
+              <li><code>for</code> and <code>if</code> build the loop tree.</li>
+              <li><code>read</code>, <code>write</code>, and <code>update</code> define accesses.</li>
+            </ul>
+          </article>
+          <article class="guide-card">
+            <p class="label">Execution Guardrails</p>
+            <ul class="guide-list">
+              <li>Analyses run in bounded background tasks.</li>
+              <li>Operation caps and timeouts constrain solver work.</li>
+              <li>Task history stays visible so results can be revisited.</li>
+              <li>The editor falls back cleanly if Monaco cannot load.</li>
+            </ul>
+          </article>
+        </div>
+      </form>
+
+      <section class="results-card">
+        <div class="card-header">
+          <h2>Tasks</h2>
+          <span id="status-chip" class="status-chip">Idle</span>
+        </div>
+        <div id="task-list" class="task-list"></div>
+        <div id="result-panel" class="result-panel empty">
+          <div class="empty-state">
+            <p class="empty-kicker">Symbolic Output</p>
+            <h3>Submit a program to inspect RI, RD, and DMD.</h3>
+            <p>The result panel renders distributions, warm-term decompositions, and the final symbolic formula once a sandboxed task completes.</p>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

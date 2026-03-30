@@ -1,0 +1,175 @@
+grammar;
+
+use crate::ast::{
+    Access, AccessKind, ArrayDecl, Block, Comparison, ComparisonOp, Expr, ForLoop, IfStmt, Program,
+    Stmt,
+};
+use crate::lexer::{LexError, Token};
+
+extern {
+    type Location = usize;
+    type Error = LexError;
+
+    enum Token {
+        "params" => Token::Params,
+        "array" => Token::Array,
+        "for" => Token::For,
+        "in" => Token::In,
+        "step" => Token::Step,
+        "if" => Token::If,
+        "else" => Token::Else,
+        "read" => Token::Read,
+        "write" => Token::Write,
+        "update" => Token::Update,
+        "{" => Token::LBrace,
+        "}" => Token::RBrace,
+        "[" => Token::LBracket,
+        "]" => Token::RBracket,
+        "(" => Token::LParen,
+        ")" => Token::RParen,
+        "," => Token::Comma,
+        ";" => Token::Semi,
+        ".." => Token::DotDot,
+        "+" => Token::Plus,
+        "-" => Token::Minus,
+        "*" => Token::Star,
+        "/" => Token::Slash,
+        "&&" => Token::AndAnd,
+        "<" => Token::Less,
+        "<=" => Token::LessEq,
+        ">" => Token::Greater,
+        ">=" => Token::GreaterEq,
+        "==" => Token::EqEq,
+        "ident" => Token::Identifier(<String>),
+        "int" => Token::Integer(<i64>),
+    }
+}
+
+pub Program: Program = {
+    <params:ParamDecl*> <arrays:ArrayDecl*> <statements:Stmt*> => Program {
+        params: params.into_iter().flatten().collect(),
+        arrays,
+        body: Block::new(statements),
+    }
+};
+
+ParamDecl: Vec<String> = {
+    "params" <items:IdentifierList> ";" => items,
+};
+
+ArrayDecl: ArrayDecl = {
+    "array" <name:Identifier> "[" <extents:ExprList> "]" ";" => ArrayDecl { name, extents },
+};
+
+Stmt: Stmt = {
+    <item:ForStmt> => Stmt::For(item),
+    <item:IfBranch> => Stmt::If(item),
+    <item:AccessStmt> => Stmt::Access(item),
+};
+
+ForStmt: ForLoop = {
+    "for" <var:Identifier> "in" <lower:Expr> ".." <upper:Expr> <step:StepSpec?> <body:Block> => ForLoop {
+        var,
+        lower,
+        upper,
+        step: step.unwrap_or(1),
+        body,
+    }
+};
+
+StepSpec: i64 = {
+    "step" <value:Integer> => value,
+};
+
+IfBranch: IfStmt = {
+    "if" <conditions:ConditionList> <then_branch:Block> <else_branch:ElseBranch?> => IfStmt {
+        conditions,
+        then_branch,
+        else_branch,
+    },
+};
+
+ElseBranch: Block = {
+    "else" <block:Block> => block,
+};
+
+Block: Block = {
+    "{" <statements:Stmt*> "}" => Block::new(statements),
+};
+
+AccessStmt: Access = {
+    <kind:AccessKind> <array:Identifier> "[" <indices:ExprList> "]" ";" => Access {
+        kind,
+        array,
+        indices,
+    },
+};
+
+AccessKind: AccessKind = {
+    "read" => AccessKind::Read,
+    "write" => AccessKind::Write,
+    "update" => AccessKind::Update,
+};
+
+ConditionList: Vec<Comparison> = {
+    <head:Comparison> <tail:("&&" Comparison)*> => {
+        let mut items = vec![head];
+        items.extend(tail.into_iter().map(|(_, item)| item));
+        items
+    }
+};
+
+Comparison: Comparison = {
+    <lhs:Expr> "<" <rhs:Expr> => Comparison { lhs, op: ComparisonOp::Lt, rhs },
+    <lhs:Expr> "<=" <rhs:Expr> => Comparison { lhs, op: ComparisonOp::Le, rhs },
+    <lhs:Expr> "==" <rhs:Expr> => Comparison { lhs, op: ComparisonOp::Eq, rhs },
+    <lhs:Expr> ">=" <rhs:Expr> => Comparison { lhs, op: ComparisonOp::Ge, rhs },
+    <lhs:Expr> ">" <rhs:Expr> => Comparison { lhs, op: ComparisonOp::Gt, rhs },
+};
+
+pub Expr: Expr = {
+    <value:AddExpr> => value,
+};
+
+AddExpr: Expr = {
+    <lhs:AddExpr> "+" <rhs:MulExpr> => Expr::Add(Box::new(lhs), Box::new(rhs)),
+    <lhs:AddExpr> "-" <rhs:MulExpr> => Expr::Sub(Box::new(lhs), Box::new(rhs)),
+    <value:MulExpr> => value,
+};
+
+MulExpr: Expr = {
+    <lhs:MulExpr> "*" <rhs:UnaryExpr> => Expr::Mul(Box::new(lhs), Box::new(rhs)),
+    <lhs:MulExpr> "/" <rhs:UnaryExpr> => Expr::FloorDiv(Box::new(lhs), Box::new(rhs)),
+    <value:UnaryExpr> => value,
+};
+
+UnaryExpr: Expr = {
+    "-" <value:UnaryExpr> => Expr::Neg(Box::new(value)),
+    "(" <value:Expr> ")" => value,
+    <value:Integer> => Expr::Int(value),
+    <name:Identifier> => Expr::Var(name),
+};
+
+IdentifierList: Vec<String> = {
+    <head:Identifier> <tail:("," Identifier)*> => {
+        let mut items = vec![head];
+        items.extend(tail.into_iter().map(|(_, item)| item));
+        items
+    }
+};
+
+ExprList: Vec<Expr> = {
+    <head:Expr> <tail:("," Expr)*> => {
+        let mut items = vec![head];
+        items.extend(tail.into_iter().map(|(_, item)| item));
+        items
+    }
+};
+
+Identifier: String = {
+    "ident" => <>,
+};
+
+Integer: i64 = {
+    "int" => <>,
+};
