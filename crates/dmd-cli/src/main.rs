@@ -1,12 +1,15 @@
-use clap::Parser;
-use dmd_core::{AnalysisOptions, AnalysisReport, DmdError, analyze_source};
+use clap::{Parser, ValueEnum};
+use dmd_core::{AnalysisOptions, AnalysisReport, ApproximationMethod, DmdError, analyze_source};
 use std::fmt::Write;
 use std::io::Read;
 use std::path::Path;
 use std::path::PathBuf;
 
 #[derive(Debug, Parser)]
-#[command(name = "dmd-cli", about = "Symbolic data movement analysis for loop-tree DSL programs")]
+#[command(
+    name = "dmd-cli",
+    about = "Symbolic data movement analysis for loop-tree DSL programs"
+)]
 struct Cli {
     #[arg(short, long)]
     input: Option<PathBuf>,
@@ -20,8 +23,24 @@ struct Cli {
     #[arg(long, default_value_t = 5_000_000)]
     max_operations: usize,
 
+    #[arg(long, value_enum, default_value_t = CliApproximationMethod::Scale)]
+    approximation_method: CliApproximationMethod,
+
     #[arg(long)]
     json: bool,
+}
+
+#[derive(Debug, Clone, Copy, ValueEnum)]
+enum CliApproximationMethod {
+    Scale,
+}
+
+impl From<CliApproximationMethod> for ApproximationMethod {
+    fn from(value: CliApproximationMethod) -> Self {
+        match value {
+            CliApproximationMethod::Scale => ApproximationMethod::Scale,
+        }
+    }
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -55,6 +74,7 @@ fn run() -> Result<(), CliError> {
             block_size: cli.block_size,
             num_sets: cli.num_sets,
             max_operations: cli.max_operations,
+            approximation_method: cli.approximation_method.into(),
         },
     )?;
 
@@ -86,7 +106,11 @@ fn render_report(report: &AnalysisReport) -> String {
     let _ = writeln!(output, "Access Counts");
     let _ = writeln!(output, "  total      = {}", report.total_accesses_plain);
     let _ = writeln!(output, "  warm       = {}", report.warm_accesses_plain);
-    let _ = writeln!(output, "  compulsory = {}", report.compulsory_accesses_plain);
+    let _ = writeln!(
+        output,
+        "  compulsory = {}",
+        report.compulsory_accesses_plain
+    );
     let _ = writeln!(output);
     let _ = writeln!(output, "RI Distribution");
     render_distribution_section(&mut output, &report.ri_distribution);

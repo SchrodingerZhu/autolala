@@ -425,6 +425,81 @@ code {
   font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 }
 
+.math-block,
+.math-inline,
+.math-cell {
+  border-radius: 0.9rem;
+  border: 1px solid rgba(21, 31, 27, 0.08);
+  background: rgba(255, 255, 255, 0.7);
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(154, 52, 18, 0.45) rgba(0, 0, 0, 0.06);
+}
+
+.math-block {
+  padding: 1rem;
+  min-height: 5.5rem;
+  white-space: nowrap;
+}
+
+.math-inline,
+.math-cell {
+  padding: 0.55rem 0.7rem;
+  white-space: nowrap;
+}
+
+.math-inline-strong {
+  margin-bottom: 0.8rem;
+}
+
+.math-ready .katex-display {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.math-fallback {
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  white-space: nowrap;
+}
+
+.math-block .katex,
+.math-inline .katex,
+.math-cell .katex {
+  white-space: nowrap;
+}
+
+.math-block::-webkit-scrollbar,
+.math-inline::-webkit-scrollbar,
+.math-cell::-webkit-scrollbar {
+  height: 0.6rem;
+}
+
+.math-block::-webkit-scrollbar-track,
+.math-inline::-webkit-scrollbar-track,
+.math-cell::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+}
+
+.math-block::-webkit-scrollbar-thumb,
+.math-inline::-webkit-scrollbar-thumb,
+.math-cell::-webkit-scrollbar-thumb {
+  background: rgba(154, 52, 18, 0.45);
+  border-radius: 999px;
+}
+
+.formula-plain {
+  margin-top: 0.9rem;
+}
+
+.formula-plain summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .detail-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -19,7 +19,10 @@ pub struct SemanticProgram {
 
 impl SemanticProgram {
     pub fn array_id(&self, name: &str) -> Option<usize> {
-        self.arrays.iter().find(|array| array.name == name).map(|array| array.id)
+        self.arrays
+            .iter()
+            .find(|array| array.name == name)
+            .map(|array| array.id)
     }
 
     pub fn array_rank(&self, name: &str) -> Option<usize> {
@@ -31,7 +34,8 @@ impl SemanticProgram {
 
     pub fn max_access_rank(&self) -> usize {
         fn block_max(block: &Block) -> usize {
-            block.statements
+            block
+                .statements
                 .iter()
                 .map(stmt_max)
                 .max()
@@ -282,7 +286,8 @@ fn validate_expr(expr: &Expr, params: &HashSet<String>, loop_scope: &[String]) -
 }
 
 fn max_access_rank(block: &Block) -> usize {
-    block.statements
+    block
+        .statements
         .iter()
         .map(|stmt| match stmt {
             Stmt::For(for_loop) => max_access_rank(&for_loop.body),
@@ -317,7 +322,8 @@ for i in 0 .. N {
 }
 "#;
         let program = parse_program(source).expect("parser should succeed");
-        let error = validate_program(program).expect_err("semantic validation should reject nonlinear terms");
+        let error = validate_program(program)
+            .expect_err("semantic validation should reject nonlinear terms");
         assert!(format!("{error}").contains("non-affine multiplication"));
     }
 

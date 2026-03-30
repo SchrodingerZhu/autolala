@@ -1,6 +1,6 @@
 use crate::ast::{Block, Comparison, ComparisonOp, Expr, Program, Stmt};
 use crate::error::{DmdError, DmdResult};
-use crate::formula::{FormulaFormatter, format_domain};
+use crate::formula::{FormulaExpr, FormulaFormatter, format_domain};
 use crate::parse_program;
 use crate::semantics::{ArrayInfo, SemanticProgram, validate_program};
 use barvinok::{
@@ -11,18 +11,38 @@ use barvinok::{
     local_space::LocalSpace,
     map::{BasicMap, Map},
     polynomial::{PiecewiseQuasiPolynomial, QuasiPolynomial},
-    set::Set,
+    set::{BasicSet, Set},
     space::Space,
     value::Value,
 };
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    sync::{LazyLock, Mutex},
+};
+
+static BARVINOK_ANALYSIS_LOCK: LazyLock<Mutex<()>> = LazyLock::new(|| Mutex::new(()));
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AnalysisOptions {
     pub block_size: usize,
     pub num_sets: usize,
     pub max_operations: usize,
+    pub approximation_method: ApproximationMethod,
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum ApproximationMethod {
+    Scale,
+}
+
+impl ApproximationMethod {
+    fn as_barvinok_arg(self) -> &'static str {
+        match self {
+            Self::Scale => "--approximation-method=scale",
+        }
+    }
 }
 
 impl Default for AnalysisOptions {
@@ -31,6 +51,7 @@ impl Default for AnalysisOptions {
             block_size: 1,
             num_sets: 1,
             max_operations: 5_000_000,
+            approximation_method: ApproximationMethod::Scale,
         }
     }
 }
@@ -152,7 +173,9 @@ impl<'model> Lowering<'model> {
         align_sets(longest, depth, sub_sets.iter_mut(), true)?;
         Ok(sub_sets
             .into_iter()
-            .try_fold(Set::empty(space)?, |acc, set| -> DmdResult<_> { Ok(acc.union(set)?) })?
+            .try_fold(Set::empty(space)?, |acc, set| -> DmdResult<_> {
+                Ok(acc.union(set)?)
+            })?
             .set_dim_name(
                 DimType::Out,
                 depth as u32,
@@ -182,15 +205,28 @@ impl<'model> Lowering<'model> {
 
                 let space = set.get_space()?;
                 let local_space = LocalSpace::try_from(space.clone())?;
-                let lower = self.convert_expr(local_space.clone(), &for_loop.lower, loop_env, env_prefix_len)?;
-                let upper = self.convert_expr(local_space.clone(), &for_loop.upper, loop_env, env_prefix_len)?;
+                let lower = self.convert_expr(
+                    local_space.clone(),
+                    &for_loop.lower,
+                    loop_env,
+                    env_prefix_len,
+                )?;
+                let upper = self.convert_expr(
+                    local_space.clone(),
+                    &for_loop.upper,
+                    loop_env,
+                    env_prefix_len,
+                )?;
                 let step = Affine::val_on_domain(
                     local_space.clone(),
                     Value::int_from_si(ctx, for_loop.step)?,
                 )?;
                 let trip = upper.checked_sub(lower)?.checked_div(step)?.ceil()?;
-                let ge_zero = Constraint::new_inequality(local_space.clone())?
-                    .set_coefficient_si(DimType::Out, depth as i32, 1)?;
+                let ge_zero = Constraint::new_inequality(local_space.clone())?.set_coefficient_si(
+                    DimType::Out,
+                    depth as i32,
+                    1,
+                )?;
                 let ub = trip
                     .checked_sub(Affine::var_on_domain(
                         local_space.clone(),
@@ -222,7 +258,12 @@ impl<'model> Lowering<'model> {
                 let mut subsets = [then_set, else_set];
                 let dom_space = longest.get_space()?;
                 align_sets(longest, depth, subsets.iter_mut(), false)?;
-                let cond = self.condition_set(dom_space.clone(), &if_stmt.conditions, loop_env, loop_env.len())?;
+                let cond = self.condition_set(
+                    dom_space.clone(),
+                    &if_stmt.conditions,
+                    loop_env,
+                    loop_env.len(),
+                )?;
                 let complement = cond.clone().complement()?;
                 let [then_set, else_set] = subsets;
                 Ok(then_set
@@ -236,7 +277,11 @@ impl<'model> Lowering<'model> {
         }
     }
 
-    fn get_access_map<'ctx>(&self, ctx: ContextRef<'ctx>, options: &AnalysisOptions) -> DmdResult<Map<'ctx>> {
+    fn get_access_map<'ctx>(
+        &self,
+        ctx: ContextRef<'ctx>,
+        options: &AnalysisOptions,
+    ) -> DmdResult<Map<'ctx>> {
         let mut loop_env = Vec::new();
         let max_rank = self.model.max_access_rank();
         let map = self.access_block(ctx, &self.model.body, 0, &mut loop_env, max_rank, options)?;
@@ -272,7 +317,9 @@ impl<'model> Lowering<'model> {
         align_maps(longest, depth, sub_maps.iter_mut(), true)?;
         Ok(sub_maps
             .into_iter()
-            .try_fold(Map::empty(space)?, |acc, map| -> DmdResult<_> { Ok(acc.union(map)?) })?
+            .try_fold(Map::empty(space)?, |acc, map| -> DmdResult<_> {
+                Ok(acc.union(map)?)
+            })?
             .set_dim_name(
                 DimType::In,
                 depth as u32,
@@ -299,12 +346,20 @@ impl<'model> Lowering<'model> {
                     index: depth,
                     env_prefix_len,
                 });
-                let map = self.access_block(ctx, &for_loop.body, depth + 1, loop_env, max_rank, options)?;
+                let map =
+                    self.access_block(ctx, &for_loop.body, depth + 1, loop_env, max_rank, options)?;
                 loop_env.pop();
                 Ok(map.set_dim_name(DimType::In, depth as u32, &for_loop.var)?)
             }
             Stmt::If(if_stmt) => {
-                let then_map = self.access_block(ctx, &if_stmt.then_branch, depth, loop_env, max_rank, options)?;
+                let then_map = self.access_block(
+                    ctx,
+                    &if_stmt.then_branch,
+                    depth,
+                    loop_env,
+                    max_rank,
+                    options,
+                )?;
                 let else_map = if let Some(else_branch) = &if_stmt.else_branch {
                     self.access_block(ctx, else_branch, depth, loop_env, max_rank, options)?
                 } else {
@@ -319,7 +374,8 @@ impl<'model> Lowering<'model> {
                 let mut submaps = [then_map, else_map];
                 let dom_space = longest.clone().domain()?.get_space()?;
                 align_maps(longest, depth, submaps.iter_mut(), false)?;
-                let cond = self.condition_set(dom_space, &if_stmt.conditions, loop_env, loop_env.len())?;
+                let cond =
+                    self.condition_set(dom_space, &if_stmt.conditions, loop_env, loop_env.len())?;
                 let complement = cond.clone().complement()?;
                 let [then_map, else_map] = submaps;
                 Ok(then_map
@@ -329,11 +385,11 @@ impl<'model> Lowering<'model> {
             Stmt::Access(access) => {
                 let domain_space = Space::set(ctx, self.parameter_count() as u32, depth as u32)?;
                 let local_space = LocalSpace::try_from(domain_space.clone())?;
-                let mut affines = AffineList::new(ctx, max_rank + 1 + usize::from(options.num_sets > 1));
-                let array = self
-                    .array_map
-                    .get(access.array.as_str())
-                    .ok_or_else(|| DmdError::analysis(format!("missing array info for `{}`", access.array)))?;
+                let mut affines =
+                    AffineList::new(ctx, max_rank + 1 + usize::from(options.num_sets > 1));
+                let array = self.array_map.get(access.array.as_str()).ok_or_else(|| {
+                    DmdError::analysis(format!("missing array info for `{}`", access.array))
+                })?;
                 affines.push(Affine::val_on_domain_space(
                     domain_space.clone(),
                     Value::int_from_si(ctx, array.id as i64)?,
@@ -346,7 +402,8 @@ impl<'model> Lowering<'model> {
                 }
 
                 for (index, expr) in access.indices.iter().enumerate() {
-                    let mut affine = self.convert_expr(local_space.clone(), expr, loop_env, loop_env.len())?;
+                    let mut affine =
+                        self.convert_expr(local_space.clone(), expr, loop_env, loop_env.len())?;
                     if options.block_size > 1 && index + 1 == access.indices.len() {
                         affine = affine
                             .checked_div(Affine::val_on_domain(
@@ -379,18 +436,24 @@ impl<'model> Lowering<'model> {
         let local_space = LocalSpace::try_from(space.clone())?;
         let mut set = Set::universe(space)?;
         for comparison in conditions {
-            let lhs = self.convert_expr(local_space.clone(), &comparison.lhs, loop_env, env_limit)?;
-            let rhs = self.convert_expr(local_space.clone(), &comparison.rhs, loop_env, env_limit)?;
+            let lhs =
+                self.convert_expr(local_space.clone(), &comparison.lhs, loop_env, env_limit)?;
+            let rhs =
+                self.convert_expr(local_space.clone(), &comparison.rhs, loop_env, env_limit)?;
             let one = Affine::val_on_domain(
                 local_space.clone(),
                 Value::int_from_si(local_space.context_ref(), 1)?,
             )?;
             let constraint = match comparison.op {
-                ComparisonOp::Lt => Constraint::new_inequality_from_affine(rhs.checked_sub(lhs)?.checked_sub(one)?),
+                ComparisonOp::Lt => {
+                    Constraint::new_inequality_from_affine(rhs.checked_sub(lhs)?.checked_sub(one)?)
+                }
                 ComparisonOp::Le => Constraint::new_inequality_from_affine(rhs.checked_sub(lhs)?),
                 ComparisonOp::Eq => Constraint::new_equality_from_affine(lhs.checked_sub(rhs)?),
                 ComparisonOp::Ge => Constraint::new_inequality_from_affine(lhs.checked_sub(rhs)?),
-                ComparisonOp::Gt => Constraint::new_inequality_from_affine(lhs.checked_sub(rhs)?.checked_sub(one)?),
+                ComparisonOp::Gt => {
+                    Constraint::new_inequality_from_affine(lhs.checked_sub(rhs)?.checked_sub(one)?)
+                }
             };
             set = set.add_constraint(constraint)?;
         }
@@ -411,7 +474,11 @@ impl<'model> Lowering<'model> {
             )?),
             Expr::Var(name) => {
                 if let Some(index) = self.model.params.iter().position(|param| param == name) {
-                    return Ok(Affine::var_on_domain(local_space, DimType::Param, index as u32)?);
+                    return Ok(Affine::var_on_domain(
+                        local_space,
+                        DimType::Param,
+                        index as u32,
+                    )?);
                 }
 
                 let (_, binding) = loop_env
@@ -419,14 +486,21 @@ impl<'model> Lowering<'model> {
                     .take(env_limit)
                     .enumerate()
                     .find(|(_, binding)| binding.name == *name)
-                    .ok_or_else(|| DmdError::analysis(format!("unknown variable `{name}` during lowering")))?;
-                let ordinal = Affine::var_on_domain(local_space.clone(), DimType::Out, binding.index as u32)?;
+                    .ok_or_else(|| {
+                        DmdError::analysis(format!("unknown variable `{name}` during lowering"))
+                    })?;
+                let ordinal =
+                    Affine::var_on_domain(local_space.clone(), DimType::Out, binding.index as u32)?;
                 let step = Affine::val_on_domain(
                     local_space.clone(),
                     Value::int_from_si(local_space.context_ref(), binding.step)?,
                 )?;
-                let lower =
-                    self.convert_expr(local_space.clone(), &binding.lower, loop_env, binding.env_prefix_len)?;
+                let lower = self.convert_expr(
+                    local_space.clone(),
+                    &binding.lower,
+                    loop_env,
+                    binding.env_prefix_len,
+                )?;
                 Ok(ordinal.checked_mul(step)?.checked_add(lower)?)
             }
             Expr::Add(lhs, rhs) => Ok(self
@@ -446,7 +520,12 @@ impl<'model> Lowering<'model> {
                 local_space.clone(),
                 Value::int_from_si(local_space.context_ref(), -1)?,
             )?
-            .checked_mul(self.convert_expr(local_space, inner, loop_env, env_limit)?)?),
+            .checked_mul(self.convert_expr(
+                local_space,
+                inner,
+                loop_env,
+                env_limit,
+            )?)?),
         }
     }
 
@@ -490,9 +569,17 @@ pub fn analyze_program(program: &Program, options: AnalysisOptions) -> DmdResult
         return Err(DmdError::semantic("num_sets must be at least one"));
     }
 
+    // `Context::from_args` is not stable under parallel in-process initialization,
+    // so keep Barvinok/ISL execution serialized within this process.
+    let _analysis_guard = BARVINOK_ANALYSIS_LOCK
+        .lock()
+        .map_err(|_| DmdError::analysis("barvinok analysis lock poisoned"))?;
+
     let model = validate_program(program.clone())?;
     let lowering = Lowering::new(&model);
-    let context = Context::new();
+    let context = unsafe {
+        Context::from_args([options.approximation_method.as_barvinok_arg()].into_iter())
+    }?;
     context.scope(|ctx| analyze_with_context(ctx, &lowering, options))
 }
 
@@ -503,7 +590,9 @@ fn analyze_with_context<'ctx>(
 ) -> DmdResult<AnalysisReport> {
     ctx.set_max_operations(options.max_operations);
     let timestamp_space = lowering.get_timestamp_space(ctx)?;
-    let access_map = lowering.get_access_map(ctx, &options)?.intersect_domain(timestamp_space.clone())?;
+    let access_map = lowering
+        .get_access_map(ctx, &options)?
+        .intersect_domain(timestamp_space.clone())?;
 
     let space = timestamp_space.get_space()?;
     let lt = Map::lex_lt(space.clone())?
@@ -525,68 +614,104 @@ fn analyze_with_context<'ctx>(
 
     let ri_distribution = DistributionProcessor::new(ri_values).collect()?;
     let rd_distribution = DistributionProcessor::new(rd_values).collect()?;
-    let total_rendered = render_piecewise(total_accesses.clone())?;
+    let total_expr = render_piecewise(total_accesses.clone())?;
     let ri_rendered = render_distribution(&ri_distribution)?;
     let rd_rendered = render_distribution(&rd_distribution)?;
-    let warm_plain = join_add(rd_rendered.count_plain_terms.iter().cloned());
-    let warm_latex = join_add(rd_rendered.count_latex_terms.iter().cloned());
-    let compulsory_plain = format!("({}) - ({})", total_rendered.0, warm_plain);
-    let compulsory_latex = format!("({}) - ({})", total_rendered.1, warm_latex);
+    let warm_expr = FormulaExpr::add(rd_rendered.count_exprs.iter().cloned());
+    let compulsory_expr = FormulaExpr::sub(total_expr.clone(), warm_expr.clone());
     let mut dmd_terms = Vec::new();
-    let mut dmd_plain_terms = vec![compulsory_plain.clone()];
-    let mut dmd_latex_terms = vec![compulsory_latex.clone()];
+    let mut dmd_formula_terms = vec![compulsory_expr.clone()];
+    let mut filtered_region_count = 0usize;
 
     for entry in &rd_rendered.entries {
         for region in &entry.regions {
-            let term_plain = format!("({}) * sqrt({})", region.count_plain, entry.value_plain);
-            let term_latex = format!("{} \\cdot \\sqrt{{{}}}", region.count_latex, entry.value_latex);
-            dmd_plain_terms.push(term_plain.clone());
-            dmd_latex_terms.push(term_latex.clone());
+            if !region_scales(&region.domain)? {
+                filtered_region_count += 1;
+                continue;
+            }
+            let term_expr = FormulaExpr::mul([
+                region.count_expr.clone(),
+                FormulaExpr::sqrt(entry.value_expr.clone()),
+            ]);
+            dmd_formula_terms.push(term_expr.clone());
             dmd_terms.push(DmdTerm {
-                domain_plain: region.domain_plain.clone(),
-                multiplicity_plain: region.count_plain.clone(),
-                multiplicity_latex: region.count_latex.clone(),
-                reuse_distance_plain: entry.value_plain.clone(),
-                reuse_distance_latex: entry.value_latex.clone(),
-                term_plain,
-                term_latex,
+                domain_plain: region.region.domain_plain.clone(),
+                multiplicity_plain: region.region.count_plain.clone(),
+                multiplicity_latex: region.region.count_latex.clone(),
+                reuse_distance_plain: entry.entry.value_plain.clone(),
+                reuse_distance_latex: entry.entry.value_latex.clone(),
+                term_plain: term_expr.to_plain(),
+                term_latex: term_expr.to_latex(),
             });
         }
     }
 
+    let ri_distribution = ri_rendered
+        .entries
+        .into_iter()
+        .map(|entry| entry.entry)
+        .collect::<Vec<_>>();
+    let rd_distribution = rd_rendered
+        .entries
+        .into_iter()
+        .map(|entry| entry.entry)
+        .collect::<Vec<_>>();
+    let dmd_formula = FormulaExpr::add(dmd_formula_terms);
+    let approximation_arg = options.approximation_method.as_barvinok_arg().to_string();
+    let mut notes = vec![
+        format!(
+            "Barvinok runs inside a context initialized with `{}`.",
+            approximation_arg
+        ),
+        "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.".to_string(),
+        "Reuse distance is derived from the cardinality of the access-image inside each reuse interval window, without Denning recursion.".to_string(),
+        "The compulsory-access term is modeled separately as total accesses minus warm reuses.".to_string(),
+    ];
+    if filtered_region_count > 0 {
+        notes.push(format!(
+            "Filtered {filtered_region_count} DMD region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+        ));
+    }
+
     Ok(AnalysisReport {
         options,
-        total_accesses_plain: total_rendered.0,
-        total_accesses_latex: total_rendered.1,
-        warm_accesses_plain: warm_plain,
-        warm_accesses_latex: warm_latex,
-        compulsory_accesses_plain: compulsory_plain,
-        compulsory_accesses_latex: compulsory_latex,
+        total_accesses_plain: total_expr.to_plain(),
+        total_accesses_latex: total_expr.to_latex(),
+        warm_accesses_plain: warm_expr.to_plain(),
+        warm_accesses_latex: warm_expr.to_latex(),
+        compulsory_accesses_plain: compulsory_expr.to_plain(),
+        compulsory_accesses_latex: compulsory_expr.to_latex(),
         timestamp_space: format!("{timestamp_space:?}"),
         access_map: format!("{access_map:?}"),
-        ri_distribution: ri_rendered.entries,
-        rd_distribution: rd_rendered.entries,
+        ri_distribution,
+        rd_distribution,
         dmd_terms,
-        dmd_formula_plain: join_add(dmd_plain_terms),
-        dmd_formula_latex: join_add(dmd_latex_terms),
-        notes: vec![
-            "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.".to_string(),
-            "Reuse distance is derived from the cardinality of the access-image inside each reuse interval window, without Denning recursion.".to_string(),
-            "The compulsory-access term is modeled separately as total accesses minus warm reuses.".to_string(),
-        ],
+        dmd_formula_plain: dmd_formula.to_plain(),
+        dmd_formula_latex: dmd_formula.to_latex(),
+        notes,
     })
 }
 
-struct RenderedDistribution {
-    entries: Vec<DistributionEntry>,
-    count_plain_terms: Vec<String>,
-    count_latex_terms: Vec<String>,
+struct RenderedDistribution<'a> {
+    entries: Vec<RenderedDistributionEntry<'a>>,
+    count_exprs: Vec<FormulaExpr>,
 }
 
-fn render_distribution(items: &[DistributionItem<'_>]) -> DmdResult<RenderedDistribution> {
+struct RenderedDistributionEntry<'a> {
+    entry: DistributionEntry,
+    value_expr: FormulaExpr,
+    regions: Vec<RenderedDistributionRegion<'a>>,
+}
+
+struct RenderedDistributionRegion<'a> {
+    region: DistributionRegion,
+    count_expr: FormulaExpr,
+    domain: Set<'a>,
+}
+
+fn render_distribution<'a>(items: &[DistributionItem<'a>]) -> DmdResult<RenderedDistribution<'a>> {
     let mut entries = Vec::new();
-    let mut count_plain_terms = Vec::new();
-    let mut count_latex_terms = Vec::new();
+    let mut count_exprs = Vec::new();
 
     for item in items {
         let value_formatter = FormulaFormatter::new(item.value.get_space()?);
@@ -595,46 +720,138 @@ fn render_distribution(items: &[DistributionItem<'_>]) -> DmdResult<RenderedDist
         item.cardinality.foreach_piece(|qpoly, domain| {
             let formatter = FormulaFormatter::new(qpoly.get_space()?);
             let count_expr = formatter.quasi_polynomial(qpoly)?;
-            count_plain_terms.push(count_expr.to_plain());
-            count_latex_terms.push(count_expr.to_latex());
-            regions.push(DistributionRegion {
-                domain_plain: format_domain(&domain),
-                count_plain: count_expr.to_plain(),
-                count_latex: count_expr.to_latex(),
+            count_exprs.push(count_expr.clone());
+            regions.push(RenderedDistributionRegion {
+                region: DistributionRegion {
+                    domain_plain: format_domain(&domain),
+                    count_plain: count_expr.to_plain(),
+                    count_latex: count_expr.to_latex(),
+                },
+                count_expr,
+                domain,
             });
             Ok(())
         })?;
-        entries.push(DistributionEntry {
-            value_plain: value_expr.to_plain(),
-            value_latex: value_expr.to_latex(),
+        entries.push(RenderedDistributionEntry {
+            entry: DistributionEntry {
+                value_plain: value_expr.to_plain(),
+                value_latex: value_expr.to_latex(),
+                regions: regions.iter().map(|region| region.region.clone()).collect(),
+            },
+            value_expr,
             regions,
         });
     }
 
     Ok(RenderedDistribution {
         entries,
-        count_plain_terms,
-        count_latex_terms,
+        count_exprs,
     })
 }
 
-fn render_piecewise(pw: PiecewiseQuasiPolynomial<'_>) -> DmdResult<(String, String)> {
-    let mut plain = Vec::new();
-    let mut latex = Vec::new();
+fn region_scales(domain: &Set<'_>) -> DmdResult<bool> {
+    let basic_sets = domain.get_basic_set_list()?;
+    if basic_sets.is_empty() {
+        return Ok(false);
+    }
+
+    for basic_set in basic_sets.iter() {
+        if basic_set_scales(&basic_set)? {
+            return Ok(true);
+        }
+    }
+
+    Ok(false)
+}
+
+fn basic_set_scales(basic_set: &BasicSet<'_>) -> DmdResult<bool> {
+    for constraint in basic_set.clone().get_constraints()?.iter() {
+        if equality_hits_named_scaling_dimension(&constraint, basic_set)?
+            || upper_bound_hits_named_scaling_dimension(&constraint, basic_set)?
+        {
+            return Ok(false);
+        }
+    }
+
+    Ok(true)
+}
+
+fn equality_hits_named_scaling_dimension(
+    constraint: &Constraint<'_>,
+    basic_set: &BasicSet<'_>,
+) -> DmdResult<bool> {
+    if !constraint.is_equality()? {
+        return Ok(false);
+    }
+
+    named_scaling_dims(basic_set)?
+        .into_iter()
+        .try_fold(false, |found, (dim_type, pos)| {
+            if found {
+                return Ok(true);
+            }
+            Ok(constraint.involves_dims(dim_type, pos, 1)?)
+        })
+}
+
+fn upper_bound_hits_named_scaling_dimension(
+    constraint: &Constraint<'_>,
+    basic_set: &BasicSet<'_>,
+) -> DmdResult<bool> {
+    for (dim_type, pos) in named_scaling_dims(basic_set)? {
+        if constraint.is_upper_bound(dim_type, pos)? {
+            return Ok(true);
+        }
+    }
+
+    Ok(false)
+}
+
+fn named_scaling_dims(basic_set: &BasicSet<'_>) -> DmdResult<Vec<(DimType, u32)>> {
+    let mut dims = Vec::new();
+
+    for dim_type in [DimType::Param, DimType::Out] {
+        let dim_count = basic_set.dim(dim_type)?;
+        for pos in 0..dim_count {
+            if basic_set.get_dim_name(dim_type, pos)?.is_some() {
+                dims.push((dim_type, pos));
+            }
+        }
+    }
+
+    Ok(dims)
+}
+
+fn render_piecewise(pw: PiecewiseQuasiPolynomial<'_>) -> DmdResult<FormulaExpr> {
+    let mut pieces = Vec::new();
     pw.foreach_piece(|qpoly, domain| {
         let formatter = FormulaFormatter::new(qpoly.get_space()?);
         let expr = formatter.quasi_polynomial(qpoly)?;
-        if plain.is_empty() && latex.is_empty() {
-            plain.push(expr.to_plain());
-            latex.push(expr.to_latex());
-        } else {
-            let region = format_domain(&domain);
-            plain.push(format!("[{region}] => {}", expr.to_plain()));
-            latex.push(format!("\\left[{}\\right] \\Rightarrow {}", region, expr.to_latex()));
-        }
+        pieces.push((expr, format_domain(&domain)));
         Ok(())
     })?;
-    Ok((join_add(plain), join_add(latex)))
+
+    match pieces.len() {
+        0 => Ok(FormulaExpr::zero()),
+        1 => Ok(pieces
+            .into_iter()
+            .next()
+            .map(|(expr, _)| expr)
+            .unwrap_or_else(FormulaExpr::zero)),
+        _ => {
+            let plain = pieces
+                .iter()
+                .map(|(expr, region)| format!("[{region}] => {}", expr.to_plain()))
+                .collect::<Vec<_>>();
+            let latex = pieces
+                .iter()
+                .map(|(expr, region)| {
+                    format!("\\left[{}\\right] \\Rightarrow {}", region, expr.to_latex())
+                })
+                .collect::<Vec<_>>();
+            Ok(FormulaExpr::raw(join_add(plain), join_add(latex)))
+        }
+    }
 }
 
 struct DistributionProcessor<'a> {
@@ -680,11 +897,16 @@ impl<'a> DistributionProcessor<'a> {
         self.qpoly.foreach_piece(|qpoly, domain| {
             if let Some(existing) = pieces
                 .iter_mut()
-                .find(|piece: &&mut DistributionPiece<'a>| qpoly.plain_is_equal(&piece.value).unwrap_or(false))
+                .find(|piece: &&mut DistributionPiece<'a>| {
+                    qpoly.plain_is_equal(&piece.value).unwrap_or(false)
+                })
             {
                 existing.domain = existing.domain.clone().union(domain)?;
             } else {
-                pieces.push(DistributionPiece { domain, value: qpoly });
+                pieces.push(DistributionPiece {
+                    domain,
+                    value: qpoly,
+                });
             }
             Ok(())
         })?;
@@ -714,11 +936,16 @@ fn align_sets<'a, 'b: 'a>(
     let local_space = LocalSpace::try_from(space.clone())?;
     for (index, set) in iter.enumerate() {
         let dims = set.n_dim()?;
-        let mut aligned = set.clone().insert_dims(DimType::Out, dims, longest_dims - dims)?;
+        let mut aligned = set
+            .clone()
+            .insert_dims(DimType::Out, dims, longest_dims - dims)?;
         for dim in dims..longest_dims {
             aligned = aligned.add_constraint(
-                Constraint::new_equality(local_space.clone())?
-                    .set_coefficient_si(DimType::Out, dim as i32, 1)?,
+                Constraint::new_equality(local_space.clone())?.set_coefficient_si(
+                    DimType::Out,
+                    dim as i32,
+                    1,
+                )?,
             )?;
         }
         if add_dim_constraint {
@@ -747,8 +974,11 @@ fn align_maps<'a, 'b: 'a>(
         let mut aligned = map.clone().add_dims(DimType::In, longest_dims - dims)?;
         for dim in dims..longest_dims {
             aligned = aligned.add_constraint(
-                Constraint::new_equality(local_space.clone())?
-                    .set_coefficient_si(DimType::In, dim as i32, 1)?,
+                Constraint::new_equality(local_space.clone())?.set_coefficient_si(
+                    DimType::In,
+                    dim as i32,
+                    1,
+                )?,
             )?;
         }
         if add_dim_constraint {
@@ -788,14 +1018,131 @@ for i in 0 .. N {
 }
 "#;
 
+    const NESTED: &str = r#"
+params N, M;
+array A[N, M];
+array B[M];
+
+for i in 0 .. N {
+    for j in 0 .. M {
+        read A[i, j];
+        read B[j];
+    }
+}
+"#;
+
+    const FOUR_ACCESS_MATMUL: &str = r#"
+params M, N, K;
+array A[M, K];
+array B[K, N];
+array C[M, N];
+
+for i in 0 .. M {
+    for j in 0 .. N {
+        for k in 0 .. K {
+            read C[i, j];
+            read A[i, k];
+            read B[k, j];
+            write C[i, j];
+        }
+    }
+}
+"#;
+
     #[test]
     fn repeated_single_access_has_unit_rd() {
-        let report = analyze_source(SIMPLE, AnalysisOptions::default()).expect("analysis should succeed");
+        let report =
+            analyze_source(SIMPLE, AnalysisOptions::default()).expect("analysis should succeed");
         assert!(!report.rd_distribution.is_empty());
-        assert!(report
-            .rd_distribution
-            .iter()
-            .any(|entry| entry.value_plain == "1"));
+        assert!(
+            report
+                .rd_distribution
+                .iter()
+                .any(|entry| entry.value_plain == "1")
+        );
         assert!(report.warm_accesses_plain.contains("N"));
+    }
+
+    #[test]
+    fn dmd_formula_uses_clean_subtractions() {
+        let report =
+            analyze_source(SIMPLE, AnalysisOptions::default()).expect("analysis should succeed");
+        assert!(!report.dmd_formula_plain.contains("+ -"));
+        let nested = analyze_source(NESTED, AnalysisOptions::default())
+            .expect("nested analysis should succeed");
+        assert!(nested.dmd_formula_latex.contains("\\sqrt"));
+    }
+
+    #[test]
+    fn default_analysis_uses_scale_approximation_context() {
+        let report =
+            analyze_source(SIMPLE, AnalysisOptions::default()).expect("analysis should succeed");
+        assert!(
+            report
+                .notes
+                .iter()
+                .any(|note| note.contains("--approximation-method=scale"))
+        );
+        assert_eq!(
+            report.options.approximation_method,
+            ApproximationMethod::Scale
+        );
+    }
+
+    #[test]
+    fn dmd_filters_non_scaling_domains() {
+        let report = analyze_source(FOUR_ACCESS_MATMUL, AnalysisOptions::default())
+            .expect("analysis should succeed");
+
+        assert!(
+            report
+                .dmd_terms
+                .iter()
+                .all(|term| !term.domain_plain.contains(" = "))
+        );
+        assert!(
+            report
+                .dmd_terms
+                .iter()
+                .all(|term| !term.domain_plain.contains("<="))
+        );
+        assert!(
+            report
+                .dmd_terms
+                .iter()
+                .any(|term| term.domain_plain == "M >= 2 and N >= 3 and K >= 3")
+        );
+        assert!(
+            !report
+                .dmd_terms
+                .iter()
+                .any(|term| term.domain_plain.contains("K = 2"))
+        );
+        assert!(
+            !report
+                .dmd_terms
+                .iter()
+                .any(|term| term.domain_plain.contains("0 < k <= -2 + K"))
+        );
+        assert!(report.notes.iter().any(|note| note.contains("Filtered")));
+    }
+
+    #[test]
+    fn analysis_is_safe_under_parallel_calls() {
+        std::thread::scope(|scope| {
+            let handles = (0..4)
+                .map(|_| {
+                    scope.spawn(|| {
+                        analyze_source(FOUR_ACCESS_MATMUL, AnalysisOptions::default())
+                            .expect("analysis should succeed")
+                    })
+                })
+                .collect::<Vec<_>>();
+
+            for handle in handles {
+                let report = handle.join().expect("worker thread should not panic");
+                assert!(!report.dmd_formula_plain.is_empty());
+            }
+        });
     }
 }

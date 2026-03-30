@@ -4,8 +4,8 @@ use axum::response::{Html, IntoResponse, Response};
 use axum::routing::{get, post};
 use axum::{Json, Router};
 use clap::Parser;
-use dmd_core::{AnalysisOptions, AnalysisReport, analyze_source};
 use dashmap::DashMap;
+use dmd_core::{AnalysisOptions, AnalysisReport, ApproximationMethod, analyze_source};
 use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
 use std::sync::Arc;
@@ -20,7 +20,10 @@ const APP_JS: &str = include_str!("../assets/app.js");
 const STYLES_CSS: &str = include_str!("../assets/styles.css");
 
 #[derive(Debug, Parser)]
-#[command(name = "dmd-playground", about = "Sandboxed playground for symbolic data movement analysis")]
+#[command(
+    name = "dmd-playground",
+    about = "Sandboxed playground for symbolic data movement analysis"
+)]
 struct ServerOptions {
     #[arg(long, default_value_t = 3000)]
     port: u16,
@@ -169,14 +172,20 @@ async fn index() -> Html<&'static str> {
 
 async fn app_js() -> impl IntoResponse {
     (
-        [(header::CONTENT_TYPE, HeaderValue::from_static("application/javascript"))],
+        [(
+            header::CONTENT_TYPE,
+            HeaderValue::from_static("application/javascript"),
+        )],
         APP_JS,
     )
 }
 
 async fn styles() -> impl IntoResponse {
     (
-        [(header::CONTENT_TYPE, HeaderValue::from_static("text/css; charset=utf-8"))],
+        [(
+            header::CONTENT_TYPE,
+            HeaderValue::from_static("text/css; charset=utf-8"),
+        )],
         STYLES_CSS,
     )
 }
@@ -239,6 +248,7 @@ impl TaskManager {
                 block_size: request.block_size,
                 num_sets: request.num_sets,
                 max_operations: effective_operations,
+                approximation_method: ApproximationMethod::Scale,
             };
 
             let result = tokio::time::timeout(
@@ -295,7 +305,10 @@ impl TaskManager {
     }
 }
 
-fn validate_request(request: &CreateTaskRequest, config: &PlaygroundConfig) -> Result<(), AppError> {
+fn validate_request(
+    request: &CreateTaskRequest,
+    config: &PlaygroundConfig,
+) -> Result<(), AppError> {
     if request.source.len() > config.max_source_bytes {
         return Err(AppError::PayloadTooLarge(format!(
             "source exceeds sandbox limit of {} bytes",
@@ -303,10 +316,14 @@ fn validate_request(request: &CreateTaskRequest, config: &PlaygroundConfig) -> R
         )));
     }
     if request.block_size == 0 {
-        return Err(AppError::BadRequest("block_size must be at least one".to_string()));
+        return Err(AppError::BadRequest(
+            "block_size must be at least one".to_string(),
+        ));
     }
     if request.num_sets == 0 {
-        return Err(AppError::BadRequest("num_sets must be at least one".to_string()));
+        return Err(AppError::BadRequest(
+            "num_sets must be at least one".to_string(),
+        ));
     }
     Ok(())
 }
@@ -351,7 +368,9 @@ for i in 0 .. N {
             .await
             .expect("task submission should succeed");
         for _ in 0..50 {
-            let snapshot = manager.snapshot(accepted.task_id).expect("task should exist");
+            let snapshot = manager
+                .snapshot(accepted.task_id)
+                .expect("task should exist");
             if matches!(snapshot.status, TaskPhase::Completed) {
                 assert!(snapshot.result.is_some());
                 return;
@@ -386,11 +405,16 @@ for i in 0 .. N {
         assert!(INDEX_HTML.contains("source-editor"));
         assert!(INDEX_HTML.contains("source-fallback"));
         assert!(INDEX_HTML.contains("monaco-editor@0.52.2"));
+        assert!(INDEX_HTML.contains("katex@0.16.11"));
+        assert!(INDEX_HTML.contains("defer src=\"/app.js\""));
         assert!(APP_JS.contains("monaco.languages.register"));
+        assert!(APP_JS.contains("katex.render"));
         assert!(APP_JS.contains("CtrlCmd"));
-        assert!(APP_JS.contains("\"params\""));
-        assert!(APP_JS.contains("\"update\""));
+        assert!(APP_JS.contains("array C[M, N];"));
+        assert!(APP_JS.contains("read C[i, j];"));
+        assert!(APP_JS.contains("write C[i, j];"));
         assert!(STYLES_CSS.contains(".editor-shell"));
         assert!(STYLES_CSS.contains(".guide-grid"));
+        assert!(STYLES_CSS.contains(".math-block"));
     }
 }

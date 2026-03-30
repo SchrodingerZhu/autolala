@@ -9,7 +9,7 @@ mod semantics;
 pub use error::{DmdError, DmdResult};
 pub use parser::parse_program;
 pub use polyhedral::{
-    AnalysisOptions, AnalysisReport, DistributionEntry, DistributionRegion, DmdTerm, analyze_program,
-    analyze_source,
+    AnalysisOptions, AnalysisReport, ApproximationMethod, DistributionEntry, DistributionRegion,
+    DmdTerm, analyze_program, analyze_source,
 };
 pub use semantics::{ArrayInfo, SemanticProgram, validate_program};

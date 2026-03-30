@@ -5,17 +5,18 @@ const LANGUAGE_ID = "dmdDsl";
 const THEME_ID = "dmdWorkbench";
 const MONACO_TIMEOUT_MS = 8000;
 
-const defaultSource = `params N, M;
-array A[N, M];
-array B[M];
+const defaultSource = `params M, N, K;
+array A[M, K];
+array B[K, N];
+array C[M, N];
 
-for i in 0 .. N {
-  for j in 0 .. M {
-    if j < M {
-      read A[i, j];
-      update B[j];
-    } else {
-      write B[0];
+for i in 0 .. M {
+  for j in 0 .. N {
+    for k in 0 .. K {
+      read C[i, j];
+      read A[i, k];
+      read B[k, j];
+      write C[i, j];
     }
   }
 }`;
@@ -471,7 +472,12 @@ function renderReport(report) {
   const riRows = renderDistribution(report.ri_distribution);
   const rdRows = renderDistribution(report.rd_distribution);
   const terms = report.dmd_terms
-    .map((term) => `<tr><td>${escapeHtml(term.domain_plain)}</td><td><code>${escapeHtml(term.multiplicity_plain)}</code></td><td><code>${escapeHtml(term.reuse_distance_plain)}</code></td><td><code>${escapeHtml(term.term_plain)}</code></td></tr>`)
+    .map((term) => `<tr>
+      <td>${escapeHtml(term.domain_plain)}</td>
+      <td>${renderMath(term.multiplicity_latex, term.multiplicity_plain, { className: "math-cell" })}</td>
+      <td>${renderMath(term.reuse_distance_latex, term.reuse_distance_plain, { className: "math-cell" })}</td>
+      <td>${renderMath(term.term_latex, term.term_plain, { className: "math-cell" })}</td>
+    </tr>`)
     .join("");
   const notes = report.notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("");
 
@@ -480,14 +486,18 @@ function renderReport(report) {
     <section class="formula-band">
       <div class="formula-card">
         <p class="label">DMD Formula</p>
-        <pre>${escapeHtml(report.dmd_formula_plain)}</pre>
+        ${renderMath(report.dmd_formula_latex, report.dmd_formula_plain, { displayMode: true, className: "math-block" })}
+        <details class="formula-plain">
+          <summary>Plain text</summary>
+          <pre>${escapeHtml(report.dmd_formula_plain)}</pre>
+        </details>
       </div>
       <div class="formula-card">
         <p class="label">Counts</p>
         <dl>
-          <div><dt>Total</dt><dd><code>${escapeHtml(report.total_accesses_plain)}</code></dd></div>
-          <div><dt>Warm</dt><dd><code>${escapeHtml(report.warm_accesses_plain)}</code></dd></div>
-          <div><dt>Compulsory</dt><dd><code>${escapeHtml(report.compulsory_accesses_plain)}</code></dd></div>
+          <div><dt>Total</dt><dd>${renderMath(report.total_accesses_latex, report.total_accesses_plain, { className: "math-inline" })}</dd></div>
+          <div><dt>Warm</dt><dd>${renderMath(report.warm_accesses_latex, report.warm_accesses_plain, { className: "math-inline" })}</dd></div>
+          <div><dt>Compulsory</dt><dd>${renderMath(report.compulsory_accesses_latex, report.compulsory_accesses_plain, { className: "math-inline" })}</dd></div>
         </dl>
       </div>
     </section>
@@ -513,6 +523,8 @@ function renderReport(report) {
       <ul>${notes}</ul>
     </section>
   `;
+  hydrateMath(resultPanel);
+  scheduleMathHydration(resultPanel);
 }
 
 function renderDistribution(entries) {
@@ -522,12 +534,12 @@ function renderDistribution(entries) {
   return entries
     .map((entry) => {
       const rows = entry.regions
-        .map((region) => `<tr><td>${escapeHtml(region.domain_plain)}</td><td><code>${escapeHtml(region.count_plain)}</code></td></tr>`)
+        .map((region) => `<tr><td>${escapeHtml(region.domain_plain)}</td><td>${renderMath(region.count_latex, region.count_plain, { className: "math-cell" })}</td></tr>`)
         .join("");
       return `
         <div class="distribution-entry">
           <p class="label">Value</p>
-          <pre>${escapeHtml(entry.value_plain)}</pre>
+          ${renderMath(entry.value_latex, entry.value_plain, { className: "math-inline math-inline-strong" })}
           <table>
             <thead><tr><th>Domain</th><th>Count</th></tr></thead>
             <tbody>${rows}</tbody>
@@ -548,9 +560,81 @@ function setEditorStatus(text, tone) {
   editorStatus.dataset.tone = tone;
 }
 
+function renderMath(latex, plain, options = {}) {
+  const {
+    className = "math-inline",
+    displayMode = false,
+  } = options;
+
+  return `<div class="${className}" data-katex="${escapeAttribute(latex)}" data-plain="${escapeAttribute(plain)}" data-display-mode="${displayMode ? "true" : "false"}">${escapeHtml(plain)}</div>`;
+}
+
+function hydrateMath(root) {
+  const nodes = root.querySelectorAll("[data-katex]");
+  for (const node of nodes) {
+    const latex = node.dataset.katex || "";
+    const displayMode = node.dataset.displayMode === "true";
+    const plain = node.dataset.plain || node.textContent || "";
+    const fallback = fallbackMathText(latex, plain);
+
+    if (typeof window.katex?.render !== "function") {
+      node.classList.add("math-fallback");
+      node.textContent = fallback;
+      continue;
+    }
+
+    try {
+      window.katex.render(latex, node, {
+        displayMode,
+        strict: "ignore",
+        throwOnError: false,
+      });
+      node.classList.add("math-ready");
+    } catch (error) {
+      console.error("Failed to render KaTeX formula", error);
+      node.classList.add("math-fallback");
+      node.textContent = fallback;
+    }
+  }
+}
+
+function scheduleMathHydration(root, attempt = 0) {
+  if (typeof window.katex?.render === "function") {
+    hydrateMath(root);
+    return;
+  }
+
+  if (attempt >= 10) {
+    return;
+  }
+
+  window.setTimeout(() => {
+    scheduleMathHydration(root, attempt + 1);
+  }, 300);
+}
+
+function fallbackMathText(latex, plain) {
+  if (!latex) {
+    return plain;
+  }
+
+  return latex
+    .replaceAll("\\left", "")
+    .replaceAll("\\right", "")
+    .replaceAll("\\cdot", "·")
+    .replace(/\\sqrt\{([^{}]+)\}/g, "√($1)")
+    .replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, "($1)/($2)");
+}
+
 function escapeHtml(value) {
   return value
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value)
+    .replaceAll("\"", "&quot;")
+    .replaceAll("'", "&#39;");
 }

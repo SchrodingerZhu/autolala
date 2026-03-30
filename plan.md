@@ -14,6 +14,7 @@
 8. Compute symbolic data movement complexity from the reuse information using the Barvinok-based polyhedral method.
 9. For the data movement stage, avoid Denning recursion. Reuse distance should be derived by counting the image of the iteration space under the access map.
 10. Keep the implementation production-oriented: explicit error types, tests, structured modules, documented formats, and operational safeguards in the playground.
+11. Filter non-scaling DMD contribution regions when their symbolic domain introduces equality constraints or upper bounds on named scaling dimensions.
 
 ## Working Assumptions
 
@@ -66,8 +67,10 @@
 9. Implement the playground backend with concurrency limits, timeouts, task IDs, and bounded execution.
 10. Implement the playground frontend with polished formula presentation and diagnostics.
 11. Build, test, and iterate on integration issues.
+12. Drop non-scaling DMD regions from the reported term list and aggregate formula while keeping RI/RD distributions available for inspection.
 
 
 ## Additional Content
 1. Consider a more efficient way to compute the reuse distance under infinite-repeat: wrap the whole space with a additional loop that runs twice, then half the final sum. This should directly gives all the imaginary reuse without the complexity of handling an extra symbol
 2. Are you sure you still need to keep lalrpop's lexical definition when using together when logos? lalrpop's default lexer is pretty bad in terms of performance.
+3. Keep the asymptotic DMD output focused on scaling regions; special-case branches with equality-fixed or upper-bounded symbolic dimensions should be excluded from the final DMD term aggregation.
