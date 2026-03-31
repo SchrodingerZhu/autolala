@@ -1,4 +1,4 @@
-# autodmd
+# Automatical Loop Algebraic Locality Analysis (AutoLALA)
 
 `autodmd` is a Rust workspace for symbolic data movement complexity analysis of affine loop-tree programs. It replaces the MLIR ingestion path with a small DSL, lowers programs into polyhedral sets/maps with `barvinok-rs`, computes reuse-interval and reuse-distance distributions, and builds symbolic DMD formulas as sums of square roots over reuse-distance regions.
 
