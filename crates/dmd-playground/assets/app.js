@@ -255,6 +255,7 @@ function registerDslLanguage(monaco) {
       root: [
         [/\bparams\b/, { token: "keyword", next: "@paramsList" }],
         [/\barray\b/, { token: "keyword", next: "@arrayName" }],
+        [/\bparallel\b/, "keyword"],
         [/\bfor\b/, { token: "keyword", next: "@loopVar" }],
         [/\b(read|write|update)\b/, { token: "keyword", next: "@accessName" }],
         [/\b(if|else|in|step)\b/, "keyword"],
@@ -305,6 +306,7 @@ function registerDslLanguage(monaco) {
         suggestions: [
           keywordSuggestion(monaco, "params", "Declare symbolic parameters.", range),
           keywordSuggestion(monaco, "array", "Declare an array shape.", range),
+          keywordSuggestion(monaco, "parallel", "Annotate a loop with a constant thread count.", range),
           keywordSuggestion(monaco, "for", "Start an affine loop.", range),
           keywordSuggestion(monaco, "if", "Guard a subtree with affine comparisons.", range),
           keywordSuggestion(monaco, "read", "Read from an array element.", range),
@@ -315,6 +317,13 @@ function registerDslLanguage(monaco) {
             "for-loop",
             ["for ${1:i} in ${2:0} .. ${3:N} {", "  $0", "}"].join("\n"),
             "Affine loop skeleton.",
+            range,
+          ),
+          snippetSuggestion(
+            monaco,
+            "parallel-for",
+            ["parallel(${1:4}) for ${2:i} in ${3:0} .. ${4:N} {", "  $0", "}"].join("\n"),
+            "Static parallel loop skeleton.",
             range,
           ),
           snippetSuggestion(
@@ -471,6 +480,7 @@ function renderFailure(message) {
 function renderReport(report) {
   const riRows = renderDistribution(report.ri_distribution);
   const rdRows = renderDistribution(report.rd_distribution);
+  const parallelSection = report.parallel ? renderParallelAnalysis(report.parallel) : "";
   const terms = report.dmd_terms
     .map((term) => `<tr>
       <td>${escapeHtml(term.domain_plain)}</td>
@@ -511,6 +521,7 @@ function renderReport(report) {
         ${rdRows}
       </div>
     </section>
+    ${parallelSection}
     <section class="detail-card">
       <h3>DMD Terms</h3>
       <table>
@@ -548,6 +559,32 @@ function renderDistribution(entries) {
       `;
     })
     .join("");
+}
+
+function renderParallelAnalysis(parallel) {
+  const rows = parallel.model_entries
+    .map((entry) => `<tr>
+      <td>${escapeHtml(entry.model_kind)}</td>
+      <td>${escapeHtml(entry.domain_plain)}</td>
+      <td>${renderMath(entry.source_ri_latex, entry.source_ri_plain, { className: "math-cell" })}</td>
+      <td>${renderMath(entry.multiplicity_latex, entry.multiplicity_plain, { className: "math-cell" })}</td>
+      <td>${renderMath(entry.expected_latex, entry.expected_plain, { className: "math-cell" })}</td>
+      <td>${renderMath(entry.model_latex, entry.model_plain, { className: "math-cell" })}</td>
+    </tr>`)
+    .join("");
+  const notes = parallel.notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("");
+
+  return `
+    <section class="detail-card">
+      <h3>Parallel CRI</h3>
+      <p class="muted">Threads: ${parallel.thread_count}. Schedule: ${escapeHtml(parallel.schedule)}.</p>
+      <table>
+        <thead><tr><th>Model</th><th>Domain</th><th>Source RI</th><th>Count</th><th>Expected CRI</th><th>Formula</th></tr></thead>
+        <tbody>${rows || `<tr><td colspan="6">No parallel regions.</td></tr>`}</tbody>
+      </table>
+      <ul>${notes}</ul>
+    </section>
+  `;
 }
 
 function setStatus(text, tone = "idle") {

@@ -39,6 +39,7 @@ for i in 0 .. N {
         let Stmt::For(outer) = &program.body.statements[0] else {
             panic!("expected an outer loop");
         };
+        assert!(outer.parallel.is_none());
         assert_eq!(outer.var, "i");
         let Stmt::For(inner) = &outer.body.statements[0] else {
             panic!("expected an inner loop");
@@ -48,5 +49,25 @@ for i in 0 .. N {
         };
         assert!(matches!(access.kind, AccessKind::Read));
         assert!(matches!(access.indices[0], Expr::Var(ref name) if name == "i"));
+    }
+
+    #[test]
+    fn parses_parallel_loop() {
+        let source = r#"
+params N;
+array A[N];
+
+parallel(4) for i in 0 .. N {
+    read A[i];
+}
+"#;
+        let program = parse_program(source).expect("parser should accept parallel loop");
+        let Stmt::For(parallel_loop) = &program.body.statements[0] else {
+            panic!("expected a loop");
+        };
+        let Some(spec) = &parallel_loop.parallel else {
+            panic!("expected parallel metadata");
+        };
+        assert!(matches!(spec.threads, Expr::Int(4)));
     }
 }

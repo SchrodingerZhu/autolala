@@ -1,8 +1,8 @@
 grammar;
 
 use crate::ast::{
-    Access, AccessKind, ArrayDecl, Block, Comparison, ComparisonOp, Expr, ForLoop, IfStmt, Program,
-    Stmt,
+    Access, AccessKind, ArrayDecl, Block, Comparison, ComparisonOp, Expr, ForLoop, IfStmt,
+    Parallelism, Program, Stmt,
 };
 use crate::lexer::{LexError, Token};
 
@@ -13,6 +13,7 @@ extern {
     enum Token {
         "params" => Token::Params,
         "array" => Token::Array,
+        "parallel" => Token::Parallel,
         "for" => Token::For,
         "in" => Token::In,
         "step" => Token::Step,
@@ -68,13 +69,18 @@ Stmt: Stmt = {
 };
 
 ForStmt: ForLoop = {
-    "for" <var:Identifier> "in" <lower:Expr> ".." <upper:Expr> <step:StepSpec?> <body:Block> => ForLoop {
+    <parallel:ParallelSpec?> "for" <var:Identifier> "in" <lower:Expr> ".." <upper:Expr> <step:StepSpec?> <body:Block> => ForLoop {
+        parallel,
         var,
         lower,
         upper,
         step: step.unwrap_or(1),
         body,
     }
+};
+
+ParallelSpec: Parallelism = {
+    "parallel" "(" <threads:Expr> ")" => Parallelism { threads },
 };
 
 StepSpec: i64 = {

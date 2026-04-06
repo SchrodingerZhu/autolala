@@ -32,7 +32,13 @@ pub enum Stmt {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Parallelism {
+    pub threads: Expr,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ForLoop {
+    pub parallel: Option<Parallelism>,
     pub var: String,
     pub lower: Expr,
     pub upper: Expr,

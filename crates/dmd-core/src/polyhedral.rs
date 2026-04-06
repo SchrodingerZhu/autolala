@@ -81,6 +81,37 @@ pub struct DmdTerm {
     pub term_latex: String,
 }
 
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum ParallelModelKind {
+    NegativeBinomial,
+    Racetrack,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ParallelModelEntry {
+    pub model_kind: ParallelModelKind,
+    pub domain_plain: String,
+    pub multiplicity_plain: String,
+    pub multiplicity_latex: String,
+    pub source_ri_plain: String,
+    pub source_ri_latex: String,
+    pub support_plain: String,
+    pub support_latex: String,
+    pub model_plain: String,
+    pub model_latex: String,
+    pub expected_plain: String,
+    pub expected_latex: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ParallelAnalysis {
+    pub thread_count: i64,
+    pub schedule: String,
+    pub model_entries: Vec<ParallelModelEntry>,
+    pub notes: Vec<String>,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AnalysisReport {
     pub options: AnalysisOptions,
@@ -97,6 +128,7 @@ pub struct AnalysisReport {
     pub dmd_terms: Vec<DmdTerm>,
     pub dmd_formula_plain: String,
     pub dmd_formula_latex: String,
+    pub parallel: Option<ParallelAnalysis>,
     pub notes: Vec<String>,
 }
 
@@ -617,6 +649,7 @@ fn analyze_with_context<'ctx>(
     let total_expr = render_piecewise(total_accesses.clone())?;
     let ri_rendered = render_distribution(&ri_distribution)?;
     let rd_rendered = render_distribution(&rd_distribution)?;
+    let parallel = build_parallel_analysis(lowering.model, &ri_rendered)?;
     let warm_expr = FormulaExpr::add(rd_rendered.count_exprs.iter().cloned());
     let compulsory_expr = FormulaExpr::sub(total_expr.clone(), warm_expr.clone());
     let mut dmd_terms = Vec::new();
@@ -688,8 +721,136 @@ fn analyze_with_context<'ctx>(
         dmd_terms,
         dmd_formula_plain: dmd_formula.to_plain(),
         dmd_formula_latex: dmd_formula.to_latex(),
+        parallel,
         notes,
     })
+}
+
+fn build_parallel_analysis(
+    model: &SemanticProgram,
+    ri_rendered: &RenderedDistribution<'_>,
+) -> DmdResult<Option<ParallelAnalysis>> {
+    let Some(thread_count) = model.thread_count() else {
+        return Ok(None);
+    };
+
+    let schedule = "OpenMP static-style round-robin schedule with chunk size 1".to_string();
+    let mut model_entries = Vec::new();
+    let mut negative_binomial_regions = 0usize;
+    let mut racetrack_regions = 0usize;
+
+    for entry in &ri_rendered.entries {
+        let input_independent_ri = entry.value_expr.as_const_i64().filter(|value| *value > 0);
+        for region in &entry.regions {
+            let (model_kind, support_plain, support_latex, model_plain, model_latex, expected) =
+                if let Some(source_ri) = input_independent_ri {
+                    negative_binomial_regions += 1;
+                    negative_binomial_model(thread_count, source_ri)
+                } else {
+                    racetrack_regions += 1;
+                    racetrack_model(thread_count, entry.value_expr.clone())
+                };
+            model_entries.push(ParallelModelEntry {
+                model_kind,
+                domain_plain: region.region.domain_plain.clone(),
+                multiplicity_plain: region.region.count_plain.clone(),
+                multiplicity_latex: region.region.count_latex.clone(),
+                source_ri_plain: entry.entry.value_plain.clone(),
+                source_ri_latex: entry.entry.value_latex.clone(),
+                support_plain,
+                support_latex,
+                model_plain,
+                model_latex,
+                expected_plain: expected.to_plain(),
+                expected_latex: expected.to_latex(),
+            });
+        }
+    }
+
+    Ok(Some(ParallelAnalysis {
+        thread_count,
+        schedule,
+        model_entries,
+        notes: vec![
+            format!(
+                "Parallel CRI modeling is enabled for `{}` threads.",
+                thread_count
+            ),
+            "Input-independent RI values are treated as short RIs and routed to the negative binomial model.".to_string(),
+            "RI values that still depend on symbolic inputs are routed to the racetrack model.".to_string(),
+            "The parallel model is synthesized from the symbolic RI distribution; the RD and DMD reports remain sequential.".to_string(),
+            format!(
+                "Generated {negative_binomial_regions} negative-binomial region(s) and {racetrack_regions} racetrack region(s)."
+            ),
+        ],
+    }))
+}
+
+fn negative_binomial_model(
+    thread_count: i64,
+    source_ri: i64,
+) -> (
+    ParallelModelKind,
+    String,
+    String,
+    String,
+    String,
+    FormulaExpr,
+) {
+    let support_plain = format!("y >= {source_ri}");
+    let support_latex = format!("y \\ge {}", source_ri);
+    let model_plain = format!(
+        "P(Y = y) = binom(y - 1, {}) * (1/{thread_count})^{source_ri} * ({}/{thread_count})^(y - {source_ri})",
+        source_ri - 1,
+        thread_count - 1,
+    );
+    let model_latex = format!(
+        "P(Y = y) = \\binom{{y - 1}}{{{}}} \\left(\\frac{{1}}{{{thread_count}}}\\right)^{{{source_ri}}} \\left(\\frac{{{}}}{{{thread_count}}}\\right)^{{y - {source_ri}}}",
+        source_ri - 1,
+        thread_count - 1,
+    );
+    let expected = FormulaExpr::rational(thread_count.saturating_mul(source_ri), 1);
+    (
+        ParallelModelKind::NegativeBinomial,
+        support_plain,
+        support_latex,
+        model_plain,
+        model_latex,
+        expected,
+    )
+}
+
+fn racetrack_model(
+    thread_count: i64,
+    source_ri: FormulaExpr,
+) -> (
+    ParallelModelKind,
+    String,
+    String,
+    String,
+    String,
+    FormulaExpr,
+) {
+    let support_plain = format!("0 <= x <= 1, cri = x * {}", source_ri.to_plain());
+    let support_latex = format!(
+        "0 \\le x \\le 1,\\ \\mathrm{{cri}} = x \\cdot {}",
+        source_ri.to_latex()
+    );
+    let model_plain = format!("f(x) = {} * (1 - x)^{}", thread_count - 1, thread_count - 2);
+    let model_latex = format!(
+        "f(x) = {} \\cdot (1 - x)^{{{}}}",
+        thread_count - 1,
+        thread_count - 2,
+    );
+    let expected = FormulaExpr::div(source_ri, FormulaExpr::rational(thread_count, 1));
+    (
+        ParallelModelKind::Racetrack,
+        support_plain,
+        support_latex,
+        model_plain,
+        model_latex,
+        expected,
+    )
 }
 
 struct RenderedDistribution<'a> {
@@ -1049,6 +1210,26 @@ for i in 0 .. M {
 }
 "#;
 
+    const PARALLEL_CONSTANT_RI: &str = r#"
+params N;
+array A[N];
+
+parallel(4) for i in 0 .. N {
+    read A[0];
+}
+"#;
+
+    const PARALLEL_SYMBOLIC_RI: &str = r#"
+params N, M;
+array A[M];
+
+parallel(4) for i in 0 .. N {
+    for j in 0 .. M {
+        read A[j];
+    }
+}
+"#;
+
     #[test]
     fn repeated_single_access_has_unit_rd() {
         let report =
@@ -1144,5 +1325,34 @@ for i in 0 .. M {
                 assert!(!report.dmd_formula_plain.is_empty());
             }
         });
+    }
+
+    #[test]
+    fn parallel_loops_emit_negative_binomial_models_for_input_independent_ri() {
+        let report = analyze_source(PARALLEL_CONSTANT_RI, AnalysisOptions::default())
+            .expect("analysis should succeed");
+        let parallel = report
+            .parallel
+            .expect("parallel analysis should be present");
+        assert_eq!(parallel.thread_count, 4);
+        assert!(parallel.model_entries.iter().any(|entry| {
+            entry.model_kind == ParallelModelKind::NegativeBinomial
+                && entry.source_ri_plain == "1"
+                && entry.model_plain.contains("binom")
+        }));
+    }
+
+    #[test]
+    fn parallel_loops_emit_racetrack_models_for_symbolic_ri() {
+        let report = analyze_source(PARALLEL_SYMBOLIC_RI, AnalysisOptions::default())
+            .expect("analysis should succeed");
+        let parallel = report
+            .parallel
+            .expect("parallel analysis should be present");
+        assert!(parallel.model_entries.iter().any(|entry| {
+            entry.model_kind == ParallelModelKind::Racetrack
+                && entry.source_ri_plain.contains('M')
+                && entry.model_plain.contains("f(x)")
+        }));
     }
 }

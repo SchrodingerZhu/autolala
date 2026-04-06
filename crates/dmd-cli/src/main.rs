@@ -117,10 +117,23 @@ fn render_report(report: &AnalysisReport) -> String {
     let _ = writeln!(output);
     let _ = writeln!(output, "RD Distribution");
     render_distribution_section(&mut output, &report.rd_distribution);
+    if let Some(parallel) = &report.parallel {
+        let _ = writeln!(output);
+        let _ = writeln!(output, "Parallel CRI");
+        let _ = writeln!(output, "  threads  = {}", parallel.thread_count);
+        let _ = writeln!(output, "  schedule = {}", parallel.schedule);
+        render_parallel_section(&mut output, parallel);
+    }
     let _ = writeln!(output);
     let _ = writeln!(output, "Notes");
     for note in &report.notes {
         let _ = writeln!(output, "  - {note}");
+    }
+    if let Some(parallel) = &report.parallel {
+        let _ = writeln!(output, "  - Parallel model notes:");
+        for note in &parallel.notes {
+            let _ = writeln!(output, "    {note}");
+        }
     }
     output
 }
@@ -140,6 +153,29 @@ fn render_distribution_section(output: &mut String, entries: &[dmd_core::Distrib
                 region.domain_plain, region.count_plain
             );
         }
+    }
+}
+
+fn render_parallel_section(output: &mut String, parallel: &dmd_core::ParallelAnalysis) {
+    if parallel.model_entries.is_empty() {
+        let _ = writeln!(output, "  <empty>");
+        return;
+    }
+
+    for entry in &parallel.model_entries {
+        let _ = writeln!(
+            output,
+            "  {:?}: source_ri = {}",
+            entry.model_kind, entry.source_ri_plain
+        );
+        let _ = writeln!(
+            output,
+            "    [{}] count = {}",
+            entry.domain_plain, entry.multiplicity_plain
+        );
+        let _ = writeln!(output, "    support  = {}", entry.support_plain);
+        let _ = writeln!(output, "    model    = {}", entry.model_plain);
+        let _ = writeln!(output, "    expected = {}", entry.expected_plain);
     }
 }
 
@@ -167,5 +203,25 @@ for i in 0 .. N {
         assert!(rendered.contains("DMD"));
         assert!(rendered.contains("RI Distribution"));
         assert!(rendered.contains("RD Distribution"));
+    }
+
+    #[test]
+    fn renders_parallel_section() {
+        let report = analyze_source(
+            r#"
+params N;
+array A[N];
+
+parallel(4) for i in 0 .. N {
+    read A[0];
+}
+"#,
+            AnalysisOptions::default(),
+        )
+        .expect("analysis should succeed");
+
+        let rendered = render_report(&report);
+        assert!(rendered.contains("Parallel CRI"));
+        assert!(rendered.contains("NegativeBinomial"));
     }
 }

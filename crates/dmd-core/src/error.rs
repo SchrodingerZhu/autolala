@@ -84,6 +84,7 @@ fn token_name(token: &Token) -> String {
     match token {
         Token::Params => "`params`".to_string(),
         Token::Array => "`array`".to_string(),
+        Token::Parallel => "`parallel`".to_string(),
         Token::For => "`for`".to_string(),
         Token::In => "`in`".to_string(),
         Token::Step => "`step`".to_string(),
