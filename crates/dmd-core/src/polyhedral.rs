@@ -17,7 +17,7 @@ use barvinok::{
 };
 use serde::{Deserialize, Serialize};
 use std::{
-    collections::HashMap,
+    collections::{HashMap, HashSet},
     sync::{LazyLock, Mutex},
 };
 
@@ -628,6 +628,10 @@ fn analyze_with_context<'ctx>(
     options: AnalysisOptions,
 ) -> DmdResult<AnalysisReport> {
     ctx.set_max_operations(options.max_operations);
+    if lowering.model.parallel_loop.is_some() {
+        return analyze_parallel_with_context(ctx, lowering.model, options);
+    }
+
     let timestamp_space = lowering.get_timestamp_space(ctx)?;
     let access_map = lowering
         .get_access_map(ctx, &options)?
@@ -769,6 +773,383 @@ fn analyze_with_context<'ctx>(
         parallel: None,
         notes,
     })
+}
+
+fn analyze_parallel_with_context<'ctx>(
+    ctx: ContextRef<'ctx>,
+    model: &SemanticProgram,
+    options: AnalysisOptions,
+) -> DmdResult<AnalysisReport> {
+    let (private_model, thread_var) = build_private_trace_model(model)?;
+    let private_lowering = Lowering::new(&private_model);
+    let timestamp_space = private_lowering.get_timestamp_space(ctx)?;
+    let access_map = private_lowering
+        .get_access_map(ctx, &options)?
+        .intersect_domain(timestamp_space.clone())?;
+    let space = timestamp_space.get_space()?;
+    let thread_dim = timestamp_space
+        .find_dim_by_name(DimType::Out, &thread_var)
+        .ok_or_else(|| DmdError::analysis("missing synthetic thread dimension in PRI model"))?;
+    let lt = same_thread_lex_order(
+        ctx,
+        space.clone(),
+        timestamp_space.clone(),
+        thread_dim,
+        false,
+    )?;
+    let le = same_thread_lex_order(
+        ctx,
+        space.clone(),
+        timestamp_space.clone(),
+        thread_dim,
+        true,
+    )?;
+    let access_rev = access_map.clone().reverse()?;
+    let same_element = access_map.clone().apply_range(access_rev)?;
+    let immediate_next = same_element.intersect(lt.clone())?.lexmin()?;
+    let immediate_prev = immediate_next.reverse()?;
+    let interval = immediate_prev.apply_range(lt)?;
+    let ri_relation = interval.intersect(le.reverse()?)?;
+    let ri_values = ri_relation.clone().cardinality()?;
+    let ri_distribution = DistributionProcessor::new(ri_values).collect()?;
+    let ri_rendered = render_distribution(&ri_distribution)?;
+    let (ri_entries, filtered_ri_region_count) = filter_rendered_entries(ri_rendered.entries)?;
+    let parallel = build_parallel_analysis(model, &ri_entries)?
+        .ok_or_else(|| DmdError::analysis("parallel analysis expected an annotated loop"))?;
+    let approximation_arg = options.approximation_method.as_barvinok_arg().to_string();
+    let mut notes = vec![
+        format!(
+            "Barvinok runs inside a context initialized with `{}`.",
+            approximation_arg
+        ),
+        "Reuse intervals are computed from the static per-thread access relation induced by the parallel schedule, not from the original sequential RI stream.".to_string(),
+        "The static schedule is modeled as chunk-size-1 round-robin assignment over the parallel loop's ordinal iterations.".to_string(),
+        "Parallel loop mode stops after PRI collection and CRI law generation; sequential RD/DMD statistics are skipped to keep the analysis fast.".to_string(),
+    ];
+    if filtered_ri_region_count > 0 {
+        notes.push(format!(
+            "Filtered {filtered_ri_region_count} RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+        ));
+    }
+
+    Ok(AnalysisReport {
+        options,
+        total_accesses_plain: String::new(),
+        total_accesses_latex: String::new(),
+        warm_accesses_plain: String::new(),
+        warm_accesses_latex: String::new(),
+        compulsory_accesses_plain: String::new(),
+        compulsory_accesses_latex: String::new(),
+        timestamp_space: String::new(),
+        access_map: String::new(),
+        ri_distribution: ri_entries.into_iter().map(|entry| entry.entry).collect(),
+        rd_distribution: Vec::new(),
+        dmd_terms: Vec::new(),
+        dmd_formula_plain: String::new(),
+        dmd_formula_latex: String::new(),
+        parallel: Some(parallel),
+        notes,
+    })
+}
+
+fn same_thread_lex_order<'ctx>(
+    ctx: ContextRef<'ctx>,
+    space: Space<'ctx>,
+    timestamp_space: Set<'ctx>,
+    thread_dim: u32,
+    inclusive: bool,
+) -> DmdResult<Map<'ctx>> {
+    let map = if inclusive {
+        Map::lex_le(space)?
+    } else {
+        Map::lex_lt(space)?
+    }
+    .intersect_domain(timestamp_space.clone())?
+    .intersect_range(timestamp_space)?;
+    let local_space = LocalSpace::try_from(map.get_space()?)?;
+    Ok(map.add_constraint(
+        Constraint::new_equality(local_space)?
+            .set_coefficient_val(DimType::In, thread_dim as i32, Value::int_from_si(ctx, 1)?)?
+            .set_coefficient_val(
+                DimType::Out,
+                thread_dim as i32,
+                Value::int_from_si(ctx, -1)?,
+            )?,
+    )?)
+}
+
+fn build_private_trace_model(model: &SemanticProgram) -> DmdResult<(SemanticProgram, String)> {
+    let mut used_names = collect_names(model);
+    let mut substitution = HashMap::new();
+    let thread_var = fresh_name("__autolala_tid", &mut used_names);
+    let body =
+        rewrite_parallel_block(&model.body, &mut used_names, &mut substitution, &thread_var)?;
+    let program = Program {
+        params: model.params.clone(),
+        arrays: model
+            .arrays
+            .iter()
+            .map(|array| crate::ast::ArrayDecl {
+                name: array.name.clone(),
+                extents: array.extents.clone(),
+            })
+            .collect(),
+        body,
+    };
+    let private_model = validate_program(program)?;
+    Ok((private_model, thread_var))
+}
+
+fn collect_names(model: &SemanticProgram) -> HashSet<String> {
+    fn collect_expr(expr: &Expr, used: &mut HashSet<String>) {
+        match expr {
+            Expr::Int(_) => {}
+            Expr::Var(name) => {
+                used.insert(name.clone());
+            }
+            Expr::Add(lhs, rhs)
+            | Expr::Sub(lhs, rhs)
+            | Expr::Mul(lhs, rhs)
+            | Expr::FloorDiv(lhs, rhs) => {
+                collect_expr(lhs, used);
+                collect_expr(rhs, used);
+            }
+            Expr::Neg(expr) => collect_expr(expr, used),
+        }
+    }
+
+    fn collect_block(block: &Block, used: &mut HashSet<String>) {
+        for stmt in &block.statements {
+            match stmt {
+                Stmt::For(for_loop) => {
+                    used.insert(for_loop.var.clone());
+                    collect_expr(&for_loop.lower, used);
+                    collect_expr(&for_loop.upper, used);
+                    if let Some(parallel) = &for_loop.parallel {
+                        collect_expr(&parallel.threads, used);
+                    }
+                    collect_block(&for_loop.body, used);
+                }
+                Stmt::If(if_stmt) => {
+                    for condition in &if_stmt.conditions {
+                        collect_expr(&condition.lhs, used);
+                        collect_expr(&condition.rhs, used);
+                    }
+                    collect_block(&if_stmt.then_branch, used);
+                    if let Some(else_branch) = &if_stmt.else_branch {
+                        collect_block(else_branch, used);
+                    }
+                }
+                Stmt::Access(access) => {
+                    used.insert(access.array.clone());
+                    for index in &access.indices {
+                        collect_expr(index, used);
+                    }
+                }
+            }
+        }
+    }
+
+    let mut used = model.params.iter().cloned().collect::<HashSet<_>>();
+    for array in &model.arrays {
+        used.insert(array.name.clone());
+        for extent in &array.extents {
+            collect_expr(extent, &mut used);
+        }
+    }
+    collect_block(&model.body, &mut used);
+    used
+}
+
+fn fresh_name(prefix: &str, used_names: &mut HashSet<String>) -> String {
+    if used_names.insert(prefix.to_string()) {
+        return prefix.to_string();
+    }
+
+    let mut index = 0usize;
+    loop {
+        let candidate = format!("{prefix}_{index}");
+        if used_names.insert(candidate.clone()) {
+            return candidate;
+        }
+        index += 1;
+    }
+}
+
+fn rewrite_parallel_block(
+    block: &Block,
+    used_names: &mut HashSet<String>,
+    substitution: &mut HashMap<String, Expr>,
+    thread_var: &str,
+) -> DmdResult<Block> {
+    let statements = block
+        .statements
+        .iter()
+        .map(|stmt| rewrite_parallel_stmt(stmt, used_names, substitution, thread_var))
+        .collect::<DmdResult<Vec<_>>>()?;
+    Ok(Block::new(statements))
+}
+
+fn rewrite_parallel_stmt(
+    stmt: &Stmt,
+    used_names: &mut HashSet<String>,
+    substitution: &mut HashMap<String, Expr>,
+    thread_var: &str,
+) -> DmdResult<Stmt> {
+    match stmt {
+        Stmt::For(for_loop) => rewrite_parallel_for(for_loop, used_names, substitution, thread_var),
+        Stmt::If(if_stmt) => Ok(Stmt::If(crate::ast::IfStmt {
+            conditions: if_stmt
+                .conditions
+                .iter()
+                .map(|condition| {
+                    Ok(Comparison {
+                        lhs: substitute_expr(&condition.lhs, substitution),
+                        op: condition.op,
+                        rhs: substitute_expr(&condition.rhs, substitution),
+                    })
+                })
+                .collect::<DmdResult<Vec<_>>>()?,
+            then_branch: rewrite_parallel_block(
+                &if_stmt.then_branch,
+                used_names,
+                substitution,
+                thread_var,
+            )?,
+            else_branch: if let Some(else_branch) = &if_stmt.else_branch {
+                Some(rewrite_parallel_block(
+                    else_branch,
+                    used_names,
+                    substitution,
+                    thread_var,
+                )?)
+            } else {
+                None
+            },
+        })),
+        Stmt::Access(access) => Ok(Stmt::Access(crate::ast::Access {
+            kind: access.kind,
+            array: access.array.clone(),
+            indices: access
+                .indices
+                .iter()
+                .map(|index| substitute_expr(index, substitution))
+                .collect(),
+        })),
+    }
+}
+
+fn rewrite_parallel_for(
+    for_loop: &crate::ast::ForLoop,
+    used_names: &mut HashSet<String>,
+    substitution: &mut HashMap<String, Expr>,
+    thread_var: &str,
+) -> DmdResult<Stmt> {
+    if for_loop.parallel.is_none() {
+        return Ok(Stmt::For(crate::ast::ForLoop {
+            parallel: None,
+            var: for_loop.var.clone(),
+            lower: substitute_expr(&for_loop.lower, substitution),
+            upper: substitute_expr(&for_loop.upper, substitution),
+            step: for_loop.step,
+            body: rewrite_parallel_block(&for_loop.body, used_names, substitution, thread_var)?,
+        }));
+    }
+
+    let Some(threads) = for_loop
+        .parallel
+        .as_ref()
+        .and_then(|parallel| parallel.threads.as_const_i64())
+    else {
+        return Err(DmdError::analysis(
+            "parallel loop thread count must be constant during PRI lowering",
+        ));
+    };
+    let private_var = fresh_name(&format!("__autolala_private_{}", for_loop.var), used_names);
+    let lower = substitute_expr(&for_loop.lower, substitution);
+    let upper = substitute_expr(&for_loop.upper, substitution);
+    let trip = loop_trip_expr(&lower, &upper, for_loop.step);
+    let private_upper = Expr::FloorDiv(
+        Box::new(Expr::Add(
+            Box::new(Expr::Sub(
+                Box::new(trip),
+                Box::new(Expr::Var(thread_var.to_string())),
+            )),
+            Box::new(Expr::Int(threads - 1)),
+        )),
+        Box::new(Expr::Int(threads)),
+    );
+    let actual_parallel_value = Expr::Add(
+        Box::new(lower),
+        Box::new(Expr::Mul(
+            Box::new(Expr::Int(for_loop.step)),
+            Box::new(Expr::Add(
+                Box::new(Expr::Var(thread_var.to_string())),
+                Box::new(Expr::Mul(
+                    Box::new(Expr::Int(threads)),
+                    Box::new(Expr::Var(private_var.clone())),
+                )),
+            )),
+        )),
+    );
+
+    substitution.insert(for_loop.var.clone(), actual_parallel_value);
+    let rewritten_body =
+        rewrite_parallel_block(&for_loop.body, used_names, substitution, thread_var)?;
+    substitution.remove(&for_loop.var);
+
+    Ok(Stmt::For(crate::ast::ForLoop {
+        parallel: None,
+        var: thread_var.to_string(),
+        lower: Expr::Int(0),
+        upper: Expr::Int(threads),
+        step: 1,
+        body: Block::new(vec![Stmt::For(crate::ast::ForLoop {
+            parallel: None,
+            var: private_var,
+            lower: Expr::Int(0),
+            upper: private_upper,
+            step: 1,
+            body: rewritten_body,
+        })]),
+    }))
+}
+
+fn loop_trip_expr(lower: &Expr, upper: &Expr, step: i64) -> Expr {
+    Expr::FloorDiv(
+        Box::new(Expr::Add(
+            Box::new(Expr::Sub(Box::new(upper.clone()), Box::new(lower.clone()))),
+            Box::new(Expr::Int(step - 1)),
+        )),
+        Box::new(Expr::Int(step)),
+    )
+}
+
+fn substitute_expr(expr: &Expr, substitution: &HashMap<String, Expr>) -> Expr {
+    match expr {
+        Expr::Int(value) => Expr::Int(*value),
+        Expr::Var(name) => substitution
+            .get(name)
+            .cloned()
+            .unwrap_or_else(|| Expr::Var(name.clone())),
+        Expr::Add(lhs, rhs) => Expr::Add(
+            Box::new(substitute_expr(lhs, substitution)),
+            Box::new(substitute_expr(rhs, substitution)),
+        ),
+        Expr::Sub(lhs, rhs) => Expr::Sub(
+            Box::new(substitute_expr(lhs, substitution)),
+            Box::new(substitute_expr(rhs, substitution)),
+        ),
+        Expr::Mul(lhs, rhs) => Expr::Mul(
+            Box::new(substitute_expr(lhs, substitution)),
+            Box::new(substitute_expr(rhs, substitution)),
+        ),
+        Expr::FloorDiv(lhs, rhs) => Expr::FloorDiv(
+            Box::new(substitute_expr(lhs, substitution)),
+            Box::new(substitute_expr(rhs, substitution)),
+        ),
+        Expr::Neg(inner) => Expr::Neg(Box::new(substitute_expr(inner, substitution))),
+    }
 }
 
 fn build_parallel_analysis(
@@ -1307,6 +1688,15 @@ parallel(4) for i in 0 .. N {
 }
 "#;
 
+    const PARALLEL_PRI_DIFFERS_FROM_SEQUENTIAL_RI: &str = r#"
+params N;
+array A[N];
+
+parallel(4) for i in 0 .. N {
+    read A[i / 4];
+}
+"#;
+
     #[test]
     fn repeated_single_access_has_unit_rd() {
         let report =
@@ -1470,6 +1860,46 @@ parallel(4) for i in 0 .. N {
                 .iter()
                 .any(|note| note.contains("racetrack law"))
         );
+    }
+
+    #[test]
+    fn parallel_pri_is_computed_from_private_trace_not_sequential_ri() {
+        let sequential = analyze_source(
+            r#"
+params N;
+array A[N];
+
+for i in 0 .. N {
+    read A[i / 4];
+}
+"#,
+            AnalysisOptions::default(),
+        )
+        .expect("sequential analysis should succeed");
+        assert!(
+            sequential
+                .ri_distribution
+                .iter()
+                .flat_map(|entry| entry.regions.iter())
+                .any(|region| region.count_plain == "N - 1"),
+            "sequential RI should observe the repeated A[i / 4] accesses"
+        );
+
+        let parallel = analyze_source(
+            PARALLEL_PRI_DIFFERS_FROM_SEQUENTIAL_RI,
+            AnalysisOptions::default(),
+        )
+        .expect("parallel analysis should succeed");
+        let parallel_analysis = parallel
+            .parallel
+            .expect("parallel analysis should be present");
+
+        assert!(parallel.ri_distribution.is_empty());
+        assert!(parallel_analysis.cri_entries.is_empty());
+        assert!(parallel.notes.iter().any(|note| {
+            note.contains("per-thread access relation")
+                || note.contains("original sequential RI stream")
+        }));
     }
 
     #[test]
