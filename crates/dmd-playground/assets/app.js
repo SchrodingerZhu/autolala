@@ -479,6 +479,7 @@ function renderFailure(message) {
 
 function renderReport(report) {
   const riRows = renderDistribution(report.ri_distribution);
+  const isParallel = Boolean(report.parallel);
   const rdRows = renderDistribution(report.rd_distribution);
   const parallelSection = report.parallel ? renderParallelAnalysis(report.parallel) : "";
   const terms = report.dmd_terms
@@ -490,9 +491,9 @@ function renderReport(report) {
     </tr>`)
     .join("");
   const notes = report.notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("");
-
-  resultPanel.className = "result-panel";
-  resultPanel.innerHTML = `
+  const sequentialOverview = isParallel
+    ? ""
+    : `
     <section class="formula-band">
       <div class="formula-card">
         <p class="label">DMD Formula</p>
@@ -510,7 +511,11 @@ function renderReport(report) {
           <div><dt>Compulsory</dt><dd>${renderMath(report.compulsory_accesses_latex, report.compulsory_accesses_plain, { className: "math-inline" })}</dd></div>
         </dl>
       </div>
-    </section>
+    </section>`
+  ;
+  const sequentialDetails = isParallel
+    ? ""
+    : `
     <section class="detail-grid">
       <div class="detail-card">
         <h3>RI Distribution</h3>
@@ -521,14 +526,28 @@ function renderReport(report) {
         ${rdRows}
       </div>
     </section>
-    ${parallelSection}
     <section class="detail-card">
       <h3>DMD Terms</h3>
       <table>
         <thead><tr><th>Domain</th><th>Multiplicity</th><th>RD</th><th>Term</th></tr></thead>
         <tbody>${terms || `<tr><td colspan="4">No warm terms</td></tr>`}</tbody>
       </table>
+    </section>`
+  ;
+  const parallelRiSection = isParallel
+    ? `
+    <section class="detail-card">
+      <h3>RI Distribution</h3>
+      ${riRows}
     </section>
+    ${parallelSection}`
+    : "";
+
+  resultPanel.className = "result-panel";
+  resultPanel.innerHTML = `
+    ${sequentialOverview}
+    ${sequentialDetails}
+    ${parallelRiSection}
     <section class="detail-card">
       <h3>Notes</h3>
       <ul>${notes}</ul>
@@ -562,14 +581,15 @@ function renderDistribution(entries) {
 }
 
 function renderParallelAnalysis(parallel) {
-  const rows = parallel.model_entries
+  const rows = parallel.cri_entries
     .map((entry) => `<tr>
       <td>${escapeHtml(entry.model_kind)}</td>
       <td>${escapeHtml(entry.domain_plain)}</td>
       <td>${renderMath(entry.source_ri_latex, entry.source_ri_plain, { className: "math-cell" })}</td>
-      <td>${renderMath(entry.multiplicity_latex, entry.multiplicity_plain, { className: "math-cell" })}</td>
-      <td>${renderMath(entry.expected_latex, entry.expected_plain, { className: "math-cell" })}</td>
-      <td>${renderMath(entry.model_latex, entry.model_plain, { className: "math-cell" })}</td>
+      <td>${renderMath(entry.law.range_latex, entry.law.range_plain, { className: "math-cell" })}</td>
+      <td>${renderMath(entry.law.cri_latex, entry.law.cri_plain, { className: "math-cell" })}</td>
+      <td>${renderMath(entry.law.probability_latex, entry.law.probability_plain, { className: "math-cell" })}</td>
+      <td>${renderMath(entry.law.count_latex, entry.law.count_plain, { className: "math-cell" })}</td>
     </tr>`)
     .join("");
   const notes = parallel.notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("");
@@ -579,8 +599,8 @@ function renderParallelAnalysis(parallel) {
       <h3>Parallel CRI</h3>
       <p class="muted">Threads: ${parallel.thread_count}. Schedule: ${escapeHtml(parallel.schedule)}.</p>
       <table>
-        <thead><tr><th>Model</th><th>Domain</th><th>Source RI</th><th>Count</th><th>Expected CRI</th><th>Formula</th></tr></thead>
-        <tbody>${rows || `<tr><td colspan="6">No parallel regions.</td></tr>`}</tbody>
+        <thead><tr><th>Model</th><th>Domain</th><th>Source RI</th><th>Range(X)</th><th>CRI(X)</th><th>Prob(X)</th><th>Cnt(X)</th></tr></thead>
+        <tbody>${rows || `<tr><td colspan="7">No parallel CRI regions.</td></tr>`}</tbody>
       </table>
       <ul>${notes}</ul>
     </section>

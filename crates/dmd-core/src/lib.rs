@@ -10,7 +10,7 @@ pub use error::{DmdError, DmdResult};
 pub use parser::parse_program;
 pub use polyhedral::{
     AnalysisOptions, AnalysisReport, ApproximationMethod, DistributionEntry, DistributionRegion,
-    DmdTerm, ParallelAnalysis, ParallelModelEntry, ParallelModelKind, analyze_program,
-    analyze_source,
+    DmdTerm, ParallelAnalysis, ParallelCriEntry, ParallelCriLaw, ParallelModelKind,
+    analyze_program, analyze_source,
 };
 pub use semantics::{ArrayInfo, ParallelLoopInfo, SemanticProgram, validate_program};

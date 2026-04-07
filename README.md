@@ -166,9 +166,9 @@ The backend API is:
 - The Barvinok context is initialized with `--approximation-method=scale`.
 - DMD aggregation excludes special-case branches that do not scale asymptotically.
 - RI and RD distributions are still reported in full for diagnostics.
-- `parallel(T) for` adds a CRI model layer with a static OpenMP-style round-robin schedule and chunk size `1`.
-- Input-independent RI values are routed to the negative binomial model; symbolic RI values are routed to the racetrack model.
-- Parallel CRI modeling is reported alongside the existing sequential RI/RD/DMD analysis; RD and DMD remain sequential.
+- `parallel(T) for` adds a static OpenMP-style round-robin CRI path with chunk size `1`.
+- In parallel mode, analysis stops after RI collection and emits implicit symbolic CRI laws of the form `range(X)`, `CRI(X)`, and `Prob(X)`.
+- Input-independent RI regions use the negative-binomial law; symbolic RI regions use the racetrack law, so terms such as `M`, `N`, and `K` remain visible in the output.
 - In-process Barvinok initialization is serialized because the current `Context::from_args(...)` path is not stable under parallel in-process calls.
 
 ## CI

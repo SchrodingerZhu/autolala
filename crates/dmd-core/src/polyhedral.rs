@@ -89,26 +89,33 @@ pub enum ParallelModelKind {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ParallelModelEntry {
-    pub model_kind: ParallelModelKind,
+pub struct ParallelCriLaw {
+    pub range_plain: String,
+    pub range_latex: String,
+    pub cri_plain: String,
+    pub cri_latex: String,
+    pub probability_plain: String,
+    pub probability_latex: String,
+    pub count_plain: String,
+    pub count_latex: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ParallelCriEntry {
     pub domain_plain: String,
     pub multiplicity_plain: String,
     pub multiplicity_latex: String,
     pub source_ri_plain: String,
     pub source_ri_latex: String,
-    pub support_plain: String,
-    pub support_latex: String,
-    pub model_plain: String,
-    pub model_latex: String,
-    pub expected_plain: String,
-    pub expected_latex: String,
+    pub model_kind: ParallelModelKind,
+    pub law: ParallelCriLaw,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ParallelAnalysis {
     pub thread_count: i64,
     pub schedule: String,
-    pub model_entries: Vec<ParallelModelEntry>,
+    pub cri_entries: Vec<ParallelCriEntry>,
     pub notes: Vec<String>,
 }
 
@@ -640,16 +647,50 @@ fn analyze_with_context<'ctx>(
     let interval = immediate_prev.apply_range(lt)?;
     let ri_relation = interval.intersect(le.reverse()?)?;
     let ri_values = ri_relation.clone().cardinality()?;
+    let ri_distribution = DistributionProcessor::new(ri_values).collect()?;
+    let ri_rendered = render_distribution(&ri_distribution)?;
+    let (ri_entries, filtered_ri_region_count) = filter_rendered_entries(ri_rendered.entries)?;
+    if let Some(parallel) = build_parallel_analysis(lowering.model, &ri_entries)? {
+        let approximation_arg = options.approximation_method.as_barvinok_arg().to_string();
+        let mut notes = vec![
+            format!(
+                "Barvinok runs inside a context initialized with `{}`.",
+                approximation_arg
+            ),
+            "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.".to_string(),
+            "Parallel loop mode stops after RI collection and CRI table generation; sequential RD/DMD statistics are skipped to keep the analysis fast.".to_string(),
+        ];
+        if filtered_ri_region_count > 0 {
+            notes.push(format!(
+                "Filtered {filtered_ri_region_count} RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+            ));
+        }
+        return Ok(AnalysisReport {
+            options,
+            total_accesses_plain: String::new(),
+            total_accesses_latex: String::new(),
+            warm_accesses_plain: String::new(),
+            warm_accesses_latex: String::new(),
+            compulsory_accesses_plain: String::new(),
+            compulsory_accesses_latex: String::new(),
+            timestamp_space: String::new(),
+            access_map: String::new(),
+            ri_distribution: ri_entries.into_iter().map(|entry| entry.entry).collect(),
+            rd_distribution: Vec::new(),
+            dmd_terms: Vec::new(),
+            dmd_formula_plain: String::new(),
+            dmd_formula_latex: String::new(),
+            parallel: Some(parallel),
+            notes,
+        });
+    }
+
     let rd_relation = ri_relation.apply_range(access_map.clone())?;
     let rd_values = rd_relation.cardinality()?;
     let total_accesses = timestamp_space.clone().cardinality()?;
-
-    let ri_distribution = DistributionProcessor::new(ri_values).collect()?;
     let rd_distribution = DistributionProcessor::new(rd_values).collect()?;
     let total_expr = render_piecewise(total_accesses.clone())?;
-    let ri_rendered = render_distribution(&ri_distribution)?;
     let rd_rendered = render_distribution(&rd_distribution)?;
-    let parallel = build_parallel_analysis(lowering.model, &ri_rendered)?;
     let warm_expr = FormulaExpr::add(rd_rendered.count_exprs.iter().cloned());
     let compulsory_expr = FormulaExpr::sub(total_expr.clone(), warm_expr.clone());
     let mut dmd_terms = Vec::new();
@@ -679,8 +720,7 @@ fn analyze_with_context<'ctx>(
         }
     }
 
-    let ri_distribution = ri_rendered
-        .entries
+    let ri_distribution = ri_entries
         .into_iter()
         .map(|entry| entry.entry)
         .collect::<Vec<_>>();
@@ -705,6 +745,11 @@ fn analyze_with_context<'ctx>(
             "Filtered {filtered_region_count} DMD region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
         ));
     }
+    if filtered_ri_region_count > 0 {
+        notes.push(format!(
+            "Filtered {filtered_ri_region_count} RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+        ));
+    }
 
     Ok(AnalysisReport {
         options,
@@ -721,48 +766,49 @@ fn analyze_with_context<'ctx>(
         dmd_terms,
         dmd_formula_plain: dmd_formula.to_plain(),
         dmd_formula_latex: dmd_formula.to_latex(),
-        parallel,
+        parallel: None,
         notes,
     })
 }
 
 fn build_parallel_analysis(
     model: &SemanticProgram,
-    ri_rendered: &RenderedDistribution<'_>,
+    ri_entries: &[RenderedDistributionEntry<'_>],
 ) -> DmdResult<Option<ParallelAnalysis>> {
     let Some(thread_count) = model.thread_count() else {
         return Ok(None);
     };
 
     let schedule = "OpenMP static-style round-robin schedule with chunk size 1".to_string();
-    let mut model_entries = Vec::new();
+    let mut cri_entries = Vec::new();
     let mut negative_binomial_regions = 0usize;
     let mut racetrack_regions = 0usize;
 
-    for entry in &ri_rendered.entries {
+    for entry in ri_entries {
         let input_independent_ri = entry.value_expr.as_const_i64().filter(|value| *value > 0);
         for region in &entry.regions {
-            let (model_kind, support_plain, support_latex, model_plain, model_latex, expected) =
-                if let Some(source_ri) = input_independent_ri {
-                    negative_binomial_regions += 1;
-                    negative_binomial_model(thread_count, source_ri)
-                } else {
-                    racetrack_regions += 1;
-                    racetrack_model(thread_count, entry.value_expr.clone())
-                };
-            model_entries.push(ParallelModelEntry {
-                model_kind,
+            let (model_kind, law) = if let Some(source_ri) = input_independent_ri {
+                negative_binomial_regions += 1;
+                (
+                    ParallelModelKind::NegativeBinomial,
+                    negative_binomial_law(thread_count, source_ri),
+                )
+            } else {
+                racetrack_regions += 1;
+                (
+                    ParallelModelKind::Racetrack,
+                    racetrack_law(thread_count, entry.value_expr.clone()),
+                )
+            };
+            let law = with_count_law(law, &region.count_expr);
+            cri_entries.push(ParallelCriEntry {
                 domain_plain: region.region.domain_plain.clone(),
                 multiplicity_plain: region.region.count_plain.clone(),
                 multiplicity_latex: region.region.count_latex.clone(),
                 source_ri_plain: entry.entry.value_plain.clone(),
                 source_ri_latex: entry.entry.value_latex.clone(),
-                support_plain,
-                support_latex,
-                model_plain,
-                model_latex,
-                expected_plain: expected.to_plain(),
-                expected_latex: expected.to_latex(),
+                model_kind,
+                law,
             });
         }
     }
@@ -770,87 +816,89 @@ fn build_parallel_analysis(
     Ok(Some(ParallelAnalysis {
         thread_count,
         schedule,
-        model_entries,
+        cri_entries,
         notes: vec![
             format!(
                 "Parallel CRI modeling is enabled for `{}` threads.",
                 thread_count
             ),
-            "Input-independent RI values are treated as short RIs and routed to the negative binomial model.".to_string(),
-            "RI values that still depend on symbolic inputs are routed to the racetrack model.".to_string(),
-            "The parallel model is synthesized from the symbolic RI distribution; the RD and DMD reports remain sequential.".to_string(),
+            "Each CRI region is reported as an implicit symbolic law over X rather than as an expanded table.".to_string(),
+            "For negative-binomial entries, Prob(X) is a PMF over integer X >= 0.".to_string(),
+            "For racetrack entries, Prob(X) is a density over continuous X in [0, 1].".to_string(),
             format!(
-                "Generated {negative_binomial_regions} negative-binomial region(s) and {racetrack_regions} racetrack region(s)."
+                "Generated {negative_binomial_regions} negative-binomial law(s) and {racetrack_regions} racetrack law(s)."
             ),
         ],
     }))
 }
 
-fn negative_binomial_model(
-    thread_count: i64,
-    source_ri: i64,
-) -> (
-    ParallelModelKind,
-    String,
-    String,
-    String,
-    String,
-    FormulaExpr,
-) {
-    let support_plain = format!("y >= {source_ri}");
-    let support_latex = format!("y \\ge {}", source_ri);
-    let model_plain = format!(
-        "P(Y = y) = binom(y - 1, {}) * (1/{thread_count})^{source_ri} * ({}/{thread_count})^(y - {source_ri})",
-        source_ri - 1,
-        thread_count - 1,
-    );
-    let model_latex = format!(
-        "P(Y = y) = \\binom{{y - 1}}{{{}}} \\left(\\frac{{1}}{{{thread_count}}}\\right)^{{{source_ri}}} \\left(\\frac{{{}}}{{{thread_count}}}\\right)^{{y - {source_ri}}}",
-        source_ri - 1,
-        thread_count - 1,
-    );
-    let expected = FormulaExpr::rational(thread_count.saturating_mul(source_ri), 1);
-    (
-        ParallelModelKind::NegativeBinomial,
-        support_plain,
-        support_latex,
-        model_plain,
-        model_latex,
-        expected,
-    )
+fn negative_binomial_law(thread_count: i64, source_ri: i64) -> ParallelCriLaw {
+    ParallelCriLaw {
+        range_plain: "X >= 0, X integer".to_string(),
+        range_latex: "X \\in \\mathbb{Z}_{\\ge 0}".to_string(),
+        cri_plain: format!("{source_ri} + X"),
+        cri_latex: format!("{source_ri} + X"),
+        probability_plain: format!(
+            "binom(X + {} - 1, {} - 1) * (1/{thread_count})^{} * ({}/{thread_count})^X",
+            source_ri,
+            source_ri,
+            source_ri,
+            thread_count - 1,
+        ),
+        probability_latex: format!(
+            "\\binom{{X + {} - 1}}{{{} - 1}} \\left(\\frac{{1}}{{{thread_count}}}\\right)^{{{}}} \\left(\\frac{{{}}}{{{thread_count}}}\\right)^X",
+            source_ri,
+            source_ri,
+            source_ri,
+            thread_count - 1,
+        ),
+        count_plain: String::new(),
+        count_latex: String::new(),
+    }
 }
 
-fn racetrack_model(
-    thread_count: i64,
-    source_ri: FormulaExpr,
-) -> (
-    ParallelModelKind,
-    String,
-    String,
-    String,
-    String,
-    FormulaExpr,
-) {
-    let support_plain = format!("0 <= x <= 1, cri = x * {}", source_ri.to_plain());
-    let support_latex = format!(
-        "0 \\le x \\le 1,\\ \\mathrm{{cri}} = x \\cdot {}",
-        source_ri.to_latex()
-    );
-    let model_plain = format!("f(x) = {} * (1 - x)^{}", thread_count - 1, thread_count - 2);
-    let model_latex = format!(
-        "f(x) = {} \\cdot (1 - x)^{{{}}}",
-        thread_count - 1,
-        thread_count - 2,
-    );
-    let expected = FormulaExpr::div(source_ri, FormulaExpr::rational(thread_count, 1));
-    (
-        ParallelModelKind::Racetrack,
-        support_plain,
-        support_latex,
-        model_plain,
-        model_latex,
-        expected,
-    )
+fn racetrack_law(thread_count: i64, source_ri: FormulaExpr) -> ParallelCriLaw {
+    ParallelCriLaw {
+        range_plain: "0 <= X <= 1".to_string(),
+        range_latex: "0 \\le X \\le 1".to_string(),
+        cri_plain: format!("X * ({})", source_ri.to_plain()),
+        cri_latex: format!("X \\cdot \\left({}\\right)", source_ri.to_latex()),
+        probability_plain: if thread_count == 2 {
+            "1".to_string()
+        } else {
+            format!("{} * (1 - X)^{}", thread_count - 1, thread_count - 2)
+        },
+        probability_latex: if thread_count == 2 {
+            "1".to_string()
+        } else {
+            format!(
+                "{} \\cdot (1 - X)^{{{}}}",
+                thread_count - 1,
+                thread_count - 2
+            )
+        },
+        count_plain: String::new(),
+        count_latex: String::new(),
+    }
+}
+
+fn with_count_law(mut law: ParallelCriLaw, multiplicity: &FormulaExpr) -> ParallelCriLaw {
+    let multiplicity_plain = multiplicity.to_plain();
+    let multiplicity_latex = multiplicity.to_latex();
+    law.count_plain = if multiplicity_plain == "1" {
+        law.probability_plain.clone()
+    } else {
+        format!("({multiplicity_plain}) * ({})", law.probability_plain)
+    };
+    law.count_latex = if multiplicity_latex == "1" {
+        law.probability_latex.clone()
+    } else {
+        format!(
+            "\\left({multiplicity_latex}\\right) \\cdot \\left({}\\right)",
+            law.probability_latex
+        )
+    };
+    law
 }
 
 struct RenderedDistribution<'a> {
@@ -868,6 +916,35 @@ struct RenderedDistributionRegion<'a> {
     region: DistributionRegion,
     count_expr: FormulaExpr,
     domain: Set<'a>,
+}
+
+fn filter_rendered_entries<'a>(
+    entries: Vec<RenderedDistributionEntry<'a>>,
+) -> DmdResult<(Vec<RenderedDistributionEntry<'a>>, usize)> {
+    let mut filtered_region_count = 0usize;
+    let mut kept_entries = Vec::new();
+
+    for mut entry in entries {
+        let mut kept_regions = Vec::new();
+        for region in entry.regions {
+            if region_scales(&region.domain)? {
+                kept_regions.push(region);
+            } else {
+                filtered_region_count += 1;
+            }
+        }
+        if kept_regions.is_empty() {
+            continue;
+        }
+        entry.entry.regions = kept_regions
+            .iter()
+            .map(|region| region.region.clone())
+            .collect::<Vec<_>>();
+        entry.regions = kept_regions;
+        kept_entries.push(entry);
+    }
+
+    Ok((kept_entries, filtered_region_count))
 }
 
 fn render_distribution<'a>(items: &[DistributionItem<'a>]) -> DmdResult<RenderedDistribution<'a>> {
@@ -1309,6 +1386,35 @@ parallel(4) for i in 0 .. N {
     }
 
     #[test]
+    fn ri_distribution_filters_non_scaling_domains() {
+        let report = analyze_source(FOUR_ACCESS_MATMUL, AnalysisOptions::default())
+            .expect("analysis should succeed");
+
+        assert!(
+            report
+                .ri_distribution
+                .iter()
+                .flat_map(|entry| entry.regions.iter())
+                .all(|region| !region.domain_plain.contains(" = "))
+        );
+        assert!(
+            report
+                .ri_distribution
+                .iter()
+                .flat_map(|entry| entry.regions.iter())
+                .all(|region| !region.domain_plain.contains("<="))
+        );
+        assert!(
+            !report
+                .ri_distribution
+                .iter()
+                .flat_map(|entry| entry.regions.iter())
+                .any(|region| region.domain_plain.contains("K = 2"))
+        );
+        assert!(report.notes.iter().any(|note| note.contains("RI region")));
+    }
+
+    #[test]
     fn analysis_is_safe_under_parallel_calls() {
         std::thread::scope(|scope| {
             let handles = (0..4)
@@ -1328,31 +1434,89 @@ parallel(4) for i in 0 .. N {
     }
 
     #[test]
-    fn parallel_loops_emit_negative_binomial_models_for_input_independent_ri() {
+    fn parallel_loops_emit_negative_binomial_laws_for_input_independent_ri() {
         let report = analyze_source(PARALLEL_CONSTANT_RI, AnalysisOptions::default())
             .expect("analysis should succeed");
         let parallel = report
             .parallel
             .expect("parallel analysis should be present");
         assert_eq!(parallel.thread_count, 4);
-        assert!(parallel.model_entries.iter().any(|entry| {
+        assert!(report.rd_distribution.is_empty());
+        assert!(report.dmd_formula_plain.is_empty());
+        assert!(parallel.cri_entries.iter().any(|entry| {
             entry.model_kind == ParallelModelKind::NegativeBinomial
                 && entry.source_ri_plain == "1"
-                && entry.model_plain.contains("binom")
+                && entry.law.cri_plain == "1 + X"
+                && entry.law.probability_plain == "binom(X + 1 - 1, 1 - 1) * (1/4)^1 * (3/4)^X"
         }));
     }
 
     #[test]
-    fn parallel_loops_emit_racetrack_models_for_symbolic_ri() {
+    fn parallel_loops_emit_racetrack_laws_for_symbolic_ri() {
         let report = analyze_source(PARALLEL_SYMBOLIC_RI, AnalysisOptions::default())
             .expect("analysis should succeed");
         let parallel = report
             .parallel
             .expect("parallel analysis should be present");
-        assert!(parallel.model_entries.iter().any(|entry| {
+        assert!(parallel.cri_entries.iter().any(|entry| {
             entry.model_kind == ParallelModelKind::Racetrack
                 && entry.source_ri_plain.contains('M')
-                && entry.model_plain.contains("f(x)")
+                && entry.law.cri_plain.contains('M')
+                && entry.law.probability_plain == "3 * (1 - X)^2"
         }));
+        assert!(
+            parallel
+                .notes
+                .iter()
+                .any(|note| note.contains("racetrack law"))
+        );
+    }
+
+    #[test]
+    fn parallel_ri_laws_filter_non_scaling_domains() {
+        let report = analyze_source(
+            r#"
+params M, N, K;
+array A[M, K];
+array B[K, N];
+array C[M, N];
+
+parallel(4) for i in 0 .. M {
+    for j in 0 .. N {
+        for k in 0 .. K {
+            read C[i, j];
+            read A[i, k];
+            read B[k, j];
+            write C[i, j];
+        }
+    }
+}
+"#,
+            AnalysisOptions::default(),
+        )
+        .expect("analysis should succeed");
+        let parallel = report
+            .parallel
+            .expect("parallel analysis should be present");
+
+        assert!(
+            parallel
+                .cri_entries
+                .iter()
+                .all(|entry| !entry.domain_plain.contains(" = "))
+        );
+        assert!(
+            parallel
+                .cri_entries
+                .iter()
+                .all(|entry| !entry.domain_plain.contains("<="))
+        );
+        assert!(
+            !parallel
+                .cri_entries
+                .iter()
+                .any(|entry| entry.domain_plain.contains("K = 1"))
+        );
+        assert!(report.notes.iter().any(|note| note.contains("RI region")));
     }
 }
