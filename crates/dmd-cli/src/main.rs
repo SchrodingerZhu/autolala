@@ -100,27 +100,41 @@ fn read_source(path: Option<&Path>) -> Result<String, std::io::Error> {
 
 fn render_report(report: &AnalysisReport) -> String {
     let mut output = String::new();
-    let _ = writeln!(output, "DMD");
-    let _ = writeln!(output, "  {}", report.dmd_formula_plain);
-    let _ = writeln!(output);
-    let _ = writeln!(output, "Access Counts");
-    let _ = writeln!(output, "  total      = {}", report.total_accesses_plain);
-    let _ = writeln!(output, "  warm       = {}", report.warm_accesses_plain);
-    let _ = writeln!(
-        output,
-        "  compulsory = {}",
-        report.compulsory_accesses_plain
-    );
-    let _ = writeln!(output);
     let _ = writeln!(output, "RI Distribution");
     render_distribution_section(&mut output, &report.ri_distribution);
-    let _ = writeln!(output);
-    let _ = writeln!(output, "RD Distribution");
-    render_distribution_section(&mut output, &report.rd_distribution);
+    if let Some(parallel) = &report.parallel {
+        let _ = writeln!(output);
+        let _ = writeln!(output, "Parallel CRI");
+        let _ = writeln!(output, "  threads  = {}", parallel.thread_count);
+        let _ = writeln!(output, "  schedule = {}", parallel.schedule);
+        render_parallel_section(&mut output, parallel);
+    } else {
+        let _ = writeln!(output);
+        let _ = writeln!(output, "DMD");
+        let _ = writeln!(output, "  {}", report.dmd_formula_plain);
+        let _ = writeln!(output);
+        let _ = writeln!(output, "Access Counts");
+        let _ = writeln!(output, "  total      = {}", report.total_accesses_plain);
+        let _ = writeln!(output, "  warm       = {}", report.warm_accesses_plain);
+        let _ = writeln!(
+            output,
+            "  compulsory = {}",
+            report.compulsory_accesses_plain
+        );
+        let _ = writeln!(output);
+        let _ = writeln!(output, "RD Distribution");
+        render_distribution_section(&mut output, &report.rd_distribution);
+    }
     let _ = writeln!(output);
     let _ = writeln!(output, "Notes");
     for note in &report.notes {
         let _ = writeln!(output, "  - {note}");
+    }
+    if let Some(parallel) = &report.parallel {
+        let _ = writeln!(output, "  - Parallel CRI notes:");
+        for note in &parallel.notes {
+            let _ = writeln!(output, "    {note}");
+        }
     }
     output
 }
@@ -140,6 +154,26 @@ fn render_distribution_section(output: &mut String, entries: &[dmd_core::Distrib
                 region.domain_plain, region.count_plain
             );
         }
+    }
+}
+
+fn render_parallel_section(output: &mut String, parallel: &dmd_core::ParallelAnalysis) {
+    if parallel.cri_entries.is_empty() {
+        let _ = writeln!(output, "  <empty>");
+        return;
+    }
+
+    for entry in &parallel.cri_entries {
+        let _ = writeln!(
+            output,
+            "  {:?}: source_ri = {}",
+            entry.model_kind, entry.source_ri_plain
+        );
+        let _ = writeln!(output, "    [{}]", entry.domain_plain);
+        let _ = writeln!(output, "    range(X) = {}", entry.law.range_plain);
+        let _ = writeln!(output, "    CRI(X)   = {}", entry.law.cri_plain);
+        let _ = writeln!(output, "    Prob(X)  = {}", entry.law.probability_plain);
+        let _ = writeln!(output, "    Cnt(X)   = {}", entry.law.count_plain);
     }
 }
 
@@ -164,8 +198,30 @@ for i in 0 .. N {
         .expect("analysis should succeed");
 
         let rendered = render_report(&report);
-        assert!(rendered.contains("DMD"));
         assert!(rendered.contains("RI Distribution"));
         assert!(rendered.contains("RD Distribution"));
+    }
+
+    #[test]
+    fn renders_parallel_section() {
+        let report = analyze_source(
+            r#"
+params N;
+array A[N];
+
+parallel(4) for i in 0 .. N {
+    read A[0];
+}
+"#,
+            AnalysisOptions::default(),
+        )
+        .expect("analysis should succeed");
+
+        let rendered = render_report(&report);
+        assert!(rendered.contains("Parallel CRI"));
+        assert!(rendered.contains("CRI(X)"));
+        assert!(rendered.contains("Prob(X)"));
+        assert!(rendered.contains("Cnt(X)"));
+        assert!(!rendered.contains("RD Distribution"));
     }
 }

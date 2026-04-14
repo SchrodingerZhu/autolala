@@ -16,6 +16,8 @@ pub enum Token {
     Params,
     #[token("array")]
     Array,
+    #[token("parallel")]
+    Parallel,
     #[token("for")]
     For,
     #[token("in")]

@@ -16,6 +16,7 @@ The DSL supports:
 
 - symbolic parameters via `params`
 - affine array declarations via `array`
+- `parallel(<const>) for` loop annotations for paper-style CRI modeling
 - affine `for` loops with optional `step`
 - affine `if` guards with `&&`
 - `read`, `write`, and `update` accesses
@@ -36,6 +37,19 @@ for i in 0 .. M {
       read B[k, j];
       write C[i, j];
     }
+  }
+}
+```
+
+Parallel example:
+
+```text
+params N, M;
+array A[M];
+
+parallel(4) for i in 0 .. N {
+  for j in 0 .. M {
+    read A[j];
   }
 }
 ```
@@ -152,6 +166,9 @@ The backend API is:
 - The Barvinok context is initialized with `--approximation-method=scale`.
 - DMD aggregation excludes special-case branches that do not scale asymptotically.
 - RI and RD distributions are still reported in full for diagnostics.
+- `parallel(T) for` adds a static OpenMP-style round-robin CRI path with chunk size `1`.
+- In parallel mode, analysis stops after RI collection and emits implicit symbolic CRI laws of the form `range(X)`, `CRI(X)`, and `Prob(X)`.
+- Input-independent RI regions use the negative-binomial law; symbolic RI regions use the racetrack law, so terms such as `M`, `N`, and `K` remain visible in the output.
 - In-process Barvinok initialization is serialized because the current `Context::from_args(...)` path is not stable under parallel in-process calls.
 
 ## CI

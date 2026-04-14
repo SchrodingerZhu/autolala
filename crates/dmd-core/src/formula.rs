@@ -274,6 +274,15 @@ impl FormulaExpr {
         }
     }
 
+    pub fn as_const_i64(&self) -> Option<i64> {
+        let rational = self.as_rational()?;
+        if rational.denominator == 1 {
+            Some(rational.numerator)
+        } else {
+            None
+        }
+    }
+
     fn degree(&self) -> u32 {
         match self {
             FormulaExpr::Rational { .. } | FormulaExpr::Raw { .. } => 0,

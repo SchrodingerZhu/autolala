@@ -11,10 +11,17 @@ pub struct ArrayInfo {
 }
 
 #[derive(Debug, Clone)]
+pub struct ParallelLoopInfo {
+    pub var: String,
+    pub threads: i64,
+}
+
+#[derive(Debug, Clone)]
 pub struct SemanticProgram {
     pub params: Vec<String>,
     pub arrays: Vec<ArrayInfo>,
     pub body: Block,
+    pub parallel_loop: Option<ParallelLoopInfo>,
 }
 
 impl SemanticProgram {
@@ -60,6 +67,10 @@ impl SemanticProgram {
 
         block_max(&self.body)
     }
+
+    pub fn thread_count(&self) -> Option<i64> {
+        self.parallel_loop.as_ref().map(|parallel| parallel.threads)
+    }
 }
 
 pub fn validate_program(program: Program) -> DmdResult<SemanticProgram> {
@@ -97,7 +108,14 @@ pub fn validate_program(program: Program) -> DmdResult<SemanticProgram> {
         .collect::<HashMap<_, _>>();
 
     let mut loop_scope = Vec::new();
-    validate_block(&program.body, &params_seen, &array_map, &mut loop_scope)?;
+    let mut parallel_loop = None;
+    validate_block(
+        &program.body,
+        &params_seen,
+        &array_map,
+        &mut loop_scope,
+        &mut parallel_loop,
+    )?;
 
     if arrays.is_empty() {
         return Err(DmdError::semantic(
@@ -115,6 +133,7 @@ pub fn validate_program(program: Program) -> DmdResult<SemanticProgram> {
         params: program.params,
         arrays,
         body: program.body,
+        parallel_loop,
     })
 }
 
@@ -138,11 +157,14 @@ fn validate_block(
     params: &HashSet<String>,
     arrays: &HashMap<&str, usize>,
     loop_scope: &mut Vec<String>,
+    parallel_loop: &mut Option<ParallelLoopInfo>,
 ) -> DmdResult<()> {
     for stmt in &block.statements {
         match stmt {
-            Stmt::For(for_loop) => validate_for(for_loop, params, arrays, loop_scope)?,
-            Stmt::If(if_stmt) => validate_if(if_stmt, params, arrays, loop_scope)?,
+            Stmt::For(for_loop) => {
+                validate_for(for_loop, params, arrays, loop_scope, parallel_loop)?
+            }
+            Stmt::If(if_stmt) => validate_if(if_stmt, params, arrays, loop_scope, parallel_loop)?,
             Stmt::Access(access) => validate_access(access, params, arrays, loop_scope)?,
         }
     }
@@ -155,6 +177,7 @@ fn validate_for(
     params: &HashSet<String>,
     arrays: &HashMap<&str, usize>,
     loop_scope: &mut Vec<String>,
+    parallel_loop: &mut Option<ParallelLoopInfo>,
 ) -> DmdResult<()> {
     if for_loop.step <= 0 {
         return Err(DmdError::semantic(format!(
@@ -172,9 +195,31 @@ fn validate_for(
 
     validate_expr(&for_loop.lower, params, loop_scope)?;
     validate_expr(&for_loop.upper, params, loop_scope)?;
+    if let Some(spec) = &for_loop.parallel {
+        validate_expr(&spec.threads, params, loop_scope)?;
+        let Some(threads) = spec.threads.as_const_i64() else {
+            return Err(DmdError::semantic(
+                "parallel loop thread count must be an input-independent constant",
+            ));
+        };
+        if threads < 2 {
+            return Err(DmdError::semantic(
+                "parallel loop thread count must be at least two",
+            ));
+        }
+        if parallel_loop.is_some() {
+            return Err(DmdError::semantic(
+                "only one parallel loop is currently supported",
+            ));
+        }
+        *parallel_loop = Some(ParallelLoopInfo {
+            var: for_loop.var.clone(),
+            threads,
+        });
+    }
 
     loop_scope.push(for_loop.var.clone());
-    let result = validate_block(&for_loop.body, params, arrays, loop_scope);
+    let result = validate_block(&for_loop.body, params, arrays, loop_scope, parallel_loop);
     loop_scope.pop();
     result
 }
@@ -184,6 +229,7 @@ fn validate_if(
     params: &HashSet<String>,
     arrays: &HashMap<&str, usize>,
     loop_scope: &mut Vec<String>,
+    parallel_loop: &mut Option<ParallelLoopInfo>,
 ) -> DmdResult<()> {
     if if_stmt.conditions.is_empty() {
         return Err(DmdError::semantic(
@@ -195,9 +241,15 @@ fn validate_if(
         validate_comparison(condition, params, loop_scope)?;
     }
 
-    validate_block(&if_stmt.then_branch, params, arrays, loop_scope)?;
+    validate_block(
+        &if_stmt.then_branch,
+        params,
+        arrays,
+        loop_scope,
+        parallel_loop,
+    )?;
     if let Some(else_branch) = &if_stmt.else_branch {
-        validate_block(else_branch, params, arrays, loop_scope)?;
+        validate_block(else_branch, params, arrays, loop_scope, parallel_loop)?;
     }
 
     Ok(())
@@ -343,5 +395,44 @@ for i in 0 .. N {
         let model = validate_program(program).expect("semantic validation should succeed");
         assert_eq!(model.max_access_rank(), 2);
         assert_eq!(model.array_rank("A"), Some(2));
+        assert!(model.parallel_loop.is_none());
+    }
+
+    #[test]
+    fn accepts_parallel_loop_with_constant_thread_count() {
+        let source = r#"
+params N;
+array A[N];
+
+parallel(2 * 2) for i in 0 .. N {
+    read A[i];
+}
+"#;
+        let program = parse_program(source).expect("parser should succeed");
+        let model = validate_program(program).expect("semantic validation should succeed");
+        assert_eq!(model.thread_count(), Some(4));
+        assert_eq!(
+            model
+                .parallel_loop
+                .as_ref()
+                .map(|parallel| parallel.var.as_str()),
+            Some("i")
+        );
+    }
+
+    #[test]
+    fn rejects_parallel_loop_with_symbolic_thread_count() {
+        let source = r#"
+params N, T;
+array A[N];
+
+parallel(T) for i in 0 .. N {
+    read A[i];
+}
+"#;
+        let program = parse_program(source).expect("parser should succeed");
+        let error = validate_program(program)
+            .expect_err("semantic validation should reject symbolic thread counts");
+        assert!(format!("{error}").contains("input-independent constant"));
     }
 }
