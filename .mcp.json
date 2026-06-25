@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "dmd": {
+      "command": "cargo",
+      "args": ["run", "--quiet", "--release", "-p", "dmd-mcp"],
+      "env": {}
+    }
+  }
+}

@@ -1,0 +1,11 @@
+# Default toolchain locations for the `mlir-extract` crate's native dependencies
+# (melior / mlir-sys), targeting the apt.llvm.org LLVM/MLIR 22 packages.
+#
+# These are *defaults*: an existing value in the environment takes precedence
+# (no `force = true`), so a non-standard install can override them with e.g.
+#   export MLIR_SYS_220_PREFIX=/path/to/llvm-22
+#
+# Only `mlir-sys` reads these; the other workspace crates ignore them.
+[env]
+MLIR_SYS_220_PREFIX = "/usr/lib/llvm-22"
+TABLEGEN_220_PREFIX = "/usr/lib/llvm-22"
