@@ -1,0 +1,534 @@
+{
+ "status": "ok",
+ "dsl_len": 331,
+ "total": "23193840",
+ "warm": "(1609/8) * i0 + (555700381/32)",
+ "compulsory": "-(1609/8) * i0 + (186502499/32)",
+ "dmd": "-(1609/8) * i0 + sqrt((49151/4096)) + 11404800 * sqrt(3) + 22487 * sqrt((189/64)) + 12736 * sqrt((63/32)) + 199 * sqrt((129/64)) + 5697480 * sqrt((63/64)) + sqrt((385/64)) + 48000 * sqrt(2) + (193674339/32)",
+ "ri": [
+  {
+   "value_plain": "(12415/8)",
+   "value_latex": "\\frac{12415}{8}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "4",
+   "value_latex": "4",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "5736000",
+     "count_latex": "5736000"
+    }
+   ]
+  },
+  {
+   "value_plain": "(189/64)",
+   "value_latex": "\\frac{189}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "47760",
+     "count_latex": "47760"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "89720",
+     "count_latex": "89720"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/64)",
+   "value_latex": "\\frac{63}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "5697480",
+     "count_latex": "5697480"
+    }
+   ]
+  },
+  {
+   "value_plain": "552",
+   "value_latex": "552",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "3",
+   "value_latex": "3",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "5784000",
+     "count_latex": "5784000"
+    }
+   ]
+  }
+ ],
+ "rd": [
+  {
+   "value_plain": "(49023/4096)",
+   "value_latex": "\\frac{49023}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(d5) mod 64 = 0 and i0 <= 239 and 64 <= d5 <= -2 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(49087/4096)",
+   "value_latex": "\\frac{49087}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(1 + d5) mod 64 = 0 and i0 <= 239 and 63 <= d5 <= -2 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(44991/4096)",
+   "value_latex": "\\frac{44991}{4096}",
+   "regions": [
+    {
+     "domain_plain": "i0 <= 239 and 0 < d5 <= -2 + i0",
+     "count_plain": "(31/32)",
+     "count_latex": "\\frac{31}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(32895/4096)",
+   "value_latex": "\\frac{32895}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and (i2) mod 64 = 0 and 66 <= i0 <= 193 and 64 <= i2 <= 128",
+     "count_plain": "(1/64) * i0 + (63/64)",
+     "count_latex": "\\frac{1}{64} \\cdot i0 + \\frac{63}{64}"
+    },
+    {
+     "domain_plain": "(i2) mod 64 = 0 and 66 <= i0 <= 239 and 64 <= i2 <= 128 and 64*floor((-1 + i0)/64) <= -2 + i0",
+     "count_plain": "(1/64) * i0 - (1/64)",
+     "count_latex": "\\frac{1}{64} \\cdot i0 - \\frac{1}{64}"
+    },
+    {
+     "domain_plain": "i0 = 65 and (i2) mod 64 = 0 and 64 <= i2 <= 128",
+     "count_plain": "2",
+     "count_latex": "2"
+    },
+    {
+     "domain_plain": "(i2) mod 64 = 0 and 2 <= i0 <= 64 and 64 <= i2 <= 128",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(28863/4096)",
+   "value_latex": "\\frac{28863}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and 3 <= i0 <= 239 and 64 <= i2 <= 128",
+     "count_plain": "(63/64) * i0 - (63/64)",
+     "count_latex": "\\frac{63}{64} \\cdot i0 - \\frac{63}{64}"
+    },
+    {
+     "domain_plain": "i0 = 2 and (i2) mod 64 = 0 and 64 <= i2 <= 128",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(12159/4096)",
+   "value_latex": "\\frac{12159}{4096}",
+   "regions": [
+    {
+     "domain_plain": "66 <= i0 <= 239",
+     "count_plain": "(49/16) * i0 - (49/16)",
+     "count_latex": "\\frac{49}{16} \\cdot i0 - \\frac{49}{16}"
+    },
+    {
+     "domain_plain": "2 <= i0 <= 65",
+     "count_plain": "196",
+     "count_latex": "196"
+    }
+   ]
+  },
+  {
+   "value_plain": "(49151/4096)",
+   "value_latex": "\\frac{49151}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 65 <= i0 <= 193",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(16191/4096)",
+   "value_latex": "\\frac{16191}{4096}",
+   "regions": [
+    {
+     "domain_plain": "d5 = -1 + i0 and (-1 + i0) mod 64 = 0 and 65 <= i0 <= 193",
+     "count_plain": "196",
+     "count_latex": "196"
+    }
+   ]
+  },
+  {
+   "value_plain": "(8127/4096)",
+   "value_latex": "\\frac{8127}{4096}",
+   "regions": [
+    {
+     "domain_plain": "3 <= i0 <= 239",
+     "count_plain": "(3087/16) * i0 - (3087/8)",
+     "count_latex": "\\frac{3087}{16} \\cdot i0 - \\frac{3087}{8}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(45119/4096)",
+   "value_latex": "\\frac{45119}{4096}",
+   "regions": [
+    {
+     "domain_plain": "2 <= i0 <= 239",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(12159/4096)",
+   "value_latex": "\\frac{12159}{4096}",
+   "regions": [
+    {
+     "domain_plain": "d5 = -1 + i0 and 2 <= i0 <= 239",
+     "count_plain": "(3087/16)",
+     "count_latex": "\\frac{3087}{16}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(49087/4096)",
+   "value_latex": "\\frac{49087}{4096}",
+   "regions": [
+    {
+     "domain_plain": "2 <= i0 <= 239",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(49151/4096)",
+   "value_latex": "\\frac{49151}{4096}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(32895/4096)",
+   "value_latex": "\\frac{32895}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and 64 <= i2 <= 128",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(12159/4096)",
+   "value_latex": "\\frac{12159}{4096}",
+   "regions": [
+    {
+     "domain_plain": "i0 = 1",
+     "count_plain": "196",
+     "count_latex": "196"
+    }
+   ]
+  },
+  {
+   "value_plain": "(193/32)",
+   "value_latex": "\\frac{193}{32}",
+   "regions": [
+    {
+     "domain_plain": "66 <= i0 <= 239",
+     "count_plain": "(1/64) * i0 - (1/64)",
+     "count_latex": "\\frac{1}{64} \\cdot i0 - \\frac{1}{64}"
+    },
+    {
+     "domain_plain": "2 <= i0 <= 65",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(161/32)",
+   "value_latex": "\\frac{161}{32}",
+   "regions": [
+    {
+     "domain_plain": "3 <= i0 <= 239",
+     "count_plain": "(63/64) * i0 - (63/32)",
+     "count_latex": "\\frac{63}{64} \\cdot i0 - \\frac{63}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "4",
+   "value_latex": "4",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "67200",
+     "count_latex": "67200"
+    }
+   ]
+  },
+  {
+   "value_plain": "3",
+   "value_latex": "3",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "11404800",
+     "count_latex": "11404800"
+    }
+   ]
+  },
+  {
+   "value_plain": "(2079/2048)",
+   "value_latex": "\\frac{2079}{2048}",
+   "regions": [
+    {
+     "domain_plain": "64 <= i0 <= 126",
+     "count_plain": "199",
+     "count_latex": "199"
+    }
+   ]
+  },
+  {
+   "value_plain": "(189/64)",
+   "value_latex": "\\frac{189}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "22487",
+     "count_latex": "22487"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/32)",
+   "value_latex": "\\frac{63}{32}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "12736",
+     "count_latex": "12736"
+    }
+   ]
+  },
+  {
+   "value_plain": "(-3839/64)",
+   "value_latex": "\\frac{-3839}{64}",
+   "regions": [
+    {
+     "domain_plain": "i0 = 192",
+     "count_plain": "6",
+     "count_latex": "6"
+    },
+    {
+     "domain_plain": "129 <= i0 <= 239 and 64*floor((i0)/64) < i0",
+     "count_plain": "(3/64) * i0 - 6",
+     "count_latex": "\\frac{3}{64} \\cdot i0 - 6"
+    },
+    {
+     "domain_plain": "i0 = 128",
+     "count_plain": "3",
+     "count_latex": "3"
+    }
+   ]
+  },
+  {
+   "value_plain": "(-3903/64)",
+   "value_latex": "\\frac{-3903}{64}",
+   "regions": [
+    {
+     "domain_plain": "129 <= i0 <= 239",
+     "count_plain": "(49/16) * i0 - 392",
+     "count_latex": "\\frac{49}{16} \\cdot i0 - 392"
+    }
+   ]
+  },
+  {
+   "value_plain": "(193/64)",
+   "value_latex": "\\frac{193}{64}",
+   "regions": [
+    {
+     "domain_plain": "d5 = -64 + i0 and (i0) mod 64 = 0 and 128 <= i0 <= 192",
+     "count_plain": "197",
+     "count_latex": "197"
+    },
+    {
+     "domain_plain": "(d5) mod 64 = 0 and i0 <= 239 and 64 <= d5 <= -64 + i0 and ((64*floor((i0)/64) < i0) or ((i0) mod 64 = 0 and d5 <= -65 + i0))",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "4",
+   "value_latex": "4",
+   "regions": [
+    {
+     "domain_plain": "(d5) mod 64 = 0 and 64 <= d5 <= 128",
+     "count_plain": "12800",
+     "count_latex": "12800"
+    },
+    {
+     "domain_plain": "d5 = 192",
+     "count_plain": "9600",
+     "count_latex": "9600"
+    }
+   ]
+  },
+  {
+   "value_plain": "(-1983/32)",
+   "value_latex": "\\frac{-1983}{32}",
+   "regions": [
+    {
+     "domain_plain": "65 <= i0 <= 239",
+     "count_plain": "199",
+     "count_latex": "199"
+    }
+   ]
+  },
+  {
+   "value_plain": "(129/64)",
+   "value_latex": "\\frac{129}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "199",
+     "count_latex": "199"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "89720",
+     "count_latex": "89720"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/64)",
+   "value_latex": "\\frac{63}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "5697480",
+     "count_latex": "5697480"
+    }
+   ]
+  },
+  {
+   "value_plain": "(385/64)",
+   "value_latex": "\\frac{385}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 65 <= i0 <= 193",
+     "count_plain": "1",
+     "count_latex": "1"
+    },
+    {
+     "domain_plain": "(i0) mod 64 = 0 and 64 <= i0 <= 192",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(321/64)",
+   "value_latex": "\\frac{321}{64}",
+   "regions": [
+    {
+     "domain_plain": "2 <= i0 <= 239",
+     "count_plain": "(31/32)",
+     "count_latex": "\\frac{31}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(385/64)",
+   "value_latex": "\\frac{385}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "2",
+   "value_latex": "2",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "48000",
+     "count_latex": "48000"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/32)",
+   "value_latex": "\\frac{1}{32}",
+   "regions": [
+    {
+     "domain_plain": "64 <= i0 <= 239",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  }
+ ],
+ "n_ri": 7,
+ "n_rd": 35,
+ "n_dmd_terms": 10,
+ "secs": 0.6,
+ "family": "const"
+}

@@ -1,0 +1,1304 @@
+{
+ "status": "ok",
+ "dsl_len": 441,
+ "total": "42826800",
+ "warm": "-(95/2048) * i1^2 + (2774785/262144) * i1 + (381/4096) * i0 + (104772111519/4096)",
+ "compulsory": "(95/2048) * i1^2 - (2774785/262144) * i1 - (381/4096) * i0 + (70646461281/4096)",
+ "dmd": "(95/2048) * i1^2 - (2774785/262144) * i1 - (381/4096) * i0 + sqrt((4287/32)) + sqrt((69/2)) + sqrt((193/64)) + 12443705 * sqrt((189/64)) + 56280 * sqrt((6017/2048)) + 6265840 * sqrt(3) + sqrt((329/2)) + sqrt(69) + sqrt((129/64)) + 135682 * sqrt(2) + sqrt(67) + 130358 * sqrt((127/64)) + 6305331 * sqrt((63/64)) + 55895 * sqrt((63/32)) + 1323 * sqrt((8001/2048)) + 77028 * sqrt((3969/2048)) + (71075681121/4096)",
+ "ri": [
+  {
+   "value_plain": "15",
+   "value_latex": "15",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/16)",
+   "value_latex": "\\frac{63}{16}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "16574089",
+     "count_latex": "16574089"
+    }
+   ]
+  },
+  {
+   "value_plain": "(16129/4096)",
+   "value_latex": "\\frac{16129}{4096}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "56280",
+     "count_latex": "56280"
+    }
+   ]
+  },
+  {
+   "value_plain": "3",
+   "value_latex": "3",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "6265840",
+     "count_latex": "6265840"
+    }
+   ]
+  },
+  {
+   "value_plain": "(189/64)",
+   "value_latex": "\\frac{189}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "111505",
+     "count_latex": "111505"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "104120",
+     "count_latex": "104120"
+    }
+   ]
+  },
+  {
+   "value_plain": "8460",
+   "value_latex": "8460",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "5",
+   "value_latex": "5",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "8",
+   "value_latex": "8",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(12097/4096)",
+   "value_latex": "\\frac{12097}{4096}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "336",
+     "count_latex": "336"
+    }
+   ]
+  },
+  {
+   "value_plain": "2",
+   "value_latex": "2",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "135681",
+     "count_latex": "135681"
+    }
+   ]
+  },
+  {
+   "value_plain": "8262",
+   "value_latex": "8262",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "7",
+   "value_latex": "7",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "335",
+     "count_latex": "335"
+    }
+   ]
+  },
+  {
+   "value_plain": "(127/64)",
+   "value_latex": "\\frac{127}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "130358",
+     "count_latex": "130358"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/64)",
+   "value_latex": "\\frac{63}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "6305331",
+     "count_latex": "6305331"
+    }
+   ]
+  },
+  {
+   "value_plain": "(10017/2048)",
+   "value_latex": "\\frac{10017}{2048}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1323",
+     "count_latex": "1323"
+    }
+   ]
+  },
+  {
+   "value_plain": "(5985/2048)",
+   "value_latex": "\\frac{5985}{2048}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "77028",
+     "count_latex": "77028"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/32)",
+   "value_latex": "\\frac{63}{32}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "335",
+     "count_latex": "335"
+    }
+   ]
+  }
+ ],
+ "rd": [
+  {
+   "value_plain": "(381/64)",
+   "value_latex": "\\frac{381}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and (i1) mod 64 = 0 and i0 <= 385 and 192 <= i1 <= -65 + i0",
+     "count_plain": "(1/64) * i1 - 2",
+     "count_latex": "\\frac{1}{64} \\cdot i1 - 2"
+    }
+   ]
+  },
+  {
+   "value_plain": "(317/64)",
+   "value_latex": "\\frac{317}{64}",
+   "regions": [
+    {
+     "domain_plain": "(i1) mod 64 = 0 and i0 <= 399 and 192 <= i1 <= -3 + i0",
+     "count_plain": "(63/4096) * i1 - (63/32)",
+     "count_latex": "\\frac{63}{4096} \\cdot i1 - \\frac{63}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(315/64)",
+   "value_latex": "\\frac{315}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-2 + i0) mod 64 = 0 and 194 <= i0 <= 386",
+     "count_plain": "(1/64) * i0 - (65/32)",
+     "count_latex": "\\frac{1}{64} \\cdot i0 - \\frac{65}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(253/64)",
+   "value_latex": "\\frac{253}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and i0 <= 385 and 129 <= i1 <= -3 + i0",
+     "count_plain": "(63/4096) * i1 - (63/32)",
+     "count_latex": "\\frac{63}{4096} \\cdot i1 - \\frac{63}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(189/64)",
+   "value_latex": "\\frac{189}{64}",
+   "regions": [
+    {
+     "domain_plain": "i0 <= 399 and 129 <= i1 <= -3 + i0",
+     "count_plain": "(3969/262144) * i1 - (3969/2048)",
+     "count_latex": "\\frac{3969}{262144} \\cdot i1 - \\frac{3969}{2048}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(251/64)",
+   "value_latex": "\\frac{251}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 257 <= i0 <= 385",
+     "count_plain": "(1/64) * i0 - (129/64)",
+     "count_latex": "\\frac{1}{64} \\cdot i0 - \\frac{129}{64}"
+    },
+    {
+     "domain_plain": "i0 = 193",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(187/64)",
+   "value_latex": "\\frac{187}{64}",
+   "regions": [
+    {
+     "domain_plain": "194 <= i0 <= 399",
+     "count_plain": "(31/2048) * i0 - (5983/2048)",
+     "count_latex": "\\frac{31}{2048} \\cdot i0 - \\frac{5983}{2048}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(79/16)",
+   "value_latex": "\\frac{79}{16}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and i0 <= 399 and i2 >= -128 + i0 and 64 <= i2 <= -67 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "2",
+   "value_latex": "2",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and (i1) mod 64 = 0 and i0 <= 385 and 128 <= i1 <= -65 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and (i1) mod 64 = 0 and i0 <= 385 and 128 <= i1 <= -3 + i0",
+     "count_plain": "(63/32)",
+     "count_latex": "\\frac{63}{32}"
+    },
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and i0 <= 385 and 65 <= i1 <= -3 + i0 and 64*floor((i1)/64) < i1",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    },
+    {
+     "domain_plain": "(i1) mod 64 = 0 and i0 <= 399 and 128 <= i1 <= -3 + i0 and 64*floor((-1 + i0)/64) <= -2 + i0",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "0",
+   "value_latex": "0",
+   "regions": [
+    {
+     "domain_plain": "i0 <= 399 and 65 <= i1 <= -3 + i0",
+     "count_plain": "(3969/4096)",
+     "count_latex": "\\frac{3969}{4096}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(31/32)",
+   "value_latex": "\\frac{31}{32}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 193 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    },
+    {
+     "domain_plain": "(-2 + i0) mod 64 = 0 and 130 <= i0 <= 386",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(-1/32)",
+   "value_latex": "\\frac{-1}{32}",
+   "regions": [
+    {
+     "domain_plain": "130 <= i0 <= 399",
+     "count_plain": "(31/32)",
+     "count_latex": "\\frac{31}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(4287/32)",
+   "value_latex": "\\frac{4287}{32}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/32)",
+   "value_latex": "\\frac{63}{32}",
+   "regions": [
+    {
+     "domain_plain": "67 <= i0 <= 128",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(127/32)",
+   "value_latex": "\\frac{127}{32}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and (i2) mod 64 = 0 and i0 <= 385 and i1 <= -3 + i0 and i2 >= -63 + i1 and 64 <= i2 < i1",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(95/32)",
+   "value_latex": "\\frac{95}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and i0 <= 399 and i1 <= -3 + i0 and i2 >= -63 + i1 and 64 <= i2 < i1",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(6049/2048)",
+   "value_latex": "\\frac{6049}{2048}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and i0 <= 399 and i2 >= -65 + i0 and 64 <= i2 <= -3 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(127/64)",
+   "value_latex": "\\frac{127}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 129 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/64)",
+   "value_latex": "\\frac{63}{64}",
+   "regions": [
+    {
+     "domain_plain": "66 <= i0 <= 399",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(47/16)",
+   "value_latex": "\\frac{47}{16}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 65 <= i0 <= 385 and 2 <= i1 <= 62",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(31/16)",
+   "value_latex": "\\frac{31}{16}",
+   "regions": [
+    {
+     "domain_plain": "i0 <= 399 and 2 <= i1 <= 62 and i1 <= -3 + i0",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(69/2)",
+   "value_latex": "\\frac{69}{2}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(127/64)",
+   "value_latex": "\\frac{127}{64}",
+   "regions": [
+    {
+     "domain_plain": "4 <= i0 <= 64",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(251/64)",
+   "value_latex": "\\frac{251}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 65 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(187/64)",
+   "value_latex": "\\frac{187}{64}",
+   "regions": [
+    {
+     "domain_plain": "4 <= i0 <= 399",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(193/64)",
+   "value_latex": "\\frac{193}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(127/32)",
+   "value_latex": "\\frac{127}{32}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 193 <= i0 <= 385",
+     "count_plain": "(1/64) * i0 - (129/64)",
+     "count_latex": "\\frac{1}{64} \\cdot i0 - \\frac{129}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(95/32)",
+   "value_latex": "\\frac{95}{32}",
+   "regions": [
+    {
+     "domain_plain": "193 <= i0 <= 399",
+     "count_plain": "(63/4096) * i0 - (189/64)",
+     "count_latex": "\\frac{63}{4096} \\cdot i0 - \\frac{189}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(159/32)",
+   "value_latex": "\\frac{159}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and i0 <= 399 and i2 >= -128 + i0 and 64 <= i2 <= -66 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(699/128)",
+   "value_latex": "\\frac{699}{128}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and (i1) mod 64 = 0 and i0 <= 385 and 128 <= i1 <= -129 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(571/128)",
+   "value_latex": "\\frac{571}{128}",
+   "regions": [
+    {
+     "domain_plain": "(i1) mod 64 = 0 and i0 <= 399 and 128 <= i1 <= -66 + i0",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(-1763/64)",
+   "value_latex": "\\frac{-1763}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 193 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(701/128)",
+   "value_latex": "\\frac{701}{128}",
+   "regions": [
+    {
+     "domain_plain": "(i1) mod 64 = 0 and i0 <= 399 and i1 >= -64 + i0 and 128 <= i1 <= -3 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(693/128)",
+   "value_latex": "\\frac{693}{128}",
+   "regions": [
+    {
+     "domain_plain": "(-2 + i0) mod 64 = 0 and 130 <= i0 <= 386",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(12161/4096)",
+   "value_latex": "\\frac{12161}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and i0 <= 399 and i2 >= -64 + i0 and 64 <= i2 <= -2 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/32)",
+   "value_latex": "\\frac{63}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i1) mod 64 = 0 and i1 <= 384 and i2 >= -63 + i1 and 0 < i2 < i1",
+     "count_plain": "-(8065/4096) * i1 + (3217935/4096)",
+     "count_latex": "-\\frac{8065}{4096} \\cdot i1 + \\frac{3217935}{4096}"
+    },
+    {
+     "domain_plain": "i1 <= 398 and i2 >= -63 + i1 and 0 < i2 < i1 and 64*floor((i1)/64) < i1",
+     "count_plain": "-(3969/4096) * i1 + (1583631/4096)",
+     "count_latex": "-\\frac{3969}{4096} \\cdot i1 + \\frac{1583631}{4096}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(317/64)",
+   "value_latex": "\\frac{317}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 129 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(189/64)",
+   "value_latex": "\\frac{189}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "12443705",
+     "count_latex": "12443705"
+    }
+   ]
+  },
+  {
+   "value_plain": "(13137/2048)",
+   "value_latex": "\\frac{13137}{2048}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and (i1) mod 64 = 0 and i0 <= 385 and 64 <= i1 <= -129 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(7057/2048)",
+   "value_latex": "\\frac{7057}{2048}",
+   "regions": [
+    {
+     "domain_plain": "(i1) mod 64 = 0 and i0 <= 399 and 64 <= i1 <= -66 + i0",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(-54463/2048)",
+   "value_latex": "\\frac{-54463}{2048}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 129 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(9137/2048)",
+   "value_latex": "\\frac{9137}{2048}",
+   "regions": [
+    {
+     "domain_plain": "(i1) mod 64 = 0 and i0 <= 399 and i1 >= -64 + i0 and 64 <= i1 <= -3 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(9009/2048)",
+   "value_latex": "\\frac{9009}{2048}",
+   "regions": [
+    {
+     "domain_plain": "(-2 + i0) mod 64 = 0 and 66 <= i0 <= 386",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(127/32)",
+   "value_latex": "\\frac{127}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i1) mod 64 = 0 and 256 <= i1 <= 384",
+     "count_plain": "-i1^2 + (527/64) * i1 - 798",
+     "count_latex": "-i1^{2} + \\frac{527}{64} \\cdot i1 - 798"
+    },
+    {
+     "domain_plain": "i1 = 192",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    },
+    {
+     "domain_plain": "(-1 + i1) mod 64 = 0 and 193 <= i1 <= 385",
+     "count_plain": "-i1^2 + (33/4) * i1 - (51471/64)",
+     "count_latex": "-i1^{2} + \\frac{33}{4} \\cdot i1 - \\frac{51471}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(95/32)",
+   "value_latex": "\\frac{95}{32}",
+   "regions": [
+    {
+     "domain_plain": "193 <= i1 <= 398",
+     "count_plain": "-(31/2048) * i1^2 + (18321/2048) * i1 - (37107/32)",
+     "count_latex": "-\\frac{31}{2048} \\cdot i1^{2} + \\frac{18321}{2048} \\cdot i1 - \\frac{37107}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(159/32)",
+   "value_latex": "\\frac{159}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and i1 <= 398 and i2 >= -127 + i1 and 64 <= i2 <= -66 + i1",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64)",
+   "value_latex": "\\frac{1}{64}",
+   "regions": [
+    {
+     "domain_plain": "129 <= i0 <= 399",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "2",
+   "value_latex": "2",
+   "regions": [
+    {
+     "domain_plain": "66 <= i0 <= 128",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(65/64)",
+   "value_latex": "\\frac{65}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i1) mod 64 = 0 and 129 <= i1 <= 385",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64)",
+   "value_latex": "\\frac{1}{64}",
+   "regions": [
+    {
+     "domain_plain": "129 <= i1 <= 398",
+     "count_plain": "-(63/64) * i1 + (25137/64)",
+     "count_latex": "-\\frac{63}{64} \\cdot i1 + \\frac{25137}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "2",
+   "value_latex": "2",
+   "regions": [
+    {
+     "domain_plain": "66 <= i1 <= 128",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    }
+   ]
+  },
+  {
+   "value_plain": "(4159/4096)",
+   "value_latex": "\\frac{4159}{4096}",
+   "regions": [
+    {
+     "domain_plain": "i1 <= 398 and i2 >= -62 + i1 and 0 < i2 < i1",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    }
+   ]
+  },
+  {
+   "value_plain": "(6017/2048)",
+   "value_latex": "\\frac{6017}{2048}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "56280",
+     "count_latex": "56280"
+    }
+   ]
+  },
+  {
+   "value_plain": "2",
+   "value_latex": "2",
+   "regions": [
+    {
+     "domain_plain": "i1 <= 398 and i2 >= -63 + i1 and 0 < i2 < i1",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    }
+   ]
+  },
+  {
+   "value_plain": "3",
+   "value_latex": "3",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "6265840",
+     "count_latex": "6265840"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "104120",
+     "count_latex": "104120"
+    }
+   ]
+  },
+  {
+   "value_plain": "(67/2)",
+   "value_latex": "\\frac{67}{2}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 193 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(65/2)",
+   "value_latex": "\\frac{65}{2}",
+   "regions": [
+    {
+     "domain_plain": "130 <= i0 <= 399",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(329/2)",
+   "value_latex": "\\frac{329}{2}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(69/2)",
+   "value_latex": "\\frac{69}{2}",
+   "regions": [
+    {
+     "domain_plain": "67 <= i0 <= 128",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "69",
+   "value_latex": "69",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "3 <= i0 <= 64",
+     "count_plain": "1",
+     "count_latex": "1"
+    },
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 129 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(129/64)",
+   "value_latex": "\\frac{129}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(191/64)",
+   "value_latex": "\\frac{191}{64}",
+   "regions": [
+    {
+     "domain_plain": "(i1) mod 64 = 0 and 128 <= i1 <= 384",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    }
+   ]
+  },
+  {
+   "value_plain": "(317/64)",
+   "value_latex": "\\frac{317}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i1) mod 64 = 0 and 129 <= i1 <= 385",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    }
+   ]
+  },
+  {
+   "value_plain": "2",
+   "value_latex": "2",
+   "regions": [
+    {
+     "domain_plain": "i0 = 65",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "0",
+   "value_latex": "0",
+   "regions": [
+    {
+     "domain_plain": "66 <= i0 <= 399",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "3 <= i0 <= 64",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "2",
+   "value_latex": "2",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "135682",
+     "count_latex": "135682"
+    }
+   ]
+  },
+  {
+   "value_plain": "(8191/4096)",
+   "value_latex": "\\frac{8191}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and i1 <= 398 and i2 >= -62 + i1 and 0 <= i2 < i1",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    }
+   ]
+  },
+  {
+   "value_plain": "(4095/4096)",
+   "value_latex": "\\frac{4095}{4096}",
+   "regions": [
+    {
+     "domain_plain": "i1 <= 398 and i2 >= -62 + i1 and 0 <= i2 < i1",
+     "count_plain": "-(63/64) * i1 + (25137/64)",
+     "count_latex": "-\\frac{63}{64} \\cdot i1 + \\frac{25137}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/32)",
+   "value_latex": "\\frac{63}{32}",
+   "regions": [
+    {
+     "domain_plain": "0 < i1 <= 63",
+     "count_plain": "-i1 + 399",
+     "count_latex": "-i1 + 399"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "i0 <= 399 and i3 >= -63 + i0 and 0 < i3 < i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(8065/2048)",
+   "value_latex": "\\frac{8065}{2048}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 65 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "i0 <= 399 and i3 >= -63 + i0 and 0 < i3 < i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "67",
+   "value_latex": "67",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "4",
+   "value_latex": "4",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "335",
+     "count_latex": "335"
+    }
+   ]
+  },
+  {
+   "value_plain": "(127/64)",
+   "value_latex": "\\frac{127}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "130358",
+     "count_latex": "130358"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/64)",
+   "value_latex": "\\frac{63}{64}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "6305331",
+     "count_latex": "6305331"
+    }
+   ]
+  },
+  {
+   "value_plain": "(95/32)",
+   "value_latex": "\\frac{95}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i0) mod 64 = 0 and (i3) mod 64 = 0 and i0 <= 384 and 64 <= i3 <= -192 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    },
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and (i3) mod 64 = 0 and i0 <= 385 and 64 <= i3 <= -129 + i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/32)",
+   "value_latex": "\\frac{63}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and i0 <= 399 and 64 <= i3 <= -129 + i0",
+     "count_plain": "(31/32)",
+     "count_latex": "\\frac{31}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(159/32)",
+   "value_latex": "\\frac{159}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i0) mod 64 = 0 and 192 <= i0 <= 384",
+     "count_plain": "1",
+     "count_latex": "1"
+    },
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 129 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(127/32)",
+   "value_latex": "\\frac{127}{32}",
+   "regions": [
+    {
+     "domain_plain": "130 <= i0 <= 190",
+     "count_plain": "(1/64) * i0 - (129/64)",
+     "count_latex": "\\frac{1}{64} \\cdot i0 - \\frac{129}{64}"
+    },
+    {
+     "domain_plain": "191 <= i0 <= 399",
+     "count_plain": "(31/32)",
+     "count_latex": "\\frac{31}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(191/64)",
+   "value_latex": "\\frac{191}{64}",
+   "regions": [
+    {
+     "domain_plain": "(i0) mod 64 = 0 and 128 <= i0 <= 384",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/32)",
+   "value_latex": "\\frac{63}{32}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "55895",
+     "count_latex": "55895"
+    }
+   ]
+  },
+  {
+   "value_plain": "(65/64)",
+   "value_latex": "\\frac{65}{64}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + i0) mod 64 = 0 and 129 <= i0 <= 385",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64)",
+   "value_latex": "\\frac{1}{64}",
+   "regions": [
+    {
+     "domain_plain": "129 <= i0 <= 399",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "2",
+   "value_latex": "2",
+   "regions": [
+    {
+     "domain_plain": "66 <= i0 <= 128",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(8001/2048)",
+   "value_latex": "\\frac{8001}{2048}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "1323",
+     "count_latex": "1323"
+    }
+   ]
+  },
+  {
+   "value_plain": "(3969/2048)",
+   "value_latex": "\\frac{3969}{2048}",
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "77028",
+     "count_latex": "77028"
+    }
+   ]
+  },
+  {
+   "value_plain": "(8191/4096)",
+   "value_latex": "\\frac{8191}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and i0 <= 399 and i3 >= -62 + i0 and 0 <= i3 < i0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(4095/4096)",
+   "value_latex": "\\frac{4095}{4096}",
+   "regions": [
+    {
+     "domain_plain": "i0 <= 399 and i3 >= -62 + i0 and 0 <= i3 < i0",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "i3 = 0 and 0 < i0 <= 63",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  }
+ ],
+ "n_ri": 18,
+ "n_rd": 94,
+ "n_dmd_terms": 18,
+ "secs": 4.1,
+ "family": "const"
+}

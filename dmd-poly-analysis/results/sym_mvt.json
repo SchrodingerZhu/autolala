@@ -1,0 +1,538 @@
+{
+ "status": "ok",
+ "dsl_len": 488,
+ "total": "8 * p0^2",
+ "warm": "(829/64) * p0^2 - (8127/2048) * p0 + (3969/4096) * i4 + (701/64)",
+ "compulsory": "-(317/64) * p0^2 + (8127/2048) * p0 - (3969/4096) * i4 - (701/64)",
+ "dmd": "(63/64) * sqrt((4095/4096) * p0 + (63/64)) * p0^2 + (1/4096) * sqrt((65/64) * p0 - (3715/64)) * p0^2 + (63/4096) * sqrt((65/64) * p0 - (3779/64)) * p0^2 + (1/4096) * sqrt((1/32) * p0 + (317/64)) * p0^2 + (63/4096) * sqrt((1/32) * p0 + (253/64)) * p0^2 - (189/64) * p0^2 - (63/32) * sqrt((4095/4096) * p0 + (63/64)) * p0 - (3/64) * sqrt((65/64) * p0 - (3715/64)) * p0 - (8127/4096) * sqrt((65/64) * p0 - (3779/64)) * p0 + (95/32) * sqrt((189/64)) * p0^2 - (3/64) * sqrt((1/32) * p0 + (317/64)) * p0 - (8127/4096) * sqrt((1/32) * p0 + (253/64)) * p0 + sqrt((1/64) * p0^2 + (1/32) * p0 + (63/32)) + (1/64) * sqrt((65/64) * p0 - 61) * p0 + (63/64) * sqrt((65/64) * p0 - 62) * p0 + 2 * sqrt(3) * p0^2 + (1/64) * sqrt((1/32) * p0 + 2) * p0 + (63/64) * sqrt((1/32) * p0 + 1) * p0 + (4031/2048) * p0 - (3969/4096) * i4 + (63/64) * sqrt((4095/4096) * p0 + (63/64)) + 2 * sqrt((65/64) * p0 - (3715/64)) + (63/32) * sqrt((65/64) * p0 - (3779/64)) - (47/16) * sqrt((189/64)) * p0 + 2 * sqrt((1/32) * p0 + (317/64)) + (63/32) * sqrt((1/32) * p0 + (253/64)) - sqrt((65/64) * p0 - 61) - (63/64) * sqrt((65/64) * p0 - 62) - sqrt((1/32) * p0 + 2) - (63/64) * sqrt((1/32) * p0 + 1) + 2 * sqrt((63/64)) * p0 + sqrt((67/64) * p0 + (63/64)) - 2 * sqrt((189/64)) - 2 * sqrt((63/64)) - (701/64)",
+ "ri": [
+  {
+   "value_plain": "(63/16) * p0",
+   "value_latex": "\\frac{63}{16} \\cdot p0",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 3",
+     "count_plain": "(63/64) * p0^2 - (63/64) * p0",
+     "count_latex": "\\frac{63}{64} \\cdot p0^{2} - \\frac{63}{64} \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2",
+     "count_plain": "2 * p0^2 - 2 * p0",
+     "count_latex": "2 \\cdot p0^{2} - 2 \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "4 * p0 - (3969/16)",
+   "value_latex": "4 \\cdot p0 - \\frac{3969}{16}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 129",
+     "count_plain": "(1/32) * p0^2 - (129/32) * p0 + 4",
+     "count_latex": "\\frac{1}{32} \\cdot p0^{2} - \\frac{129}{32} \\cdot p0 + 4"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/16)",
+   "value_latex": "\\frac{63}{16}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "(95/32) * p0^2 - (47/16) * p0 - 2",
+     "count_latex": "\\frac{95}{32} \\cdot p0^{2} - \\frac{47}{16} \\cdot p0 - 2"
+    }
+   ]
+  },
+  {
+   "value_plain": "4 * p0^2 - 252",
+   "value_latex": "4 \\cdot p0^{2} - 252",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "4 * p0 - 252",
+   "value_latex": "4 \\cdot p0 - 252",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "2 * p0 - 2",
+     "count_latex": "2 \\cdot p0 - 2"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/64)",
+   "value_latex": "\\frac{63}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2",
+     "count_plain": "2 * p0 - 2",
+     "count_latex": "2 \\cdot p0 - 2"
+    }
+   ]
+  },
+  {
+   "value_plain": "8 * p0 - 256",
+   "value_latex": "8 \\cdot p0 - 256",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "3",
+   "value_latex": "3",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0",
+     "count_plain": "2 * p0^2",
+     "count_latex": "2 \\cdot p0^{2}"
+    }
+   ]
+  }
+ ],
+ "rd": [
+  {
+   "value_plain": "(1/64) * p0^2 + (4223/4096) * p0 + (159/32)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{4223}{4096} \\cdot p0 + \\frac{159}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and (1 + i4) mod 64 = 0 and 64 <= i3 <= -65 + p0 and 63 <= i4 <= -2 + p0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (4223/4096) * p0 + (127/32)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{4223}{4096} \\cdot p0 + \\frac{127}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and 64 <= i3 <= -65 + p0 and 0 < i4 <= -2 + p0",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (4159/4096) * p0 + (383/64)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{4159}{4096} \\cdot p0 + \\frac{383}{64}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and (1 + i4) mod 64 = 0 and -64 + p0 <= i3 < p0 and 63 <= i4 <= -2 + p0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (4159/4096) * p0 + (319/64)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{4159}{4096} \\cdot p0 + \\frac{319}{64}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and i3 >= -64 + p0 and 64 <= i3 < p0 and 0 < i4 <= -2 + p0",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(4095/4096) * p0 + (63/64)",
+   "value_latex": "\\frac{4095}{4096} \\cdot p0 + \\frac{63}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 3",
+     "count_plain": "(63/64) * p0^2 - (63/32) * p0 + (63/64)",
+     "count_latex": "\\frac{63}{64} \\cdot p0^{2} - \\frac{63}{32} \\cdot p0 + \\frac{63}{64}"
+    },
+    {
+     "domain_plain": "p0 = 2",
+     "count_plain": "(63/64) * p0 - (63/64)",
+     "count_latex": "\\frac{63}{64} \\cdot p0 - \\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(8447/4096) * p0 + (12033/4096)",
+   "value_latex": "\\frac{8447}{4096} \\cdot p0 + \\frac{12033}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + p0) mod 64 = 0 and (i3) mod 64 = 0 and 64 <= i3 <= -65 + p0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(8447/4096) * p0 + (8001/4096)",
+   "value_latex": "\\frac{8447}{4096} \\cdot p0 + \\frac{8001}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and 64 <= i3 <= -65 + p0",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (8255/4096) * p0 + (20225/4096)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{8255}{4096} \\cdot p0 + \\frac{20225}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + p0) mod 64 = 0 and p0 >= 65",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(8319/4096) * p0 + (16321/4096)",
+   "value_latex": "\\frac{8319}{4096} \\cdot p0 + \\frac{16321}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and i3 >= -64 + p0 and 64 <= i3 <= -2 + p0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(4095/4096) * p0 + (8001/4096)",
+   "value_latex": "\\frac{4095}{4096} \\cdot p0 + \\frac{8001}{4096}",
+   "regions": [
+    {
+     "domain_plain": "(-1 + p0) mod 64 = 0 and p0 >= 65",
+     "count_plain": "(63/64) * p0 - (63/64)",
+     "count_latex": "\\frac{63}{64} \\cdot p0 - \\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(12159/4096)",
+   "value_latex": "\\frac{12159}{4096}",
+   "regions": [
+    {
+     "domain_plain": "i4 = -1 + p0 and p0 >= 2",
+     "count_plain": "(3969/4096) * i4",
+     "count_latex": "\\frac{3969}{4096} \\cdot i4"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (4287/4096) * p0 + (95/32)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{4287}{4096} \\cdot p0 + \\frac{95}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and 64 <= i3 <= -65 + p0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (4223/4096) * p0 + (255/64)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{4223}{4096} \\cdot p0 + \\frac{255}{64}",
+   "regions": [
+    {
+     "domain_plain": "(i3) mod 64 = 0 and i3 >= -64 + p0 and 64 <= i3 < p0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "1",
+   "value_latex": "1",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2",
+     "count_plain": "2 * p0^2 - 2 * p0",
+     "count_latex": "2 \\cdot p0^{2} - 2 \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "(65/64) * p0 - (3715/64)",
+   "value_latex": "\\frac{65}{64} \\cdot p0 - \\frac{3715}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 129",
+     "count_plain": "(1/4096) * p0^2 - (3/64) * p0 + 2",
+     "count_latex": "\\frac{1}{4096} \\cdot p0^{2} - \\frac{3}{64} \\cdot p0 + 2"
+    }
+   ]
+  },
+  {
+   "value_plain": "(65/64) * p0 - (3779/64)",
+   "value_latex": "\\frac{65}{64} \\cdot p0 - \\frac{3779}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 129",
+     "count_plain": "(63/4096) * p0^2 - (8127/4096) * p0 + (63/32)",
+     "count_latex": "\\frac{63}{4096} \\cdot p0^{2} - \\frac{8127}{4096} \\cdot p0 + \\frac{63}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(255/32)",
+   "value_latex": "\\frac{255}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i4) mod 64 = 0 and p0 >= 65 and -64 + p0 <= i4 < p0",
+     "count_plain": "(1/64) * p0 - 1",
+     "count_latex": "\\frac{1}{64} \\cdot p0 - 1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(223/32)",
+   "value_latex": "\\frac{223}{32}",
+   "regions": [
+    {
+     "domain_plain": "(i4) mod 64 = 0 and i4 >= -64 + p0 and 64 <= i4 < p0",
+     "count_plain": "(63/64) * p0 - (63/64)",
+     "count_latex": "\\frac{63}{64} \\cdot p0 - \\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(189/64)",
+   "value_latex": "\\frac{189}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "(95/32) * p0^2 - (47/16) * p0 - 2",
+     "count_latex": "\\frac{95}{32} \\cdot p0^{2} - \\frac{47}{16} \\cdot p0 - 2"
+    },
+    {
+     "domain_plain": "2 <= p0 <= 64",
+     "count_plain": "(95/32) * p0^2 - (95/32) * p0",
+     "count_latex": "\\frac{95}{32} \\cdot p0^{2} - \\frac{95}{32} \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/32) * p0 + (317/64)",
+   "value_latex": "\\frac{1}{32} \\cdot p0 + \\frac{317}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 129",
+     "count_plain": "(1/4096) * p0^2 - (3/64) * p0 + 2",
+     "count_latex": "\\frac{1}{4096} \\cdot p0^{2} - \\frac{3}{64} \\cdot p0 + 2"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/32) * p0 + (253/64)",
+   "value_latex": "\\frac{1}{32} \\cdot p0 + \\frac{253}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 129",
+     "count_plain": "(63/4096) * p0^2 - (8127/4096) * p0 + (63/32)",
+     "count_latex": "\\frac{63}{4096} \\cdot p0^{2} - \\frac{8127}{4096} \\cdot p0 + \\frac{63}{32}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(447/64)",
+   "value_latex": "\\frac{447}{64}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and p0 >= 65 and -64 + p0 <= i2 < p0",
+     "count_plain": "(1/64) * p0 - 1",
+     "count_latex": "\\frac{1}{64} \\cdot p0 - 1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(383/64)",
+   "value_latex": "\\frac{383}{64}",
+   "regions": [
+    {
+     "domain_plain": "(i2) mod 64 = 0 and i2 >= -64 + p0 and 64 <= i2 < p0",
+     "count_plain": "(63/64) * p0 - (63/64)",
+     "count_latex": "\\frac{63}{64} \\cdot p0 - \\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (1/64) * p0 + (127/32)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{1}{64} \\cdot p0 + \\frac{127}{32}",
+   "regions": [
+    {
+     "domain_plain": "(1 + i4) mod 64 = 0 and 63 <= i4 <= -2 + p0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (1/64) * p0 + (95/32)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{1}{64} \\cdot p0 + \\frac{95}{32}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65 and 0 < i4 <= -2 + p0",
+     "count_plain": "(63/64)",
+     "count_latex": "\\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (1/32) * p0 + (63/32)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{1}{32} \\cdot p0 + \\frac{63}{32}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (317/64)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{317}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 <= 64 and 0 < i4 <= -2 + p0",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/64) * p0^2 + (1/64) * p0 + (95/32)",
+   "value_latex": "\\frac{1}{64} \\cdot p0^{2} + \\frac{1}{64} \\cdot p0 + \\frac{95}{32}",
+   "regions": [
+    {
+     "domain_plain": "2 <= p0 <= 64",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(65/64) * p0 - 61",
+   "value_latex": "\\frac{65}{64} \\cdot p0 - 61",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "(1/64) * p0 - 1",
+     "count_latex": "\\frac{1}{64} \\cdot p0 - 1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(65/64) * p0 - 62",
+   "value_latex": "\\frac{65}{64} \\cdot p0 - 62",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "(63/64) * p0 - (63/64)",
+     "count_latex": "\\frac{63}{64} \\cdot p0 - \\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "3",
+   "value_latex": "3",
+   "regions": [
+    {
+     "domain_plain": "2 <= p0 <= 64",
+     "count_plain": "2 * p0^2 + 2 * p0 - 2",
+     "count_latex": "2 \\cdot p0^{2} + 2 \\cdot p0 - 2"
+    },
+    {
+     "domain_plain": "p0 >= 65 or p0 = 1",
+     "count_plain": "2 * p0^2",
+     "count_latex": "2 \\cdot p0^{2}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/32) * p0 + 2",
+   "value_latex": "\\frac{1}{32} \\cdot p0 + 2",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "(1/64) * p0 - 1",
+     "count_latex": "\\frac{1}{64} \\cdot p0 - 1"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/32) * p0 + 1",
+   "value_latex": "\\frac{1}{32} \\cdot p0 + 1",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "(63/64) * p0 - (63/64)",
+     "count_latex": "\\frac{63}{64} \\cdot p0 - \\frac{63}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(63/64)",
+   "value_latex": "\\frac{63}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2",
+     "count_plain": "2 * p0 - 2",
+     "count_latex": "2 \\cdot p0 - 2"
+    }
+   ]
+  },
+  {
+   "value_plain": "(67/64) * p0 + (63/64)",
+   "value_latex": "\\frac{67}{64} \\cdot p0 + \\frac{63}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 65",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "p0 + 4",
+   "value_latex": "p0 + 4",
+   "regions": [
+    {
+     "domain_plain": "2 <= p0 <= 64",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  },
+  {
+   "value_plain": "4",
+   "value_latex": "4",
+   "regions": [
+    {
+     "domain_plain": "p0 = 1",
+     "count_plain": "1",
+     "count_latex": "1"
+    }
+   ]
+  }
+ ],
+ "n_ri": 9,
+ "n_rd": 37,
+ "n_dmd_terms": 15,
+ "secs": 0.8,
+ "family": "symbolic"
+}

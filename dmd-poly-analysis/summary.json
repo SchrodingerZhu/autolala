@@ -1,0 +1,267 @@
+{
+ "sym_2mm": {
+  "status": "ok",
+  "secs": 6.4,
+  "family": "symbolic"
+ },
+ "sym_3mm": {
+  "status": "ok",
+  "secs": 20.0,
+  "family": "symbolic"
+ },
+ "sym_adi": {
+  "status": "extract_fail",
+  "secs": 0.0,
+  "family": "symbolic"
+ },
+ "sym_atax": {
+  "status": "ok",
+  "secs": 1.0,
+  "family": "symbolic"
+ },
+ "sym_bicg": {
+  "status": "ok",
+  "secs": 0.8,
+  "family": "symbolic"
+ },
+ "sym_cholesky": {
+  "status": "ok",
+  "secs": 6.2,
+  "family": "symbolic"
+ },
+ "sym_convolution": {
+  "status": "extract_fail",
+  "secs": 0.0,
+  "family": "symbolic"
+ },
+ "sym_correlation": {
+  "status": "ok",
+  "secs": 26.3,
+  "family": "symbolic"
+ },
+ "sym_covariance": {
+  "status": "ok",
+  "secs": 14.0,
+  "family": "symbolic"
+ },
+ "sym_deriche": {
+  "status": "extract_fail",
+  "secs": 0.0,
+  "family": "symbolic"
+ },
+ "sym_doitgen": {
+  "status": "ok",
+  "secs": 4.6,
+  "family": "symbolic"
+ },
+ "sym_durbin": {
+  "status": "extract_fail",
+  "secs": 0.0,
+  "family": "symbolic"
+ },
+ "sym_fdtd": {
+  "status": "ok",
+  "secs": 45.6,
+  "family": "symbolic"
+ },
+ "sym_floyd_warshall": {
+  "status": "ok",
+  "secs": 21.5,
+  "family": "symbolic"
+ },
+ "sym_gemm": {
+  "status": "ok",
+  "secs": 1.0,
+  "family": "symbolic"
+ },
+ "sym_gemver": {
+  "status": "ok",
+  "secs": 4.7,
+  "family": "symbolic"
+ },
+ "sym_gesummv": {
+  "status": "ok",
+  "secs": 1.7,
+  "family": "symbolic"
+ },
+ "sym_gramschmidt": {
+  "status": "extract_fail",
+  "secs": 0.0,
+  "family": "symbolic"
+ },
+ "sym_heat-3d": {
+  "status": "analyze_fail",
+  "secs": 160.6,
+  "family": "symbolic"
+ },
+ "sym_imperfect": {
+  "status": "ok",
+  "secs": 12.2,
+  "family": "symbolic"
+ },
+ "sym_jacobi-1d": {
+  "status": "ok",
+  "secs": 1.8,
+  "family": "symbolic"
+ },
+ "sym_jacobi-2d": {
+  "status": "ok",
+  "secs": 51.5,
+  "family": "symbolic"
+ },
+ "sym_lu": {
+  "status": "ok",
+  "secs": 42.2,
+  "family": "symbolic"
+ },
+ "sym_lu_decomp": {
+  "status": "ok",
+  "secs": 5.4,
+  "family": "symbolic"
+ },
+ "sym_mvt": {
+  "status": "ok",
+  "secs": 0.8,
+  "family": "symbolic"
+ },
+ "sym_seidel-2d": {
+  "status": "ok",
+  "secs": 30.2,
+  "family": "symbolic"
+ },
+ "sym_symm": {
+  "status": "extract_fail",
+  "secs": 0.0,
+  "family": "symbolic"
+ },
+ "sym_syr2k": {
+  "status": "ok",
+  "secs": 5.1,
+  "family": "symbolic"
+ },
+ "sym_syrk": {
+  "status": "ok",
+  "secs": 1.2,
+  "family": "symbolic"
+ },
+ "sym_trisolve": {
+  "status": "ok",
+  "secs": 0.6,
+  "family": "symbolic"
+ },
+ "sym_trmm": {
+  "status": "ok",
+  "secs": 1.4,
+  "family": "symbolic"
+ },
+ "const_3mm": {
+  "status": "ok",
+  "secs": 9.2,
+  "family": "const"
+ },
+ "const_atax": {
+  "status": "ok",
+  "secs": 0.7,
+  "family": "const"
+ },
+ "const_bicg": {
+  "status": "ok",
+  "secs": 0.4,
+  "family": "const"
+ },
+ "const_cholesky": {
+  "status": "ok",
+  "secs": 4.1,
+  "family": "const"
+ },
+ "const_convolution": {
+  "status": "extract_fail",
+  "secs": 0.0,
+  "family": "const"
+ },
+ "const_correlation": {
+  "status": "analyze_fail",
+  "secs": 100.1,
+  "family": "const"
+ },
+ "const_covariance": {
+  "status": "ok",
+  "secs": 8.1,
+  "family": "const"
+ },
+ "const_doitgen": {
+  "status": "ok",
+  "secs": 0.8,
+  "family": "const"
+ },
+ "const_fdtd-apml": {
+  "status": "timeout",
+  "secs": 360.3,
+  "family": "const"
+ },
+ "const_floyd_warshall": {
+  "status": "ok",
+  "secs": 10.7,
+  "family": "const"
+ },
+ "const_gemm": {
+  "status": "ok",
+  "secs": 0.4,
+  "family": "const"
+ },
+ "const_gemver": {
+  "status": "ok",
+  "secs": 2.5,
+  "family": "const"
+ },
+ "const_gesummv": {
+  "status": "ok",
+  "secs": 0.7,
+  "family": "const"
+ },
+ "const_gramschmidt": {
+  "status": "extract_fail",
+  "secs": 0.0,
+  "family": "const"
+ },
+ "const_lu": {
+  "status": "ok",
+  "secs": 3.3,
+  "family": "const"
+ },
+ "const_mvt": {
+  "status": "ok",
+  "secs": 0.5,
+  "family": "const"
+ },
+ "const_seidel-2d": {
+  "status": "ok",
+  "secs": 6.7,
+  "family": "const"
+ },
+ "const_symm": {
+  "status": "extract_fail",
+  "secs": 0.0,
+  "family": "const"
+ },
+ "const_syr2k": {
+  "status": "ok",
+  "secs": 2.4,
+  "family": "const"
+ },
+ "const_syrk": {
+  "status": "ok",
+  "secs": 0.6,
+  "family": "const"
+ },
+ "const_trisolve": {
+  "status": "ok",
+  "secs": 0.5,
+  "family": "const"
+ },
+ "const_trmm": {
+  "status": "ok",
+  "secs": 0.7,
+  "family": "const"
+ }
+}
