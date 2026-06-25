@@ -1,0 +1,57 @@
+{
+  "contest": {
+    "tool-matmul": 27663,
+    "ctrl-matmul": 4913,
+    "tool-syrk": 24364,
+    "ctrl-mvt": 6292,
+    "ctrl-gesummv": 7640,
+    "tool-bicg": 43861,
+    "ctrl-gemm": 6335,
+    "ctrl-bicg": 5036,
+    "ctrl-syrk": 7835,
+    "tool-gemm": 9955,
+    "tool-gesummv": 20539,
+    "tool-mvt": 23832
+  },
+  "analyst_total": 177579,
+  "analyst_list": [
+    [
+      "Analyze gesummv variants",
+      16252
+    ],
+    [
+      "Analyze SYRK kernel locality",
+      19718
+    ],
+    [
+      "Verify optimized.mlir",
+      3014
+    ],
+    [
+      "Analyze bicg kernel locality",
+      40006
+    ],
+    [
+      "Verify optimized.mlir extracts and improves",
+      7101
+    ],
+    [
+      "Verify optimized SYRK extracts+improves",
+      15840
+    ],
+    [
+      "Analyze matmul locality variants",
+      33079
+    ],
+    [
+      "Analyze mvt kernel variants",
+      22361
+    ],
+    [
+      "Analyze and compare GEMM variants",
+      20208
+    ]
+  ],
+  "tool_total": 327793,
+  "ctrl_total": 38051
+}

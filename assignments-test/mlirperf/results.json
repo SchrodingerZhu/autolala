@@ -1,0 +1,446 @@
+{
+  "tool-matmul": {
+    "kernel": "matmul",
+    "regimes": {
+      "small": {
+        "testN": 256,
+        "src": "opt_small.mlir",
+        "correct": true,
+        "t_ref": 0.052823362000000006,
+        "t_opt": 0.014126129000000001,
+        "speedup": 3.739408156332142,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 768,
+        "src": "opt_medium.mlir",
+        "correct": true,
+        "t_ref": 1.5204119715,
+        "t_opt": 0.35374186274999997,
+        "speedup": 4.298083239796023,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 1280,
+        "src": "opt_large.mlir",
+        "correct": true,
+        "t_ref": 8.591758151,
+        "t_opt": 1.6373848522499999,
+        "speedup": 5.247244188923394,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 4.428245195017186,
+    "all_correct": true,
+    "geo_speedup": 4.385337163897255,
+    "n_regimes_scored": 3,
+    "group": "tool"
+  },
+  "ctrl-matmul": {
+    "kernel": "matmul",
+    "regimes": {
+      "small": {
+        "testN": 256,
+        "src": "opt_small.mlir",
+        "correct": true,
+        "t_ref": 0.053641626500000004,
+        "t_opt": 0.010810172500000001,
+        "speedup": 4.962143434806428,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 768,
+        "src": "opt_medium.mlir",
+        "correct": true,
+        "t_ref": 1.527562625,
+        "t_opt": 0.25367441625000003,
+        "speedup": 6.021744910588712,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 1280,
+        "src": "opt_large.mlir",
+        "correct": true,
+        "t_ref": 8.56690442,
+        "t_opt": 1.1605665845000002,
+        "speedup": 7.38165697204769,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 6.12184843914761,
+    "all_correct": true,
+    "geo_speedup": 6.042015603601839,
+    "n_regimes_scored": 3,
+    "group": "ctrl"
+  },
+  "tool-gemm": {
+    "kernel": "gemm",
+    "regimes": {
+      "small": {
+        "testN": 256,
+        "src": "opt_small.mlir",
+        "correct": true,
+        "t_ref": 0.05337074775,
+        "t_opt": 0.010863688750000001,
+        "speedup": 4.912764805600676,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 768,
+        "src": "opt_medium.mlir",
+        "correct": true,
+        "t_ref": 1.5210506185000001,
+        "t_opt": 0.26481928675,
+        "speedup": 5.743730515881696,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 1280,
+        "src": "opt_large.mlir",
+        "correct": true,
+        "t_ref": 8.640890227,
+        "t_opt": 1.24780343025,
+        "speedup": 6.924880968846815,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 5.860458763443063,
+    "all_correct": true,
+    "geo_speedup": 5.8028870026918495,
+    "n_regimes_scored": 3,
+    "group": "tool"
+  },
+  "ctrl-gemm": {
+    "kernel": "gemm",
+    "regimes": {
+      "small": {
+        "testN": 256,
+        "src": "opt_small.mlir",
+        "correct": true,
+        "t_ref": 0.05264911725,
+        "t_opt": 0.014104269000000001,
+        "speedup": 3.7328497669748075,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 768,
+        "src": "opt_medium.mlir",
+        "correct": true,
+        "t_ref": 1.52595175,
+        "t_opt": 0.35418511125,
+        "speedup": 4.308345273505621,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 1280,
+        "src": "opt_large.mlir",
+        "correct": true,
+        "t_ref": 8.618066965250001,
+        "t_opt": 1.794322002,
+        "speedup": 4.802965663712572,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 4.281386901397667,
+    "all_correct": true,
+    "geo_speedup": 4.258795939993279,
+    "n_regimes_scored": 3,
+    "group": "ctrl"
+  },
+  "tool-2mm": {
+    "kernel": "2mm",
+    "regimes": {
+      "small": {
+        "testN": 224,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.06393527825,
+        "t_opt": 0.019183757750000002,
+        "speedup": 3.3327817773345263,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 576,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 1.1644042435,
+        "t_opt": 0.302546046,
+        "speedup": 3.848684386706544,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 1024,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 9.57128722125,
+        "t_opt": 1.71290985775,
+        "speedup": 5.58773550046726,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 4.25640055483611,
+    "all_correct": true,
+    "geo_speedup": 4.153858249137381,
+    "n_regimes_scored": 3,
+    "group": "tool"
+  },
+  "ctrl-2mm": {
+    "kernel": "2mm",
+    "regimes": {
+      "small": {
+        "testN": 224,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.06408601425,
+        "t_opt": 0.018798818249999998,
+        "speedup": 3.4090448345070845,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 576,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 1.16512590075,
+        "t_opt": 0.29238811850000007,
+        "speedup": 3.9848606254155974,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 1024,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 9.571635337500002,
+        "t_opt": 1.6584685402500003,
+        "speedup": 5.771369854297723,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 4.3884251047401355,
+    "all_correct": true,
+    "geo_speedup": 4.279978478820216,
+    "n_regimes_scored": 3,
+    "group": "ctrl"
+  },
+  "tool-mvt": {
+    "kernel": "mvt",
+    "regimes": {
+      "small": {
+        "testN": 1536,
+        "src": "opt_small.mlir",
+        "correct": true,
+        "t_ref": 0.02602765275,
+        "t_opt": 0.011945521,
+        "speedup": 2.178862918578436,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 4096,
+        "src": "opt_medium.mlir",
+        "correct": true,
+        "t_ref": 0.229184906,
+        "t_opt": 0.08582935425,
+        "speedup": 2.6702391973314885,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 7168,
+        "src": "opt_large.mlir",
+        "correct": true,
+        "t_ref": 0.7423132370000001,
+        "t_opt": 0.24776062999999998,
+        "speedup": 2.9960903675454817,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 2.615064161151802,
+    "all_correct": true,
+    "geo_speedup": 2.5928555803329347,
+    "n_regimes_scored": 3,
+    "group": "tool"
+  },
+  "ctrl-mvt": {
+    "kernel": "mvt",
+    "regimes": {
+      "small": {
+        "testN": 1536,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.025798182,
+        "t_opt": 0.017807826500000002,
+        "speedup": 1.4486990874489931,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 4096,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.22384919375,
+        "t_opt": 0.13134573950000003,
+        "speedup": 1.7042744941871522,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 7168,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.7267400112500001,
+        "t_opt": 0.39116287175000003,
+        "speedup": 1.8578961955123239,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 1.6702899257161565,
+    "all_correct": true,
+    "geo_speedup": 1.6615486381789646,
+    "n_regimes_scored": 3,
+    "group": "ctrl"
+  },
+  "tool-atax": {
+    "kernel": "atax",
+    "regimes": {
+      "small": {
+        "testN": 1536,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.017188172,
+        "t_opt": 0.012872526000000002,
+        "speedup": 1.335260227868252,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 4096,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.12513656525000003,
+        "t_opt": 0.08906912275000001,
+        "speedup": 1.4049376639897355,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 7168,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.37983214375,
+        "t_opt": 0.22474568875,
+        "speedup": 1.6900530811628305,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 1.4767503243402726,
+    "all_correct": true,
+    "geo_speedup": 1.4690653134227711,
+    "n_regimes_scored": 3,
+    "group": "tool"
+  },
+  "ctrl-atax": {
+    "kernel": "atax",
+    "regimes": {
+      "small": {
+        "testN": 1536,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.017399900500000003,
+        "t_opt": 0.011218283,
+        "speedup": 1.5510306256313913,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 4096,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.12498275,
+        "t_opt": 0.08390051200000001,
+        "speedup": 1.4896541990113241,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 7168,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.38521424675000004,
+        "t_opt": 0.20523038025,
+        "speedup": 1.8769845199368334,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 1.6392231148598497,
+    "all_correct": true,
+    "geo_speedup": 1.6307554667210555,
+    "n_regimes_scored": 3,
+    "group": "ctrl"
+  },
+  "tool-syrk": {
+    "kernel": "syrk",
+    "regimes": {
+      "small": {
+        "testN": 256,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.02778941275,
+        "t_opt": 0.00712642925,
+        "speedup": 3.899486232884442,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 768,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 0.84953122025,
+        "t_opt": 0.17716510775000002,
+        "speedup": 4.795138450449197,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 1408,
+        "src": "opt.mlir",
+        "correct": true,
+        "t_ref": 5.10599937375,
+        "t_opt": 1.22157136725,
+        "speedup": 4.179861701608658,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 4.291495461647433,
+    "all_correct": true,
+    "geo_speedup": 4.275531906105088,
+    "n_regimes_scored": 3,
+    "group": "tool"
+  },
+  "ctrl-syrk": {
+    "kernel": "syrk",
+    "regimes": {
+      "small": {
+        "testN": 256,
+        "src": "opt_small.mlir",
+        "correct": true,
+        "t_ref": 0.026531945,
+        "t_opt": 0.008203446999999999,
+        "speedup": 3.234243483257709,
+        "status": "ok"
+      },
+      "medium": {
+        "testN": 768,
+        "src": "opt_medium.mlir",
+        "correct": true,
+        "t_ref": 0.85105076075,
+        "t_opt": 0.19278999575,
+        "speedup": 4.414392756424966,
+        "status": "ok"
+      },
+      "large": {
+        "testN": 1408,
+        "src": "opt_large.mlir",
+        "correct": true,
+        "t_ref": 5.16274307275,
+        "t_opt": 1.1802296570000002,
+        "speedup": 4.374354636938257,
+        "status": "ok"
+      }
+    },
+    "avg_speedup": 4.007663625540311,
+    "all_correct": true,
+    "geo_speedup": 3.9675209056019742,
+    "n_regimes_scored": 3,
+    "group": "ctrl"
+  }
+}

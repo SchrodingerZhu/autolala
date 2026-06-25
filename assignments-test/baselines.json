@@ -1,0 +1,32 @@
+{
+  "matmul": {
+    "baseline_dmd": 1.0808996824030235e+17,
+    "baseline_total": 1125899906842624.0,
+    "ok": true
+  },
+  "gemm": {
+    "baseline_dmd": 3.701424876491443e+16,
+    "baseline_total": 1125908496777216.0,
+    "ok": true
+  },
+  "mvt": {
+    "baseline_dmd": 1126606192214.5764,
+    "baseline_total": 34359738368.0,
+    "ok": true
+  },
+  "bicg": {
+    "baseline_dmd": 31227002627.780563,
+    "baseline_total": 30064836608.0,
+    "ok": true
+  },
+  "syrk": {
+    "baseline_dmd": 766294183084038.0,
+    "baseline_total": 562962838388736.0,
+    "ok": true
+  },
+  "gesummv": {
+    "baseline_dmd": 54700690960.93095,
+    "baseline_total": 34360066048.0,
+    "ok": true
+  }
+}

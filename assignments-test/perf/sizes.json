@@ -1,0 +1,14 @@
+{
+  "matmul":     {"corr": [64,128], "perf": 1024},
+  "gemm":       {"corr": [64,128], "perf": 1024},
+  "2mm":        {"corr": [64,128], "perf": 768},
+  "3mm":        {"corr": [64,128], "perf": 768},
+  "mvt":        {"corr": [128,512], "perf": 4096},
+  "atax":       {"corr": [128,512], "perf": 4096},
+  "bicg":       {"corr": [128,512], "perf": 4096},
+  "gemver":     {"corr": [128,512], "perf": 4096},
+  "gesummv":    {"corr": [128,512], "perf": 4096},
+  "syrk":       {"corr": [64,128], "perf": 1024},
+  "doitgen":    {"corr": [24,40],  "perf": 160},
+  "covariance": {"corr": [64,128], "perf": 1024}
+}

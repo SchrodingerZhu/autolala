@@ -1,0 +1,98 @@
+{
+  "ctrl-bicg": {
+    "group": "ctrl",
+    "kernel": "bicg",
+    "ok": true,
+    "score_secs": 2.9,
+    "dmd": 26000128810.26323,
+    "total": 30064836608.0
+  },
+  "ctrl-gemm": {
+    "group": "ctrl",
+    "kernel": "gemm",
+    "ok": true,
+    "score_secs": 15.2,
+    "dmd": 860716163402074.9,
+    "total": 1125908496777216.0
+  },
+  "ctrl-gesummv": {
+    "group": "ctrl",
+    "kernel": "gesummv",
+    "ok": true,
+    "score_secs": 5.6,
+    "dmd": 82667301949.57549,
+    "total": 34360066048.0
+  },
+  "ctrl-matmul": {
+    "group": "ctrl",
+    "kernel": "matmul",
+    "ok": true,
+    "score_secs": 9.9,
+    "dmd": 2200838371941978.5,
+    "total": 1125899906842624.0
+  },
+  "ctrl-mvt": {
+    "group": "ctrl",
+    "kernel": "mvt",
+    "ok": true,
+    "score_secs": 7.0,
+    "dmd": 36021782204.417786,
+    "total": 34359738368.0
+  },
+  "ctrl-syrk": {
+    "group": "ctrl",
+    "kernel": "syrk",
+    "ok": true,
+    "score_secs": 1.0,
+    "dmd": 403607073860980.3,
+    "total": 562962838388736.0
+  },
+  "tool-bicg": {
+    "group": "tool",
+    "kernel": "bicg",
+    "ok": true,
+    "score_secs": 2.9,
+    "dmd": 26659260672.937153,
+    "total": 30064836608.0
+  },
+  "tool-gemm": {
+    "group": "tool",
+    "kernel": "gemm",
+    "ok": true,
+    "score_secs": 13.8,
+    "dmd": 950582934108107.6,
+    "total": 1125908496777216.0
+  },
+  "tool-gesummv": {
+    "group": "tool",
+    "kernel": "gesummv",
+    "ok": true,
+    "score_secs": 17.9,
+    "dmd": 33282743160.959045,
+    "total": 34360066048.0
+  },
+  "tool-matmul": {
+    "group": "tool",
+    "kernel": "matmul",
+    "ok": true,
+    "score_secs": 9.9,
+    "dmd": 2200838371941978.5,
+    "total": 1125899906842624.0
+  },
+  "tool-mvt": {
+    "group": "tool",
+    "kernel": "mvt",
+    "ok": true,
+    "score_secs": 7.7,
+    "dmd": 20302043564.566135,
+    "total": 34359738368.0
+  },
+  "tool-syrk": {
+    "group": "tool",
+    "kernel": "syrk",
+    "ok": true,
+    "score_secs": 1.0,
+    "dmd": 403607073860980.3,
+    "total": 562962838388736.0
+  }
+}

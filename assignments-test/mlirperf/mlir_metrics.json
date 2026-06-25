@@ -1,0 +1,146 @@
+{
+  "tool-matmul": {
+    "kernel": "matmul",
+    "group": "tool",
+    "correct": true,
+    "avg": 4.428245195017186,
+    "per": {
+      "small": 3.74,
+      "medium": 4.3,
+      "large": 5.25
+    },
+    "tok": 15289
+  },
+  "ctrl-matmul": {
+    "kernel": "matmul",
+    "group": "ctrl",
+    "correct": true,
+    "avg": 6.12184843914761,
+    "per": {
+      "small": 4.96,
+      "medium": 6.02,
+      "large": 7.38
+    },
+    "tok": 11977
+  },
+  "tool-gemm": {
+    "kernel": "gemm",
+    "group": "tool",
+    "correct": true,
+    "avg": 5.860458763443063,
+    "per": {
+      "small": 4.91,
+      "medium": 5.74,
+      "large": 6.92
+    },
+    "tok": 42208
+  },
+  "ctrl-gemm": {
+    "kernel": "gemm",
+    "group": "ctrl",
+    "correct": true,
+    "avg": 4.281386901397667,
+    "per": {
+      "small": 3.73,
+      "medium": 4.31,
+      "large": 4.8
+    },
+    "tok": 8577
+  },
+  "tool-2mm": {
+    "kernel": "2mm",
+    "group": "tool",
+    "correct": true,
+    "avg": 4.25640055483611,
+    "per": {
+      "small": 3.33,
+      "medium": 3.85,
+      "large": 5.59
+    },
+    "tok": 16793
+  },
+  "ctrl-2mm": {
+    "kernel": "2mm",
+    "group": "ctrl",
+    "correct": true,
+    "avg": 4.3884251047401355,
+    "per": {
+      "small": 3.41,
+      "medium": 3.98,
+      "large": 5.77
+    },
+    "tok": 6334
+  },
+  "tool-mvt": {
+    "kernel": "mvt",
+    "group": "tool",
+    "correct": true,
+    "avg": 2.615064161151802,
+    "per": {
+      "small": 2.18,
+      "medium": 2.67,
+      "large": 3.0
+    },
+    "tok": 19440
+  },
+  "ctrl-mvt": {
+    "kernel": "mvt",
+    "group": "ctrl",
+    "correct": true,
+    "avg": 1.6702899257161565,
+    "per": {
+      "small": 1.45,
+      "medium": 1.7,
+      "large": 1.86
+    },
+    "tok": 11220
+  },
+  "tool-atax": {
+    "kernel": "atax",
+    "group": "tool",
+    "correct": true,
+    "avg": 1.4767503243402726,
+    "per": {
+      "small": 1.34,
+      "medium": 1.4,
+      "large": 1.69
+    },
+    "tok": 28178
+  },
+  "ctrl-atax": {
+    "kernel": "atax",
+    "group": "ctrl",
+    "correct": true,
+    "avg": 1.6392231148598497,
+    "per": {
+      "small": 1.55,
+      "medium": 1.49,
+      "large": 1.88
+    },
+    "tok": 36923
+  },
+  "tool-syrk": {
+    "kernel": "syrk",
+    "group": "tool",
+    "correct": true,
+    "avg": 4.291495461647433,
+    "per": {
+      "small": 3.9,
+      "medium": 4.8,
+      "large": 4.18
+    },
+    "tok": 27852
+  },
+  "ctrl-syrk": {
+    "kernel": "syrk",
+    "group": "ctrl",
+    "correct": true,
+    "avg": 4.007663625540311,
+    "per": {
+      "small": 3.23,
+      "medium": 4.41,
+      "large": 4.37
+    },
+    "tok": 17338
+  }
+}

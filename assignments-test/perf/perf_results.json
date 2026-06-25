@@ -1,0 +1,554 @@
+{
+  "tool-matmul": {
+    "kernel": "matmul",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 18.68955957132636,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 1024,
+    "t_ref_s": 4.614698507125,
+    "t_opt_s": 0.24691317575000002,
+    "group": "tool",
+    "eval_secs": 48.8
+  },
+  "ctrl-matmul": {
+    "kernel": "matmul",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 19.513164562219735,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 1024,
+    "t_ref_s": 4.606171653,
+    "t_opt_s": 0.23605456912500006,
+    "group": "ctrl",
+    "eval_secs": 48.7
+  },
+  "tool-gemm": {
+    "kernel": "gemm",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 18.84489134307503,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 1024,
+    "t_ref_s": 4.609414879125,
+    "t_opt_s": 0.24459758325000003,
+    "group": "tool",
+    "eval_secs": 48.6
+  },
+  "ctrl-gemm": {
+    "kernel": "gemm",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 20.914865587533,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 1024,
+    "t_ref_s": 4.5943578648750005,
+    "t_opt_s": 0.21966949037500005,
+    "group": "ctrl",
+    "eval_secs": 48.4
+  },
+  "tool-2mm": {
+    "kernel": "2mm",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 9.841135622841993,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 768,
+    "t_ref_s": 3.382654165875,
+    "t_opt_s": 0.34372599825000005,
+    "group": "tool",
+    "eval_secs": 37.5
+  },
+  "ctrl-2mm": {
+    "kernel": "2mm",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 17.403031721791464,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 768,
+    "t_ref_s": 3.3698007497500004,
+    "t_opt_s": 0.19363297175,
+    "group": "ctrl",
+    "eval_secs": 35.8
+  },
+  "tool-3mm": {
+    "kernel": "3mm",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 16.64149282110845,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 768,
+    "t_ref_s": 5.050472219875,
+    "t_opt_s": 0.30348672887500006,
+    "group": "tool",
+    "eval_secs": 53.8
+  },
+  "ctrl-3mm": {
+    "kernel": "3mm",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 16.529326297891306,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 768,
+    "t_ref_s": 5.072481793874999,
+    "t_opt_s": 0.30687770950000004,
+    "group": "ctrl",
+    "eval_secs": 54.1
+  },
+  "tool-mvt": {
+    "kernel": "mvt",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 2.612561266574028,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.19302184487500004,
+    "t_opt_s": 0.073882227125,
+    "group": "tool",
+    "eval_secs": 2.8
+  },
+  "ctrl-mvt": {
+    "kernel": "mvt",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 2.456017193311715,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 4.3198244231705337e-16
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 1.814586465900714e-15
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.190282671125,
+    "t_opt_s": 0.07747611525,
+    "group": "ctrl",
+    "eval_secs": 2.8
+  },
+  "tool-atax": {
+    "kernel": "atax",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 0.9435290968854998,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 4.429344107876553e-16
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 5.836525404333463e-16
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.075843541,
+    "t_opt_s": 0.08038283212500001,
+    "group": "tool",
+    "eval_secs": 1.7
+  },
+  "ctrl-atax": {
+    "kernel": "atax",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 1.0074082693972477,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 4.429344107876553e-16
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 5.836525404333463e-16
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.082489720375,
+    "t_opt_s": 0.08188310825,
+    "group": "ctrl",
+    "eval_secs": 1.8
+  },
+  "tool-bicg": {
+    "kernel": "bicg",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 1.0155608986820162,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.07948988237500001,
+    "t_opt_s": 0.07827190125,
+    "group": "tool",
+    "eval_secs": 1.8
+  },
+  "ctrl-bicg": {
+    "kernel": "bicg",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 1.0057801886489688,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 8.650536413963252e-16
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 1.7552813874779566e-15
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.075391074625,
+    "t_opt_s": 0.074957804375,
+    "group": "ctrl",
+    "eval_secs": 1.7
+  },
+  "tool-gemver": {
+    "kernel": "gemver",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 2.3775259333519427,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 1.1564614691296884e-15
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 2.570966401285542e-15
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.20350009700000002,
+    "t_opt_s": 0.085593218625,
+    "group": "tool",
+    "eval_secs": 3.1
+  },
+  "ctrl-gemver": {
+    "kernel": "gemver",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 2.737464480207649,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 1.1688964685057846e-15
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 2.782114303170675e-15
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.20460260624999999,
+    "t_opt_s": 0.074741647875,
+    "group": "ctrl",
+    "eval_secs": 3.0
+  },
+  "tool-gesummv": {
+    "kernel": "gesummv",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 1.0034199709145522,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.12582894425000002,
+    "t_opt_s": 0.125400079625,
+    "group": "tool",
+    "eval_secs": 2.7
+  },
+  "ctrl-gesummv": {
+    "kernel": "gesummv",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 1.018196139555824,
+    "corr_detail": [
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 512,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 4096,
+    "t_ref_s": 0.12321741412500002,
+    "t_opt_s": 0.12101540100000001,
+    "group": "ctrl",
+    "eval_secs": 2.6
+  },
+  "tool-syrk": {
+    "kernel": "syrk",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 24.879571208605586,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 1.0944464049070465e-15
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 1.6124339841076562e-15
+      }
+    ],
+    "perf_N": 1024,
+    "t_ref_s": 2.26530547175,
+    "t_opt_s": 0.0910508245,
+    "group": "tool",
+    "eval_secs": 23.8
+  },
+  "ctrl-syrk": {
+    "kernel": "syrk",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 23.757193140207665,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 1.0944464049070465e-15
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 1.6124339841076562e-15
+      }
+    ],
+    "perf_N": 1024,
+    "t_ref_s": 2.2468022210000003,
+    "t_opt_s": 0.09457355537500002,
+    "group": "ctrl",
+    "eval_secs": 23.6
+  },
+  "tool-doitgen": {
+    "kernel": "doitgen",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 2.6457736737844355,
+    "corr_detail": [
+      {
+        "N": 24,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 40,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 160,
+    "t_ref_s": 0.64080425725,
+    "t_opt_s": 0.24219919625000003,
+    "group": "tool",
+    "eval_secs": 9.1
+  },
+  "ctrl-doitgen": {
+    "kernel": "doitgen",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 4.492213630806239,
+    "corr_detail": [
+      {
+        "N": 24,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 40,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 160,
+    "t_ref_s": 0.6412554822500001,
+    "t_opt_s": 0.14274821612500002,
+    "group": "ctrl",
+    "eval_secs": 8.0
+  },
+  "tool-covariance": {
+    "kernel": "covariance",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 38.129161662832495,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 1024,
+    "t_ref_s": 3.872089508125,
+    "t_opt_s": 0.10155191825000001,
+    "group": "tool",
+    "eval_secs": 39.8
+  },
+  "ctrl-covariance": {
+    "kernel": "covariance",
+    "build_ok": true,
+    "correct": true,
+    "speedup": 20.714038605032165,
+    "corr_detail": [
+      {
+        "N": 64,
+        "ok": true,
+        "max_rel_err": 0.0
+      },
+      {
+        "N": 128,
+        "ok": true,
+        "max_rel_err": 0.0
+      }
+    ],
+    "perf_N": 1024,
+    "t_ref_s": 3.8421653738750003,
+    "t_opt_s": 0.185486058375,
+    "group": "ctrl",
+    "eval_secs": 40.5
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "tool-matmul": {
+    "kernel": "matmul",
+    "group": "tool",
+    "correct": true,
+    "speedup": 18.68955957132636,
+    "L": 2.9279650562527544,
+    "tokens": 18978
+  },
+  "ctrl-matmul": {
+    "kernel": "matmul",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 19.513164562219735,
+    "L": 2.971089343543181,
+    "tokens": 8264
+  },
+  "tool-gemm": {
+    "kernel": "gemm",
+    "group": "tool",
+    "correct": true,
+    "speedup": 18.84489134307503,
+    "L": 2.9362418608799787,
+    "tokens": 10344
+  },
+  "ctrl-gemm": {
+    "kernel": "gemm",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 20.914865587533,
+    "L": 3.040460178267391,
+    "tokens": 6670
+  },
+  "tool-2mm": {
+    "kernel": "2mm",
+    "group": "tool",
+    "correct": true,
+    "speedup": 9.841135622841993,
+    "L": 2.286571113230482,
+    "tokens": 9781
+  },
+  "ctrl-2mm": {
+    "kernel": "2mm",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 17.403031721791464,
+    "L": 2.8566444279275673,
+    "tokens": 5495
+  },
+  "tool-3mm": {
+    "kernel": "3mm",
+    "group": "tool",
+    "correct": true,
+    "speedup": 16.64149282110845,
+    "L": 2.8118991441761074,
+    "tokens": 14843
+  },
+  "ctrl-3mm": {
+    "kernel": "3mm",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 16.529326297891306,
+    "L": 2.8051361546739564,
+    "tokens": 2517
+  },
+  "tool-mvt": {
+    "kernel": "mvt",
+    "group": "tool",
+    "correct": true,
+    "speedup": 2.612561266574028,
+    "L": 0.9603310683361537,
+    "tokens": 12246
+  },
+  "ctrl-mvt": {
+    "kernel": "mvt",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 2.456017193311715,
+    "L": 0.8985410107944783,
+    "tokens": 5393
+  },
+  "tool-atax": {
+    "kernel": "atax",
+    "group": "tool",
+    "correct": true,
+    "speedup": 0.9435290968854998,
+    "L": -0.058128075342747686,
+    "tokens": 15587
+  },
+  "ctrl-atax": {
+    "kernel": "atax",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 1.0074082693972477,
+    "L": 0.007380962948936194,
+    "tokens": 7050
+  },
+  "tool-bicg": {
+    "kernel": "bicg",
+    "group": "tool",
+    "correct": true,
+    "speedup": 1.0155608986820162,
+    "L": 0.015441069400259735,
+    "tokens": 10350
+  },
+  "ctrl-bicg": {
+    "kernel": "bicg",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 1.0057801886489688,
+    "L": 0.00576354745393082,
+    "tokens": 12294
+  },
+  "tool-gemver": {
+    "kernel": "gemver",
+    "group": "tool",
+    "correct": true,
+    "speedup": 2.3775259333519427,
+    "L": 0.8660604232020794,
+    "tokens": 21904
+  },
+  "ctrl-gemver": {
+    "kernel": "gemver",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 2.737464480207649,
+    "L": 1.0070321197918275,
+    "tokens": 18247
+  },
+  "tool-gesummv": {
+    "kernel": "gesummv",
+    "group": "tool",
+    "correct": true,
+    "speedup": 1.0034199709145522,
+    "L": 0.0034141361134727927,
+    "tokens": 15690
+  },
+  "ctrl-gesummv": {
+    "kernel": "gesummv",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 1.018196139555824,
+    "L": 0.01803257103894259,
+    "tokens": 3412
+  },
+  "tool-syrk": {
+    "kernel": "syrk",
+    "group": "tool",
+    "correct": true,
+    "speedup": 24.879571208605586,
+    "L": 3.214047033341661,
+    "tokens": 15650
+  },
+  "ctrl-syrk": {
+    "kernel": "syrk",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 23.757193140207665,
+    "L": 3.16788535368645,
+    "tokens": 7171
+  },
+  "tool-doitgen": {
+    "kernel": "doitgen",
+    "group": "tool",
+    "correct": true,
+    "speedup": 2.6457736737844355,
+    "L": 0.9729635268055573,
+    "tokens": 9187
+  },
+  "ctrl-doitgen": {
+    "kernel": "doitgen",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 4.492213630806239,
+    "L": 1.5023455938055081,
+    "tokens": 6103
+  },
+  "tool-covariance": {
+    "kernel": "covariance",
+    "group": "tool",
+    "correct": true,
+    "speedup": 38.129161662832495,
+    "L": 3.6409793873396112,
+    "tokens": 18944
+  },
+  "ctrl-covariance": {
+    "kernel": "covariance",
+    "group": "ctrl",
+    "correct": true,
+    "speedup": 20.714038605032165,
+    "L": 3.030811663881865,
+    "tokens": 4205
+  }
+}
