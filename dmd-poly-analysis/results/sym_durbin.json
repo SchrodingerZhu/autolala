@@ -1,6 +1,6 @@
 {
  "status": "extract_fail",
- "error": "\u001b[31mError:\u001b[0m operation `memref.alloca` is not supported inside an extractable affine loop nest\n    \u001b[38;5;246m\u256d\u001b[0m\u001b[38;5;246m\u2500\u001b[0m\u001b[38;5;246m[\u001b[0m /tmp/poly_sym_durbin.mlir:10:18 \u001b[38;5;246m]\u001b[0m\n    \u001b[38;5;246m\u2502\u001b[0m\n \u001b[38;5;246m10 \u2502\u001b[0m \u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[",
+ "error": "\u001b[31mError:\u001b[0m operation `memref.load` is not supported inside an extractable affine loop nest\n    \u001b[38;5;246m\u256d\u001b[0m\u001b[38;5;246m\u2500\u001b[0m\u001b[38;5;246m[\u001b[0m /tmp/poly_sym_durbin.mlir:45:30 \u001b[38;5;246m]\u001b[0m\n    \u001b[38;5;246m\u2502\u001b[0m\n \u001b[38;5;246m45 \u2502\u001b[0m \u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m",
  "secs": 0.0,
  "family": "symbolic"
 }

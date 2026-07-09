@@ -1,4 +1,4 @@
-use crate::ast::{Block, Comparison, ComparisonOp, Expr, Program, Stmt};
+use crate::ast::{Block, Comparison, ComparisonOp, Expr, ForLoop, Program, Stmt};
 use crate::error::{DmdError, DmdResult};
 use crate::formula::{FormulaExpr, FormulaFormatter, format_domain};
 use crate::parse_program;
@@ -29,6 +29,15 @@ pub struct AnalysisOptions {
     pub num_sets: usize,
     pub max_operations: usize,
     pub approximation_method: ApproximationMethod,
+    /// Model the extracted region as an infinitely repeating trace. Implemented
+    /// by wrapping the program in an outer loop that runs twice and keeping only
+    /// the reuse intervals whose *consuming* access lands in the second
+    /// repetition (which sees a full period of prior history). This turns the
+    /// period-boundary "compulsory" accesses into warm reuses at a reuse
+    /// distance equal to the working-set footprint, and drives the compulsory
+    /// term to zero. Two repetitions suffice whenever every live element recurs
+    /// each period (true for affine kernels whose reuse spans at most one nest).
+    pub infinite_repeat: bool,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
@@ -52,6 +61,7 @@ impl Default for AnalysisOptions {
             num_sets: 1,
             max_operations: 5_000_000,
             approximation_method: ApproximationMethod::Scale,
+            infinite_repeat: false,
         }
     }
 }
@@ -600,6 +610,50 @@ pub fn analyze_source(source: &str, options: AnalysisOptions) -> DmdResult<Analy
     analyze_program(&program, options)
 }
 
+/// Loop variable injected as the outermost dimension under `--infinite-repeat`.
+/// It becomes timestamp `Out` dim 0, so the second repetition is `{ dim0 == 1 }`.
+const REPEAT_VAR: &str = "__repeat";
+
+/// Wrap the whole program body in `for __repeat in 0 .. 2 { <body> }`, physically
+/// materializing one extra period of trace. The second copy sees a full prior
+/// period, so its reuse intervals (including period-boundary wraparounds) are the
+/// steady-state ones. `analyze_with_context` then keeps only that second copy.
+fn wrap_infinite_repeat(program: &Program) -> Program {
+    let mut program = program.clone();
+    let repeat = ForLoop {
+        parallel: None,
+        var: REPEAT_VAR.to_string(),
+        lower: Expr::Int(0),
+        upper: Expr::Int(2),
+        step: 1,
+        body: std::mem::replace(&mut program.body, Block::new(Vec::new())),
+    };
+    program.body = Block::new(vec![Stmt::For(repeat)]);
+    program
+}
+
+/// Timestamp index of the `__repeat` counter injected by [`wrap_infinite_repeat`].
+/// The schedule encoding prefixes each loop level with a constant statement-order
+/// dimension, so `Out` dim 0 is the top block's position (`t0 = 0`) and dim 1 is
+/// the outermost loop variable — which, after wrapping, is always `__repeat`.
+/// (Confirmed by the emitted space `[t0=0, __repeat, t1=0, i0=0, ...]`.)
+const REPEAT_DIM: u32 = 1;
+
+/// `timestamp_space ∩ { __repeat == value }` — selects a single repetition once
+/// the program has been wrapped by [`wrap_infinite_repeat`].
+fn fix_repeat_dim<'ctx>(
+    ctx: ContextRef<'ctx>,
+    timestamp_space: &Set<'ctx>,
+    value: i64,
+) -> DmdResult<Set<'ctx>> {
+    let space = timestamp_space.get_space()?;
+    let local_space = LocalSpace::try_from(space)?;
+    let repeat = Affine::var_on_domain(local_space.clone(), DimType::Out, REPEAT_DIM)?;
+    let target = Affine::val_on_domain(local_space, Value::int_from_si(ctx, value)?)?;
+    let eq = Constraint::new_equality_from_affine(repeat.checked_sub(target)?);
+    Ok(timestamp_space.clone().add_constraint(eq)?)
+}
+
 pub fn analyze_program(program: &Program, options: AnalysisOptions) -> DmdResult<AnalysisReport> {
     if options.block_size == 0 {
         return Err(DmdError::semantic("block size must be at least one"));
@@ -614,7 +668,12 @@ pub fn analyze_program(program: &Program, options: AnalysisOptions) -> DmdResult
         .lock()
         .map_err(|_| DmdError::analysis("barvinok analysis lock poisoned"))?;
 
-    let model = validate_program(program.clone())?;
+    let program = if options.infinite_repeat {
+        wrap_infinite_repeat(program)
+    } else {
+        program.clone()
+    };
+    let model = validate_program(program)?;
     let lowering = Lowering::new(&model);
     let context = unsafe {
         Context::from_args([options.approximation_method.as_barvinok_arg()].into_iter())
@@ -650,6 +709,21 @@ fn analyze_with_context<'ctx>(
     let immediate_prev = immediate_next.reverse()?;
     let interval = immediate_prev.apply_range(lt)?;
     let ri_relation = interval.intersect(le.reverse()?)?;
+
+    // Under `--infinite-repeat` the program was wrapped in `for __repeat in 0..2`
+    // (timestamp `Out` dim 0). Keep only reuse intervals whose *consuming* access
+    // lands in the second repetition (`__repeat == 1`): that copy has a full
+    // period of prior history, so its RI/RD are the steady-state values and
+    // period-boundary accesses become warm wraparound reuses (reuse distance ~=
+    // footprint) instead of compulsory misses. The access total is likewise one
+    // period, so `compulsory = total - warm` collapses toward zero.
+    let (ri_relation, total_domain) = if options.infinite_repeat {
+        let second_copy = fix_repeat_dim(ctx, &timestamp_space, 1)?;
+        (ri_relation.intersect_domain(second_copy.clone())?, second_copy)
+    } else {
+        (ri_relation, timestamp_space.clone())
+    };
+
     let ri_values = ri_relation.clone().cardinality()?;
     let ri_distribution = DistributionProcessor::new(ri_values).collect()?;
     let ri_rendered = render_distribution(&ri_distribution)?;
@@ -691,7 +765,7 @@ fn analyze_with_context<'ctx>(
 
     let rd_relation = ri_relation.apply_range(access_map.clone())?;
     let rd_values = rd_relation.cardinality()?;
-    let total_accesses = timestamp_space.clone().cardinality()?;
+    let total_accesses = total_domain.cardinality()?;
     let rd_distribution = DistributionProcessor::new(rd_values).collect()?;
     let total_expr = render_piecewise(total_accesses.clone())?;
     let rd_rendered = render_distribution(&rd_distribution)?;
@@ -1709,6 +1783,47 @@ parallel(4) for i in 0 .. N {
                 .any(|entry| entry.value_plain == "1")
         );
         assert!(report.warm_accesses_plain.contains("N"));
+    }
+
+    #[test]
+    fn infinite_repeat_adds_footprint_wraparound_reuse() {
+        // In NESTED, each `A[i, j]` is touched exactly once per period, so under
+        // the single-shot model it is compulsory (no reuse). Under infinite
+        // repeat the next period re-touches it, producing a wraparound reuse at a
+        // reuse distance equal to the working-set footprint (~ N * M).
+        let single = analyze_source(NESTED, AnalysisOptions::default())
+            .expect("single-shot analysis should succeed");
+        let repeated = analyze_source(
+            NESTED,
+            AnalysisOptions {
+                infinite_repeat: true,
+                ..AnalysisOptions::default()
+            },
+        )
+        .expect("infinite-repeat analysis should succeed");
+
+        // The access total is one period either way (second-copy normalization).
+        assert_eq!(
+            single.total_accesses_plain,
+            repeated.total_accesses_plain,
+            "infinite repeat must keep exactly one period of accesses"
+        );
+
+        let has_footprint_rd = |report: &AnalysisReport| {
+            report
+                .rd_distribution
+                .iter()
+                .any(|entry| entry.value_plain.contains("N * M"))
+        };
+        assert!(
+            !has_footprint_rd(&single),
+            "single-shot must not see a footprint-sized reuse for the once-per-period A[i, j]"
+        );
+        assert!(
+            has_footprint_rd(&repeated),
+            "infinite repeat must convert the period-boundary access into a footprint-distance reuse"
+        );
+        assert!(repeated.rd_distribution.len() > single.rd_distribution.len());
     }
 
     #[test]

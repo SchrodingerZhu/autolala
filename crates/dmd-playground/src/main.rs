@@ -249,6 +249,7 @@ impl TaskManager {
                 num_sets: request.num_sets,
                 max_operations: effective_operations,
                 approximation_method: ApproximationMethod::Scale,
+                ..AnalysisOptions::default()
             };
 
             let result = tokio::time::timeout(

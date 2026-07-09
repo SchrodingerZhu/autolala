@@ -1,406 +1,2205 @@
 {
  "status": "ok",
  "dsl_len": 719,
+ "single": {
+  "total": "12 * p1^2 * p0 - 24 * p1 * p0 + 12 * p0",
+  "warm": "(1133/32) * p1^2 * p0 - (6401/64) * p1 * p0 + (29/32) * p1^2 + (96423/64) * p0 - (247/32) * p1 - (2845/64)",
+  "compulsory": "-(749/32) * p1^2 * p0 + (4865/64) * p1 * p0 - (29/32) * p1^2 - (95655/64) * p0 + (247/32) * p1 + (2845/64)",
+  "dmd": "(7/32) * sqrt((1/4) * p1^2 + (7/2)) * p1^2 * p0 + (7/32) * sqrt((1/4) * p1^2 + (5/2)) * p1^2 * p0 + (7/4) * sqrt((1/4) * p1^2) * p1 * p0 + (7/4) * sqrt((1/4) * p1^2 - 1) * p1 * p0 - (147/32) * sqrt((1/4) * p1^2 + (7/2)) * p1 * p0 - (7/64) * sqrt((1/4) * p1^2 + (7/2)) * p1^2 + (7/16) * sqrt((1/4) * p1^2 + (29/8)) * p1 * p0 - (147/32) * sqrt((1/4) * p1^2 + (5/2)) * p1 * p0 - (7/64) * sqrt((1/4) * p1^2 + (5/2)) * p1^2 + (7/32) * sqrt((1/4) * p1^2 + (21/8)) * p1 * p0 + (7/32) * sqrt((1/2) * p1 + (161/64)) * p1^2 * p0 + (3/16) * sqrt((1/4) * p1^2 + (1/4) * p1 + (217/64)) * p1 * p0 + (7/32) * sqrt((1/4) * p1^2 + (1/4) * p1 + (7/2)) * p1 * p0 + (7/32) * sqrt((1/2) * p1 + (25/32)) * p1^2 * p0 + (7/32) * sqrt((1/4) * p1^2 - (11/32)) * p1 * p0 - (749/32) * p1^2 * p0 - (35/4) * sqrt((1/4) * p1^2) * p0 - (7/8) * sqrt((1/4) * p1^2) * p1 - (21/4) * sqrt((1/4) * p1^2 - 1) * p0 - (7/8) * sqrt((1/4) * p1^2 - 1) * p1 + (7/2) * sqrt((1/4) * p1^2 + (1/8)) * p0 + (7/4) * sqrt((1/4) * p1^2 - p1 + 2) * p0 + (7/4) * sqrt((1/4) * p1^2 - 2) * p0 + (7/4) * sqrt((1/4) * p1^2 - (7/8)) * p0 + (7/4) * sqrt((1/4) * p1^2 - p1) * p0 + (35/2) * sqrt((1/4) * p1^2 + (7/2)) * p0 + (147/64) * sqrt((1/4) * p1^2 + (7/2)) * p1 - (231/32) * sqrt((1/4) * p1^2 + (29/8)) * p0 - (7/32) * sqrt((1/4) * p1^2 + (29/8)) * p1 + (35/2) * sqrt((1/4) * p1^2 + (5/2)) * p0 + (147/64) * sqrt((1/4) * p1^2 + (5/2)) * p1 - (7/2) * sqrt((1/4) * p1^2 + (21/8)) * p0 - (7/64) * sqrt((1/4) * p1^2 + (21/8)) * p1 + (7/2) * sqrt((1/4) * p1^2 + (1/4) * p1) * p0 + 2 * sqrt((1/2) * p1 - (7/8)) * p1 * p0 + 2 * sqrt((1/2) * p1 + (1/8)) * p1 * p0 + (3/2) * sqrt(3) * p1^2 * p0 + (1/2) * sqrt(7) * p1^2 * p0 + (15/32) * sqrt((9/2)) * p1^2 * p0 + (21/8) * sqrt((7/2)) * p1^2 * p0 - (133/32) * sqrt((1/2) * p1 + (161/64)) * p1 * p0 - 3 * sqrt((1/4) * p1^2 + (1/4) * p1 + (217/64)) * p0 - (3/16) * sqrt((1/4) * p1^2 + (1/4) * p1 + (217/64)) * p1 + (7/32) * sqrt((281/64)) * p1^2 * p0 + (21/16) * sqrt((217/64)) * p1^2 * p0 - (7/2) * sqrt((1/4) * p1^2 + (1/4) * p1 + (7/2)) * p0 - (7/32) * sqrt((1/4) * p1^2 + (1/4) * p1 + (7/2)) * p1 - (63/16) * sqrt((1/2) * p1 + (25/32)) * p1 * p0 - (7/2) * sqrt((1/4) * p1^2 - (11/32)) * p0 - (7/64) * sqrt((1/4) * p1^2 - (11/32)) * p1 + (1/4) * sqrt((47/8)) * p1^2 * p0 + (7/32) * sqrt((77/32)) * p1^2 * p0 + (21/16) * sqrt((21/32)) * p1^2 * p0 + (7/4) * sqrt((7/8)) * p1^2 * p0 + (4865/64) * p1 * p0 - (29/32) * p1^2 + (35/8) * sqrt((1/4) * p1^2) + (21/8) * sqrt((1/4) * p1^2 - 1) - (7/4) * sqrt((1/4) * p1^2 + (1/8)) - (7/8) * sqrt((1/4) * p1^2 - p1 + 2) - (7/8) * sqrt((1/4) * p1^2 - 2) - (7/8) * sqrt((1/4) * p1^2 - (7/8)) - (7/8) * sqrt((1/4) * p1^2 - p1) - (35/4) * sqrt((1/4) * p1^2 + (7/2)) + (231/64) * sqrt((1/4) * p1^2 + (29/8)) - (35/4) * sqrt((1/4) * p1^2 + (5/2)) + (7/4) * sqrt((1/4) * p1^2 + (21/8)) - (7/2) * sqrt((1/4) * p1^2 + (1/4) * p1) - 4 * sqrt((1/2) * p1 - (7/8)) * p0 - 4 * sqrt((1/2) * p1 + (1/8)) * p0 - (9/2) * sqrt(3) * p1 * p0 - (19/4) * sqrt(7) * p1 * p0 - (15/4) * sqrt((9/2)) * p1 * p0 - (9/2) * sqrt((7/2)) * p1 * p0 + (7/32) * sqrt((7/2)) * p1^2 + (119/16) * sqrt((1/2) * p1 + (161/64)) * p0 + 3 * sqrt((1/4) * p1^2 + (1/4) * p1 + (217/64)) - (7/4) * sqrt((281/64)) * p1 * p0 - (49/16) * sqrt((217/64)) * p1 * p0 + (7/2) * sqrt((1/4) * p1^2 + (1/4) * p1 + (7/2)) + 7 * sqrt((1/2) * p1 + (25/32)) * p0 + (7/4) * sqrt((1/4) * p1^2 - (11/32)) - (9/4) * sqrt((47/8)) * p1 * p0 - (63/32) * sqrt((77/32)) * p1 * p0 - (7/2) * sqrt((7/8)) * p1 * p0 - (95655/64) * p0 + (247/32) * p1 + 3 * sqrt(3) * p0 + (17/4) * sqrt(7) * p0 + (105/32) * sqrt((9/2)) * p0 - (117/16) * sqrt((7/2)) * p0 - (59/32) * sqrt((7/2)) * p1 + (49/32) * sqrt((281/64)) * p0 + (7/4) * sqrt((217/64)) * p0 + (7/32) * sqrt((217/64)) * p1 + 2 * sqrt((47/8)) * p0 + (7/4) * sqrt((77/32)) * p0 - (21/16) * sqrt((21/32)) * p0 + (7/64) * sqrt((21/32)) * p1 + (7/4) * sqrt((7/8)) * p0 + (3/4) * sqrt((7/2)) - (7/4) * sqrt((217/64)) - (49/64) * sqrt((21/32)) + (2845/64)",
+  "ri": [
+   {
+    "value_plain": "6 * p1^2 - 18 * p1 - 23",
+    "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - 23",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "2 * p1 * p0 - 4 * p0 - p1 + 2",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
+     }
+    ]
+   },
+   {
+    "value_plain": "7",
+    "value_latex": "7",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 10",
+      "count_plain": "(1/2) * p1^2 * p0 - (19/4) * p1 * p0 + (17/4) * p0",
+      "count_latex": "\\frac{1}{2} \\cdot p1^{2} \\cdot p0 - \\frac{19}{4} \\cdot p1 \\cdot p0 + \\frac{17}{4} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1^2 - 18 * p1 - 26",
+    "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - 26",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "2 * p1 * p0 - 4 * p0 - p1 + 2",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1^2 - 18 * p1 - (95/4)",
+    "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - \\frac{95}{4}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(1/4) * p1^2 * p0 - (9/2) * p1 * p0 - p1^2 + 8 * p0 + (9/4) * p1 - 4",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 - p1^{2} + 8 \\cdot p0 + \\frac{9}{4} \\cdot p1 - 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1^2 - 18 * p1 - (107/4)",
+    "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - \\frac{107}{4}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(1/4) * p1^2 * p0 - (9/2) * p1 * p0 - p1^2 + 8 * p0 + (9/4) * p1 - 4",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 - p1^{2} + 8 \\cdot p0 + \\frac{9}{4} \\cdot p1 - 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "12 * p1^2 - 24 * p1 - 24",
+    "value_latex": "12 \\cdot p1^{2} - 24 \\cdot p1 - 24",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "4 * p0 - 4",
+      "count_latex": "4 \\cdot p0 - 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1^2 - 12 * p1 - 32",
+    "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - 32",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 10",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1 - 45",
+    "value_latex": "6 \\cdot p1 - 45",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 10",
+      "count_plain": "4 * p1 * p0 - 8 * p0",
+      "count_latex": "4 \\cdot p1 \\cdot p0 - 8 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "3",
+    "value_latex": "3",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 9",
+      "count_plain": "(3/2) * p1^2 * p0 - (9/2) * p1 * p0 + 3 * p0",
+      "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 + 3 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1^2 - 12 * p1 - 35",
+    "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - 35",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1^2 - 12 * p1 - (131/4)",
+    "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - \\frac{131}{4}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 18",
+      "count_plain": "(1/4) * p1 * p0 - (17/4) * p0 - p1 + (17/8)",
+      "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0 - p1 + \\frac{17}{8}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(21/4)",
+    "value_latex": "\\frac{21}{4}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 10 and 8*floor((-1 + p1)/8) <= -2 + p1",
+      "count_plain": "(105/32) * p1^2 * p0 - (11/2) * p1 * p0 + (1/4) * p1^2 - (17/2) * p0 - (17/8) * p1 + 1",
+      "count_latex": "\\frac{105}{32} \\cdot p1^{2} \\cdot p0 - \\frac{11}{2} \\cdot p1 \\cdot p0 + \\frac{1}{4} \\cdot p1^{2} - \\frac{17}{2} \\cdot p0 - \\frac{17}{8} \\cdot p1 + 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1 - (2935/64)",
+    "value_latex": "6 \\cdot p1 - \\frac{2935}{64}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 18",
+      "count_plain": "(7/32) * p1^2 * p0 - (133/32) * p1 * p0 + (119/16) * p0",
+      "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{133}{32} \\cdot p1 \\cdot p0 + \\frac{119}{16} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "12 * p1^2 - 24 * p1 - (1591/64)",
+    "value_latex": "12 \\cdot p1^{2} - 24 \\cdot p1 - \\frac{1591}{64}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/32) * p1 + (7/2)",
+      "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{32} \\cdot p1 + \\frac{7}{2}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(329/64)",
+    "value_latex": "\\frac{329}{64}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 10 and 8*floor((-1 + p1)/8) <= -2 + p1",
+      "count_plain": "(49/32) * p1^2 * p0 - (105/32) * p1 * p0 + (7/4) * p0 + (7/32) * p1 - (7/4)",
+      "count_latex": "\\frac{49}{32} \\cdot p1^{2} \\cdot p0 - \\frac{105}{32} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4}"
+     }
+    ]
+   },
+   {
+    "value_plain": "12 * p1^2 - 24 * p1 - (99/4)",
+    "value_latex": "12 \\cdot p1^{2} - 24 \\cdot p1 - \\frac{99}{4}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 4",
+      "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1 - (1747/32)",
+    "value_latex": "6 \\cdot p1 - \\frac{1747}{32}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 17",
+      "count_plain": "(7/32) * p1^2 * p0 - (63/16) * p1 * p0 + 7 * p0",
+      "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{16} \\cdot p1 \\cdot p0 + 7 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "6 * p1^2 - 12 * p1 - (1419/32)",
+    "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - \\frac{1419}{32}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/64) * p1 + (7/4)",
+      "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{64} \\cdot p1 + \\frac{7}{4}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(55/8)",
+    "value_latex": "\\frac{55}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 9",
+      "count_plain": "(1/4) * p1^2 * p0 - (9/4) * p1 * p0 + 2 * p0",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{4} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(77/32)",
+    "value_latex": "\\frac{77}{32}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 9",
+      "count_plain": "(7/32) * p1^2 * p0 - (63/32) * p1 * p0 + (7/4) * p0",
+      "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{32} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(21/32)",
+    "value_latex": "\\frac{21}{32}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1",
+      "count_plain": "(21/16) * p1^2 * p0 - (21/16) * p0 + (7/64) * p1 - (49/64)",
+      "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{21}{16} \\cdot p0 + \\frac{7}{64} \\cdot p1 - \\frac{49}{64}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(7/8)",
+    "value_latex": "\\frac{7}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 2",
+      "count_plain": "(7/4) * p1^2 * p0 - (7/2) * p1 * p0 + (7/4) * p0",
+      "count_latex": "\\frac{7}{4} \\cdot p1^{2} \\cdot p0 - \\frac{7}{2} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
+     }
+    ]
+   }
+  ],
+  "rd": [
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - 2",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - 2",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p1 * p0 - 8 * p0 - p1 + 4",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 8 \\cdot p0 - p1 + 4"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p1 - 4",
+      "count_latex": "p1 - 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - 3",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - 3",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p1 * p0 - 8 * p0 - p1 + 4",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 8 \\cdot p0 - p1 + 4"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p1 - 4",
+      "count_latex": "p1 - 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "(7/4) * p1 * p0 - (35/4) * p0 - (7/8) * p1 + (35/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p1 \\cdot p0 - \\frac{35}{4} \\cdot p0 - \\frac{7}{8} \\cdot p1 + \\frac{35}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 9",
+      "count_plain": "(7/8) * p1 - (35/8)",
+      "count_latex": "\\frac{7}{8} \\cdot p1 - \\frac{35}{8}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - 1",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - 1",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "(7/4) * p1 * p0 - (21/4) * p0 - (7/8) * p1 + (21/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p1 \\cdot p0 - \\frac{21}{4} \\cdot p0 - \\frac{7}{8} \\cdot p1 + \\frac{21}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 9",
+      "count_plain": "(7/8) * p1 - (21/8)",
+      "count_latex": "\\frac{7}{8} \\cdot p1 - \\frac{21}{8}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (23/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{23}{8}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (1/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 10",
+      "count_plain": "(7/2) * p0 - (7/4)",
+      "count_latex": "\\frac{7}{2} \\cdot p0 - \\frac{7}{4}"
+     },
+     {
+      "domain_plain": "p1 = 9 and p0 >= 2",
+      "count_plain": "(7/4) * p0 - (7/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 10",
+      "count_plain": "(7/4)",
+      "count_latex": "\\frac{7}{4}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 9",
+      "count_plain": "(7/8) * p0",
+      "count_latex": "\\frac{7}{8} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (3/4) * p1",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - p1 + 2",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + 2",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "(7/4) * p0 - (7/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 9",
+      "count_plain": "(7/8) * p0",
+      "count_latex": "\\frac{7}{8} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "21",
+    "value_latex": "21",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and p0 >= 2",
+      "count_plain": "12 * p0 - 6",
+      "count_latex": "12 \\cdot p0 - 6"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 8",
+      "count_plain": "6",
+      "count_latex": "6"
+     }
+    ]
+   },
+   {
+    "value_plain": "7",
+    "value_latex": "7",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and i2 = 5 and p0 >= 2",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "2 * p1",
+    "value_latex": "2 \\cdot p1",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and 6 <= p1 <= 7",
+      "count_plain": "2 * p1 * p0 - 6 * p0 - p1 + 3",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 6 \\cdot p0 - p1 + 3"
+     },
+     {
+      "domain_plain": "p0 = 1 and 6 <= p1 <= 7",
+      "count_plain": "p1 - 3",
+      "count_latex": "p1 - 3"
+     },
+     {
+      "domain_plain": "p1 = 5 and p0 >= 2",
+      "count_plain": "4 * p0 - 2",
+      "count_latex": "4 \\cdot p0 - 2"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 5",
+      "count_plain": "2",
+      "count_latex": "2"
+     }
+    ]
+   },
+   {
+    "value_plain": "6",
+    "value_latex": "6",
+    "regions": [
+     {
+      "domain_plain": "i2 = -3 + p1 and p0 >= 2 and 4 <= p1 <= 7",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "8",
+    "value_latex": "8",
+    "regions": [
+     {
+      "domain_plain": "p1 = 4 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 4",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     },
+     {
+      "domain_plain": "p1 = 3 and p0 >= 2",
+      "count_plain": "2 * p0 - 2",
+      "count_latex": "2 \\cdot p0 - 2"
+     }
+    ]
+   },
+   {
+    "value_plain": "4",
+    "value_latex": "4",
+    "regions": [
+     {
+      "domain_plain": "p1 = 3 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 3",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - 4",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - 4",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - 2",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - 2",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "(7/4) * p0 - (7/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 9",
+      "count_plain": "(7/8) * p0",
+      "count_latex": "\\frac{7}{8} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (31/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{31}{8}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (7/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{7}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "(7/4) * p0 - (7/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 9",
+      "count_plain": "(7/8) * p0",
+      "count_latex": "\\frac{7}{8} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "20",
+    "value_latex": "20",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and p0 >= 2",
+      "count_plain": "8 * p0 - 4",
+      "count_latex": "8 \\cdot p0 - 4"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 8",
+      "count_plain": "4",
+      "count_latex": "4"
+     }
+    ]
+   },
+   {
+    "value_plain": "6",
+    "value_latex": "6",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and i2 = 5 and p0 >= 2",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "2 * p1 - 1",
+    "value_latex": "2 \\cdot p1 - 1",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and 6 <= p1 <= 7",
+      "count_plain": "6 * p0 - 3",
+      "count_latex": "6 \\cdot p0 - 3"
+     },
+     {
+      "domain_plain": "p0 = 1 and 6 <= p1 <= 7",
+      "count_plain": "3",
+      "count_latex": "3"
+     },
+     {
+      "domain_plain": "p0 >= 2 and 4 <= p1 <= 5",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and 4 <= p1 <= 5",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "13",
+    "value_latex": "13",
+    "regions": [
+     {
+      "domain_plain": "p1 = 7 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 7",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "5",
+    "value_latex": "5",
+    "regions": [
+     {
+      "domain_plain": "i2 = -3 + p1 and p0 >= 2 and 5 <= p1 <= 7",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "9",
+    "value_latex": "9",
+    "regions": [
+     {
+      "domain_plain": "p1 = 5 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 5",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "5",
+    "value_latex": "5",
+    "regions": [
+     {
+      "domain_plain": "p1 = 4 and p0 >= 2",
+      "count_plain": "6 * p0 - 1",
+      "count_latex": "6 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 4",
+      "count_plain": "5 * p0",
+      "count_latex": "5 \\cdot p0"
+     },
+     {
+      "domain_plain": "p1 = 3 and p0 >= 2",
+      "count_plain": "4 * p0 - 1",
+      "count_latex": "4 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 3",
+      "count_plain": "3",
+      "count_latex": "3"
+     },
+     {
+      "domain_plain": "p0 > 0 and 5 <= p1 <= 7",
+      "count_plain": "2 * p1 * p0 - 4 * p0",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (3/4) * p1 - 2",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 - 2",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - p1",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "(7/4) * p0 - (7/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 9",
+      "count_plain": "(7/8) * p0",
+      "count_latex": "\\frac{7}{8} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "6",
+    "value_latex": "6",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and p0 > 0",
+      "count_plain": "12 * p0",
+      "count_latex": "12 \\cdot p0"
+     },
+     {
+      "domain_plain": "p1 = 2 and p0 >= 2",
+      "count_plain": "6 * p0 - 5",
+      "count_latex": "6 \\cdot p0 - 5"
+     },
+     {
+      "domain_plain": "p1 = 4 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 4",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 2",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "19",
+    "value_latex": "19",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and p0 >= 2",
+      "count_plain": "3 * p0 - 1",
+      "count_latex": "3 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 8",
+      "count_plain": "2",
+      "count_latex": "2"
+     }
+    ]
+   },
+   {
+    "value_plain": "2 * p1 - 2",
+    "value_latex": "2 \\cdot p1 - 2",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and 5 <= p1 <= 6",
+      "count_plain": "3 * p0 - 1",
+      "count_latex": "3 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p1 = 7 and p0 >= 2",
+      "count_plain": "3 * p0 - 1",
+      "count_latex": "3 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and 5 <= p1 <= 6",
+      "count_plain": "2",
+      "count_latex": "2"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 7",
+      "count_plain": "2",
+      "count_latex": "2"
+     },
+     {
+      "domain_plain": "p1 = 4 and (p0 >= 2 or p0 = 1)",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "2",
+    "value_latex": "2",
+    "regions": [
+     {
+      "domain_plain": "p1 = 3 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 3",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 + (3/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{3}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+      "count_plain": "(1/4) * p1^2 * p0 - (21/4) * p1 * p0 - p1^2 + 20 * p0 + (21/8) * p1 - 10",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{21}{4} \\cdot p1 \\cdot p0 - p1^{2} + 20 \\cdot p0 + \\frac{21}{8} \\cdot p1 - 10"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+      "count_plain": "(1/8) * p1^2 - (21/8) * p1 + 10",
+      "count_latex": "\\frac{1}{8} \\cdot p1^{2} - \\frac{21}{8} \\cdot p1 + 10"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 + (5/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{5}{8}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+      "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 2",
+      "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+      "count_plain": "(1/8) * p1 * p0 - 2 * p0",
+      "count_latex": "\\frac{1}{8} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (7/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{7}{8}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -17 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -17 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (7/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{7}{2}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(7/32) * p1^2 * p0 - (147/32) * p1 * p0 - (7/64) * p1^2 + (35/2) * p0 + (147/64) * p1 - (35/4)",
+      "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{147}{32} \\cdot p1 \\cdot p0 - \\frac{7}{64} \\cdot p1^{2} + \\frac{35}{2} \\cdot p0 + \\frac{147}{64} \\cdot p1 - \\frac{35}{4}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 17",
+      "count_plain": "(7/64) * p1^2 - (147/64) * p1 + (35/4)",
+      "count_latex": "\\frac{7}{64} \\cdot p1^{2} - \\frac{147}{64} \\cdot p1 + \\frac{35}{4}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (29/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{29}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 18",
+      "count_plain": "(7/16) * p1 * p0 - (231/32) * p0 - (7/32) * p1 + (231/64)",
+      "count_latex": "\\frac{7}{16} \\cdot p1 \\cdot p0 - \\frac{231}{32} \\cdot p0 - \\frac{7}{32} \\cdot p1 + \\frac{231}{64}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 18",
+      "count_plain": "(7/32) * p1 * p0 - (231/64) * p0",
+      "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{231}{64} \\cdot p0"
+     },
+     {
+      "domain_plain": "p1 = 17 and p0 >= 2",
+      "count_plain": "(7/32) * p0 - (7/64)",
+      "count_latex": "\\frac{7}{32} \\cdot p0 - \\frac{7}{64}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 17",
+      "count_plain": "(7/64) * p1 * p0 - (7/4) * p0",
+      "count_latex": "\\frac{7}{64} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (17/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{17}{8}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -10 + p1",
+      "count_plain": "(7/4) * p0 - (7/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -10 + p1",
+      "count_plain": "(7/8) * p0",
+      "count_latex": "\\frac{7}{8} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (3/4) * p1 + 4",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 + 4",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -17 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -17 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - p1 + 6",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + 6",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -10 + p1",
+      "count_plain": "(7/4) * p0 - (7/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -10 + p1",
+      "count_plain": "(7/8) * p0",
+      "count_latex": "\\frac{7}{8} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 + (1/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{1}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+      "count_plain": "(1/4) * p1^2 * p0 - (13/4) * p1 * p0 - p1^2 + 12 * p0 + (13/8) * p1 - 6",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{13}{4} \\cdot p1 \\cdot p0 - p1^{2} + 12 \\cdot p0 + \\frac{13}{8} \\cdot p1 - 6"
+     },
+     {
+      "domain_plain": "p1 = 16 and p0 >= 2",
+      "count_plain": "24 * p0 - 12",
+      "count_latex": "24 \\cdot p0 - 12"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+      "count_plain": "(1/8) * p1^2 - (13/8) * p1 + 6",
+      "count_latex": "\\frac{1}{8} \\cdot p1^{2} - \\frac{13}{8} \\cdot p1 + 6"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 16",
+      "count_plain": "12",
+      "count_latex": "12"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (3/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{3}{8}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+      "count_plain": "(1/4) * p1 * p0 - 2 * p0 - p1 + 1",
+      "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 - p1 + 1"
+     },
+     {
+      "domain_plain": "p1 = 16 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+      "count_plain": "(1/8) * p1 - 1",
+      "count_latex": "\\frac{1}{8} \\cdot p1 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (15/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{15}{8}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -17 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -17 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (5/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{5}{2}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(7/32) * p1^2 * p0 - (147/32) * p1 * p0 - (7/64) * p1^2 + (35/2) * p0 + (147/64) * p1 - (35/4)",
+      "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{147}{32} \\cdot p1 \\cdot p0 - \\frac{7}{64} \\cdot p1^{2} + \\frac{35}{2} \\cdot p0 + \\frac{147}{64} \\cdot p1 - \\frac{35}{4}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 17",
+      "count_plain": "(7/64) * p1^2 - (147/64) * p1 + (35/4)",
+      "count_latex": "\\frac{7}{64} \\cdot p1^{2} - \\frac{147}{64} \\cdot p1 + \\frac{35}{4}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (21/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{21}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/64) * p1 + (7/4)",
+      "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{64} \\cdot p1 + \\frac{7}{4}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 17",
+      "count_plain": "(7/64) * p1 * p0 - (7/4) * p0",
+      "count_latex": "\\frac{7}{64} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (9/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{8}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -10 + p1",
+      "count_plain": "(7/4) * p0 - (7/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -10 + p1",
+      "count_plain": "(7/8) * p0",
+      "count_latex": "\\frac{7}{8} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (3/4) * p1 + 2",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 + 2",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -17 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -17 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - p1 + 4",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + 4",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -10 + p1",
+      "count_plain": "(7/4) * p0 - (7/8)",
+      "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -10 + p1",
+      "count_plain": "(7/8) * p0",
+      "count_latex": "\\frac{7}{8} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(3/4) * p1 + (9/2)",
+    "value_latex": "\\frac{3}{4} \\cdot p1 + \\frac{9}{2}",
+    "regions": [
+     {
+      "domain_plain": "i2 = -3 + p1 and (p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (29/4)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{29}{4}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "2 * p1 * p0 - 10 * p0 - p1 + 5",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 10 \\cdot p0 - p1 + 5"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p1 * p0 - 5 * p0",
+      "count_latex": "p1 \\cdot p0 - 5 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (59/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{59}{8}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(3/8) * p1 + (29/4)",
+    "value_latex": "\\frac{3}{8} \\cdot p1 + \\frac{29}{4}",
+    "regions": [
+     {
+      "domain_plain": "i2 = -3 + p1 and (1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - p1 + (17/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{17}{2}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (1/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{1}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p1 * p0 - 10 * p0 - p1 + 5",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 10 \\cdot p0 - p1 + 5"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p1 - 5",
+      "count_latex": "p1 - 5"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (11/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{11}{8}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (3/4) * p1 - (1/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 - \\frac{1}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (25/4)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{25}{4}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "2 * p1 * p0 - 10 * p0 - p1 + 5",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 10 \\cdot p0 - p1 + 5"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p1 - 5",
+      "count_latex": "p1 - 5"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (51/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{51}{8}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (5/8) * p1 + (25/4)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{5}{8} \\cdot p1 + \\frac{25}{4}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (3/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{3}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - p1 + (13/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{13}{2}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (9/4) * p1 - 2",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 - 2",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "4 * p0 - 4",
+      "count_latex": "4 \\cdot p0 - 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (1/4) * p1",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{4} \\cdot p1",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "count_plain": "(7/2) * p0 - (7/2)",
+      "count_latex": "\\frac{7}{2} \\cdot p0 - \\frac{7}{2}"
+     }
+    ]
+   },
+   {
+    "value_plain": "31",
+    "value_latex": "31",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and p0 >= 2",
+      "count_plain": "4 * p0 - 4",
+      "count_latex": "4 \\cdot p0 - 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "2 * p1 + 2",
+    "value_latex": "2 \\cdot p1 + 2",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and 4 <= p1 <= 7",
+      "count_plain": "4 * p0 - 4",
+      "count_latex": "4 \\cdot p0 - 4"
+     },
+     {
+      "domain_plain": "p1 = 3 and p0 >= 2",
+      "count_plain": "2 * p0 - 2",
+      "count_latex": "2 \\cdot p0 - 2"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (15/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{15}{8}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "2 * p1 + 1",
+    "value_latex": "2 \\cdot p1 + 1",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and 3 <= p1 <= 7",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and 3 <= p1 <= 7",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 - (7/8)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 - \\frac{7}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 10",
+      "count_plain": "2 * p1 * p0 - 4 * p0",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 + (1/8)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{1}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 9",
+      "count_plain": "2 * p1 * p0 - 4 * p0",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "3",
+    "value_latex": "3",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and 3 <= p1 <= 8",
+      "count_plain": "(3/2) * p1^2 * p0 - (5/2) * p1 * p0 - p0",
+      "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - \\frac{5}{2} \\cdot p1 \\cdot p0 - p0"
+     },
+     {
+      "domain_plain": "p0 > 0 and p1 >= 9",
+      "count_plain": "(3/2) * p1^2 * p0 - (9/2) * p1 * p0 + 3 * p0",
+      "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 + 3 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "1",
+    "value_latex": "1",
+    "regions": [
+     {
+      "domain_plain": "p1 = 2 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 2",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "18",
+    "value_latex": "18",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and p0 > 0",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "2 * p1 - 3",
+    "value_latex": "2 \\cdot p1 - 3",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and 5 <= p1 <= 6",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     },
+     {
+      "domain_plain": "p1 = 7 and p0 > 0",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(95/4)",
+    "value_latex": "\\frac{95}{4}",
+    "regions": [
+     {
+      "domain_plain": "p1 = 9 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 9",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "24",
+    "value_latex": "24",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 8",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "7",
+    "value_latex": "7",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 10",
+      "count_plain": "(1/2) * p1^2 * p0 - (19/4) * p1 * p0 + (17/4) * p0",
+      "count_latex": "\\frac{1}{2} \\cdot p1^{2} \\cdot p0 - \\frac{19}{4} \\cdot p1 \\cdot p0 + \\frac{17}{4} \\cdot p0"
+     },
+     {
+      "domain_plain": "p1 = 9 and p0 > 0",
+      "count_plain": "16 * p0",
+      "count_latex": "16 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(9/2)",
+    "value_latex": "\\frac{9}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+      "count_plain": "(23/32) * p1^2 * p0 - 4 * p1 * p0 + (105/32) * p0",
+      "count_latex": "\\frac{23}{32} \\cdot p1^{2} \\cdot p0 - 4 \\cdot p1 \\cdot p0 + \\frac{105}{32} \\cdot p0"
+     },
+     {
+      "domain_plain": "p1 = 8 and p0 > 0",
+      "count_plain": "(553/32) * p0",
+      "count_latex": "\\frac{553}{32} \\cdot p0"
+     },
+     {
+      "domain_plain": "p0 > 0 and p1 >= 8 and 8*floor((p1)/8) < p1",
+      "count_plain": "(15/32) * p1^2 * p0 - (15/4) * p1 * p0 + (105/32) * p0",
+      "count_latex": "\\frac{15}{32} \\cdot p1^{2} \\cdot p0 - \\frac{15}{4} \\cdot p1 \\cdot p0 + \\frac{105}{32} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (3/4) * p1 + (1/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 + \\frac{1}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (5/8) * p1 + (29/4)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{5}{8} \\cdot p1 + \\frac{29}{4}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i5) mod 8 = 0 and p0 > 0 and i5 >= -8 + p1 and 7 <= i5 <= -2 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 + (13/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{13}{8}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+      "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 2",
+      "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+      "count_plain": "(1/8) * p1 * p0 - 2 * p0",
+      "count_latex": "\\frac{1}{8} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (49/8)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{49}{8}",
+    "regions": [
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 + (7/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{7}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(81/2)",
+    "value_latex": "\\frac{81}{2}",
+    "regions": [
+     {
+      "domain_plain": "p1 = 9 and p0 >= 2",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 = 9",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (33/4)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{33}{4}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i5) mod 8 = 0 and p0 >= 2 and i5 >= -8 + p1 and 7 <= i5 <= -3 + p1",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (1 + i5) mod 8 = 0 and i5 >= -8 + p1 and 7 <= i5 <= -3 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (7/4) * p1 + (9/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{7}{4} \\cdot p1 + \\frac{9}{2}",
+    "regions": [
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(7/2)",
+    "value_latex": "\\frac{7}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+      "count_plain": "(33/8) * p1^2 * p0 - 8 * p1 * p0 + (15/32) * p1^2 - (85/16) * p0 - (131/32) * p1 + (11/4)",
+      "count_latex": "\\frac{33}{8} \\cdot p1^{2} \\cdot p0 - 8 \\cdot p1 \\cdot p0 + \\frac{15}{32} \\cdot p1^{2} - \\frac{85}{16} \\cdot p0 - \\frac{131}{32} \\cdot p1 + \\frac{11}{4}"
+     },
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 17",
+      "count_plain": "(33/8) * p1^2 * p0 - 30 * p1 * p0 + (7/32) * p1^2 + (1611/16) * p0 - (59/32) * p1 + (3/4)",
+      "count_latex": "\\frac{33}{8} \\cdot p1^{2} \\cdot p0 - 30 \\cdot p1 \\cdot p0 + \\frac{7}{32} \\cdot p1^{2} + \\frac{1611}{16} \\cdot p0 - \\frac{59}{32} \\cdot p1 + \\frac{3}{4}"
+     },
+     {
+      "domain_plain": "p0 > 0 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1",
+      "count_plain": "(21/8) * p1^2 * p0 - (9/2) * p1 * p0 + (7/32) * p1^2 - (117/16) * p0 - (59/32) * p1 + (3/4)",
+      "count_latex": "\\frac{21}{8} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 + \\frac{7}{32} \\cdot p1^{2} - \\frac{117}{16} \\cdot p0 - \\frac{59}{32} \\cdot p1 + \\frac{3}{4}"
+     },
+     {
+      "domain_plain": "p1 = 9 and p0 > 0",
+      "count_plain": "(5235/32) * p0 + (15/8)",
+      "count_latex": "\\frac{5235}{32} \\cdot p0 + \\frac{15}{8}"
+     },
+     {
+      "domain_plain": "p1 = 8 and p0 > 0",
+      "count_plain": "(3115/16) * p0",
+      "count_latex": "\\frac{3115}{16} \\cdot p0"
+     },
+     {
+      "domain_plain": "p0 > 0 and 3 <= p1 <= 7",
+      "count_plain": "(105/32) * p1^2 * p0 - (315/32) * p1 * p0 + (105/16) * p0",
+      "count_latex": "\\frac{105}{32} \\cdot p1^{2} \\cdot p0 - \\frac{315}{32} \\cdot p1 \\cdot p0 + \\frac{105}{16} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 + (217/64)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{217}{64}",
+    "regions": [
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 25",
+      "count_plain": "(1/4) * p1^2 * p0 - (19/4) * p1 * p0 + (17/2) * p0",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{19}{4} \\cdot p1 \\cdot p0 + \\frac{17}{2} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 + (161/64)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{161}{64}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 18",
+      "count_plain": "(7/32) * p1^2 * p0 - (133/32) * p1 * p0 + (119/16) * p0",
+      "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{133}{32} \\cdot p1 \\cdot p0 + \\frac{119}{16} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (9/4) * p1 + (89/64)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 + \\frac{89}{64}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+      "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 4",
+      "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (1/4) * p1 + (273/64)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{4} \\cdot p1 + \\frac{273}{64}",
+    "regions": [
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17",
+      "count_plain": "(1/4) * p1 * p0 - (9/4) * p0 - p1 + (9/4)",
+      "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 - p1 + \\frac{9}{4}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (1/4) * p1 + (217/64)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{4} \\cdot p1 + \\frac{217}{64}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(3/16) * p1 * p0 - 3 * p0 - (3/16) * p1 + 3",
+      "count_latex": "\\frac{3}{16} \\cdot p1 \\cdot p0 - 3 \\cdot p0 - \\frac{3}{16} \\cdot p1 + 3"
+     }
+    ]
+   },
+   {
+    "value_plain": "(337/64)",
+    "value_latex": "\\frac{337}{64}",
+    "regions": [
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 9",
+      "count_plain": "(1/4) * p1^2 * p0 - p1 * p0 + (1/4) * p0",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - p1 \\cdot p0 + \\frac{1}{4} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(281/64)",
+    "value_latex": "\\frac{281}{64}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 8",
+      "count_plain": "(7/32) * p1^2 * p0 - (7/4) * p1 * p0 + (49/32) * p0",
+      "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{7}{4} \\cdot p1 \\cdot p0 + \\frac{49}{32} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (9/4) * p1 + (25/64)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 + \\frac{25}{64}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 2",
+      "count_latex": "2 \\cdot p0 - 2"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (377/64)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{377}{64}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i5) mod 8 = 0 and p0 >= 2 and i5 >= -8 + p1 and 7 <= i5 <= -2 + p1",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 + (433/64)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{433}{64}",
+    "regions": [
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 17",
+      "count_plain": "2 * p1 * p0 - 4 * p0",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 + (345/64)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{345}{64}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+      "count_plain": "2 * p1 * p0 - 4 * p0",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(793/64)",
+    "value_latex": "\\frac{793}{64}",
+    "regions": [
+     {
+      "domain_plain": "p1 = 9 and p0 > 0",
+      "count_plain": "14 * p0",
+      "count_latex": "14 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 + (505/64)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{505}{64}",
+    "regions": [
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 17",
+      "count_plain": "2 * p1 * p0 - 4 * p0",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(601/64)",
+    "value_latex": "\\frac{601}{64}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i5) mod 8 = 0 and p0 > 0 and i5 >= -8 + p1 and 7 <= i5 <= -3 + p1",
+      "count_plain": "2 * p1 * p0 - 4 * p0",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(273/64)",
+    "value_latex": "\\frac{273}{64}",
+    "regions": [
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 17",
+      "count_plain": "(3/2) * p1^2 * p0 - 5 * p1 * p0 + (7/2) * p0 + (1/4) * p1 - (9/4)",
+      "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - 5 \\cdot p1 \\cdot p0 + \\frac{7}{2} \\cdot p0 + \\frac{1}{4} \\cdot p1 - \\frac{9}{4}"
+     },
+     {
+      "domain_plain": "p1 = 9 and p0 > 0",
+      "count_plain": "80 * p0",
+      "count_latex": "80 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(217/64)",
+    "value_latex": "\\frac{217}{64}",
+    "regions": [
+     {
+      "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 10",
+      "count_plain": "(21/16) * p1^2 * p0 - (49/16) * p1 * p0 + (7/4) * p0 + (7/32) * p1 + (1/4)",
+      "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{49}{16} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0 + \\frac{7}{32} \\cdot p1 + \\frac{1}{4}"
+     },
+     {
+      "domain_plain": "p0 > 0 and p1 >= 10 and 8*floor((-1 + p1)/8) <= -2 + p1",
+      "count_plain": "(21/16) * p1^2 * p0 - (49/16) * p1 * p0 + (7/4) * p0 + (7/32) * p1 - (7/4)",
+      "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{49}{16} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4}"
+     },
+     {
+      "domain_plain": "p1 = 9 and p0 > 0",
+      "count_plain": "70 * p0 + (71/32)",
+      "count_latex": "70 \\cdot p0 + \\frac{71}{32}"
+     },
+     {
+      "domain_plain": "p1 = 8 and p0 > 0",
+      "count_plain": "(245/4) * p0",
+      "count_latex": "\\frac{245}{4} \\cdot p0"
+     },
+     {
+      "domain_plain": "p0 > 0 and 3 <= p1 <= 7",
+      "count_plain": "(7/4) * p1^2 * p0 - (21/4) * p1 * p0 + (7/2) * p0",
+      "count_latex": "\\frac{7}{4} \\cdot p1^{2} \\cdot p0 - \\frac{21}{4} \\cdot p1 \\cdot p0 + \\frac{7}{2} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - p1 + (537/64)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{537}{64}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (9/4) * p1 + (3/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 + \\frac{3}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+      "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 4",
+      "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (1/4) * p1 + (7/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{4} \\cdot p1 + \\frac{7}{2}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/32) * p1 + (7/2)",
+      "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{32} \\cdot p1 + \\frac{7}{2}"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (9/4) * p1 + (1/2)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 + \\frac{1}{2}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 2",
+      "count_latex": "2 \\cdot p0 - 2"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + 6",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + 6",
+    "regions": [
+     {
+      "domain_plain": "(1 + i5) mod 8 = 0 and p0 >= 2 and i5 >= -8 + p1 and 7 <= i5 <= -2 + p1",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - p1 + (29/4)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{29}{4}",
+    "regions": [
+     {
+      "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 + (49/32)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{49}{32}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 24",
+      "count_plain": "(1/4) * p1^2 * p0 - (9/2) * p1 * p0 + 8 * p0",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 + 8 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 + (25/32)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{25}{32}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 17",
+      "count_plain": "(7/32) * p1^2 * p0 - (63/16) * p1 * p0 + 7 * p0",
+      "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{16} \\cdot p1 \\cdot p0 + 7 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (19/32)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{19}{32}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+      "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 2",
+      "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+      "count_plain": "(1/8) * p1 * p0 - 2 * p0",
+      "count_latex": "\\frac{1}{8} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (11/32)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{11}{32}",
+    "regions": [
+     {
+      "domain_plain": "p0 >= 2 and p1 >= 17",
+      "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/64) * p1 + (7/4)",
+      "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{64} \\cdot p1 + \\frac{7}{4}"
+     },
+     {
+      "domain_plain": "p0 = 1 and p1 >= 17",
+      "count_plain": "(7/64) * p1 * p0 - (7/4) * p0",
+      "count_latex": "\\frac{7}{64} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/2) * p1 + (13/32)",
+    "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{13}{32}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p1 * p0 - 4 * p0",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "2 * p1 - 4",
+      "count_latex": "2 \\cdot p1 - 4"
+     }
+    ]
+   },
+   {
+    "value_plain": "(165/32)",
+    "value_latex": "\\frac{165}{32}",
+    "regions": [
+     {
+      "domain_plain": "(2 + i5) mod 8 = 0 and p0 > 0 and i5 >= -9 + p1 and 6 <= i5 <= -3 + p1",
+      "count_plain": "2 * p1 * p0 - 4 * p0",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + p1 - (51/32)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{51}{32}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p0 - 1",
+      "count_latex": "2 \\cdot p0 - 1"
+     },
+     {
+      "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - p1 + (165/32)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{165}{32}",
+    "regions": [
+     {
+      "domain_plain": "(2 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -9 + p1 and 6 <= i3 <= -3 + p1",
+      "count_plain": "p0 - 1",
+      "count_latex": "p0 - 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1045/32)",
+    "value_latex": "\\frac{1045}{32}",
+    "regions": [
+     {
+      "domain_plain": "p1 = 8 and p0 >= 2",
+      "count_plain": "14 * p0 - 14",
+      "count_latex": "14 \\cdot p0 - 14"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 + (9/4) * p1 - (43/32)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 - \\frac{43}{32}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+      "count_plain": "2 * p1 * p0 - 2 * p0 - 2 * p1 + 2",
+      "count_latex": "2 \\cdot p1 \\cdot p0 - 2 \\cdot p0 - 2 \\cdot p1 + 2"
+     }
+    ]
+   },
+   {
+    "value_plain": "(47/8)",
+    "value_latex": "\\frac{47}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 9",
+      "count_plain": "(1/4) * p1^2 * p0 - (9/4) * p1 * p0 + 2 * p0",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{4} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(165/32)",
+    "value_latex": "\\frac{165}{32}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 24",
+      "count_plain": "(1/4) * p1^2 * p0 - (9/4) * p1 * p0 + 2 * p0",
+      "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{4} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
+     },
+     {
+      "domain_plain": "p1 = 16 and p0 > 0",
+      "count_plain": "30 * p0",
+      "count_latex": "30 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(45/32)",
+    "value_latex": "\\frac{45}{32}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 24",
+      "count_plain": "(3/2) * p1^2 * p0 - (3/2) * p1 * p0 + (1/8) * p1 - 1",
+      "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - \\frac{3}{2} \\cdot p1 \\cdot p0 + \\frac{1}{8} \\cdot p1 - 1"
+     },
+     {
+      "domain_plain": "p1 = 16 and p0 > 0",
+      "count_plain": "360 * p0 + 1",
+      "count_latex": "360 \\cdot p0 + 1"
+     },
+     {
+      "domain_plain": "p1 = 8 and p0 > 0",
+      "count_plain": "84 * p0",
+      "count_latex": "84 \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (121/32)",
+    "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{121}{32}",
+    "regions": [
+     {
+      "domain_plain": "(2 + i5) mod 8 = 0 and p0 > 0 and i5 >= -9 + p1 and 6 <= i5 <= -3 + p1",
+      "count_plain": "p0",
+      "count_latex": "p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(77/32)",
+    "value_latex": "\\frac{77}{32}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 9",
+      "count_plain": "(7/32) * p1^2 * p0 - (63/32) * p1 * p0 + (7/4) * p0",
+      "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{32} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(21/32)",
+    "value_latex": "\\frac{21}{32}",
+    "regions": [
+     {
+      "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+      "count_plain": "(21/16) * p1^2 * p0 - (21/16) * p0 + (135/64) * p1 - (177/64)",
+      "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{21}{16} \\cdot p0 + \\frac{135}{64} \\cdot p1 - \\frac{177}{64}"
+     },
+     {
+      "domain_plain": "p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1",
+      "count_plain": "(21/16) * p1^2 * p0 - (21/16) * p0 + (7/64) * p1 - (49/64)",
+      "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{21}{16} \\cdot p0 + \\frac{7}{64} \\cdot p1 - \\frac{49}{64}"
+     },
+     {
+      "domain_plain": "p1 = 8 and p0 > 0",
+      "count_plain": "(147/2) * p0 + (903/64)",
+      "count_latex": "\\frac{147}{2} \\cdot p0 + \\frac{903}{64}"
+     },
+     {
+      "domain_plain": "p0 > 0 and 2 <= p1 <= 7",
+      "count_plain": "(7/4) * p1^2 * p0 - (7/2) * p1 * p0 + (7/4) * p0",
+      "count_latex": "\\frac{7}{4} \\cdot p1^{2} \\cdot p0 - \\frac{7}{2} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
+     }
+    ]
+   },
+   {
+    "value_plain": "(7/8)",
+    "value_latex": "\\frac{7}{8}",
+    "regions": [
+     {
+      "domain_plain": "p0 > 0 and p1 >= 2",
+      "count_plain": "(7/4) * p1^2 * p0 - (7/2) * p1 * p0 + (7/4) * p0",
+      "count_latex": "\\frac{7}{4} \\cdot p1^{2} \\cdot p0 - \\frac{7}{2} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
+     }
+    ]
+   }
+  ],
+  "n_ri": 22,
+  "n_rd": 124,
+  "n_dmd_terms": 29
+ },
+ "inf": null,
+ "inf_error": "isl error: isl error(Quota): maximal number of operations exceeded",
  "total": "12 * p1^2 * p0 - 24 * p1 * p0 + 12 * p0",
- "warm": "(80333/2048) * p1^2 * p0 - (1349849/4096) * p1 * p0 + (253/2048) * p1^2 + (482365135/4096) * p0 - (14555/2048) * p1 - (176325/4096)",
- "compulsory": "-(55757/2048) * p1^2 * p0 + (1251545/4096) * p1 * p0 - (253/2048) * p1^2 - (482315983/4096) * p0 + (14555/2048) * p1 + (176325/4096)",
- "dmd": "(63/2048) * sqrt((1/32) * p1^2 + (63/16)) * p1^2 * p0 + (63/2048) * sqrt((1/32) * p1^2 + (47/16)) * p1^2 * p0 + (63/32) * sqrt((1/32) * p1^2) * p1 * p0 + (63/32) * sqrt((1/32) * p1^2 - 1) * p1 * p0 - (8379/2048) * sqrt((1/32) * p1^2 + (63/16)) * p1 * p0 - (63/4096) * sqrt((1/32) * p1^2 + (63/16)) * p1^2 + (63/1024) * sqrt((1/32) * p1^2 + (253/64)) * p1 * p0 - (8379/2048) * sqrt((1/32) * p1^2 + (47/16)) * p1 * p0 - (63/4096) * sqrt((1/32) * p1^2 + (47/16)) * p1^2 + (63/2048) * sqrt((1/32) * p1^2 + (189/64)) * p1 * p0 + (63/2048) * sqrt((1/16) * p1 + (12033/4096)) * p1^2 * p0 + (31/1024) * sqrt((1/32) * p1^2 + (1/32) * p1 + (16065/4096)) * p1 * p0 + (63/2048) * sqrt((1/32) * p1^2 + (1/32) * p1 + (63/16)) * p1 * p0 + (63/2048) * sqrt((1/16) * p1 + (1985/2048)) * p1^2 * p0 + (63/2048) * sqrt((1/32) * p1^2 - (95/2048)) * p1 * p0 - (55757/2048) * p1^2 * p0 - (315/32) * sqrt((1/32) * p1^2) * p0 - (63/64) * sqrt((1/32) * p1^2) * p1 - (189/32) * sqrt((1/32) * p1^2 - 1) * p0 - (63/64) * sqrt((1/32) * p1^2 - 1) * p1 + (63/16) * sqrt((1/32) * p1^2 + (1/64)) * p0 + (63/32) * sqrt((1/32) * p1^2 - p1 + 2) * p0 + (63/32) * sqrt((1/32) * p1^2 - 2) * p0 + (63/32) * sqrt((1/32) * p1^2 - (63/64)) * p0 + (63/32) * sqrt((1/32) * p1^2 - p1) * p0 + (315/16) * sqrt((1/32) * p1^2 + (63/16)) * p0 + (8379/4096) * sqrt((1/32) * p1^2 + (63/16)) * p1 - (16191/2048) * sqrt((1/32) * p1^2 + (253/64)) * p0 - (63/2048) * sqrt((1/32) * p1^2 + (253/64)) * p1 + (315/16) * sqrt((1/32) * p1^2 + (47/16)) * p0 + (8379/4096) * sqrt((1/32) * p1^2 + (47/16)) * p1 - (63/16) * sqrt((1/32) * p1^2 + (189/64)) * p0 - (63/4096) * sqrt((1/32) * p1^2 + (189/64)) * p1 + (63/16) * sqrt((1/32) * p1^2 + (1/32) * p1) * p0 + 2 * sqrt((1/16) * p1 - (63/64)) * p1 * p0 + 2 * sqrt((1/16) * p1 + (1/64)) * p1 * p0 + (127/2048) * sqrt((79/16)) * p1^2 * p0 + (1953/512) * sqrt((63/16)) * p1^2 * p0 - (8253/2048) * sqrt((1/16) * p1 + (12033/4096)) * p1 * p0 - (31/8) * sqrt((1/32) * p1^2 + (1/32) * p1 + (16065/4096)) * p0 - (31/1024) * sqrt((1/32) * p1^2 + (1/32) * p1 + (16065/4096)) * p1 + (63/2048) * sqrt((20161/4096)) * p1^2 * p0 + (1953/1024) * sqrt((16065/4096)) * p1^2 * p0 - (63/16) * sqrt((1/32) * p1^2 + (1/32) * p1 + (63/16)) * p0 - (63/2048) * sqrt((1/32) * p1^2 + (1/32) * p1 + (63/16)) * p1 - (4095/1024) * sqrt((1/16) * p1 + (1985/2048)) * p1 * p0 - (63/16) * sqrt((1/32) * p1^2 - (95/2048)) * p0 - (63/4096) * sqrt((1/32) * p1^2 - (95/2048)) * p1 + (1/16) * sqrt((63/8)) * p1^2 * p0 + (31/16) * sqrt((31/8)) * p1^2 * p0 + (1/32) * sqrt((383/64)) * p1^2 * p0 + (63/2048) * sqrt((5985/2048)) * p1^2 * p0 + (1953/1024) * sqrt((1953/2048)) * p1^2 * p0 + (63/32) * sqrt((63/64)) * p1^2 * p0 + (1251545/4096) * p1 * p0 - (253/2048) * p1^2 + (315/64) * sqrt((1/32) * p1^2) + (189/64) * sqrt((1/32) * p1^2 - 1) - (63/32) * sqrt((1/32) * p1^2 + (1/64)) - (63/64) * sqrt((1/32) * p1^2 - p1 + 2) - (63/64) * sqrt((1/32) * p1^2 - 2) - (63/64) * sqrt((1/32) * p1^2 - (63/64)) - (63/64) * sqrt((1/32) * p1^2 - p1) - (315/32) * sqrt((1/32) * p1^2 + (63/16)) + (16191/4096) * sqrt((1/32) * p1^2 + (253/64)) - (315/32) * sqrt((1/32) * p1^2 + (47/16)) + (63/32) * sqrt((1/32) * p1^2 + (189/64)) - (63/16) * sqrt((1/32) * p1^2 + (1/32) * p1) - 4 * sqrt((1/16) * p1 - (63/64)) * p0 - 4 * sqrt((1/16) * p1 + (1/64)) * p0 - (127/32) * sqrt((79/16)) * p1 * p0 - (2969/512) * sqrt((63/16)) * p1 * p0 + (63/2048) * sqrt((63/16)) * p1^2 + (8127/1024) * sqrt((1/16) * p1 + (12033/4096)) * p0 + (31/8) * sqrt((1/32) * p1^2 + (1/32) * p1 + (16065/4096)) - (63/32) * sqrt((20161/4096)) * p1 * p0 - (3969/1024) * sqrt((16065/4096)) * p1 * p0 + (63/16) * sqrt((1/32) * p1^2 + (1/32) * p1 + (63/16)) + (63/8) * sqrt((1/16) * p1 + (1985/2048)) * p0 + (63/32) * sqrt((1/32) * p1^2 - (95/2048)) - (131/32) * sqrt((63/8)) * p1 * p0 - (93/16) * sqrt((31/8)) * p1 * p0 - (65/32) * sqrt((383/64)) * p1 * p0 - (4095/2048) * sqrt((5985/2048)) * p1 * p0 - (63/16) * sqrt((63/64)) * p1 * p0 - (482315983/4096) * p0 + (14555/2048) * p1 + (8001/2048) * sqrt((79/16)) * p0 - (121007/1024) * sqrt((63/16)) * p0 - (4063/2048) * sqrt((63/16)) * p1 + (3969/2048) * sqrt((20161/4096)) * p0 + (63/32) * sqrt((16065/4096)) * p0 + (63/2048) * sqrt((16065/4096)) * p1 + (129/32) * sqrt((63/8)) * p0 + (31/8) * sqrt((31/8)) * p0 + 2 * sqrt((383/64)) * p0 + (63/32) * sqrt((5985/2048)) * p0 - (1953/1024) * sqrt((1953/2048)) * p0 + (63/4096) * sqrt((1953/2048)) * p1 + (63/32) * sqrt((63/64)) * p0 + (31/32) * sqrt((63/16)) - (63/32) * sqrt((16065/4096)) - (3969/4096) * sqrt((1953/2048)) + (176325/4096)",
+ "warm": "(1133/32) * p1^2 * p0 - (6401/64) * p1 * p0 + (29/32) * p1^2 + (96423/64) * p0 - (247/32) * p1 - (2845/64)",
+ "compulsory": "-(749/32) * p1^2 * p0 + (4865/64) * p1 * p0 - (29/32) * p1^2 - (95655/64) * p0 + (247/32) * p1 + (2845/64)",
+ "dmd": "(7/32) * sqrt((1/4) * p1^2 + (7/2)) * p1^2 * p0 + (7/32) * sqrt((1/4) * p1^2 + (5/2)) * p1^2 * p0 + (7/4) * sqrt((1/4) * p1^2) * p1 * p0 + (7/4) * sqrt((1/4) * p1^2 - 1) * p1 * p0 - (147/32) * sqrt((1/4) * p1^2 + (7/2)) * p1 * p0 - (7/64) * sqrt((1/4) * p1^2 + (7/2)) * p1^2 + (7/16) * sqrt((1/4) * p1^2 + (29/8)) * p1 * p0 - (147/32) * sqrt((1/4) * p1^2 + (5/2)) * p1 * p0 - (7/64) * sqrt((1/4) * p1^2 + (5/2)) * p1^2 + (7/32) * sqrt((1/4) * p1^2 + (21/8)) * p1 * p0 + (7/32) * sqrt((1/2) * p1 + (161/64)) * p1^2 * p0 + (3/16) * sqrt((1/4) * p1^2 + (1/4) * p1 + (217/64)) * p1 * p0 + (7/32) * sqrt((1/4) * p1^2 + (1/4) * p1 + (7/2)) * p1 * p0 + (7/32) * sqrt((1/2) * p1 + (25/32)) * p1^2 * p0 + (7/32) * sqrt((1/4) * p1^2 - (11/32)) * p1 * p0 - (749/32) * p1^2 * p0 - (35/4) * sqrt((1/4) * p1^2) * p0 - (7/8) * sqrt((1/4) * p1^2) * p1 - (21/4) * sqrt((1/4) * p1^2 - 1) * p0 - (7/8) * sqrt((1/4) * p1^2 - 1) * p1 + (7/2) * sqrt((1/4) * p1^2 + (1/8)) * p0 + (7/4) * sqrt((1/4) * p1^2 - p1 + 2) * p0 + (7/4) * sqrt((1/4) * p1^2 - 2) * p0 + (7/4) * sqrt((1/4) * p1^2 - (7/8)) * p0 + (7/4) * sqrt((1/4) * p1^2 - p1) * p0 + (35/2) * sqrt((1/4) * p1^2 + (7/2)) * p0 + (147/64) * sqrt((1/4) * p1^2 + (7/2)) * p1 - (231/32) * sqrt((1/4) * p1^2 + (29/8)) * p0 - (7/32) * sqrt((1/4) * p1^2 + (29/8)) * p1 + (35/2) * sqrt((1/4) * p1^2 + (5/2)) * p0 + (147/64) * sqrt((1/4) * p1^2 + (5/2)) * p1 - (7/2) * sqrt((1/4) * p1^2 + (21/8)) * p0 - (7/64) * sqrt((1/4) * p1^2 + (21/8)) * p1 + (7/2) * sqrt((1/4) * p1^2 + (1/4) * p1) * p0 + 2 * sqrt((1/2) * p1 - (7/8)) * p1 * p0 + 2 * sqrt((1/2) * p1 + (1/8)) * p1 * p0 + (3/2) * sqrt(3) * p1^2 * p0 + (1/2) * sqrt(7) * p1^2 * p0 + (15/32) * sqrt((9/2)) * p1^2 * p0 + (21/8) * sqrt((7/2)) * p1^2 * p0 - (133/32) * sqrt((1/2) * p1 + (161/64)) * p1 * p0 - 3 * sqrt((1/4) * p1^2 + (1/4) * p1 + (217/64)) * p0 - (3/16) * sqrt((1/4) * p1^2 + (1/4) * p1 + (217/64)) * p1 + (7/32) * sqrt((281/64)) * p1^2 * p0 + (21/16) * sqrt((217/64)) * p1^2 * p0 - (7/2) * sqrt((1/4) * p1^2 + (1/4) * p1 + (7/2)) * p0 - (7/32) * sqrt((1/4) * p1^2 + (1/4) * p1 + (7/2)) * p1 - (63/16) * sqrt((1/2) * p1 + (25/32)) * p1 * p0 - (7/2) * sqrt((1/4) * p1^2 - (11/32)) * p0 - (7/64) * sqrt((1/4) * p1^2 - (11/32)) * p1 + (1/4) * sqrt((47/8)) * p1^2 * p0 + (7/32) * sqrt((77/32)) * p1^2 * p0 + (21/16) * sqrt((21/32)) * p1^2 * p0 + (7/4) * sqrt((7/8)) * p1^2 * p0 + (4865/64) * p1 * p0 - (29/32) * p1^2 + (35/8) * sqrt((1/4) * p1^2) + (21/8) * sqrt((1/4) * p1^2 - 1) - (7/4) * sqrt((1/4) * p1^2 + (1/8)) - (7/8) * sqrt((1/4) * p1^2 - p1 + 2) - (7/8) * sqrt((1/4) * p1^2 - 2) - (7/8) * sqrt((1/4) * p1^2 - (7/8)) - (7/8) * sqrt((1/4) * p1^2 - p1) - (35/4) * sqrt((1/4) * p1^2 + (7/2)) + (231/64) * sqrt((1/4) * p1^2 + (29/8)) - (35/4) * sqrt((1/4) * p1^2 + (5/2)) + (7/4) * sqrt((1/4) * p1^2 + (21/8)) - (7/2) * sqrt((1/4) * p1^2 + (1/4) * p1) - 4 * sqrt((1/2) * p1 - (7/8)) * p0 - 4 * sqrt((1/2) * p1 + (1/8)) * p0 - (9/2) * sqrt(3) * p1 * p0 - (19/4) * sqrt(7) * p1 * p0 - (15/4) * sqrt((9/2)) * p1 * p0 - (9/2) * sqrt((7/2)) * p1 * p0 + (7/32) * sqrt((7/2)) * p1^2 + (119/16) * sqrt((1/2) * p1 + (161/64)) * p0 + 3 * sqrt((1/4) * p1^2 + (1/4) * p1 + (217/64)) - (7/4) * sqrt((281/64)) * p1 * p0 - (49/16) * sqrt((217/64)) * p1 * p0 + (7/2) * sqrt((1/4) * p1^2 + (1/4) * p1 + (7/2)) + 7 * sqrt((1/2) * p1 + (25/32)) * p0 + (7/4) * sqrt((1/4) * p1^2 - (11/32)) - (9/4) * sqrt((47/8)) * p1 * p0 - (63/32) * sqrt((77/32)) * p1 * p0 - (7/2) * sqrt((7/8)) * p1 * p0 - (95655/64) * p0 + (247/32) * p1 + 3 * sqrt(3) * p0 + (17/4) * sqrt(7) * p0 + (105/32) * sqrt((9/2)) * p0 - (117/16) * sqrt((7/2)) * p0 - (59/32) * sqrt((7/2)) * p1 + (49/32) * sqrt((281/64)) * p0 + (7/4) * sqrt((217/64)) * p0 + (7/32) * sqrt((217/64)) * p1 + 2 * sqrt((47/8)) * p0 + (7/4) * sqrt((77/32)) * p0 - (21/16) * sqrt((21/32)) * p0 + (7/64) * sqrt((21/32)) * p1 + (7/4) * sqrt((7/8)) * p0 + (3/4) * sqrt((7/2)) - (7/4) * sqrt((217/64)) - (49/64) * sqrt((21/32)) + (2845/64)",
  "ri": [
   {
-   "value_plain": "6 * p1^2 - 18 * p1 - 359",
-   "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - 359",
+   "value_plain": "6 * p1^2 - 18 * p1 - 23",
+   "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - 23",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
+     "domain_plain": "p0 >= 2 and p1 >= 9",
      "count_plain": "2 * p1 * p0 - 4 * p0 - p1 + 2",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1^2 - 18 * p1 - 362",
-   "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - 362",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "2 * p1 * p0 - 4 * p0 - p1 + 2",
-     "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1^2 - 18 * p1 - (11491/32)",
-   "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - \\frac{11491}{32}",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(1/32) * p1^2 * p0 - (65/16) * p1 * p0 - p1^2 + 8 * p0 + (65/32) * p1 - 4",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{65}{16} \\cdot p1 \\cdot p0 - p1^{2} + 8 \\cdot p0 + \\frac{65}{32} \\cdot p1 - 4"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1^2 - 18 * p1 - (11587/32)",
-   "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - \\frac{11587}{32}",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(1/32) * p1^2 * p0 - (65/16) * p1 * p0 - p1^2 + 8 * p0 + (65/32) * p1 - 4",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{65}{16} \\cdot p1 \\cdot p0 - p1^{2} + 8 \\cdot p0 + \\frac{65}{32} \\cdot p1 - 4"
-    }
-   ]
-  },
-  {
-   "value_plain": "12 * p1^2 - 24 * p1 - 360",
-   "value_latex": "12 \\cdot p1^{2} - 24 \\cdot p1 - 360",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "4 * p0 - 4",
-     "count_latex": "4 \\cdot p0 - 4"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1^2 - 12 * p1 - 368",
-   "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - 368",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 66",
-     "count_plain": "2 * p0 - 1",
-     "count_latex": "2 \\cdot p0 - 1"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1 - 381",
-   "value_latex": "6 \\cdot p1 - 381",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 66",
-     "count_plain": "4 * p1 * p0 - 8 * p0",
-     "count_latex": "4 \\cdot p1 \\cdot p0 - 8 \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1^2 - 12 * p1 - 371",
-   "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - 371",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "2 * p0 - 1",
-     "count_latex": "2 \\cdot p0 - 1"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1^2 - 12 * p1 - (11779/32)",
-   "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - \\frac{11779}{32}",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 130",
-     "count_plain": "(1/32) * p1 * p0 - (129/32) * p0 - p1 + (129/64)",
-     "count_latex": "\\frac{1}{32} \\cdot p1 \\cdot p0 - \\frac{129}{32} \\cdot p0 - p1 + \\frac{129}{64}"
-    }
-   ]
-  },
-  {
-   "value_plain": "(189/32)",
-   "value_latex": "\\frac{189}{32}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 66 and 64*floor((-1 + p1)/64) <= -2 + p1",
-     "count_plain": "(8001/2048) * p1^2 * p0 - (95/16) * p1 * p0 + (1/32) * p1^2 - (1921/16) * p0 - (129/64) * p1 + 1",
-     "count_latex": "\\frac{8001}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{95}{16} \\cdot p1 \\cdot p0 + \\frac{1}{32} \\cdot p1^{2} - \\frac{1921}{16} \\cdot p0 - \\frac{129}{64} \\cdot p1 + 1"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1 - (1561023/4096)",
-   "value_latex": "6 \\cdot p1 - \\frac{1561023}{4096}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 130",
-     "count_plain": "(63/2048) * p1^2 * p0 - (8253/2048) * p1 * p0 + (8127/1024) * p0",
-     "count_latex": "\\frac{63}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{8253}{2048} \\cdot p1 \\cdot p0 + \\frac{8127}{1024} \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "12 * p1^2 - 24 * p1 - (1475007/4096)",
-   "value_latex": "12 \\cdot p1^{2} - 24 \\cdot p1 - \\frac{1475007}{4096}",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(63/2048) * p1 * p0 - (63/16) * p0 - (63/2048) * p1 + (63/16)",
-     "count_latex": "\\frac{63}{2048} \\cdot p1 \\cdot p0 - \\frac{63}{16} \\cdot p0 - \\frac{63}{2048} \\cdot p1 + \\frac{63}{16}"
-    }
-   ]
-  },
-  {
-   "value_plain": "(24129/4096)",
-   "value_latex": "\\frac{24129}{4096}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 66 and 64*floor((-1 + p1)/64) <= -2 + p1",
-     "count_plain": "(3969/2048) * p1^2 * p0 - (8001/2048) * p1 * p0 + (63/32) * p0 + (63/2048) * p1 - (63/32)",
-     "count_latex": "\\frac{3969}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{8001}{2048} \\cdot p1 \\cdot p0 + \\frac{63}{32} \\cdot p0 + \\frac{63}{2048} \\cdot p1 - \\frac{63}{32}"
-    }
-   ]
-  },
-  {
-   "value_plain": "12 * p1^2 - 24 * p1 - (11523/32)",
-   "value_latex": "12 \\cdot p1^{2} - 24 \\cdot p1 - \\frac{11523}{32}",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(1/32) * p1 * p0 - 4 * p0 - p1 + 4",
-     "count_latex": "\\frac{1}{32} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1 - (798879/2048)",
-   "value_latex": "6 \\cdot p1 - \\frac{798879}{2048}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 129",
-     "count_plain": "(63/2048) * p1^2 * p0 - (4095/1024) * p1 * p0 + (63/8) * p0",
-     "count_latex": "\\frac{63}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{4095}{1024} \\cdot p1 \\cdot p0 + \\frac{63}{8} \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "6 * p1^2 - 12 * p1 - (778335/2048)",
-   "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - \\frac{778335}{2048}",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(63/2048) * p1 * p0 - (63/16) * p0 - (63/4096) * p1 + (63/32)",
-     "count_latex": "\\frac{63}{2048} \\cdot p1 \\cdot p0 - \\frac{63}{16} \\cdot p0 - \\frac{63}{4096} \\cdot p1 + \\frac{63}{32}"
-    }
-   ]
-  },
-  {
-   "value_plain": "(63/8)",
-   "value_latex": "\\frac{63}{8}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 66",
-     "count_plain": "(1/16) * p1^2 * p0 - (131/32) * p1 * p0 + (129/32) * p0",
-     "count_latex": "\\frac{1}{16} \\cdot p1^{2} \\cdot p0 - \\frac{131}{32} \\cdot p1 \\cdot p0 + \\frac{129}{32} \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "(31/8)",
-   "value_latex": "\\frac{31}{8}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 3",
-     "count_plain": "(31/16) * p1^2 * p0 - (93/16) * p1 * p0 + (31/8) * p0",
-     "count_latex": "\\frac{31}{16} \\cdot p1^{2} \\cdot p0 - \\frac{93}{16} \\cdot p1 \\cdot p0 + \\frac{31}{8} \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "(447/64)",
-   "value_latex": "\\frac{447}{64}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 65",
-     "count_plain": "(1/32) * p1^2 * p0 - (65/32) * p1 * p0 + 2 * p0",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{65}{32} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "(5985/2048)",
-   "value_latex": "\\frac{5985}{2048}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 65",
-     "count_plain": "(63/2048) * p1^2 * p0 - (4095/2048) * p1 * p0 + (63/32) * p0",
-     "count_latex": "\\frac{63}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{4095}{2048} \\cdot p1 \\cdot p0 + \\frac{63}{32} \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "(1953/2048)",
-   "value_latex": "\\frac{1953}{2048}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 65 and 64*floor((p1)/64) < p1",
-     "count_plain": "(1953/1024) * p1^2 * p0 - (1953/1024) * p0 + (63/4096) * p1 - (3969/4096)",
-     "count_latex": "\\frac{1953}{1024} \\cdot p1^{2} \\cdot p0 - \\frac{1953}{1024} \\cdot p0 + \\frac{63}{4096} \\cdot p1 - \\frac{3969}{4096}"
-    }
-   ]
-  },
-  {
-   "value_plain": "(63/64)",
-   "value_latex": "\\frac{63}{64}",
-   "regions": [
-    {
-     "domain_plain": "p0 > 0 and p1 >= 2",
-     "count_plain": "(63/32) * p1^2 * p0 - (63/16) * p1 * p0 + (63/32) * p0",
-     "count_latex": "\\frac{63}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{16} \\cdot p1 \\cdot p0 + \\frac{63}{32} \\cdot p0"
-    }
-   ]
-  }
- ],
- "rd": [
-  {
-   "value_plain": "(1/32) * p1^2 + p1 - 2",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - 2",
-   "regions": [
-    {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
-     "count_plain": "2 * p1 * p0 - 8 * p0 - p1 + 4",
-     "count_latex": "2 \\cdot p1 \\cdot p0 - 8 \\cdot p0 - p1 + 4"
-    },
-    {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
-     "count_plain": "p1 - 4",
-     "count_latex": "p1 - 4"
-    }
-   ]
-  },
-  {
-   "value_plain": "(1/32) * p1^2 + p1 - 3",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - 3",
-   "regions": [
-    {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
-     "count_plain": "2 * p1 * p0 - 8 * p0 - p1 + 4",
-     "count_latex": "2 \\cdot p1 \\cdot p0 - 8 \\cdot p0 - p1 + 4"
-    },
-    {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
-     "count_plain": "p1 - 4",
-     "count_latex": "p1 - 4"
-    }
-   ]
-  },
-  {
-   "value_plain": "(1/32) * p1^2",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2}",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "(63/32) * p1 * p0 - (315/32) * p0 - (63/64) * p1 + (315/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p1 \\cdot p0 - \\frac{315}{32} \\cdot p0 - \\frac{63}{64} \\cdot p1 + \\frac{315}{64}"
-    },
-    {
-     "domain_plain": "p0 = 1 and p1 >= 65",
-     "count_plain": "(63/64) * p1 - (315/64)",
-     "count_latex": "\\frac{63}{64} \\cdot p1 - \\frac{315}{64}"
-    }
-   ]
-  },
-  {
-   "value_plain": "(1/32) * p1^2 - 1",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - 1",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "(63/32) * p1 * p0 - (189/32) * p0 - (63/64) * p1 + (189/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p1 \\cdot p0 - \\frac{189}{32} \\cdot p0 - \\frac{63}{64} \\cdot p1 + \\frac{189}{64}"
-    },
-    {
-     "domain_plain": "p0 = 1 and p1 >= 65",
-     "count_plain": "(63/64) * p1 - (189/64)",
-     "count_latex": "\\frac{63}{64} \\cdot p1 - \\frac{189}{64}"
-    }
-   ]
-  },
-  {
-   "value_plain": "(1/32) * p1^2 + p1 - (191/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{191}{64}",
-   "regions": [
-    {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
-     "count_plain": "2 * p0 - 1",
-     "count_latex": "2 \\cdot p0 - 1"
-    },
-    {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
-     "count_plain": "p0",
-     "count_latex": "p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "(1/32) * p1^2 + (1/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{1}{64}",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 66",
-     "count_plain": "(63/16) * p0 - (63/32)",
-     "count_latex": "\\frac{63}{16} \\cdot p0 - \\frac{63}{32}"
-    },
-    {
-     "domain_plain": "p1 = 65 and p0 >= 2",
-     "count_plain": "(63/32) * p0 - (63/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p0 - \\frac{63}{64}"
-    },
-    {
-     "domain_plain": "p0 = 1 and p1 >= 66",
-     "count_plain": "(63/32)",
-     "count_latex": "\\frac{63}{32}"
-    },
-    {
-     "domain_plain": "p0 = 1 and p1 = 65",
-     "count_plain": "(63/64) * p0",
-     "count_latex": "\\frac{63}{64} \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "(1/32) * p1^2 + (31/32) * p1",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{31}{32} \\cdot p1",
-   "regions": [
-    {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
-     "count_plain": "2 * p0 - 1",
-     "count_latex": "2 \\cdot p0 - 1"
-    },
-    {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
-     "count_plain": "p0",
-     "count_latex": "p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "(1/32) * p1^2 - p1 + 2",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - p1 + 2",
-   "regions": [
-    {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "(63/32) * p0 - (63/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p0 - \\frac{63}{64}"
-    },
-    {
-     "domain_plain": "p0 = 1 and p1 >= 65",
-     "count_plain": "(63/64) * p0",
-     "count_latex": "\\frac{63}{64} \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "189",
-   "value_latex": "189",
-   "regions": [
-    {
-     "domain_plain": "p1 = 64 and p0 >= 2",
-     "count_plain": "124 * p0 - 62",
-     "count_latex": "124 \\cdot p0 - 62"
-    },
-    {
-     "domain_plain": "p0 = 1 and p1 = 64",
-     "count_plain": "62",
-     "count_latex": "62"
     }
    ]
   },
@@ -409,7 +2208,394 @@
    "value_latex": "7",
    "regions": [
     {
-     "domain_plain": "p1 = 64 and i2 = 61 and p0 >= 2",
+     "domain_plain": "p0 > 0 and p1 >= 10",
+     "count_plain": "(1/2) * p1^2 * p0 - (19/4) * p1 * p0 + (17/4) * p0",
+     "count_latex": "\\frac{1}{2} \\cdot p1^{2} \\cdot p0 - \\frac{19}{4} \\cdot p1 \\cdot p0 + \\frac{17}{4} \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1^2 - 18 * p1 - 26",
+   "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - 26",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "2 * p1 * p0 - 4 * p0 - p1 + 2",
+     "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1^2 - 18 * p1 - (95/4)",
+   "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - \\frac{95}{4}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(1/4) * p1^2 * p0 - (9/2) * p1 * p0 - p1^2 + 8 * p0 + (9/4) * p1 - 4",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 - p1^{2} + 8 \\cdot p0 + \\frac{9}{4} \\cdot p1 - 4"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1^2 - 18 * p1 - (107/4)",
+   "value_latex": "6 \\cdot p1^{2} - 18 \\cdot p1 - \\frac{107}{4}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(1/4) * p1^2 * p0 - (9/2) * p1 * p0 - p1^2 + 8 * p0 + (9/4) * p1 - 4",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 - p1^{2} + 8 \\cdot p0 + \\frac{9}{4} \\cdot p1 - 4"
+    }
+   ]
+  },
+  {
+   "value_plain": "12 * p1^2 - 24 * p1 - 24",
+   "value_latex": "12 \\cdot p1^{2} - 24 \\cdot p1 - 24",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "4 * p0 - 4",
+     "count_latex": "4 \\cdot p0 - 4"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1^2 - 12 * p1 - 32",
+   "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - 32",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 10",
+     "count_plain": "2 * p0 - 1",
+     "count_latex": "2 \\cdot p0 - 1"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1 - 45",
+   "value_latex": "6 \\cdot p1 - 45",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 10",
+     "count_plain": "4 * p1 * p0 - 8 * p0",
+     "count_latex": "4 \\cdot p1 \\cdot p0 - 8 \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "3",
+   "value_latex": "3",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 9",
+     "count_plain": "(3/2) * p1^2 * p0 - (9/2) * p1 * p0 + 3 * p0",
+     "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 + 3 \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1^2 - 12 * p1 - 35",
+   "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - 35",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "2 * p0 - 1",
+     "count_latex": "2 \\cdot p0 - 1"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1^2 - 12 * p1 - (131/4)",
+   "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - \\frac{131}{4}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 18",
+     "count_plain": "(1/4) * p1 * p0 - (17/4) * p0 - p1 + (17/8)",
+     "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0 - p1 + \\frac{17}{8}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(21/4)",
+   "value_latex": "\\frac{21}{4}",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 10 and 8*floor((-1 + p1)/8) <= -2 + p1",
+     "count_plain": "(105/32) * p1^2 * p0 - (11/2) * p1 * p0 + (1/4) * p1^2 - (17/2) * p0 - (17/8) * p1 + 1",
+     "count_latex": "\\frac{105}{32} \\cdot p1^{2} \\cdot p0 - \\frac{11}{2} \\cdot p1 \\cdot p0 + \\frac{1}{4} \\cdot p1^{2} - \\frac{17}{2} \\cdot p0 - \\frac{17}{8} \\cdot p1 + 1"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1 - (2935/64)",
+   "value_latex": "6 \\cdot p1 - \\frac{2935}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 18",
+     "count_plain": "(7/32) * p1^2 * p0 - (133/32) * p1 * p0 + (119/16) * p0",
+     "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{133}{32} \\cdot p1 \\cdot p0 + \\frac{119}{16} \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "12 * p1^2 - 24 * p1 - (1591/64)",
+   "value_latex": "12 \\cdot p1^{2} - 24 \\cdot p1 - \\frac{1591}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/32) * p1 + (7/2)",
+     "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{32} \\cdot p1 + \\frac{7}{2}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(329/64)",
+   "value_latex": "\\frac{329}{64}",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 10 and 8*floor((-1 + p1)/8) <= -2 + p1",
+     "count_plain": "(49/32) * p1^2 * p0 - (105/32) * p1 * p0 + (7/4) * p0 + (7/32) * p1 - (7/4)",
+     "count_latex": "\\frac{49}{32} \\cdot p1^{2} \\cdot p0 - \\frac{105}{32} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4}"
+    }
+   ]
+  },
+  {
+   "value_plain": "12 * p1^2 - 24 * p1 - (99/4)",
+   "value_latex": "12 \\cdot p1^{2} - 24 \\cdot p1 - \\frac{99}{4}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 4",
+     "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1 - (1747/32)",
+   "value_latex": "6 \\cdot p1 - \\frac{1747}{32}",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 17",
+     "count_plain": "(7/32) * p1^2 * p0 - (63/16) * p1 * p0 + 7 * p0",
+     "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{16} \\cdot p1 \\cdot p0 + 7 \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "6 * p1^2 - 12 * p1 - (1419/32)",
+   "value_latex": "6 \\cdot p1^{2} - 12 \\cdot p1 - \\frac{1419}{32}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/64) * p1 + (7/4)",
+     "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{64} \\cdot p1 + \\frac{7}{4}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(55/8)",
+   "value_latex": "\\frac{55}{8}",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 9",
+     "count_plain": "(1/4) * p1^2 * p0 - (9/4) * p1 * p0 + 2 * p0",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{4} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "(77/32)",
+   "value_latex": "\\frac{77}{32}",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 9",
+     "count_plain": "(7/32) * p1^2 * p0 - (63/32) * p1 * p0 + (7/4) * p0",
+     "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{32} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "(21/32)",
+   "value_latex": "\\frac{21}{32}",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1",
+     "count_plain": "(21/16) * p1^2 * p0 - (21/16) * p0 + (7/64) * p1 - (49/64)",
+     "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{21}{16} \\cdot p0 + \\frac{7}{64} \\cdot p1 - \\frac{49}{64}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(7/8)",
+   "value_latex": "\\frac{7}{8}",
+   "regions": [
+    {
+     "domain_plain": "p0 > 0 and p1 >= 2",
+     "count_plain": "(7/4) * p1^2 * p0 - (7/2) * p1 * p0 + (7/4) * p0",
+     "count_latex": "\\frac{7}{4} \\cdot p1^{2} \\cdot p0 - \\frac{7}{2} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
+    }
+   ]
+  }
+ ],
+ "rd": [
+  {
+   "value_plain": "(1/4) * p1^2 + p1 - 2",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - 2",
+   "regions": [
+    {
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+     "count_plain": "2 * p1 * p0 - 8 * p0 - p1 + 4",
+     "count_latex": "2 \\cdot p1 \\cdot p0 - 8 \\cdot p0 - p1 + 4"
+    },
+    {
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+     "count_plain": "p1 - 4",
+     "count_latex": "p1 - 4"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/4) * p1^2 + p1 - 3",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - 3",
+   "regions": [
+    {
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+     "count_plain": "2 * p1 * p0 - 8 * p0 - p1 + 4",
+     "count_latex": "2 \\cdot p1 \\cdot p0 - 8 \\cdot p0 - p1 + 4"
+    },
+    {
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+     "count_plain": "p1 - 4",
+     "count_latex": "p1 - 4"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/4) * p1^2",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "(7/4) * p1 * p0 - (35/4) * p0 - (7/8) * p1 + (35/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p1 \\cdot p0 - \\frac{35}{4} \\cdot p0 - \\frac{7}{8} \\cdot p1 + \\frac{35}{8}"
+    },
+    {
+     "domain_plain": "p0 = 1 and p1 >= 9",
+     "count_plain": "(7/8) * p1 - (35/8)",
+     "count_latex": "\\frac{7}{8} \\cdot p1 - \\frac{35}{8}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/4) * p1^2 - 1",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - 1",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "(7/4) * p1 * p0 - (21/4) * p0 - (7/8) * p1 + (21/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p1 \\cdot p0 - \\frac{21}{4} \\cdot p0 - \\frac{7}{8} \\cdot p1 + \\frac{21}{8}"
+    },
+    {
+     "domain_plain": "p0 = 1 and p1 >= 9",
+     "count_plain": "(7/8) * p1 - (21/8)",
+     "count_latex": "\\frac{7}{8} \\cdot p1 - \\frac{21}{8}"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/4) * p1^2 + p1 - (23/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{23}{8}",
+   "regions": [
+    {
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+     "count_plain": "2 * p0 - 1",
+     "count_latex": "2 \\cdot p0 - 1"
+    },
+    {
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+     "count_plain": "p0",
+     "count_latex": "p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/4) * p1^2 + (1/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{8}",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 10",
+     "count_plain": "(7/2) * p0 - (7/4)",
+     "count_latex": "\\frac{7}{2} \\cdot p0 - \\frac{7}{4}"
+    },
+    {
+     "domain_plain": "p1 = 9 and p0 >= 2",
+     "count_plain": "(7/4) * p0 - (7/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+    },
+    {
+     "domain_plain": "p0 = 1 and p1 >= 10",
+     "count_plain": "(7/4)",
+     "count_latex": "\\frac{7}{4}"
+    },
+    {
+     "domain_plain": "p0 = 1 and p1 = 9",
+     "count_plain": "(7/8) * p0",
+     "count_latex": "\\frac{7}{8} \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/4) * p1^2 + (3/4) * p1",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1",
+   "regions": [
+    {
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+     "count_plain": "2 * p0 - 1",
+     "count_latex": "2 \\cdot p0 - 1"
+    },
+    {
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+     "count_plain": "p0",
+     "count_latex": "p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/4) * p1^2 - p1 + 2",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + 2",
+   "regions": [
+    {
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "(7/4) * p0 - (7/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
+    },
+    {
+     "domain_plain": "p0 = 1 and p1 >= 9",
+     "count_plain": "(7/8) * p0",
+     "count_latex": "\\frac{7}{8} \\cdot p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "21",
+   "value_latex": "21",
+   "regions": [
+    {
+     "domain_plain": "p1 = 8 and p0 >= 2",
+     "count_plain": "12 * p0 - 6",
+     "count_latex": "12 \\cdot p0 - 6"
+    },
+    {
+     "domain_plain": "p0 = 1 and p1 = 8",
+     "count_plain": "6",
+     "count_latex": "6"
+    }
+   ]
+  },
+  {
+   "value_plain": "7",
+   "value_latex": "7",
+   "regions": [
+    {
+     "domain_plain": "p1 = 8 and i2 = 5 and p0 >= 2",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
@@ -420,12 +2606,12 @@
    "value_latex": "2 \\cdot p1",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and 6 <= p1 <= 63",
+     "domain_plain": "p0 >= 2 and 6 <= p1 <= 7",
      "count_plain": "2 * p1 * p0 - 6 * p0 - p1 + 3",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 6 \\cdot p0 - p1 + 3"
     },
     {
-     "domain_plain": "p0 = 1 and 6 <= p1 <= 63",
+     "domain_plain": "p0 = 1 and 6 <= p1 <= 7",
      "count_plain": "p1 - 3",
      "count_latex": "p1 - 3"
     },
@@ -446,7 +2632,7 @@
    "value_latex": "6",
    "regions": [
     {
-     "domain_plain": "i2 = -3 + p1 and p0 >= 2 and 4 <= p1 <= 63",
+     "domain_plain": "i2 = -3 + p1 and p0 >= 2 and 4 <= p1 <= 7",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
@@ -490,82 +2676,82 @@
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - 4",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - 4",
+   "value_plain": "(1/4) * p1^2 + p1 - 4",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - 4",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - 2",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - 2",
+   "value_plain": "(1/4) * p1^2 - 2",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - 2",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "(63/32) * p0 - (63/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p0 - \\frac{63}{64}"
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "(7/4) * p0 - (7/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
     },
     {
-     "domain_plain": "p0 = 1 and p1 >= 65",
-     "count_plain": "(63/64) * p0",
-     "count_latex": "\\frac{63}{64} \\cdot p0"
+     "domain_plain": "p0 = 1 and p1 >= 9",
+     "count_plain": "(7/8) * p0",
+     "count_latex": "\\frac{7}{8} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (255/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{255}{64}",
+   "value_plain": "(1/4) * p1^2 + p1 - (31/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{31}{8}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (63/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{63}{64}",
+   "value_plain": "(1/4) * p1^2 - (7/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{7}{8}",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "(63/32) * p0 - (63/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p0 - \\frac{63}{64}"
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "(7/4) * p0 - (7/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
     },
     {
-     "domain_plain": "p0 = 1 and p1 >= 65",
-     "count_plain": "(63/64) * p0",
-     "count_latex": "\\frac{63}{64} \\cdot p0"
+     "domain_plain": "p0 = 1 and p1 >= 9",
+     "count_plain": "(7/8) * p0",
+     "count_latex": "\\frac{7}{8} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "188",
-   "value_latex": "188",
+   "value_plain": "20",
+   "value_latex": "20",
    "regions": [
     {
-     "domain_plain": "p1 = 64 and p0 >= 2",
-     "count_plain": "120 * p0 - 60",
-     "count_latex": "120 \\cdot p0 - 60"
+     "domain_plain": "p1 = 8 and p0 >= 2",
+     "count_plain": "8 * p0 - 4",
+     "count_latex": "8 \\cdot p0 - 4"
     },
     {
-     "domain_plain": "p0 = 1 and p1 = 64",
-     "count_plain": "60",
-     "count_latex": "60"
+     "domain_plain": "p0 = 1 and p1 = 8",
+     "count_plain": "4",
+     "count_latex": "4"
     }
    ]
   },
@@ -574,7 +2760,7 @@
    "value_latex": "6",
    "regions": [
     {
-     "domain_plain": "p1 = 64 and i2 = 61 and p0 >= 2",
+     "domain_plain": "p1 = 8 and i2 = 5 and p0 >= 2",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
@@ -585,22 +2771,12 @@
    "value_latex": "2 \\cdot p1 - 1",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and 7 <= p1 <= 63",
-     "count_plain": "2 * p1 * p0 - 6 * p0 - p1 + 3",
-     "count_latex": "2 \\cdot p1 \\cdot p0 - 6 \\cdot p0 - p1 + 3"
-    },
-    {
-     "domain_plain": "p0 = 1 and 7 <= p1 <= 63",
-     "count_plain": "p1 - 3",
-     "count_latex": "p1 - 3"
-    },
-    {
-     "domain_plain": "p1 = 6 and p0 >= 2",
+     "domain_plain": "p0 >= 2 and 6 <= p1 <= 7",
      "count_plain": "6 * p0 - 3",
      "count_latex": "6 \\cdot p0 - 3"
     },
     {
-     "domain_plain": "p0 = 1 and p1 = 6",
+     "domain_plain": "p0 = 1 and 6 <= p1 <= 7",
      "count_plain": "3",
      "count_latex": "3"
     },
@@ -617,11 +2793,27 @@
    ]
   },
   {
+   "value_plain": "13",
+   "value_latex": "13",
+   "regions": [
+    {
+     "domain_plain": "p1 = 7 and p0 >= 2",
+     "count_plain": "2 * p0 - 1",
+     "count_latex": "2 \\cdot p0 - 1"
+    },
+    {
+     "domain_plain": "p0 = 1 and p1 = 7",
+     "count_plain": "p0",
+     "count_latex": "p0"
+    }
+   ]
+  },
+  {
    "value_plain": "5",
    "value_latex": "5",
    "regions": [
     {
-     "domain_plain": "i2 = -3 + p1 and p0 >= 2 and 5 <= p1 <= 63",
+     "domain_plain": "i2 = -3 + p1 and p0 >= 2 and 5 <= p1 <= 7",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
@@ -668,41 +2860,41 @@
      "count_latex": "3"
     },
     {
-     "domain_plain": "p0 > 0 and 5 <= p1 <= 63",
+     "domain_plain": "p0 > 0 and 5 <= p1 <= 7",
      "count_plain": "2 * p1 * p0 - 4 * p0",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (31/32) * p1 - 2",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{31}{32} \\cdot p1 - 2",
+   "value_plain": "(1/4) * p1^2 + (3/4) * p1 - 2",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 - 2",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - p1",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - p1",
+   "value_plain": "(1/4) * p1^2 - p1",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "(63/32) * p0 - (63/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p0 - \\frac{63}{64}"
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "(7/4) * p0 - (7/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
     },
     {
-     "domain_plain": "p0 = 1 and p1 >= 65",
-     "count_plain": "(63/64) * p0",
-     "count_latex": "\\frac{63}{64} \\cdot p0"
+     "domain_plain": "p0 = 1 and p1 >= 9",
+     "count_plain": "(7/8) * p0",
+     "count_latex": "\\frac{7}{8} \\cdot p0"
     }
    ]
   },
@@ -711,9 +2903,9 @@
    "value_latex": "6",
    "regions": [
     {
-     "domain_plain": "p1 = 64 and p0 > 0",
-     "count_plain": "124 * p0",
-     "count_latex": "124 \\cdot p0"
+     "domain_plain": "p1 = 8 and p0 > 0",
+     "count_plain": "12 * p0",
+     "count_latex": "12 \\cdot p0"
     },
     {
      "domain_plain": "p1 = 2 and p0 >= 2",
@@ -738,16 +2930,16 @@
    ]
   },
   {
-   "value_plain": "187",
-   "value_latex": "187",
+   "value_plain": "19",
+   "value_latex": "19",
    "regions": [
     {
-     "domain_plain": "p1 = 64 and p0 >= 2",
+     "domain_plain": "p1 = 8 and p0 >= 2",
      "count_plain": "3 * p0 - 1",
      "count_latex": "3 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and p1 = 64",
+     "domain_plain": "p0 = 1 and p1 = 8",
      "count_plain": "2",
      "count_latex": "2"
     }
@@ -758,22 +2950,22 @@
    "value_latex": "2 \\cdot p1 - 2",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and 5 <= p1 <= 62",
+     "domain_plain": "p0 >= 2 and 5 <= p1 <= 6",
      "count_plain": "3 * p0 - 1",
      "count_latex": "3 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p1 = 63 and p0 >= 2",
+     "domain_plain": "p1 = 7 and p0 >= 2",
      "count_plain": "3 * p0 - 1",
      "count_latex": "3 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and 5 <= p1 <= 62",
+     "domain_plain": "p0 = 1 and 5 <= p1 <= 6",
      "count_plain": "2",
      "count_latex": "2"
     },
     {
-     "domain_plain": "p0 = 1 and p1 = 63",
+     "domain_plain": "p0 = 1 and p1 = 7",
      "count_plain": "2",
      "count_latex": "2"
     },
@@ -801,517 +2993,517 @@
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 + (31/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 + \\frac{31}{16}",
+   "value_plain": "(1/4) * p1^2 + p1 + (3/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{3}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 192",
-     "count_plain": "(1/32) * p1^2 * p0 - (133/32) * p1 * p0 - p1^2 + 20 * p0 + (133/64) * p1 - 10",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{133}{32} \\cdot p1 \\cdot p0 - p1^{2} + 20 \\cdot p0 + \\frac{133}{64} \\cdot p1 - 10"
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+     "count_plain": "(1/4) * p1^2 * p0 - (21/4) * p1 * p0 - p1^2 + 20 * p0 + (21/8) * p1 - 10",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{21}{4} \\cdot p1 \\cdot p0 - p1^{2} + 20 \\cdot p0 + \\frac{21}{8} \\cdot p1 - 10"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 192",
-     "count_plain": "(1/64) * p1^2 - (133/64) * p1 + 10",
-     "count_latex": "\\frac{1}{64} \\cdot p1^{2} - \\frac{133}{64} \\cdot p1 + 10"
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+     "count_plain": "(1/8) * p1^2 - (21/8) * p1 + 10",
+     "count_latex": "\\frac{1}{8} \\cdot p1^{2} - \\frac{21}{8} \\cdot p1 + 10"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 + (61/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 + \\frac{61}{64}",
+   "value_plain": "(1/4) * p1^2 + p1 + (5/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{5}{8}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 192",
-     "count_plain": "(1/32) * p1 * p0 - 4 * p0 - p1 + 2",
-     "count_latex": "\\frac{1}{32} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+     "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 2",
+     "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 192",
-     "count_plain": "(1/64) * p1 * p0 - 2 * p0",
-     "count_latex": "\\frac{1}{64} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+     "count_plain": "(1/8) * p1 * p0 - 2 * p0",
+     "count_latex": "\\frac{1}{8} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (7/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{7}{64}",
+   "value_plain": "(1/4) * p1^2 + p1 - (7/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{7}{8}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and (1 + i3) mod 64 = 0 and p0 >= 2 and 63 <= i3 <= -129 + p1",
+     "domain_plain": "(p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -17 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and (1 + i3) mod 64 = 0 and 63 <= i3 <= -129 + p1",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -17 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (63/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{63}{16}",
+   "value_plain": "(1/4) * p1^2 + (7/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{7}{2}",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(63/2048) * p1^2 * p0 - (8379/2048) * p1 * p0 - (63/4096) * p1^2 + (315/16) * p0 + (8379/4096) * p1 - (315/32)",
-     "count_latex": "\\frac{63}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{8379}{2048} \\cdot p1 \\cdot p0 - \\frac{63}{4096} \\cdot p1^{2} + \\frac{315}{16} \\cdot p0 + \\frac{8379}{4096} \\cdot p1 - \\frac{315}{32}"
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(7/32) * p1^2 * p0 - (147/32) * p1 * p0 - (7/64) * p1^2 + (35/2) * p0 + (147/64) * p1 - (35/4)",
+     "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{147}{32} \\cdot p1 \\cdot p0 - \\frac{7}{64} \\cdot p1^{2} + \\frac{35}{2} \\cdot p0 + \\frac{147}{64} \\cdot p1 - \\frac{35}{4}"
     },
     {
-     "domain_plain": "p0 = 1 and p1 >= 129",
-     "count_plain": "(63/4096) * p1^2 - (8379/4096) * p1 + (315/32)",
-     "count_latex": "\\frac{63}{4096} \\cdot p1^{2} - \\frac{8379}{4096} \\cdot p1 + \\frac{315}{32}"
+     "domain_plain": "p0 = 1 and p1 >= 17",
+     "count_plain": "(7/64) * p1^2 - (147/64) * p1 + (35/4)",
+     "count_latex": "\\frac{7}{64} \\cdot p1^{2} - \\frac{147}{64} \\cdot p1 + \\frac{35}{4}"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (253/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{253}{64}",
+   "value_plain": "(1/4) * p1^2 + (29/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{29}{8}",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 130",
-     "count_plain": "(63/1024) * p1 * p0 - (16191/2048) * p0 - (63/2048) * p1 + (16191/4096)",
-     "count_latex": "\\frac{63}{1024} \\cdot p1 \\cdot p0 - \\frac{16191}{2048} \\cdot p0 - \\frac{63}{2048} \\cdot p1 + \\frac{16191}{4096}"
+     "domain_plain": "p0 >= 2 and p1 >= 18",
+     "count_plain": "(7/16) * p1 * p0 - (231/32) * p0 - (7/32) * p1 + (231/64)",
+     "count_latex": "\\frac{7}{16} \\cdot p1 \\cdot p0 - \\frac{231}{32} \\cdot p0 - \\frac{7}{32} \\cdot p1 + \\frac{231}{64}"
     },
     {
-     "domain_plain": "p0 = 1 and p1 >= 130",
-     "count_plain": "(63/2048) * p1 * p0 - (16191/4096) * p0",
-     "count_latex": "\\frac{63}{2048} \\cdot p1 \\cdot p0 - \\frac{16191}{4096} \\cdot p0"
+     "domain_plain": "p0 = 1 and p1 >= 18",
+     "count_plain": "(7/32) * p1 * p0 - (231/64) * p0",
+     "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{231}{64} \\cdot p0"
     },
     {
-     "domain_plain": "p1 = 129 and p0 >= 2",
-     "count_plain": "(63/2048) * p0 - (63/4096)",
-     "count_latex": "\\frac{63}{2048} \\cdot p0 - \\frac{63}{4096}"
+     "domain_plain": "p1 = 17 and p0 >= 2",
+     "count_plain": "(7/32) * p0 - (7/64)",
+     "count_latex": "\\frac{7}{32} \\cdot p0 - \\frac{7}{64}"
     },
     {
-     "domain_plain": "p0 = 1 and p1 = 129",
-     "count_plain": "(63/4096) * p1 * p0 - (63/32) * p0",
-     "count_latex": "\\frac{63}{4096} \\cdot p1 \\cdot p0 - \\frac{63}{32} \\cdot p0"
+     "domain_plain": "p0 = 1 and p1 = 17",
+     "count_plain": "(7/64) * p1 * p0 - (7/4) * p0",
+     "count_latex": "\\frac{7}{64} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (185/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{185}{64}",
+   "value_plain": "(1/4) * p1^2 + (17/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{17}{8}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and 63 <= i3 <= -66 + p1",
-     "count_plain": "(63/32) * p0 - (63/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p0 - \\frac{63}{64}"
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -10 + p1",
+     "count_plain": "(7/4) * p0 - (7/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and 63 <= i3 <= -66 + p1",
-     "count_plain": "(63/64) * p0",
-     "count_latex": "\\frac{63}{64} \\cdot p0"
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -10 + p1",
+     "count_plain": "(7/8) * p0",
+     "count_latex": "\\frac{7}{8} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (31/32) * p1 + 4",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{31}{32} \\cdot p1 + 4",
+   "value_plain": "(1/4) * p1^2 + (3/4) * p1 + 4",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 + 4",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and (1 + i3) mod 64 = 0 and p0 >= 2 and 63 <= i3 <= -129 + p1",
+     "domain_plain": "(p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -17 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and (1 + i3) mod 64 = 0 and 63 <= i3 <= -129 + p1",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -17 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - p1 + 6",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - p1 + 6",
+   "value_plain": "(1/4) * p1^2 - p1 + 6",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + 6",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and 63 <= i3 <= -66 + p1",
-     "count_plain": "(63/32) * p0 - (63/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p0 - \\frac{63}{64}"
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -10 + p1",
+     "count_plain": "(7/4) * p0 - (7/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and 63 <= i3 <= -66 + p1",
-     "count_plain": "(63/64) * p0",
-     "count_latex": "\\frac{63}{64} \\cdot p0"
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -10 + p1",
+     "count_plain": "(7/8) * p0",
+     "count_latex": "\\frac{7}{8} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 + (15/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 + \\frac{15}{16}",
+   "value_plain": "(1/4) * p1^2 + p1 + (1/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{1}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 192",
-     "count_plain": "(1/32) * p1^2 * p0 - (69/32) * p1 * p0 - p1^2 + 12 * p0 + (69/64) * p1 - 6",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{69}{32} \\cdot p1 \\cdot p0 - p1^{2} + 12 \\cdot p0 + \\frac{69}{64} \\cdot p1 - 6"
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+     "count_plain": "(1/4) * p1^2 * p0 - (13/4) * p1 * p0 - p1^2 + 12 * p0 + (13/8) * p1 - 6",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{13}{4} \\cdot p1 \\cdot p0 - p1^{2} + 12 \\cdot p0 + \\frac{13}{8} \\cdot p1 - 6"
     },
     {
-     "domain_plain": "p1 = 128 and p0 >= 2",
-     "count_plain": "248 * p0 - 124",
-     "count_latex": "248 \\cdot p0 - 124"
+     "domain_plain": "p1 = 16 and p0 >= 2",
+     "count_plain": "24 * p0 - 12",
+     "count_latex": "24 \\cdot p0 - 12"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 192",
-     "count_plain": "(1/64) * p1^2 - (69/64) * p1 + 6",
-     "count_latex": "\\frac{1}{64} \\cdot p1^{2} - \\frac{69}{64} \\cdot p1 + 6"
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+     "count_plain": "(1/8) * p1^2 - (13/8) * p1 + 6",
+     "count_latex": "\\frac{1}{8} \\cdot p1^{2} - \\frac{13}{8} \\cdot p1 + 6"
     },
     {
-     "domain_plain": "p0 = 1 and p1 = 128",
-     "count_plain": "124",
-     "count_latex": "124"
+     "domain_plain": "p0 = 1 and p1 = 16",
+     "count_plain": "12",
+     "count_latex": "12"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (3/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{3}{64}",
+   "value_plain": "(1/4) * p1^2 + p1 - (3/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{3}{8}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 192",
-     "count_plain": "(1/32) * p1 * p0 - 2 * p0 - p1 + 1",
-     "count_latex": "\\frac{1}{32} \\cdot p1 \\cdot p0 - 2 \\cdot p0 - p1 + 1"
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+     "count_plain": "(1/4) * p1 * p0 - 2 * p0 - p1 + 1",
+     "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 - p1 + 1"
     },
     {
-     "domain_plain": "p1 = 128 and p0 >= 2",
+     "domain_plain": "p1 = 16 and p0 >= 2",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 192",
-     "count_plain": "(1/64) * p1 - 1",
-     "count_latex": "\\frac{1}{64} \\cdot p1 - 1"
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+     "count_plain": "(1/8) * p1 - 1",
+     "count_latex": "\\frac{1}{8} \\cdot p1 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and p1 = 128",
+     "domain_plain": "p0 = 1 and p1 = 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (71/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{71}{64}",
+   "value_plain": "(1/4) * p1^2 + p1 - (15/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{15}{8}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and (1 + i3) mod 64 = 0 and p0 >= 2 and 63 <= i3 <= -129 + p1",
+     "domain_plain": "(p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -17 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and (1 + i3) mod 64 = 0 and 63 <= i3 <= -129 + p1",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -17 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (47/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{47}{16}",
+   "value_plain": "(1/4) * p1^2 + (5/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{5}{2}",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(63/2048) * p1^2 * p0 - (8379/2048) * p1 * p0 - (63/4096) * p1^2 + (315/16) * p0 + (8379/4096) * p1 - (315/32)",
-     "count_latex": "\\frac{63}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{8379}{2048} \\cdot p1 \\cdot p0 - \\frac{63}{4096} \\cdot p1^{2} + \\frac{315}{16} \\cdot p0 + \\frac{8379}{4096} \\cdot p1 - \\frac{315}{32}"
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(7/32) * p1^2 * p0 - (147/32) * p1 * p0 - (7/64) * p1^2 + (35/2) * p0 + (147/64) * p1 - (35/4)",
+     "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{147}{32} \\cdot p1 \\cdot p0 - \\frac{7}{64} \\cdot p1^{2} + \\frac{35}{2} \\cdot p0 + \\frac{147}{64} \\cdot p1 - \\frac{35}{4}"
     },
     {
-     "domain_plain": "p0 = 1 and p1 >= 129",
-     "count_plain": "(63/4096) * p1^2 - (8379/4096) * p1 + (315/32)",
-     "count_latex": "\\frac{63}{4096} \\cdot p1^{2} - \\frac{8379}{4096} \\cdot p1 + \\frac{315}{32}"
+     "domain_plain": "p0 = 1 and p1 >= 17",
+     "count_plain": "(7/64) * p1^2 - (147/64) * p1 + (35/4)",
+     "count_latex": "\\frac{7}{64} \\cdot p1^{2} - \\frac{147}{64} \\cdot p1 + \\frac{35}{4}"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (189/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{189}{64}",
+   "value_plain": "(1/4) * p1^2 + (21/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{21}{8}",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(63/2048) * p1 * p0 - (63/16) * p0 - (63/4096) * p1 + (63/32)",
-     "count_latex": "\\frac{63}{2048} \\cdot p1 \\cdot p0 - \\frac{63}{16} \\cdot p0 - \\frac{63}{4096} \\cdot p1 + \\frac{63}{32}"
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/64) * p1 + (7/4)",
+     "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{64} \\cdot p1 + \\frac{7}{4}"
     },
     {
-     "domain_plain": "p0 = 1 and p1 >= 129",
-     "count_plain": "(63/4096) * p1 * p0 - (63/32) * p0",
-     "count_latex": "\\frac{63}{4096} \\cdot p1 \\cdot p0 - \\frac{63}{32} \\cdot p0"
+     "domain_plain": "p0 = 1 and p1 >= 17",
+     "count_plain": "(7/64) * p1 * p0 - (7/4) * p0",
+     "count_latex": "\\frac{7}{64} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (121/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{121}{64}",
+   "value_plain": "(1/4) * p1^2 + (9/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{8}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and 63 <= i3 <= -66 + p1",
-     "count_plain": "(63/32) * p0 - (63/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p0 - \\frac{63}{64}"
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -10 + p1",
+     "count_plain": "(7/4) * p0 - (7/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and 63 <= i3 <= -66 + p1",
-     "count_plain": "(63/64) * p0",
-     "count_latex": "\\frac{63}{64} \\cdot p0"
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -10 + p1",
+     "count_plain": "(7/8) * p0",
+     "count_latex": "\\frac{7}{8} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (31/32) * p1 + 2",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{31}{32} \\cdot p1 + 2",
+   "value_plain": "(1/4) * p1^2 + (3/4) * p1 + 2",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 + 2",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and (1 + i3) mod 64 = 0 and p0 >= 2 and 63 <= i3 <= -129 + p1",
+     "domain_plain": "(p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -17 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and (1 + i3) mod 64 = 0 and 63 <= i3 <= -129 + p1",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -17 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - p1 + 4",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - p1 + 4",
+   "value_plain": "(1/4) * p1^2 - p1 + 4",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + 4",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and 63 <= i3 <= -66 + p1",
-     "count_plain": "(63/32) * p0 - (63/64)",
-     "count_latex": "\\frac{63}{32} \\cdot p0 - \\frac{63}{64}"
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and 7 <= i3 <= -10 + p1",
+     "count_plain": "(7/4) * p0 - (7/8)",
+     "count_latex": "\\frac{7}{4} \\cdot p0 - \\frac{7}{8}"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and 63 <= i3 <= -66 + p1",
-     "count_plain": "(63/64) * p0",
-     "count_latex": "\\frac{63}{64} \\cdot p0"
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and 7 <= i3 <= -10 + p1",
+     "count_plain": "(7/8) * p0",
+     "count_latex": "\\frac{7}{8} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(3/32) * p1 + (79/16)",
-   "value_latex": "\\frac{3}{32} \\cdot p1 + \\frac{79}{16}",
+   "value_plain": "(3/4) * p1 + (9/2)",
+   "value_latex": "\\frac{3}{4} \\cdot p1 + \\frac{9}{2}",
    "regions": [
     {
-     "domain_plain": "i2 = -3 + p1 and (p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "i2 = -3 + p1 and (p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (3/64) * p1 + (225/32)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{3}{64} \\cdot p1 + \\frac{225}{32}",
+   "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (29/4)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{29}{4}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "2 * p1 * p0 - 10 * p0 - p1 + 5",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 10 \\cdot p0 - p1 + 5"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p1 * p0 - 5 * p0",
      "count_latex": "p1 \\cdot p0 - 5 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (3/64) * p1 + (451/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{3}{64} \\cdot p1 + \\frac{451}{64}",
+   "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (59/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{59}{8}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(3/64) * p1 + (225/32)",
-   "value_latex": "\\frac{3}{64} \\cdot p1 + \\frac{225}{32}",
+   "value_plain": "(3/8) * p1 + (29/4)",
+   "value_latex": "\\frac{3}{8} \\cdot p1 + \\frac{29}{4}",
    "regions": [
     {
-     "domain_plain": "i2 = -3 + p1 and (1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "i2 = -3 + p1 and (1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - p1 + (129/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - p1 + \\frac{129}{16}",
+   "value_plain": "(1/4) * p1^2 - p1 + (17/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{17}{2}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (1/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{1}{16}",
+   "value_plain": "(1/4) * p1^2 + p1 - (1/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{1}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p1 * p0 - 10 * p0 - p1 + 5",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 10 \\cdot p0 - p1 + 5"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "p1 - 5",
      "count_latex": "p1 - 5"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (67/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{67}{64}",
+   "value_plain": "(1/4) * p1^2 + p1 - (11/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{11}{8}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (31/32) * p1 - (1/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{31}{32} \\cdot p1 - \\frac{1}{16}",
+   "value_plain": "(1/4) * p1^2 + (3/4) * p1 - (1/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 - \\frac{1}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (3/64) * p1 + (193/32)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{3}{64} \\cdot p1 + \\frac{193}{32}",
+   "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (25/4)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{25}{4}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "2 * p1 * p0 - 10 * p0 - p1 + 5",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 10 \\cdot p0 - p1 + 5"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p1 - 5",
      "count_latex": "p1 - 5"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (3/64) * p1 + (387/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{3}{64} \\cdot p1 + \\frac{387}{64}",
+   "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (51/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{51}{8}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (5/64) * p1 + (193/32)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{5}{64} \\cdot p1 + \\frac{193}{32}",
+   "value_plain": "(1/4) * p1^2 - (5/8) * p1 + (25/4)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{5}{8} \\cdot p1 + \\frac{25}{4}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (17/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{17}{16}",
+   "value_plain": "(1/4) * p1^2 + p1 - (3/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{3}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - p1 + (97/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - p1 + \\frac{97}{16}",
+   "value_plain": "(1/4) * p1^2 - p1 + (13/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{13}{2}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i3) mod 64 = 0 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (65/32) * p1 - 2",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{65}{32} \\cdot p1 - 2",
+   "value_plain": "(1/4) * p1^2 + (9/4) * p1 - 2",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 - 2",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "4 * p0 - 4",
      "count_latex": "4 \\cdot p0 - 4"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (1/32) * p1",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{1}{32} \\cdot p1",
+   "value_plain": "(1/4) * p1^2 + (1/4) * p1",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{4} \\cdot p1",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 65",
-     "count_plain": "(63/16) * p0 - (63/16)",
-     "count_latex": "\\frac{63}{16} \\cdot p0 - \\frac{63}{16}"
+     "domain_plain": "p0 >= 2 and p1 >= 9",
+     "count_plain": "(7/2) * p0 - (7/2)",
+     "count_latex": "\\frac{7}{2} \\cdot p0 - \\frac{7}{2}"
     }
    ]
   },
   {
-   "value_plain": "255",
-   "value_latex": "255",
+   "value_plain": "31",
+   "value_latex": "31",
    "regions": [
     {
-     "domain_plain": "p1 = 64 and p0 >= 2",
+     "domain_plain": "p1 = 8 and p0 >= 2",
      "count_plain": "4 * p0 - 4",
      "count_latex": "4 \\cdot p0 - 4"
     }
@@ -1322,7 +3514,7 @@
    "value_latex": "2 \\cdot p1 + 2",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and 4 <= p1 <= 63",
+     "domain_plain": "p0 >= 2 and 4 <= p1 <= 7",
      "count_plain": "4 * p0 - 4",
      "count_latex": "4 \\cdot p0 - 4"
     },
@@ -1334,16 +3526,16 @@
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (127/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{127}{64}",
+   "value_plain": "(1/4) * p1^2 + p1 - (15/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{15}{8}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
@@ -1354,34 +3546,34 @@
    "value_latex": "2 \\cdot p1 + 1",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and 3 <= p1 <= 63",
+     "domain_plain": "p0 >= 2 and 3 <= p1 <= 7",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and 3 <= p1 <= 63",
+     "domain_plain": "p0 = 1 and 3 <= p1 <= 7",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 - (63/64)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 - \\frac{63}{64}",
+   "value_plain": "(1/2) * p1 - (7/8)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 - \\frac{7}{8}",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and p1 >= 66",
+     "domain_plain": "p0 > 0 and p1 >= 10",
      "count_plain": "2 * p1 * p0 - 4 * p0",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 + (1/64)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 + \\frac{1}{64}",
+   "value_plain": "(1/2) * p1 + (1/8)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{1}{8}",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and p1 >= 65",
+     "domain_plain": "p0 > 0 and p1 >= 9",
      "count_plain": "2 * p1 * p0 - 4 * p0",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
     }
@@ -1392,9 +3584,14 @@
    "value_latex": "3",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and 3 <= p1 <= 64",
-     "count_plain": "2 * p1 * p0 - 4 * p0",
-     "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
+     "domain_plain": "p0 > 0 and 3 <= p1 <= 8",
+     "count_plain": "(3/2) * p1^2 * p0 - (5/2) * p1 * p0 - p0",
+     "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - \\frac{5}{2} \\cdot p1 \\cdot p0 - p0"
+    },
+    {
+     "domain_plain": "p0 > 0 and p1 >= 9",
+     "count_plain": "(3/2) * p1^2 * p0 - (9/2) * p1 * p0 + 3 * p0",
+     "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 + 3 \\cdot p0"
     }
    ]
   },
@@ -1415,11 +3612,11 @@
    ]
   },
   {
-   "value_plain": "186",
-   "value_latex": "186",
+   "value_plain": "18",
+   "value_latex": "18",
    "regions": [
     {
-     "domain_plain": "p1 = 64 and p0 > 0",
+     "domain_plain": "p1 = 8 and p0 > 0",
      "count_plain": "p0",
      "count_latex": "p0"
     }
@@ -1430,44 +3627,44 @@
    "value_latex": "2 \\cdot p1 - 3",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and 5 <= p1 <= 62",
+     "domain_plain": "p0 > 0 and 5 <= p1 <= 6",
      "count_plain": "p0",
      "count_latex": "p0"
     },
     {
-     "domain_plain": "p1 = 63 and p0 > 0",
-     "count_plain": "p0",
-     "count_latex": "p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "(4351/32)",
-   "value_latex": "\\frac{4351}{32}",
-   "regions": [
-    {
-     "domain_plain": "p1 = 65 and p0 >= 2",
-     "count_plain": "2 * p0 - 1",
-     "count_latex": "2 \\cdot p0 - 1"
-    },
-    {
-     "domain_plain": "p0 = 1 and p1 = 65",
+     "domain_plain": "p1 = 7 and p0 > 0",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "192",
-   "value_latex": "192",
+   "value_plain": "(95/4)",
+   "value_latex": "\\frac{95}{4}",
    "regions": [
     {
-     "domain_plain": "p1 = 64 and p0 >= 2",
+     "domain_plain": "p1 = 9 and p0 >= 2",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and p1 = 64",
+     "domain_plain": "p0 = 1 and p1 = 9",
+     "count_plain": "p0",
+     "count_latex": "p0"
+    }
+   ]
+  },
+  {
+   "value_plain": "24",
+   "value_latex": "24",
+   "regions": [
+    {
+     "domain_plain": "p1 = 8 and p0 >= 2",
+     "count_plain": "2 * p0 - 1",
+     "count_latex": "2 \\cdot p0 - 1"
+    },
+    {
+     "domain_plain": "p0 = 1 and p1 = 8",
      "count_plain": "p0",
      "count_latex": "p0"
     }
@@ -1478,722 +3675,700 @@
    "value_latex": "7",
    "regions": [
     {
-     "domain_plain": "p1 = 65 and p0 > 0",
-     "count_plain": "126 * p0",
-     "count_latex": "126 \\cdot p0"
+     "domain_plain": "p0 > 0 and p1 >= 10",
+     "count_plain": "(1/2) * p1^2 * p0 - (19/4) * p1 * p0 + (17/4) * p0",
+     "count_latex": "\\frac{1}{2} \\cdot p1^{2} \\cdot p0 - \\frac{19}{4} \\cdot p1 \\cdot p0 + \\frac{17}{4} \\cdot p0"
+    },
+    {
+     "domain_plain": "p1 = 9 and p0 > 0",
+     "count_plain": "16 * p0",
+     "count_latex": "16 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(79/16)",
-   "value_latex": "\\frac{79}{16}",
+   "value_plain": "(9/2)",
+   "value_latex": "\\frac{9}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 > 0 and p1 >= 128",
-     "count_plain": "(191/2048) * p1^2 * p0 - 4 * p1 * p0 + (8001/2048) * p0",
-     "count_latex": "\\frac{191}{2048} \\cdot p1^{2} \\cdot p0 - 4 \\cdot p1 \\cdot p0 + \\frac{8001}{2048} \\cdot p0"
+     "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+     "count_plain": "(23/32) * p1^2 * p0 - 4 * p1 * p0 + (105/32) * p0",
+     "count_latex": "\\frac{23}{32} \\cdot p1^{2} \\cdot p0 - 4 \\cdot p1 \\cdot p0 + \\frac{105}{32} \\cdot p0"
     },
     {
-     "domain_plain": "p1 = 64 and p0 > 0",
-     "count_plain": "(266049/2048) * p0",
-     "count_latex": "\\frac{266049}{2048} \\cdot p0"
+     "domain_plain": "p1 = 8 and p0 > 0",
+     "count_plain": "(553/32) * p0",
+     "count_latex": "\\frac{553}{32} \\cdot p0"
     },
     {
-     "domain_plain": "p0 > 0 and p1 >= 64 and 64*floor((p1)/64) < p1",
-     "count_plain": "(127/2048) * p1^2 * p0 - (127/32) * p1 * p0 + (8001/2048) * p0",
-     "count_latex": "\\frac{127}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{127}{32} \\cdot p1 \\cdot p0 + \\frac{8001}{2048} \\cdot p0"
+     "domain_plain": "p0 > 0 and p1 >= 8 and 8*floor((p1)/8) < p1",
+     "count_plain": "(15/32) * p1^2 * p0 - (15/4) * p1 * p0 + (105/32) * p0",
+     "count_latex": "\\frac{15}{32} \\cdot p1^{2} \\cdot p0 - \\frac{15}{4} \\cdot p1 \\cdot p0 + \\frac{105}{32} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (31/32) * p1 + (15/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{31}{32} \\cdot p1 + \\frac{15}{16}",
+   "value_plain": "(1/4) * p1^2 + (3/4) * p1 + (1/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{3}{4} \\cdot p1 + \\frac{1}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 > 0 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (5/64) * p1 + (225/32)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{5}{64} \\cdot p1 + \\frac{225}{32}",
+   "value_plain": "(1/4) * p1^2 - (5/8) * p1 + (29/4)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{5}{8} \\cdot p1 + \\frac{29}{4}",
    "regions": [
     {
-     "domain_plain": "(1 + i5) mod 64 = 0 and p0 > 0 and i5 >= -64 + p1 and 63 <= i5 <= -2 + p1",
+     "domain_plain": "(1 + i5) mod 8 = 0 and p0 > 0 and i5 >= -8 + p1 and 7 <= i5 <= -2 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 + (125/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 + \\frac{125}{64}",
+   "value_plain": "(1/4) * p1^2 + p1 + (13/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{13}{8}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 192",
-     "count_plain": "(1/32) * p1 * p0 - 4 * p0 - p1 + 2",
-     "count_latex": "\\frac{1}{32} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+     "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 2",
+     "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 192",
-     "count_plain": "(1/64) * p1 * p0 - 2 * p0",
-     "count_latex": "\\frac{1}{64} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+     "count_plain": "(1/8) * p1 * p0 - 2 * p0",
+     "count_latex": "\\frac{1}{8} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (441/64)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{441}{64}",
+   "value_plain": "(1/4) * p1^2 + (49/8)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{49}{8}",
    "regions": [
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 >= 2 and p1 >= 129",
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (-1 + p1) mod 64 = 0 and p1 >= 129",
+     "domain_plain": "p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 + (63/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 + \\frac{63}{16}",
+   "value_plain": "(1/4) * p1^2 + p1 + (7/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 + \\frac{7}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(4239/16)",
-   "value_latex": "\\frac{4239}{16}",
+   "value_plain": "(81/2)",
+   "value_latex": "\\frac{81}{2}",
    "regions": [
     {
-     "domain_plain": "p1 = 65 and p0 >= 2",
+     "domain_plain": "p1 = 9 and p0 >= 2",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and p1 = 65",
+     "domain_plain": "p0 = 1 and p1 = 9",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (3/64) * p1 + (257/32)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{3}{64} \\cdot p1 + \\frac{257}{32}",
+   "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (33/4)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{33}{4}",
    "regions": [
     {
-     "domain_plain": "(1 + i5) mod 64 = 0 and p0 >= 2 and i5 >= -64 + p1 and 63 <= i5 <= -3 + p1",
+     "domain_plain": "(1 + i5) mod 8 = 0 and p0 >= 2 and i5 >= -8 + p1 and 7 <= i5 <= -3 + p1",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (1 + i5) mod 64 = 0 and i5 >= -64 + p1 and 63 <= i5 <= -3 + p1",
+     "domain_plain": "p0 = 1 and (1 + i5) mod 8 = 0 and i5 >= -8 + p1 and 7 <= i5 <= -3 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (63/32) * p1 + (79/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{63}{32} \\cdot p1 + \\frac{79}{16}",
+   "value_plain": "(1/4) * p1^2 + (7/4) * p1 + (9/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{7}{4} \\cdot p1 + \\frac{9}{2}",
    "regions": [
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 >= 2 and p1 >= 129",
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (-1 + p1) mod 64 = 0 and p1 >= 129",
+     "domain_plain": "p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(63/16)",
-   "value_latex": "\\frac{63}{16}",
+   "value_plain": "(7/2)",
+   "value_latex": "\\frac{7}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 > 0 and p1 >= 128",
-     "count_plain": "(2945/512) * p1^2 * p0 - (4985/512) * p1 * p0 + (127/2048) * p1^2 - (118959/1024) * p0 - (8223/2048) * p1 + (95/32)",
-     "count_latex": "\\frac{2945}{512} \\cdot p1^{2} \\cdot p0 - \\frac{4985}{512} \\cdot p1 \\cdot p0 + \\frac{127}{2048} \\cdot p1^{2} - \\frac{118959}{1024} \\cdot p0 - \\frac{8223}{2048} \\cdot p1 + \\frac{95}{32}"
+     "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+     "count_plain": "(33/8) * p1^2 * p0 - 8 * p1 * p0 + (15/32) * p1^2 - (85/16) * p0 - (131/32) * p1 + (11/4)",
+     "count_latex": "\\frac{33}{8} \\cdot p1^{2} \\cdot p0 - 8 \\cdot p1 \\cdot p0 + \\frac{15}{32} \\cdot p1^{2} - \\frac{85}{16} \\cdot p0 - \\frac{131}{32} \\cdot p1 + \\frac{11}{4}"
     },
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 > 0 and p1 >= 129",
-     "count_plain": "(2945/512) * p1^2 * p0 - (130937/512) * p1 * p0 + (63/2048) * p1^2 + (8132433/1024) * p0 - (4063/2048) * p1 + (31/32)",
-     "count_latex": "\\frac{2945}{512} \\cdot p1^{2} \\cdot p0 - \\frac{130937}{512} \\cdot p1 \\cdot p0 + \\frac{63}{2048} \\cdot p1^{2} + \\frac{8132433}{1024} \\cdot p0 - \\frac{4063}{2048} \\cdot p1 + \\frac{31}{32}"
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 17",
+     "count_plain": "(33/8) * p1^2 * p0 - 30 * p1 * p0 + (7/32) * p1^2 + (1611/16) * p0 - (59/32) * p1 + (3/4)",
+     "count_latex": "\\frac{33}{8} \\cdot p1^{2} \\cdot p0 - 30 \\cdot p1 \\cdot p0 + \\frac{7}{32} \\cdot p1^{2} + \\frac{1611}{16} \\cdot p0 - \\frac{59}{32} \\cdot p1 + \\frac{3}{4}"
     },
     {
-     "domain_plain": "p0 > 0 and p1 >= 66 and 64*floor((p1)/64) <= -2 + p1",
-     "count_plain": "(1953/512) * p1^2 * p0 - (2969/512) * p1 * p0 + (63/2048) * p1^2 - (121007/1024) * p0 - (4063/2048) * p1 + (31/32)",
-     "count_latex": "\\frac{1953}{512} \\cdot p1^{2} \\cdot p0 - \\frac{2969}{512} \\cdot p1 \\cdot p0 + \\frac{63}{2048} \\cdot p1^{2} - \\frac{121007}{1024} \\cdot p0 - \\frac{4063}{2048} \\cdot p1 + \\frac{31}{32}"
+     "domain_plain": "p0 > 0 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1",
+     "count_plain": "(21/8) * p1^2 * p0 - (9/2) * p1 * p0 + (7/32) * p1^2 - (117/16) * p0 - (59/32) * p1 + (3/4)",
+     "count_latex": "\\frac{21}{8} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 + \\frac{7}{32} \\cdot p1^{2} - \\frac{117}{16} \\cdot p0 - \\frac{59}{32} \\cdot p1 + \\frac{3}{4}"
     },
     {
-     "domain_plain": "p1 = 65 and p0 > 0",
-     "count_plain": "(31987871/2048) * p0 + (127/64)",
-     "count_latex": "\\frac{31987871}{2048} \\cdot p0 + \\frac{127}{64}"
+     "domain_plain": "p1 = 9 and p0 > 0",
+     "count_plain": "(5235/32) * p0 + (15/8)",
+     "count_latex": "\\frac{5235}{32} \\cdot p0 + \\frac{15}{8}"
     },
     {
-     "domain_plain": "p1 = 64 and p0 > 0",
-     "count_plain": "(23368401/1024) * p0",
-     "count_latex": "\\frac{23368401}{1024} \\cdot p0"
+     "domain_plain": "p1 = 8 and p0 > 0",
+     "count_plain": "(3115/16) * p0",
+     "count_latex": "\\frac{3115}{16} \\cdot p0"
     },
     {
-     "domain_plain": "p0 > 0 and 3 <= p1 <= 63",
-     "count_plain": "(8001/2048) * p1^2 * p0 - (24003/2048) * p1 * p0 + (8001/1024) * p0",
-     "count_latex": "\\frac{8001}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{24003}{2048} \\cdot p1 \\cdot p0 + \\frac{8001}{1024} \\cdot p0"
+     "domain_plain": "p0 > 0 and 3 <= p1 <= 7",
+     "count_plain": "(105/32) * p1^2 * p0 - (315/32) * p1 * p0 + (105/16) * p0",
+     "count_latex": "\\frac{105}{32} \\cdot p1^{2} \\cdot p0 - \\frac{315}{32} \\cdot p1 \\cdot p0 + \\frac{105}{16} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 + (16065/4096)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 + \\frac{16065}{4096}",
+   "value_plain": "(1/2) * p1 + (217/64)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{217}{64}",
    "regions": [
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 > 0 and p1 >= 193",
-     "count_plain": "(1/32) * p1^2 * p0 - (131/32) * p1 * p0 + (129/16) * p0",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{131}{32} \\cdot p1 \\cdot p0 + \\frac{129}{16} \\cdot p0"
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 25",
+     "count_plain": "(1/4) * p1^2 * p0 - (19/4) * p1 * p0 + (17/2) * p0",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{19}{4} \\cdot p1 \\cdot p0 + \\frac{17}{2} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 + (12033/4096)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 + \\frac{12033}{4096}",
+   "value_plain": "(1/2) * p1 + (161/64)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{161}{64}",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and p1 >= 130",
-     "count_plain": "(63/2048) * p1^2 * p0 - (8253/2048) * p1 * p0 + (8127/1024) * p0",
-     "count_latex": "\\frac{63}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{8253}{2048} \\cdot p1 \\cdot p0 + \\frac{8127}{1024} \\cdot p0"
+     "domain_plain": "p0 > 0 and p1 >= 18",
+     "count_plain": "(7/32) * p1^2 * p0 - (133/32) * p1 * p0 + (119/16) * p0",
+     "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{133}{32} \\cdot p1 \\cdot p0 + \\frac{119}{16} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (65/32) * p1 + (7873/4096)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{65}{32} \\cdot p1 + \\frac{7873}{4096}",
+   "value_plain": "(1/4) * p1^2 + (9/4) * p1 + (89/64)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 + \\frac{89}{64}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 192",
-     "count_plain": "(1/32) * p1 * p0 - 4 * p0 - p1 + 4",
-     "count_latex": "\\frac{1}{32} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+     "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 4",
+     "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (1/32) * p1 + (20097/4096)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{1}{32} \\cdot p1 + \\frac{20097}{4096}",
+   "value_plain": "(1/4) * p1^2 + (1/4) * p1 + (273/64)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{4} \\cdot p1 + \\frac{273}{64}",
    "regions": [
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 >= 2 and p1 >= 129",
-     "count_plain": "(1/32) * p1 * p0 - (65/32) * p0 - p1 + (65/32)",
-     "count_latex": "\\frac{1}{32} \\cdot p1 \\cdot p0 - \\frac{65}{32} \\cdot p0 - p1 + \\frac{65}{32}"
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17",
+     "count_plain": "(1/4) * p1 * p0 - (9/4) * p0 - p1 + (9/4)",
+     "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 - p1 + \\frac{9}{4}"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (1/32) * p1 + (16065/4096)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{1}{32} \\cdot p1 + \\frac{16065}{4096}",
+   "value_plain": "(1/4) * p1^2 + (1/4) * p1 + (217/64)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{4} \\cdot p1 + \\frac{217}{64}",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(31/1024) * p1 * p0 - (31/8) * p0 - (31/1024) * p1 + (31/8)",
-     "count_latex": "\\frac{31}{1024} \\cdot p1 \\cdot p0 - \\frac{31}{8} \\cdot p0 - \\frac{31}{1024} \\cdot p1 + \\frac{31}{8}"
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(3/16) * p1 * p0 - 3 * p0 - (3/16) * p1 + 3",
+     "count_latex": "\\frac{3}{16} \\cdot p1 \\cdot p0 - 3 \\cdot p0 - \\frac{3}{16} \\cdot p1 + 3"
     }
    ]
   },
   {
-   "value_plain": "(24193/4096)",
-   "value_latex": "\\frac{24193}{4096}",
+   "value_plain": "(337/64)",
+   "value_latex": "\\frac{337}{64}",
    "regions": [
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 > 0 and p1 >= 65",
-     "count_plain": "(1/32) * p1^2 * p0 - p1 * p0 + (1/32) * p0",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - p1 \\cdot p0 + \\frac{1}{32} \\cdot p0"
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 9",
+     "count_plain": "(1/4) * p1^2 * p0 - p1 * p0 + (1/4) * p0",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - p1 \\cdot p0 + \\frac{1}{4} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(20161/4096)",
-   "value_latex": "\\frac{20161}{4096}",
+   "value_plain": "(281/64)",
+   "value_latex": "\\frac{281}{64}",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and p1 >= 64",
-     "count_plain": "(63/2048) * p1^2 * p0 - (63/32) * p1 * p0 + (3969/2048) * p0",
-     "count_latex": "\\frac{63}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{63}{32} \\cdot p1 \\cdot p0 + \\frac{3969}{2048} \\cdot p0"
+     "domain_plain": "p0 > 0 and p1 >= 8",
+     "count_plain": "(7/32) * p1^2 * p0 - (7/4) * p1 * p0 + (49/32) * p0",
+     "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{7}{4} \\cdot p1 \\cdot p0 + \\frac{49}{32} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (65/32) * p1 + (3777/4096)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{65}{32} \\cdot p1 + \\frac{3777}{4096}",
+   "value_plain": "(1/4) * p1^2 + (9/4) * p1 + (25/64)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 + \\frac{25}{64}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 2",
      "count_latex": "2 \\cdot p0 - 2"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (24513/4096)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{24513}{4096}",
+   "value_plain": "(1/4) * p1^2 + (377/64)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{377}{64}",
    "regions": [
     {
-     "domain_plain": "(1 + i5) mod 64 = 0 and p0 >= 2 and i5 >= -64 + p1 and 63 <= i5 <= -2 + p1",
+     "domain_plain": "(1 + i5) mod 8 = 0 and p0 >= 2 and i5 >= -8 + p1 and 7 <= i5 <= -2 + p1",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 + (32129/4096)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 + \\frac{32129}{4096}",
+   "value_plain": "(1/2) * p1 + (433/64)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{433}{64}",
    "regions": [
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 > 0 and p1 >= 129",
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 17",
      "count_plain": "2 * p1 * p0 - 4 * p0",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 + (24257/4096)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 + \\frac{24257}{4096}",
+   "value_plain": "(1/2) * p1 + (345/64)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{345}{64}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 > 0 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
      "count_plain": "2 * p1 * p0 - 4 * p0",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(52929/4096)",
-   "value_latex": "\\frac{52929}{4096}",
+   "value_plain": "(793/64)",
+   "value_latex": "\\frac{793}{64}",
    "regions": [
     {
-     "domain_plain": "p1 = 65 and p0 > 0",
-     "count_plain": "126 * p0",
-     "count_latex": "126 \\cdot p0"
+     "domain_plain": "p1 = 9 and p0 > 0",
+     "count_plain": "14 * p0",
+     "count_latex": "14 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 + (36289/4096)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 + \\frac{36289}{4096}",
+   "value_plain": "(1/2) * p1 + (505/64)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{505}{64}",
    "regions": [
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 > 0 and p1 >= 129",
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 17",
      "count_plain": "2 * p1 * p0 - 4 * p0",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(37057/4096)",
-   "value_latex": "\\frac{37057}{4096}",
+   "value_plain": "(601/64)",
+   "value_latex": "\\frac{601}{64}",
    "regions": [
     {
-     "domain_plain": "(1 + i5) mod 64 = 0 and p0 > 0 and i5 >= -64 + p1 and 63 <= i5 <= -3 + p1",
+     "domain_plain": "(1 + i5) mod 8 = 0 and p0 > 0 and i5 >= -8 + p1 and 7 <= i5 <= -3 + p1",
      "count_plain": "2 * p1 * p0 - 4 * p0",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(20097/4096)",
-   "value_latex": "\\frac{20097}{4096}",
+   "value_plain": "(273/64)",
+   "value_latex": "\\frac{273}{64}",
    "regions": [
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 > 0 and p1 >= 129",
-     "count_plain": "(31/16) * p1^2 * p0 - (47/8) * p1 * p0 + (63/16) * p0 + (1/32) * p1 - (65/32)",
-     "count_latex": "\\frac{31}{16} \\cdot p1^{2} \\cdot p0 - \\frac{47}{8} \\cdot p1 \\cdot p0 + \\frac{63}{16} \\cdot p0 + \\frac{1}{32} \\cdot p1 - \\frac{65}{32}"
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 17",
+     "count_plain": "(3/2) * p1^2 * p0 - 5 * p1 * p0 + (7/2) * p0 + (1/4) * p1 - (9/4)",
+     "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - 5 \\cdot p1 \\cdot p0 + \\frac{7}{2} \\cdot p0 + \\frac{1}{4} \\cdot p1 - \\frac{9}{4}"
     },
     {
-     "domain_plain": "p1 = 65 and p0 > 0",
-     "count_plain": "7808 * p0",
-     "count_latex": "7808 \\cdot p0"
+     "domain_plain": "p1 = 9 and p0 > 0",
+     "count_plain": "80 * p0",
+     "count_latex": "80 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(16065/4096)",
-   "value_latex": "\\frac{16065}{4096}",
+   "value_plain": "(217/64)",
+   "value_latex": "\\frac{217}{64}",
    "regions": [
     {
-     "domain_plain": "(-1 + p1) mod 64 = 0 and p0 > 0 and p1 >= 66",
-     "count_plain": "(1953/1024) * p1^2 * p0 - (3969/1024) * p1 * p0 + (63/32) * p0 + (63/2048) * p1 + (1/32)",
-     "count_latex": "\\frac{1953}{1024} \\cdot p1^{2} \\cdot p0 - \\frac{3969}{1024} \\cdot p1 \\cdot p0 + \\frac{63}{32} \\cdot p0 + \\frac{63}{2048} \\cdot p1 + \\frac{1}{32}"
+     "domain_plain": "(-1 + p1) mod 8 = 0 and p0 > 0 and p1 >= 10",
+     "count_plain": "(21/16) * p1^2 * p0 - (49/16) * p1 * p0 + (7/4) * p0 + (7/32) * p1 + (1/4)",
+     "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{49}{16} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0 + \\frac{7}{32} \\cdot p1 + \\frac{1}{4}"
     },
     {
-     "domain_plain": "p0 > 0 and p1 >= 66 and 64*floor((-1 + p1)/64) <= -2 + p1",
-     "count_plain": "(1953/1024) * p1^2 * p0 - (3969/1024) * p1 * p0 + (63/32) * p0 + (63/2048) * p1 - (63/32)",
-     "count_latex": "\\frac{1953}{1024} \\cdot p1^{2} \\cdot p0 - \\frac{3969}{1024} \\cdot p1 \\cdot p0 + \\frac{63}{32} \\cdot p0 + \\frac{63}{2048} \\cdot p1 - \\frac{63}{32}"
+     "domain_plain": "p0 > 0 and p1 >= 10 and 8*floor((-1 + p1)/8) <= -2 + p1",
+     "count_plain": "(21/16) * p1^2 * p0 - (49/16) * p1 * p0 + (7/4) * p0 + (7/32) * p1 - (7/4)",
+     "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{49}{16} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4}"
     },
     {
-     "domain_plain": "p1 = 65 and p0 > 0",
-     "count_plain": "7686 * p0 + (4159/2048)",
-     "count_latex": "7686 \\cdot p0 + \\frac{4159}{2048}"
+     "domain_plain": "p1 = 9 and p0 > 0",
+     "count_plain": "70 * p0 + (71/32)",
+     "count_latex": "70 \\cdot p0 + \\frac{71}{32}"
     },
     {
-     "domain_plain": "p1 = 64 and p0 > 0",
-     "count_plain": "(242109/32) * p0",
-     "count_latex": "\\frac{242109}{32} \\cdot p0"
+     "domain_plain": "p1 = 8 and p0 > 0",
+     "count_plain": "(245/4) * p0",
+     "count_latex": "\\frac{245}{4} \\cdot p0"
     },
     {
-     "domain_plain": "p0 > 0 and 3 <= p1 <= 63",
-     "count_plain": "(63/32) * p1^2 * p0 - (189/32) * p1 * p0 + (63/16) * p0",
-     "count_latex": "\\frac{63}{32} \\cdot p1^{2} \\cdot p0 - \\frac{189}{32} \\cdot p1 \\cdot p0 + \\frac{63}{16} \\cdot p0"
+     "domain_plain": "p0 > 0 and 3 <= p1 <= 7",
+     "count_plain": "(7/4) * p1^2 * p0 - (21/4) * p1 * p0 + (7/2) * p0",
+     "count_latex": "\\frac{7}{4} \\cdot p1^{2} \\cdot p0 - \\frac{21}{4} \\cdot p1 \\cdot p0 + \\frac{7}{2} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - p1 + (32961/4096)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - p1 + \\frac{32961}{4096}",
+   "value_plain": "(1/4) * p1^2 - p1 + (537/64)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{537}{64}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (65/32) * p1 + (31/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{65}{32} \\cdot p1 + \\frac{31}{16}",
+   "value_plain": "(1/4) * p1^2 + (9/4) * p1 + (3/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 + \\frac{3}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 192",
-     "count_plain": "(1/32) * p1 * p0 - 4 * p0 - p1 + 4",
-     "count_latex": "\\frac{1}{32} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+     "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 4",
+     "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (1/32) * p1 + (63/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{1}{32} \\cdot p1 + \\frac{63}{16}",
+   "value_plain": "(1/4) * p1^2 + (1/4) * p1 + (7/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{1}{4} \\cdot p1 + \\frac{7}{2}",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(63/2048) * p1 * p0 - (63/16) * p0 - (63/2048) * p1 + (63/16)",
-     "count_latex": "\\frac{63}{2048} \\cdot p1 \\cdot p0 - \\frac{63}{16} \\cdot p0 - \\frac{63}{2048} \\cdot p1 + \\frac{63}{16}"
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/32) * p1 + (7/2)",
+     "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{32} \\cdot p1 + \\frac{7}{2}"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + (65/32) * p1 + (15/16)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{65}{32} \\cdot p1 + \\frac{15}{16}",
+   "value_plain": "(1/4) * p1^2 + (9/4) * p1 + (1/2)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 + \\frac{1}{2}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 2",
      "count_latex": "2 \\cdot p0 - 2"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + 6",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + 6",
+   "value_plain": "(1/4) * p1^2 + 6",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + 6",
    "regions": [
     {
-     "domain_plain": "(1 + i5) mod 64 = 0 and p0 >= 2 and i5 >= -64 + p1 and 63 <= i5 <= -2 + p1",
+     "domain_plain": "(1 + i5) mod 8 = 0 and p0 >= 2 and i5 >= -8 + p1 and 7 <= i5 <= -2 + p1",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - p1 + (225/32)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - p1 + \\frac{225}{32}",
+   "value_plain": "(1/4) * p1^2 - p1 + (29/4)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{29}{4}",
    "regions": [
     {
-     "domain_plain": "(1 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -64 + p1 and 63 <= i3 <= -2 + p1",
+     "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 + (3969/2048)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 + \\frac{3969}{2048}",
+   "value_plain": "(1/2) * p1 + (49/32)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{49}{32}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 > 0 and p1 >= 192",
-     "count_plain": "(1/32) * p1^2 * p0 - (65/16) * p1 * p0 + 8 * p0",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{65}{16} \\cdot p1 \\cdot p0 + 8 \\cdot p0"
+     "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 24",
+     "count_plain": "(1/4) * p1^2 * p0 - (9/2) * p1 * p0 + 8 * p0",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{2} \\cdot p1 \\cdot p0 + 8 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 + (1985/2048)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 + \\frac{1985}{2048}",
+   "value_plain": "(1/2) * p1 + (25/32)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{25}{32}",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and p1 >= 129",
-     "count_plain": "(63/2048) * p1^2 * p0 - (4095/1024) * p1 * p0 + (63/8) * p0",
-     "count_latex": "\\frac{63}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{4095}{1024} \\cdot p1 \\cdot p0 + \\frac{63}{8} \\cdot p0"
+     "domain_plain": "p0 > 0 and p1 >= 17",
+     "count_plain": "(7/32) * p1^2 * p0 - (63/16) * p1 * p0 + 7 * p0",
+     "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{16} \\cdot p1 \\cdot p0 + 7 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (159/2048)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{159}{2048}",
+   "value_plain": "(1/4) * p1^2 + p1 - (19/32)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{19}{32}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 192",
-     "count_plain": "(1/32) * p1 * p0 - 4 * p0 - p1 + 2",
-     "count_latex": "\\frac{1}{32} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 24",
+     "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 2",
+     "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 2"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 192",
-     "count_plain": "(1/64) * p1 * p0 - 2 * p0",
-     "count_latex": "\\frac{1}{64} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 24",
+     "count_plain": "(1/8) * p1 * p0 - 2 * p0",
+     "count_latex": "\\frac{1}{8} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (95/2048)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{95}{2048}",
+   "value_plain": "(1/4) * p1^2 - (11/32)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{11}{32}",
    "regions": [
     {
-     "domain_plain": "p0 >= 2 and p1 >= 129",
-     "count_plain": "(63/2048) * p1 * p0 - (63/16) * p0 - (63/4096) * p1 + (63/32)",
-     "count_latex": "\\frac{63}{2048} \\cdot p1 \\cdot p0 - \\frac{63}{16} \\cdot p0 - \\frac{63}{4096} \\cdot p1 + \\frac{63}{32}"
+     "domain_plain": "p0 >= 2 and p1 >= 17",
+     "count_plain": "(7/32) * p1 * p0 - (7/2) * p0 - (7/64) * p1 + (7/4)",
+     "count_latex": "\\frac{7}{32} \\cdot p1 \\cdot p0 - \\frac{7}{2} \\cdot p0 - \\frac{7}{64} \\cdot p1 + \\frac{7}{4}"
     },
     {
-     "domain_plain": "p0 = 1 and p1 >= 129",
-     "count_plain": "(63/4096) * p1 * p0 - (63/32) * p0",
-     "count_latex": "\\frac{63}{4096} \\cdot p1 \\cdot p0 - \\frac{63}{32} \\cdot p0"
+     "domain_plain": "p0 = 1 and p1 >= 17",
+     "count_plain": "(7/64) * p1 * p0 - (7/4) * p0",
+     "count_latex": "\\frac{7}{64} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/16) * p1 + (1889/2048)",
-   "value_latex": "\\frac{1}{16} \\cdot p1 + \\frac{1889}{2048}",
+   "value_plain": "(1/2) * p1 + (13/32)",
+   "value_latex": "\\frac{1}{2} \\cdot p1 + \\frac{13}{32}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p1 * p0 - 4 * p0",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "2 * p1 - 4",
      "count_latex": "2 \\cdot p1 - 4"
     }
    ]
   },
   {
-   "value_plain": "(8481/2048)",
-   "value_latex": "\\frac{8481}{2048}",
+   "value_plain": "(165/32)",
+   "value_latex": "\\frac{165}{32}",
    "regions": [
     {
-     "domain_plain": "(2 + i5) mod 64 = 0 and p0 > 0 and i5 >= -65 + p1 and 62 <= i5 <= -3 + p1",
+     "domain_plain": "(2 + i5) mod 8 = 0 and p0 > 0 and i5 >= -9 + p1 and 6 <= i5 <= -3 + p1",
      "count_plain": "2 * p1 * p0 - 4 * p0",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 4 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 + p1 - (2207/2048)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + p1 - \\frac{2207}{2048}",
+   "value_plain": "(1/4) * p1^2 + p1 - (51/32)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + p1 - \\frac{51}{32}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p0 - 1",
      "count_latex": "2 \\cdot p0 - 1"
     },
     {
-     "domain_plain": "p0 = 1 and (p1) mod 64 = 0 and p1 >= 128",
+     "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
      "count_plain": "1",
      "count_latex": "1"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - p1 + (8481/2048)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - p1 + \\frac{8481}{2048}",
+   "value_plain": "(1/4) * p1^2 - p1 + (165/32)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - p1 + \\frac{165}{32}",
    "regions": [
     {
-     "domain_plain": "(2 + i3) mod 64 = 0 and p0 >= 2 and i3 >= -65 + p1 and 62 <= i3 <= -3 + p1",
+     "domain_plain": "(2 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -9 + p1 and 6 <= i3 <= -3 + p1",
      "count_plain": "p0 - 1",
      "count_latex": "p0 - 1"
     }
    ]
   },
   {
-   "value_plain": "(63/8)",
-   "value_latex": "\\frac{63}{8}",
+   "value_plain": "(1045/32)",
+   "value_latex": "\\frac{1045}{32}",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and p1 >= 66",
-     "count_plain": "(1/16) * p1^2 * p0 - (131/32) * p1 * p0 + (129/32) * p0",
-     "count_latex": "\\frac{1}{16} \\cdot p1^{2} \\cdot p0 - \\frac{131}{32} \\cdot p1 \\cdot p0 + \\frac{129}{32} \\cdot p0"
-    },
-    {
-     "domain_plain": "p1 = 65 and p0 > 0",
-     "count_plain": "(1/32) * p1^2 * p0 - (65/32) * p1 * p0 + 2 * p0",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{65}{32} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
+     "domain_plain": "p1 = 8 and p0 >= 2",
+     "count_plain": "14 * p0 - 14",
+     "count_latex": "14 \\cdot p0 - 14"
     }
    ]
   },
   {
-   "value_plain": "(31/8)",
-   "value_latex": "\\frac{31}{8}",
+   "value_plain": "(1/4) * p1^2 + (9/4) * p1 - (43/32)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} + \\frac{9}{4} \\cdot p1 - \\frac{43}{32}",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and p1 >= 3",
-     "count_plain": "(31/16) * p1^2 * p0 - (93/16) * p1 * p0 + (31/8) * p0",
-     "count_latex": "\\frac{31}{16} \\cdot p1^{2} \\cdot p0 - \\frac{93}{16} \\cdot p1 \\cdot p0 + \\frac{31}{8} \\cdot p0"
-    }
-   ]
-  },
-  {
-   "value_plain": "(526241/2048)",
-   "value_latex": "\\frac{526241}{2048}",
-   "regions": [
-    {
-     "domain_plain": "p1 = 64 and p0 >= 2",
-     "count_plain": "126 * p0 - 126",
-     "count_latex": "126 \\cdot p0 - 126"
-    }
-   ]
-  },
-  {
-   "value_plain": "(1/32) * p1^2 + (65/32) * p1 - (2143/2048)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} + \\frac{65}{32} \\cdot p1 - \\frac{2143}{2048}",
-   "regions": [
-    {
-     "domain_plain": "(p1) mod 64 = 0 and p0 >= 2 and p1 >= 128",
+     "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
      "count_plain": "2 * p1 * p0 - 2 * p0 - 2 * p1 + 2",
      "count_latex": "2 \\cdot p1 \\cdot p0 - 2 \\cdot p0 - 2 \\cdot p1 + 2"
     }
    ]
   },
   {
-   "value_plain": "(383/64)",
-   "value_latex": "\\frac{383}{64}",
+   "value_plain": "(47/8)",
+   "value_latex": "\\frac{47}{8}",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and p1 >= 65",
-     "count_plain": "(1/32) * p1^2 * p0 - (65/32) * p1 * p0 + 2 * p0",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{65}{32} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
+     "domain_plain": "p0 > 0 and p1 >= 9",
+     "count_plain": "(1/4) * p1^2 * p0 - (9/4) * p1 * p0 + 2 * p0",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{4} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(12065/2048)",
-   "value_latex": "\\frac{12065}{2048}",
+   "value_plain": "(165/32)",
+   "value_latex": "\\frac{165}{32}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 > 0 and p1 >= 192",
-     "count_plain": "(1/32) * p1^2 * p0 - (65/32) * p1 * p0 + 2 * p0",
-     "count_latex": "\\frac{1}{32} \\cdot p1^{2} \\cdot p0 - \\frac{65}{32} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
+     "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 24",
+     "count_plain": "(1/4) * p1^2 * p0 - (9/4) * p1 * p0 + 2 * p0",
+     "count_latex": "\\frac{1}{4} \\cdot p1^{2} \\cdot p0 - \\frac{9}{4} \\cdot p1 \\cdot p0 + 2 \\cdot p0"
     },
     {
-     "domain_plain": "p1 = 128 and p0 > 0",
-     "count_plain": "254 * p0",
-     "count_latex": "254 \\cdot p0"
+     "domain_plain": "p1 = 16 and p0 > 0",
+     "count_plain": "30 * p0",
+     "count_latex": "30 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(3937/2048)",
-   "value_latex": "\\frac{3937}{2048}",
+   "value_plain": "(45/32)",
+   "value_latex": "\\frac{45}{32}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 > 0 and p1 >= 192",
-     "count_plain": "(31/16) * p1^2 * p0 - (31/16) * p1 * p0 + (1/64) * p1 - 1",
-     "count_latex": "\\frac{31}{16} \\cdot p1^{2} \\cdot p0 - \\frac{31}{16} \\cdot p1 \\cdot p0 + \\frac{1}{64} \\cdot p1 - 1"
+     "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 24",
+     "count_plain": "(3/2) * p1^2 * p0 - (3/2) * p1 * p0 + (1/8) * p1 - 1",
+     "count_latex": "\\frac{3}{2} \\cdot p1^{2} \\cdot p0 - \\frac{3}{2} \\cdot p1 \\cdot p0 + \\frac{1}{8} \\cdot p1 - 1"
     },
     {
-     "domain_plain": "p1 = 128 and p0 > 0",
-     "count_plain": "31496 * p0 + 1",
-     "count_latex": "31496 \\cdot p0 + 1"
+     "domain_plain": "p1 = 16 and p0 > 0",
+     "count_plain": "360 * p0 + 1",
+     "count_latex": "360 \\cdot p0 + 1"
     },
     {
-     "domain_plain": "p1 = 64 and p0 > 0",
-     "count_plain": "7812 * p0",
-     "count_latex": "7812 \\cdot p0"
+     "domain_plain": "p1 = 8 and p0 > 0",
+     "count_plain": "84 * p0",
+     "count_latex": "84 \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1/32) * p1^2 - (3/64) * p1 + (6337/2048)",
-   "value_latex": "\\frac{1}{32} \\cdot p1^{2} - \\frac{3}{64} \\cdot p1 + \\frac{6337}{2048}",
+   "value_plain": "(1/4) * p1^2 - (3/8) * p1 + (121/32)",
+   "value_latex": "\\frac{1}{4} \\cdot p1^{2} - \\frac{3}{8} \\cdot p1 + \\frac{121}{32}",
    "regions": [
     {
-     "domain_plain": "(2 + i5) mod 64 = 0 and p0 > 0 and i5 >= -65 + p1 and 62 <= i5 <= -3 + p1",
+     "domain_plain": "(2 + i5) mod 8 = 0 and p0 > 0 and i5 >= -9 + p1 and 6 <= i5 <= -3 + p1",
      "count_plain": "p0",
      "count_latex": "p0"
     }
    ]
   },
   {
-   "value_plain": "(5985/2048)",
-   "value_latex": "\\frac{5985}{2048}",
+   "value_plain": "(77/32)",
+   "value_latex": "\\frac{77}{32}",
    "regions": [
     {
-     "domain_plain": "p0 > 0 and p1 >= 65",
-     "count_plain": "(63/2048) * p1^2 * p0 - (4095/2048) * p1 * p0 + (63/32) * p0",
-     "count_latex": "\\frac{63}{2048} \\cdot p1^{2} \\cdot p0 - \\frac{4095}{2048} \\cdot p1 \\cdot p0 + \\frac{63}{32} \\cdot p0"
+     "domain_plain": "p0 > 0 and p1 >= 9",
+     "count_plain": "(7/32) * p1^2 * p0 - (63/32) * p1 * p0 + (7/4) * p0",
+     "count_latex": "\\frac{7}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{32} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(1953/2048)",
-   "value_latex": "\\frac{1953}{2048}",
+   "value_plain": "(21/32)",
+   "value_latex": "\\frac{21}{32}",
    "regions": [
     {
-     "domain_plain": "(p1) mod 64 = 0 and p0 > 0 and p1 >= 128",
-     "count_plain": "(1953/1024) * p1^2 * p0 - (1953/1024) * p0 + (8255/4096) * p1 - (12161/4096)",
-     "count_latex": "\\frac{1953}{1024} \\cdot p1^{2} \\cdot p0 - \\frac{1953}{1024} \\cdot p0 + \\frac{8255}{4096} \\cdot p1 - \\frac{12161}{4096}"
+     "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+     "count_plain": "(21/16) * p1^2 * p0 - (21/16) * p0 + (135/64) * p1 - (177/64)",
+     "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{21}{16} \\cdot p0 + \\frac{135}{64} \\cdot p1 - \\frac{177}{64}"
     },
     {
-     "domain_plain": "p0 > 0 and p1 >= 65 and 64*floor((p1)/64) < p1",
-     "count_plain": "(1953/1024) * p1^2 * p0 - (1953/1024) * p0 + (63/4096) * p1 - (3969/4096)",
-     "count_latex": "\\frac{1953}{1024} \\cdot p1^{2} \\cdot p0 - \\frac{1953}{1024} \\cdot p0 + \\frac{63}{4096} \\cdot p1 - \\frac{3969}{4096}"
+     "domain_plain": "p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1",
+     "count_plain": "(21/16) * p1^2 * p0 - (21/16) * p0 + (7/64) * p1 - (49/64)",
+     "count_latex": "\\frac{21}{16} \\cdot p1^{2} \\cdot p0 - \\frac{21}{16} \\cdot p0 + \\frac{7}{64} \\cdot p1 - \\frac{49}{64}"
     },
     {
-     "domain_plain": "p1 = 64 and p0 > 0",
-     "count_plain": "(123039/16) * p0 + (516159/4096)",
-     "count_latex": "\\frac{123039}{16} \\cdot p0 + \\frac{516159}{4096}"
+     "domain_plain": "p1 = 8 and p0 > 0",
+     "count_plain": "(147/2) * p0 + (903/64)",
+     "count_latex": "\\frac{147}{2} \\cdot p0 + \\frac{903}{64}"
     },
     {
-     "domain_plain": "p0 > 0 and 2 <= p1 <= 63",
-     "count_plain": "(63/32) * p1^2 * p0 - (63/16) * p1 * p0 + (63/32) * p0",
-     "count_latex": "\\frac{63}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{16} \\cdot p1 \\cdot p0 + \\frac{63}{32} \\cdot p0"
+     "domain_plain": "p0 > 0 and 2 <= p1 <= 7",
+     "count_plain": "(7/4) * p1^2 * p0 - (7/2) * p1 * p0 + (7/4) * p0",
+     "count_latex": "\\frac{7}{4} \\cdot p1^{2} \\cdot p0 - \\frac{7}{2} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
     }
    ]
   },
   {
-   "value_plain": "(63/64)",
-   "value_latex": "\\frac{63}{64}",
+   "value_plain": "(7/8)",
+   "value_latex": "\\frac{7}{8}",
    "regions": [
     {
      "domain_plain": "p0 > 0 and p1 >= 2",
-     "count_plain": "(63/32) * p1^2 * p0 - (63/16) * p1 * p0 + (63/32) * p0",
-     "count_latex": "\\frac{63}{32} \\cdot p1^{2} \\cdot p0 - \\frac{63}{16} \\cdot p1 \\cdot p0 + \\frac{63}{32} \\cdot p0"
+     "count_plain": "(7/4) * p1^2 * p0 - (7/2) * p1 * p0 + (7/4) * p0",
+     "count_latex": "\\frac{7}{4} \\cdot p1^{2} \\cdot p0 - \\frac{7}{2} \\cdot p1 \\cdot p0 + \\frac{7}{4} \\cdot p0"
     }
    ]
   }
  ],
  "n_ri": 22,
- "n_rd": 125,
+ "n_rd": 124,
  "n_dmd_terms": 29,
- "secs": 51.5,
+ "secs": 207.7,
  "family": "symbolic"
 }

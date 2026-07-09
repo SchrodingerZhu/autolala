@@ -109,6 +109,15 @@ fn is_ignorable_compute(name: &str) -> bool {
     PURE_DIALECTS.iter().any(|prefix| name.starts_with(prefix))
 }
 
+/// Scratch-buffer (de)allocation carries no reuse-relevant memory movement of
+/// its own: the accesses to the buffer are separate `affine.load`/`affine.store`
+/// ops (resolved by memref type), so the allocation itself is safely ignored.
+/// Legacy `raffine` ignored these implicitly via its catch-all arm.
+fn is_ignorable_memref(name: &str) -> bool {
+    const IGNORED: [&str; 3] = ["memref.alloca", "memref.alloc", "memref.dealloc"];
+    IGNORED.contains(&name)
+}
+
 /// Mutable translation state: identifier assignment and array discovery.
 struct Translator {
     params: Vec<String>,
@@ -212,13 +221,11 @@ impl Translator {
     fn translate_for(&mut self, op: OperationRef<'_, '_>) -> ExtractResult<ForLoop> {
         let span = operation_span(op);
 
-        if op.result_count() != 0 {
-            return Err(ExtractError::at(
-                "affine.for produces results (loop-carried values / reduction), which the language cannot model",
-                span,
-            )
-            .with_help("extract a loop nest without iter_args"));
-        }
+        // Loop-carried values (`iter_args`, i.e. reductions) are permitted: the
+        // language models memory movement only, so the carried scalar and its
+        // `affine.yield` are simply ignored. This mirrors the legacy `raffine`
+        // extractor, which never inspected loop results and let the body's
+        // affine loads/stores flow through unchanged.
 
         let lower_map = self.bound_map(op, "lowerBoundMap", span)?;
         let upper_map = self.bound_map(op, "upperBoundMap", span)?;
@@ -246,13 +253,18 @@ impl Translator {
         let lower_inputs = lower_map.num_inputs();
         let upper_inputs = upper_map.num_inputs();
         let operands = self.operands(op)?;
-        if operands.len() != lower_inputs + upper_inputs {
+        let bound_inputs = lower_inputs + upper_inputs;
+        // Operand layout: [lower-bound operands, upper-bound operands, iter_args
+        // initial values...]. Only the bound operands are meaningful here; any
+        // trailing operands are reduction seeds and are discarded.
+        if operands.len() < bound_inputs {
             return Err(ExtractError::at(
-                "affine.for has unexpected operands (loop-carried values are not supported)",
+                "affine.for has fewer operands than its bound maps require",
                 span,
             ));
         }
-        let (lower_operands, upper_operands) = operands.split_at(lower_inputs);
+        let (bound_operands, _iter_inits) = operands.split_at(bound_inputs);
+        let (lower_operands, upper_operands) = bound_operands.split_at(lower_inputs);
 
         let lower = self.lower_map_result(&lower_map, lower_operands, span)?;
         let upper = self.lower_map_result(&upper_map, upper_operands, span)?;
@@ -456,6 +468,7 @@ impl Translator {
                 "affine.if" => statements.push(Stmt::If(self.translate_if(op)?)),
                 "affine.yield" => {} // region terminator, no DSL counterpart
                 other if is_ignorable_compute(other) => {} // pure arithmetic
+                other if is_ignorable_memref(other) => {} // scratch (de)allocation
                 other => {
                     return Err(ExtractError::at(
                         format!(

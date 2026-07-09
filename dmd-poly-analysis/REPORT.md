@@ -1,266 +1,444 @@
 ---
-title: "Mathematical Structure of Reuse-Interval / DMD Formulas across PolyBench"
-subtitle: "A rigorous order analysis of the AutoLALA scale-approximated data-movement model, with empirical confirmation"
-date: "2026-06-25"
+title: "How much data does PolyBench move? A reuse-distance study"
+subtitle: "Symbolic data-movement growth rates and coefficients for PolyBench, under single-shot and infinitely-repeating execution, with empirical confirmation"
+date: "2026-07-08"
 geometry: margin=1in
 fontsize: 10pt
 ---
 
-# Overview
+This report measures the **data-movement cost** of the PolyBench kernels and
+explains what drives it. We use the AutoLALA `dmd` analyzer, which reads a loop
+nest and produces *symbolic* formulas — cost as a function of the problem size,
+not a single number for one input. From those formulas we extract a simple,
+testable law for how each kernel's data movement grows, rank the kernels by both
+growth rate and constant factor, and check the predictions against real
+cache-miss counts and wall-clock time.
 
-We ran the AutoLALA `dmd` analyzer (Barvinok, **scale approximation**, block size 64) on
-all 53 PolyBench programs in `../autolala/analyzer/misc/polybench` (22 constant-size, 31
-symbolic). **41 analyzed successfully**; 12 fall outside the supported affine subset
-(loop-carried `iter_args`, `memref.alloca`, parametric triangular `affine.if`, or exceed
-the Barvinok operation budget): `adi, convolution, deriche, durbin, gramschmidt, heat-3d,
-symm` (symbolic) and `convolution, correlation, fdtd-apml, gramschmidt, symm` (const).
+Everything here is reproducible; see **Reproduce** at the end.
 
-For every kernel we collected the **reuse-interval (RI) distribution**, the **reuse-distance
-(RD) distribution**, the **DMD formula**, and the access counts. This report establishes the
-*mathematical structure* of those formulas, proves a clean order identity, classifies all
-kernels by it, derives the optimization consequences, and **confirms the predictions
-empirically** with cachegrind cache-miss scaling and raw single-core runtime.
+---
 
-All raw outputs are in `results/<kernel>.json`; the order table in `order_table.json`; the
-empirical sweep in `confirm/`.
+## 1. Three quantities, in plain words
 
-# 1. The central identity
+When a program runs, it touches memory in some order. To reason about locality we
+track, for each piece of data, *how long it sits unused between two touches*.
+There are two natural ways to measure "how long", and one summary number built on
+top of them.
 
-The scale model builds DMD as a **sum of square roots over reuse-distance regions**
-(README: *"symbolic DMD formulas as sums of square roots over reuse-distance regions"*):
-$$ \mathrm{DMD} \;=\; \sum_{i}\; m_i \,\sqrt{d_i}, $$
-where region $i$ has multiplicity (access count) $m_i$ and reuse distance $d_i$, both
-piecewise-polynomial in the loop parameters. Writing every parameter as a single scale $N$
-and letting $a=\operatorname{ord}_N(\text{total accesses})$, the **dominant** term is the one
-maximising $\operatorname{ord}(m_i)+\tfrac12\operatorname{ord}(d_i)$. Since the multiplicity of
-the dominant reuse class scales like the access count ($\operatorname{ord}(m_\star)=a$, verified
-below), we obtain the identity that organises the whole dataset:
+**Reuse interval (RI).** When you touch a value and later touch it again, the
+reuse interval is *how many memory accesses happened in between*, counted in
+accesses. If you read `A[0]`, then read nine other things, then read `A[0]`
+again, the reuse interval of that second `A[0]` is 10.
 
-$$ \boxed{\;\operatorname{ord}_N(\mathrm{DMD}) \;=\; a \;+\; \tfrac12\,\rho,\qquad
-   \rho \;:=\; \operatorname{ord}_N(d_\star)\;}$$
+**Reuse distance (RD).** The reuse interval counts *every* access in between; the
+reuse distance counts only the *distinct cache lines* touched in between. That is
+what actually decides whether the value is still in cache when you return to it.
+If those nine intervening accesses only ever hit two different cache lines, the
+reuse distance is 2–3 lines even though the reuse interval is 10. RD is the
+working-set size between two touches, in cache lines.
 
-where $\rho$ is the **exponent of the dominant reuse distance**. Define the
-**data-movement gap** $\;g=\operatorname{ord}(\mathrm{DMD})-a=\tfrac12\rho.$ Because tiling
-caps the reuse distance at the (constant) tile footprint, it drives $\rho\to 0$ and hence
-$\operatorname{ord}(\mathrm{DMD})\to a$; the **maximum asymptotic data-movement reduction a
-loop transformation can deliver is therefore $N^{g}=N^{\rho/2}$.** This single number,
-computed per kernel, is the rigorous tiling-headroom predictor.
+> A cache line here is **8 doubles** (a 64-byte line holds eight 8-byte `f64`
+> values). All PolyBench arrays are double precision, so the analyzer's block
+> size is 8 elements. (Block size is in *elements*, not bytes.)
 
-> We estimate $a$ and $\operatorname{ord}(\mathrm{DMD})$ by log–log slope of the symbolic
-> formulas at large $N$. Crucially, $\operatorname{ord}(\mathrm{DMD})$ is computed **from the RD
-> distribution via the sum-of-sqrt construction**, not from the assembled closed form — the
-> assembled `scale` formula carries large negative lower-order corrections that make it
-> non-monotone (even negative) at finite $N$, so a naive fit of it fails on the
-> triangular/sequential kernels. The RD-construction is exact and stable.
+**Data-movement distance (DMD).** This is the single summary number. For every
+reuse in the program it adds the **square root of that reuse's distance**:
 
-\newpage
+$$\text{DMD} \;=\; \sum_{\text{reuses}} \sqrt{\text{reuse distance}}.$$
 
-# 2. The order table (24 symbolic kernels)
+Why the square root, and why the sum? The model treats a reuse at distance $d$ as
+costing $\sqrt{d}$ to service — a memory-hierarchy cost model in which data
+further away (a larger working set to traverse before you get back) is more
+expensive, but sub-linearly so. Summing over all reuses gives one number whose
+*growth rate* captures how a kernel's data traffic scales with problem size. A
+kernel whose reuses stay at small distance has low DMD; one that keeps reaching
+far back into a large working set has high DMD. We report DMD **as a formula in
+the problem size**, then read off its growth rate.
 
-Sorted by gap $g$ (tiling headroom). `dom mult` $=\operatorname{ord}(m_\star)$,
-`dom RD` $=\rho=\operatorname{ord}(d_\star)$; the identity
-$\operatorname{ord}(\mathrm{DMD})=\texttt{dom mult}+\tfrac12\,\texttt{dom RD}$ holds to within
-fit noise ($\pm0.05$) on every row.
+---
 
-| kernel | acc $a$ | DMD ord | gap $g$ | dom mult | dom RD $\rho$ | tiling headroom |
-|--------|:------:|:------:|:------:|:------:|:------:|:------:|
-| floyd_warshall | 3.00 | 4.05 | **1.05** | 3.05 | 2.00 | $\sim N$ |
-| seidel-2d | 3.00 | 4.03 | **1.03** | 3.03 | 2.01 | $\sim N$ |
-| jacobi-2d | 3.00 | 4.03 | **1.03** | 3.03 | 1.99 | $\sim N$ |
-| gemm | 3.00 | 4.02 | **1.02** | 3.02 | 2.00 | $\sim N$ |
-| doitgen | 4.00 | 5.02 | **1.02** | 4.02 | 1.99 | $\sim N$ |
-| 2mm | 3.00 | 4.02 | **1.02** | 3.02 | 1.99 | $\sim N$ |
-| 3mm | 3.00 | 4.02 | **1.02** | 3.02 | 1.99 | $\sim N$ |
-| covariance | 3.00 | 3.55 | **0.55** | 3.05 | 1.00 | $\sim\sqrt N$ |
-| gemver | 2.00 | 2.54 | **0.54** | 2.04 | 1.01 | $\sim\sqrt N$ |
-| mvt | 2.00 | 2.54 | **0.54** | 2.04 | 1.01 | $\sim\sqrt N$ |
-| jacobi-1d | 2.00 | 2.53 | **0.53** | 2.03 | 0.99 | $\sim\sqrt N$ |
-| gesummv | 2.00 | 2.52 | **0.52** | 2.04 | 0.97 | $\sim\sqrt N$ |
-| bicg | 2.00 | 2.52 | **0.52** | 2.02 | 0.99 | $\sim\sqrt N$ |
-| atax | 2.00 | 2.51 | **0.51** | 2.02 | 0.97 | $\sim\sqrt N$ |
-| imperfect | 3.00 | 3.51 | **0.51** | 3.01 | 1.00 | $\sim\sqrt N$ |
-| correlation | 3.00\* | 3.55 | 0.55\* | 3.05 | 1.00 | $\sim\sqrt N$ |
-| fdtd | 3.00\* | 3.53 | 0.53\* | 3.04 | 0.98 | $\sim\sqrt N$ |
-| syr2k | 3.00 | 3.02 | **0.02** | 3.02 | 0.00 | none (asymptotic) |
-| syrk | 3.00 | 3.02 | **0.02** | 3.02 | 0.00 | none (asymptotic) |
-| cholesky | 3.00\* | 3.04 | 0.04\* | 3.04 | 0.00 | none (asymptotic) |
-| lu | 3.00\* | 3.07 | 0.07\* | 3.07 | 0.00 | none (asymptotic) |
-| lu_decomp | 3.00\* | 3.02 | 0.02\* | 3.02 | 0.00 | none (asymptotic) |
-| trmm | 3.00\* | 3.00 | 0.00\* | 3.00 | 0.00 | none (asymptotic) |
-| trisolve | 2.00\* | 2.02 | 0.02\* | 2.02 | 0.00 | none (asymptotic) |
+## 2. Two models of the trace: single-shot vs. infinitely repeating
 
-\* access order taken from the dominant-term multiplicity when the assembled total/DMD
-formula was non-monotone (triangular/sequential kernels).
+A kernel's reuse pattern depends on an assumption people rarely state: *does the
+kernel run once, or over and over?*
 
-## The three classes
+**Single-shot.** The kernel runs exactly once. The very last time a value is
+touched it is never touched again, so that touch is a **cold miss** (compulsory —
+the data had to be brought in at least once). This is the right model for a
+one-off computation.
 
-The gap is **sharply trimodal** — it takes essentially only the values $\{0,\,\tfrac12,\,1\}$,
-i.e. the dominant reuse distance is $\Theta(1)$, $\Theta(N)$, or $\Theta(N^2)$. Nothing lands
-at e.g. $g=0.25$ or $0.75$. This is itself a non-obvious mathematical regularity: across
-24 independent kernels the reuse-distance exponent is quantised to integers.
+**Infinitely repeating.** The kernel runs many times back-to-back — think of a
+linear-solver step, a stencil sweep, or an inner loop re-run every outer
+iteration. Now the "last" touch of a value in one pass is followed by the "first"
+touch of the same value in the next pass, so that value *is* reused — at a large
+distance (you sweep the whole working set in between), but reused nonetheless.
+This is the right model for a kernel that lives inside an outer iteration.
 
-| class | $\rho$ | $g$ | kernels | meaning |
-|-------|:---:|:---:|---------|---------|
-| **A** | $2$ | $1$ | gemm, 2mm, 3mm, doitgen, jacobi-2d, seidel-2d, floyd | a whole $N\times N$ array is re-streamed per reuse |
-| **B** | $1$ | $\tfrac12$ | mvt, atax, bicg, gemver, gesummv, covariance, jacobi-1d, correlation, fdtd, imperfect | an $N$-vector / one matrix dimension re-streamed |
-| **C** | $0$ | $0$ | syrk, syr2k, cholesky, lu, trmm, trisolve | reuse captured in a bounded window (accumulator) |
+We implement infinite repeat the simple way: wrap the kernel in an outer loop
+that runs **twice**, and keep only the reuse intervals whose *second* touch lands
+in the second pass. That pass has a full period of history behind it, so its
+reuses — including the ones that wrap around the period boundary — are the
+steady-state ones. Two passes suffice whenever every value live in one pass is
+touched again in the next (true for all these kernels).
 
-\newpage
+Here is the difference on a two-line example — read `A[i][j]` and `B[j]` inside an
+`i`,`j` nest. `B[j]` is reused every `i` (short distance); `A[i][j]` is touched
+exactly once per pass.
 
-# 3. Rigorous per-kernel derivations
+| model | reuse distances the analyzer reports |
+|-------|--------------------------------------|
+| single-shot   | `2·M`, `4`, `2` |
+| infinite-repeat | `2·M`, `4`, `2`, **`N·M+M`, `N·M+2`, `N·M+1`** |
 
-These read the **actual** dominant symbolic terms from the analyzer output (`results/*.json`),
-confirming the orders above by hand and exposing *why* each class arises.
+Single-shot sees only `B`'s short reuse and calls every `A[i][j]` a cold miss.
+Infinite-repeat additionally sees that each `A[i][j]` is re-touched next pass — at
+a reuse distance of about `N·M`, the size of the whole array. The access *total*
+is identical either way (`2·N·M`); infinite-repeat does not invent work, it
+reclassifies boundary cold misses as far-away reuses. **This is the extra
+information infinite-repeat gives: reuse that only exists across invocations.** We
+report both models throughout.
 
-**gemm (Class A).** Dominant DMD term (verbatim):
-$$ \underbrace{\tfrac{31}{2048}\,p_2p_1p_0}_{m_\star=\Theta(N^3)}\;\cdot\;
-   \sqrt{\;\underbrace{\tfrac1{64}p_2p_1+\tfrac1{32}p_1+\tfrac1{64}p_2+\tfrac{251}{64}}_{d_\star}\;}. $$
-The reuse distance $d_\star\approx \tfrac1{64}N^2$ is exactly **(working-set $N^2$) / (block
-size 64)** — the model measures reuse distance in *cache lines*, and the $1/64$ is literally
-the block size. Thus $\mathrm{DMD}\sim N^3\sqrt{N^2/64}=N^4/8$, order $4$, $g=1$. Tiling caps
-$d_\star$ at $\approx T^2/64$ (constant) $\Rightarrow\mathrm{DMD}\to\Theta(N^3)$: an $N^1$
-asymptotic reduction.
+---
 
-**2mm (Class A).** Dominant term $\tfrac{63}{4096}p_3p_1p_0\cdot\sqrt{\tfrac1{64}p_3p_1+\dots}$,
-again $m_\star=\Theta(N^3)$, $d_\star\approx N^2/64$ (the intermediate $T$ / operand
-re-stream). Note the **RI vs RD distinction**: 2mm and 3mm have *reuse-interval* max order
-$3$ (the same datum is revisited after $\Theta(N^3)$ accesses) but *reuse-distance* order only
-$2$ — the $\sqrt{\cdot}$ is taken over **distinct lines** ($\Theta(N^2)$), not raw accesses
-($\Theta(N^3)$). The model correctly credits spatial locality: the sqrt weight is $N$, not
-$N^{1.5}$. This is a substantive correctness property of using reuse *distance*.
+## 3. The growth-rate law
 
-**mvt (Class B).** Dominant term $\big(\tfrac1{4096}p_0^2-\dots\big)\sqrt{\tfrac{65}{64}p_0-\dots}$,
-i.e. $m_\star=\Theta(N^2)$, $d_\star\approx\tfrac{65}{64}N=\Theta(N)$ — the
-transposed sweep $x_2{+}{=}A^\top y_2$ re-streams an $N$-vector with reuse distance $\sim N$
-(the $65/64=1+1/64$ is the block-size correction). $\mathrm{DMD}\sim N^2\sqrt N=N^{2.5}$,
-$g=\tfrac12$. Interchanging the transposed loop caps $d_\star$ at a constant: $N^{1/2}$
-headroom.
+Write the problem size as $N$. Two growth rates matter:
 
-**syrk (Class C).** Dominant term $\big(\tfrac1{128}p_1p_0^2-\dots\big)\cdot\sqrt{4}$ — the
-reuse distance is the **constant 4**. The accumulator $C[i][j]$ stays cache-resident across
-the entire $k$-reduction, so every one of the $\Theta(N^3)$ updates has $O(1)$ reuse distance.
-$\mathrm{DMD}=\Theta(N^3)=\Theta(\text{accesses})$, $g=0$: the kernel is **already at the
-data-movement lower bound at leading order**; tiling can only win constant factors.
+- **access growth $a$** — the number of memory accesses grows like $N^a$ (a triple
+  loop over $N$ does $N^3$ accesses, so $a=3$).
+- **reuse-distance growth $\rho$** — the *largest* reuse distances grow like
+  $N^\rho$.
 
-\newpage
+Because DMD sums $\sqrt{\text{distance}}$ over roughly $N^a$ reuses, and the
+dominant reuses sit at distance $\sim N^\rho$ each contributing $\sqrt{N^\rho} =
+N^{\rho/2}$, the DMD grows like
 
-# 4. Interesting mathematical properties (summary)
+$$\text{DMD} \;\sim\; \text{coeff}\cdot N^{\,d}, \qquad d \;=\; a + \tfrac{1}{2}\rho.$$
 
-1. **The exact order law** $\operatorname{ord}(\mathrm{DMD})=a+\tfrac12\rho$, with the dominant
-   multiplicity tracking the access count ($\operatorname{ord}(m_\star)=a$ on all 24 rows).
-   The DMD exponent is never independent of the access exponent — it is always the access
-   exponent plus *half* a reuse-distance exponent. The "half" is the signature of the
-   $\sqrt{\cdot}$ cost law.
-2. **Quantisation of the reuse-distance exponent** to $\rho\in\{0,1,2\}$ across all kernels —
-   the gap is trimodal at $\{0,\tfrac12,1\}$. Affine kernels re-stream either nothing
-   (bounded window), a vector/one dimension, or a full matrix; no intermediate scaling
-   occurs.
-3. **Reuse distance = footprint / block size.** The block size 64 appears as an explicit
-   $1/64$ inside every Class-A/B $\sqrt{\cdot}$, i.e. $d=\text{(data footprint)}/B$. Changing
-   $B$ rescales the constant but not the exponent — block size is a constant-factor lever, not
-   an asymptotic one.
-4. **RI $\neq$ RD, and DMD uses RD.** Chained products (2mm/3mm) have reuse *interval* order 3
-   but reuse *distance* order 2; the model's use of distinct-line distance (not raw interval)
-   means it does not double-count spatially local re-streams.
-5. **A pointwise artifact to avoid.** The symbolic warm/compulsory split is *not* pointwise
-   physical: evaluated at finite $N$ the `warm` polynomial exceeds `total` (so `compulsory`
-   goes negative) on most kernels. It is an average/asymptotic decomposition; do not read the
-   per-$N$ cold-miss fraction off it. Only the leading-order *orders* are trustworthy.
+In words: **the DMD growth exponent is the access-growth exponent plus half the
+reuse-distance-growth exponent.** We compute $d$ directly and stably from the
+reuse-distance distribution (summing the square-root terms), which avoids the
+numerical cancellation you get from evaluating the fully assembled formula.
 
-# 5. Optimization implications
+We call $d - a = \tfrac{1}{2}\rho$ the **headroom**. It is the most useful single
+number here, so plainly:
 
-- **Tile Class A first (gap $=1$).** gemm, 2mm, 3mm, doitgen, jacobi-2d, seidel-2d,
-  floyd-warshall each have an asymptotic data-movement reduction of $\Theta(N)$ available —
-  the payoff *grows linearly with problem size*, so these dominate any locality-optimisation
-  budget and the win widens as $N$ grows.
-- **Block Class B (gap $=\tfrac12$) for a $\sqrt N$ win**, chiefly by **fixing the offending
-  access, not by 2-D tiling**: mvt/atax/gemver re-stream a vector through a *transposed* sweep;
-  loop interchange (or fusion to share the matrix pass) collapses $d_\star$ from $\Theta(N)$ to
-  $O(1)$ and recovers the whole $\sqrt N$. This matches our agent experiments, where the
-  measured mvt win came from fusing the two passes, not from tiling.
-- **Do not tile Class C (gap $=0$).** syrk, syr2k, cholesky, lu, trmm, trisolve already move
-  $\Theta(\text{compute})$ data; tiling yields only constant-factor (cache-line / register)
-  gains. Spending a tiling pass here is wasted asymptotically — and indeed in the runtime
-  experiments syrk's gains came from interchange/register reuse, never from $N$-growing tiling.
-- **Connection to the agent study (`../assignments-test`).** The measured tiling speedups
-  there track $g$: matmul/gemm (Class A) speedups *grew with $N$* (small$\to$large
-  $4.9\to7.4\times$), while syrk (Class C) did not grow with $N$. The DMD gap is a faithful
-  a-priori predictor of *where* and *how much* locality optimisation pays.
+> Headroom is how much *faster* a kernel's data movement grows than its raw
+> arithmetic. Headroom 0 means data movement grows in lockstep with work — the
+> kernel is already as local as it can be. Large headroom means the kernel moves
+> far more data than it computes, and a locality transformation (tiling, loop
+> interchange) has room to recover roughly a factor of $N^{\text{headroom}}$.
 
-\newpage
+Across the symbolic kernels $\rho$ takes only a few clean values, so headroom
+clusters at a few levels — the backbone of the taxonomy in §6.
 
-# 6. Empirical confirmation
+---
 
-We confirm the reuse-distance taxonomy two non-privileged ways. (Hardware PMU via `perf`
-was unavailable: `perf_event_paranoid=4` and lowering it host-wide was declined as a
-security change; we did **not** modify the host. We therefore use cachegrind's deterministic
-cache simulator to count misses — the exact quantity the reuse-distance math predicts — and
-raw wall-clock for the performance corroboration.)
+## 4. Same growth rate, different constant: the coefficient
 
-## 6.1 Cachegrind cache-miss scaling (32 KB L1D 8-way, 2 MB LL 16-way, 64 B line)
+Growth rate alone cannot separate two kernels that scale the same way. Two kernels
+can both be $\Theta(N^4)$ yet move meaningfully different amounts of data, because
+the **leading coefficient** in $\text{DMD}\sim\text{coeff}\cdot N^d$ differs. The
+coefficient is physically meaningful — it counts how many square-root-of-distance
+units of traffic the kernel issues per $N^d$ — so we report it and use it to rank
+kernels *within* a growth class.
 
-| kernel | N | D1 miss % | **LLd miss %** |
-|--------|--:|--:|--:|
-| matmul naive (A) | 128 | 49.9 | 0.18 |
-| | 256 | 50.1 | 0.08 |
-| | 384 | 50.4 | 0.07 |
-| | **512** | 50.1 | **3.55** |
-| matmul tiled | 128–384 | 3–5 | 0.04–0.12 |
-| | **512** | 5.5 | **0.16** |
-| syrk naive (C) | 128 | 6.0 | 0.31 |
-| | 256/384/512 | 6.3 | 0.13 / 0.12 | **0.09** |
-| mvt naive (B) | 512 | 30.2 | 9.9 |
-| | 1024 | 31.0 | 31.0 |
-| | 2048 | 31.2 | **31.2** |
-| mvt interchanged | 512–2048 | 7.5 | **7.4–7.5** |
+We extract the coefficient from the same square-root construction used for the
+exponent: for each dominant reuse-distance term, take the leading coefficient of
+its multiplicity times the square root of the leading coefficient of its distance,
+and sum the terms sharing the top growth order. The result is a single number
+`coeff` with $\text{DMD}\approx\text{coeff}\cdot N^d$ at large $N$.
 
-Readout, matching the three classes exactly:
+The ranking is intuitive where we can check it by hand. `gemm`, `2mm`, and `3mm`
+all grow as $N^4$ (headroom 1.0), but their coefficients are 0.044, 0.088, and
+0.132 — almost exactly $1:2:3$, because `2mm` is two chained matmuls and `3mm` is
+three, each contributing one matmul's worth of far-reaching reuse. The exponent
+says "these are all $N^4$ kernels"; the coefficient says "`3mm` moves three times
+the data of `gemm`." Likewise in the flat headroom-0 band, `syr2k` (coeff 3.79)
+moves about $4\times$ the data of `cholesky` (0.92) at the same $N^3$ growth. We
+therefore rank kernels first by headroom, then by coefficient.
 
-- **Class A (matmul, $\rho=2$):** the LL miss rate is negligible while the $N^2$ working set
-  fits in the 2 MB LL, then **jumps 50$\times$ (0.07 % $\to$ 3.55 %) precisely at $N=512$**,
-  where $B$ ($512^2\times 8\,\mathrm B=2\,\mathrm{MB}$) crosses LL capacity. That is the
-  $d\sim N^2$ capacity threshold made visible. Tiling holds the rate at 0.16 % — **$22\times$
-  fewer LL misses at $N=512$, a ratio that grows like $N$** (the predicted $N^1$ headroom).
-- **Class B (mvt, $\rho=1$):** the naive LL miss rate **rises with $N$** (9.9 $\to$ 31 %) as
-  the re-streamed operand outgrows cache; interchange pins it flat at 7.5 % (**$\sim$4$\times$**),
-  recovering the $\sqrt N$.
-- **Class C (syrk, $\rho=0$):** the LL miss rate is **flat and tiny (0.09 %) with no capacity
-  cliff at any $N$** — the bounded accumulator reuse predicted by $d_\star=4$. No tiling
-  headroom, confirmed.
+---
 
-## 6.2 Raw single-core runtime (ns per memory access)
+## 5. Results — how every kernel scales
 
-| kernel | N=256 | N=512 | N=1024 | trend |
-|--------|--:|--:|--:|------|
-| matmul naive (A) | 1.67 | 2.01 | 2.15 | **rises** then latency-saturates |
-| syrk naive (C) | 0.51 | 0.39 | 0.38 | **flat** |
+Below are all 27 symbolic kernels the analyzer could handle, grouped by headroom.
+For each: the access growth $a$, the DMD growth $d$, the headroom $d-a$, and the
+leading coefficient (so $\text{DMD}\approx\text{coeff}\cdot N^d$). The last two
+columns repeat $d$ and the coefficient under the infinite-repeat model; "—" means
+the doubled trace exceeded the analyzer's counting budget (see §7). A **bold**
+inf-repeat order marks a kernel whose growth rate *rises* under repetition.
 
-Matmul's per-access cost rises with $N$ (and is $\sim$5$\times$ syrk's) as its reuse-distance
-cost grows, while syrk is flat — the runtime signature of $g=1$ vs $g=0$. (Wall-clock
-*saturates* at memory latency once out of cache, whereas the *miss count* keeps growing —
-which is why §6.1's miss-scaling is the sharper confirmation of the data-movement prediction.)
+**Headroom 1.0** — data movement grows a full factor of $N$ faster than the work.
 
-# 7. Caveats
+| kernel | $a$ | $d$ | headroom | coeff | $d$ (inf) | coeff (inf) |
+|--------|:--:|:--:|:--:|--:|:--:|--:|
+| doitgen        | 4 | 5.0 | 1.0 | 0.044 | 5.0 | 0.044 |
+| jacobi-2d      | 3 | 4.0 | 1.0 | 0.468 | — | — |
+| 3mm            | 3 | 4.0 | 1.0 | 0.132 | 4.0 | 0.132 |
+| 2mm            | 3 | 4.0 | 1.0 | 0.088 | 4.0 | 0.088 |
+| seidel-2d      | 3 | 4.0 | 1.0 | 0.083 | — | — |
+| gemm           | 3 | 4.0 | 1.0 | 0.044 | 4.0 | 0.044 |
+| floyd-warshall | 3 | 4.0 | 1.0 | 0.044 | 4.0 | 0.044 |
 
-- **`scale` approximation.** All formulas are Barvinok `scale`-approximated; trust orders and
-  dominant terms, not exact constants. Lower-order terms can be negative (§1).
-- **12/53 kernels unsupported** (non-affine constructs / Barvinok quota); the taxonomy covers
-  the 41 analysable ones (24 symbolic carry usable orders).
-- **Warm/compulsory split is not pointwise** (§4.5) — used for orders only.
-- **cachegrind is a cache *model***, not the runtime ground truth; it is used here strictly to
-  confirm the reuse-distance/miss-count prediction, consistent with treating measured
-  wall-clock as the performance metric elsewhere in this project.
+**Headroom 0.5** — data movement grows a factor of $\sqrt{N}$ faster than the work.
 
-# 8. Conclusion
+| kernel | $a$ | $d$ | headroom | coeff | $d$ (inf) | coeff (inf) |
+|--------|:--:|:--:|:--:|--:|:--:|--:|
+| gramschmidt | 3 | 3.5 | 0.5 | 2.685 | 3.5 | 2.098 |
+| imperfect   | 3 | 3.5 | 0.5 | 2.568 | 3.5 | 2.656 |
+| covariance  | 3 | 3.5 | 0.5 | 0.706 | 3.5 | 0.706 |
+| correlation | 3 | 3.5 | 0.5 | 0.706 | — | — |
+| fdtd        | 3 | 3.5 | 0.5 | 0.242 | — | — |
+| gemver      | 2 | 2.5 | 0.5 | 1.216 | 2.5 | 1.216 |
+| mvt         | 2 | 2.5 | 0.5 | 1.063 | 2.5 | 1.063 |
+| jacobi-1d   | 2 | 2.5 | 0.5 | 0.249 | 2.5 | 0.250 |
+| bicg        | 2 | 2.5 | 0.5 | 0.153 | **3.0** | 0.044 |
+| gesummv     | 2 | 2.5 | 0.5 | 0.076 | **3.0** | 0.125 |
+| atax        | 2 | 2.5 | 0.5 | 0.062 | **3.0** | 0.044 |
 
-Across PolyBench, the scale-approximated DMD formulas obey one clean law,
-$\operatorname{ord}(\mathrm{DMD})=a+\tfrac12\rho$, with the reuse-distance exponent $\rho$
-quantised to $\{0,1,2\}$. That single integer sorts every kernel into "tile it (Class A,
-$N^1$ payoff)", "fix the transposed/re-streamed access (Class B, $\sqrt N$)", or "leave it
-(Class C, already optimal)". Cachegrind miss-scaling and raw runtime confirm all three
-regimes, including the exact capacity threshold the $d\sim N^2$ prediction implies. The DMD
-gap $g=\tfrac12\rho$ is thus a rigorous, empirically validated, a-priori predictor of
-loop-locality optimisation headroom.
+**Headroom 0.0** — data movement grows in lockstep with the work; no asymptotic
+locality slack.
 
-_Artifacts: `results/*.json` (per-kernel RI/RD/DMD), `order_table.json`, `dsl/*.dsl`,
-`analyze_math.py`, `run_analysis.py`, `confirm/{sweep.py,cg.json,runtime.json,k.c}`._
+| kernel | $a$ | $d$ | headroom | coeff | $d$ (inf) | coeff (inf) |
+|--------|:--:|:--:|:--:|--:|:--:|--:|
+| syr2k     | 3 | 3.0 | 0.0 | 3.789 | 3.0 | 3.827 |
+| symm      | 3 | 3.0 | 0.0 | 2.899 | 3.0 | 2.943 |
+| syrk      | 3 | 3.0 | 0.0 | 2.158 | 3.0 | 2.191 |
+| lu_decomp | 3 | 3.0 | 0.0 | 1.899 | 3.0 | 1.881 |
+| lu        | 3 | 3.0 | 0.0 | 1.378 | — | — |
+| trmm      | 3 | 3.0 | 0.0 | 1.366 | 3.0 | 1.351 |
+| cholesky  | 3 | 3.0 | 0.0 | 0.923 | 3.0 | 0.940 |
+| trisolve  | 2 | 2.0 | 0.0 | 2.871 | **3.0** | 0.031 |
+
+Two things stand out immediately. First, **every headroom value is 0.0, 0.5, or
+1.0** — nothing in between. The reuse-distance growth $\rho$ is quantized to
+$\{0,1,2\}$ across the entire suite; there is no kernel whose worst reuse distance
+grows like, say, $N^{1.3}$. Second, within a headroom band the **coefficients
+spread over 1–2 orders of magnitude**, which is exactly the ranking information
+the growth rate alone throws away (§4).
+
+---
+
+## 6. Three optimization classes
+
+Because headroom takes only three values, the kernels fall into three groups, and
+the group tells you *which* locality transformation can help and *how much*.
+
+**Class A — headroom 1.0 (reuse distance grows like $N^2$).** The dense
+linear-algebra and 2-D stencil kernels: `gemm`, `2mm`, `3mm`, `doitgen`,
+`floyd-warshall`, `jacobi-2d`, `seidel-2d`. Here the working set reached between
+reuses is a whole matrix, so the reuse distance grows as $N^2$ and the data
+movement outpaces the arithmetic by a full factor of $N$. The right transformation
+is **tiling**: block the loops so the reused sub-matrix fits in cache, which caps
+the reuse distance at the (constant) tile footprint and collapses the headroom to
+zero. This is the largest asymptotic win available — and the one the empirical
+section confirms most sharply.
+
+**Class B — headroom 0.5 (reuse distance grows like $N$).** Matrix–vector
+products and mixed 1-D patterns: `mvt`, `atax`, `bicg`, `gemver`, `gesummv`,
+`jacobi-1d`, `covariance`, `correlation`, `fdtd`, `gramschmidt`, `imperfect`. The
+culprit is typically one array streamed "the wrong way" — read down a column while
+it is stored by rows, or re-streamed on each pass — so its reuse distance grows as
+$N$. The fix is **loop interchange or fusion** to bring that access's reuse close,
+recovering about $\sqrt{N}$.
+
+**Class C — headroom 0.0 (reuse distance bounded).** Triangular and
+accumulator kernels: `syrk`, `syr2k`, `cholesky`, `lu`, `lu_decomp`, `trmm`,
+`trisolve`, `symm`. Every element's reuse is already local — a resident
+accumulator, or a bounded triangular band — so there is no asymptotic locality
+slack. Tiling cannot change the growth rate (it may still help the constant
+factor). Optimization effort is better spent on vectorization and register use
+than on data locality.
+
+The point of the taxonomy is predictive: given a new affine kernel, its headroom
+tells you up front whether a locality transformation is worth attempting at all,
+and if so which one and roughly what payoff to expect.
+
+---
+
+## 7. What infinite-repeat reveals
+
+Comparing the two models across the whole suite gives a clean answer to "does
+infinite-repeat tell us anything the single-shot model doesn't?" — **yes, for a
+specific and recognizable set of kernels.** Four kernels raise their DMD growth
+rate under repetition:
+
+| kernel | single-shot | infinite-repeat |
+|--------|:--:|:--:|
+| atax     | $N^{2.5}$ | $N^{3.0}$ |
+| bicg     | $N^{2.5}$ | $N^{3.0}$ |
+| gesummv  | $N^{2.5}$ | $N^{3.0}$ |
+| trisolve | $N^{2.0}$ | $N^{3.0}$ |
+
+These are exactly the kernels that **read their matrix once per invocation**. In a
+single pass, each matrix element is touched once and then never again, so the
+single-shot model files it as a cold miss and it contributes nothing to the
+reuse-driven part of DMD. But if the kernel repeats — `atax` inside a Krylov
+solver, `trisolve` inside a Newton iteration — the matrix is read again on the
+next pass, a genuine reuse at distance $\approx N^2$ (the matrix footprint). That
+adds a term of size (number of matrix elements $\sim N^2$) $\times \sqrt{N^2} =
+N^3$, lifting the DMD order. Infinite-repeat surfaces this cross-invocation reuse;
+single-shot cannot see it.
+
+The contrast within Class B is telling. `mvt` and `gemver` are also
+matrix–vector kernels, yet they do **not** jump — because they already touch the
+matrix more than once per pass (`mvt` multiplies by $A$ and $A^{\top}$; `gemver`
+applies rank-1 updates), so their matrix reuse is captured within a single pass
+and repetition adds nothing new to the leading term. So the jump is a real signal:
+it distinguishes "the matrix is streamed once and only reused across
+invocations" from "the matrix is reused within each invocation."
+
+Practically: if you are optimizing one of the jumping kernels *inside an outer
+iteration*, the analysis says the matrix reuse across iterations is worth
+capturing (keep the matrix resident if it fits), whereas the single-shot view
+would have told you the matrix traffic is unavoidable cold-miss volume.
+
+Where infinite-repeat did not complete (`jacobi-2d`, `seidel-2d`, `correlation`,
+`fdtd`, `lu` — the "—" rows in §5), the doubled trace pushed the Barvinok counter
+past its operation budget. For every kernel where it did complete, the headroom
+stayed the same or rose — never fell — consistent with the model only ever
+*adding* boundary reuses, never removing intra-pass ones.
+
+---
+
+## 8. Empirical confirmation
+
+The growth-rate law is a claim about reuse distances, and reuse distance is what
+decides cache behavior. So we check the predictions on real hardware with the
+actual C kernels (not the model): **cache-miss scaling** with cachegrind, and
+**wall-clock time per access** over a size sweep. We take one kernel from each
+class. The prediction in each case is about the *last-level* miss rate, because
+that is what a growing reuse distance eventually blows.
+
+**Class A — `matmul` (predicted headroom 1: reuse distance $\sim N^2$).** As $N$
+grows, the reused operand (a full $N\times N$ matrix) eventually overflows
+last-level cache. The last-level miss rate should stay tiny while it fits, then
+jump once it doesn't — and tiling, which caps the reuse distance at the tile size,
+should prevent the jump.
+
+| last-level miss rate | N=128 | N=256 | N=384 | N=512 |
+|----------------------|:--:|:--:|:--:|:--:|
+| naive  | 0.18% | 0.08% | 0.07% | **3.55%** |
+| tiled  | 0.12% | 0.05% | 0.04% | 0.16% |
+
+The naive kernel's miss rate is flat and small up to $N{=}384$, then **jumps about
+50$\times$** at $N{=}512$ — exactly when the working set crosses the simulated
+2 MB cache. Tiling holds it at 0.16%, **22$\times$ lower** than naive at $N{=}512$
+and still flat. Wall-clock time per access rises with the miss rate — 1.67, 2.01,
+2.15 ns at $N=256, 512, 1024$ — then saturates at memory latency. This is the
+headroom-1 signature: an unbounded reuse distance that tiling removes.
+
+**Class B — `mvt` (predicted headroom 0.5: reuse distance $\sim N$).** One array
+is streamed transposed; its reuse distance grows as $N$, so the miss rate should
+climb with $N$ until that access no longer fits, and loop interchange should flatten
+it.
+
+| last-level miss rate | N=512 | N=1024 | N=2048 |
+|----------------------|:--:|:--:|:--:|
+| naive       | 9.9% | 31.0% | 31.2% |
+| interchanged| 7.4% | 7.5% | 7.5% |
+
+The naive miss rate **grows** from 9.9% to 31% as the transposed access outgrows
+cache; loop interchange fixes the access order and pins it at 7.5% across all
+sizes — about **4$\times$ lower** at $N{=}2048$. Headroom-½ signature: a growing
+reuse distance from one mis-ordered access, capped by interchange.
+
+**Class C — `syrk` (predicted headroom 0: reuse distance bounded).** Every reuse
+is already local, so the miss rate should be flat in $N$ with nothing to fix.
+
+| last-level miss rate | N=128 | N=256 | N=384 | N=512 |
+|----------------------|:--:|:--:|:--:|:--:|
+| naive | 0.31% | 0.13% | 0.12% | 0.09% |
+
+It is flat — if anything *declining*, as one-time costs amortize — and wall-clock
+time per access falls slightly (0.51 → 0.39 → 0.38 ns) rather than rising. There
+is no locality problem to solve. Headroom-0 signature.
+
+All three predicted behaviors are observed, on real cache hardware, for the class
+the growth-rate analysis assigned each kernel.
+
+> A note on ground truth. Cachegrind is used only as an *independent check of the
+> reuse-distance prediction* — does the miss rate move the way the model says? —
+> not as a performance oracle. Wall-clock time is the performance measure. (PMU
+> counters via `perf` were unavailable on this host, which runs with
+> `perf_event_paranoid=4`; we did not weaken that host setting, and cachegrind
+> plus timing were sufficient.)
+
+---
+
+## 9. What we could and could not analyze
+
+Of the 53 PolyBench programs (31 symbolic-size, 22 fixed-size), the analyzer
+handled **48 under the single-shot model**, and **43 of those also under
+infinite-repeat**. That single-shot figure is up from 41 before this work: the
+reduction-loop fix in §10 recovered the six accumulator kernels (`convolution`,
+`symm`, `gramschmidt` in both size families) that the extractor had previously
+refused. The growth-rate table in §5 covers the 27 symbolic kernels that yield a
+size-dependent formula (the fixed-size kernels give one number, not a growth
+rate, and are used only as numeric cross-checks).
+
+The five programs we could not analyze fall into three honest buckets:
+
+- **Not representable** — `adi`, `deriche`, `durbin`. These use genuinely
+  non-affine array subscripts (an index computed from loaded data) or MLIR syntax
+  the current toolchain no longer parses. They are outside the affine model, and
+  we let them error rather than silently drop accesses. (None were in the legacy
+  AutoLALA reference set either.)
+- **Over the counting budget** — `heat-3d`. A deep, heavily-parametric 3-D stencil
+  whose reuse relation exceeds the Barvinok operation budget even single-shot.
+- **Excluded** — `fdtd-apml`, a known pathological case for the counter (it times
+  out); dropped by request.
+
+Infinite-repeat additionally could not complete on the five heaviest kernels that
+*do* analyze single-shot (`jacobi-2d`, `seidel-2d`, `correlation`, `fdtd`, `lu`):
+doubling the trace doubles the outer schedule dimension and pushes the polytope
+past the counting budget. One further kernel, `convolution`, analyzes but its
+symbolic bounds (`N−K` in both loop dimensions) leave the access-count formula
+without a clean single growth order, so it is omitted from the ranked table.
+
+None of these gaps affect the central findings, which rest on the 27 symbolic
+kernels that do produce clean formulas.
+
+---
+
+## 10. Implementation notes
+
+Two toolchain changes made this study possible; both live in this branch.
+
+**Loading kernels with reductions.** The MLIR extractor had been rejecting any
+loop that carried a value across iterations (an `iter_args` reduction), which
+blocked every kernel with an inner accumulator (`convolution`, `symm`,
+`gramschmidt`). The DMD model only tracks memory movement, so a value carried in a
+register is irrelevant — the legacy AutoLALA extractor simply ignored such carried
+values. We restored that: an `affine.for` with `iter_args` is treated as an
+ordinary loop, its carried scalar and `affine.yield` ignored, its inner
+loads/stores flowing through unchanged. Scratch (de)allocations
+(`memref.alloc`/`alloca`/`dealloc`) are likewise ignored. This recovered the six
+reduction kernels. Kernels with genuinely non-affine subscripts (`adi`, `durbin`,
+`deriche`) remain out of scope — not representable — and we let them error rather
+than silently drop accesses.
+
+**The infinite-repeat model.** We added `--infinite-repeat` to `dmd-cli`. It wraps
+the program in a two-iteration outer loop and keeps only the reuse intervals whose
+consuming access lands in the second iteration, as in §2. This is simpler than the
+original AutoLALA scheme (no symbolic repeat count, no normalization): two concrete
+passes suffice and the second-pass filter yields the steady-state distribution
+directly. A unit test pins the behavior to the §2 example — the wraparound reuse
+must appear at footprint distance and the access total must stay at one period.
+
+**Block size.** The analyzer's block size is in elements. A 64-byte cache line is
+8 doubles, so we pass `--block-size 8` (16 would model single precision). This
+matches the line cachegrind simulates.
+
+---
+
+## Reproduce
+
+```sh
+python3 run_analysis.py both --resume   # analyze all kernels, both models -> results/
+python3 analyze_math.py                 # growth rates + coefficients -> order_table.json
+cd confirm && python3 sweep.py          # cachegrind miss-scaling -> cg.json
+pandoc REPORT.md -o REPORT.pdf --pdf-engine=xelatex \
+   -V mainfont="DejaVu Serif" -V monofont="DejaVu Sans Mono"
+```

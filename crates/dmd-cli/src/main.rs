@@ -26,6 +26,13 @@ struct Cli {
     #[arg(long, value_enum, default_value_t = CliApproximationMethod::Scale)]
     approximation_method: CliApproximationMethod,
 
+    /// Model the extracted region as an infinitely repeating trace: wrap it in a
+    /// loop that runs twice and keep the steady-state (second-repetition) reuse
+    /// intervals, so period-boundary accesses become warm wraparound reuses and
+    /// the compulsory term drops to zero.
+    #[arg(long)]
+    infinite_repeat: bool,
+
     #[arg(long)]
     json: bool,
 }
@@ -75,6 +82,7 @@ fn run() -> Result<(), CliError> {
             num_sets: cli.num_sets,
             max_operations: cli.max_operations,
             approximation_method: cli.approximation_method.into(),
+            infinite_repeat: cli.infinite_repeat,
         },
     )?;
 
