@@ -31,6 +31,7 @@ infinitely-repeating — plus empirical confirmation on real cache hardware.
 | `REPORT.md`, `REPORT.pdf` | the full write-up (definitions, the law, results, three classes, infinite-repeat, empirical confirmation) |
 | `run_analysis.py` | batch: tag → `mlir-extract` → `dmd-cli --json`, **both** single-shot and `--infinite-repeat`, over every kernel |
 | `analyze_math.py` | growth rates + leading coefficients (`d = a + ½ρ`, `DMD ≈ coeff·N^d`) |
+| `local_analysis.py` | finite-range analysis: local exponent `p(N)`, exact doubling cost, cache threshold `N* = √(C/c)` |
 | `results/<k>.json` | per-kernel `single` and `inf` records: RI/RD distributions, DMD formula, access counts |
 | `order_table.json` | computed growth rates, headroom, and coefficients for the 27 symbolic kernels, both models |
 | `confirm/` | empirical confirmation: `k.c` kernels, `sweep.py` cachegrind sweep, `cg.json`, `runtime.json` |
@@ -41,6 +42,7 @@ infinitely-repeating — plus empirical confirmation on real cache hardware.
 ```sh
 python3 run_analysis.py both --resume   # analyze all kernels, both models -> results/
 python3 analyze_math.py                 # growth rates + coefficients -> order_table.json
+python3 local_analysis.py               # local exponent / doubling cost / cache threshold N*
 cd confirm && python3 sweep.py          # cachegrind miss-scaling -> cg.json
 pandoc REPORT.md -o REPORT.pdf --pdf-engine=xelatex \
    -V mainfont="DejaVu Serif" -V monofont="DejaVu Sans Mono"

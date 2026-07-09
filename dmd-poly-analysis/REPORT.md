@@ -367,12 +367,78 @@ the growth-rate analysis assigned each kernel.
 
 ---
 
-## 9. What we could and could not analyze
+## 9. Finite ranges: the local exponent, and what doubling $N$ actually costs
+
+Everything up to here is asymptotic. In practice you have a size *range* and you
+ask: "if I double $N$ from here, what does it cost?" The order $d$ answers only the
+limit — it says DMD scales by $2^d$ per doubling. Over a real octave $[N, 2N]$ the
+honest quantity is the **local exponent**, the log–log slope measured right at
+your size,
+
+$$p(N) \;=\; \frac{\log\big(\text{DMD}(2N)/\text{DMD}(N)\big)}{\log 2},$$
+
+computed exactly from the symbolic formula (`local_analysis.py`, with DMD$(N)$
+evaluated as $\sum \text{multiplicity}\cdot\sqrt{\text{distance}}$ over the
+reuse-distance bins — no cancellation). Here is `gemm` (Class A, order $d=4$):
+
+| $N$ | DMD$(2N)/$DMD$(N)$ | local $p(N)$ | naive $2^d$ | access slope | local headroom |
+|----:|:--:|:--:|:--:|:--:|:--:|
+| 64   | 11.14 | 3.48 | 16.0 | 2.99 | 0.48 |
+| 256  | 13.53 | 3.76 | 16.0 | 3.00 | 0.76 |
+| 512  | 14.47 | 3.85 | 16.0 | 3.00 | 0.86 |
+| 1024 | 15.09 | 3.92 | 16.0 | 3.00 | 0.92 |
+| 4096 | 15.70 | 3.97 | 16.0 | 3.00 | 0.97 |
+
+Two things to read off. First, the naive $2^d$ **overestimates** the real cost of
+doubling at practical sizes: at $N{=}64$, doubling multiplies DMD by $11.1\times$,
+not the asymptotic $16\times$; the local exponent $3.48$ is the honest growth rate
+there, and it only creeps toward $4.0$. Second, the **local headroom** (last
+column) starts at $0.48$ and climbs to $0.97$ — so at small $N$ `gemm`'s per-access
+data movement grows far less than the asymptotic headroom of $1.0$ promises. You
+are *pre-asymptotic*: the tiling payoff is latent, and how latent depends on where
+your $N$ sits.
+
+Contrast a headroom-0 kernel, `syrk`:
+
+| $N$ | DMD$(2N)/$DMD$(N)$ | local $p(N)$ | naive $2^d$ | local headroom |
+|----:|:--:|:--:|:--:|:--:|
+| 64   | 7.97 | 2.99 | 8.0 | 0.011 |
+| 256  | 7.99 | 3.00 | 8.0 | 0.003 |
+| 4096 | 8.00 | 3.00 | 8.0 | 0.000 |
+
+`syrk` sits *at* its asymptote immediately — local exponent $3.00$, local headroom
+$0.00$ across the whole range. There is no pre-asymptotic regime and no latent
+payoff, because there is no growing reuse distance to wait for. This is the
+finite-$N$ face of "headroom 0 means nothing to optimize."
+
+**The cliff the smooth exponent hides.** DMD is a smooth polynomial, so its local
+exponent drifts continuously. The real *miss* curve does not — it has a cliff at
+the size where the dominant reuse distance fills the cache. `gemm`'s dominant
+reuse-distance term is $0.125\,N^2$ cache lines, i.e. $0.125\,N^2 \times 64\text{ B}
+= 8N^2$ bytes, which fills a 2 MB last-level cache at
+
+$$N^{*} \;=\; \sqrt{2\,\text{MB}/8\,\text{B}} \;=\; 512.$$
+
+The cachegrind sweep in §8 put `gemm`'s last-level miss-rate jump at **exactly
+$N{=}512$**. The model's reuse-distance *coefficient* predicted the measured cliff
+location, not merely its existence. `syrk`'s dominant growing distance, by
+contrast, is only $\sim N^1$ and carries a vanishing fraction of the accesses, so
+its crossing size is astronomically large ($N^{*}\!\approx\!2.6\times10^5$) and no
+cliff appears in range — consistent with its flat measured miss rate.
+
+So the complete finite-range recipe is: use the **local exponent** $p(N)$ (exact,
+from the formula) for the smooth cost, and separately test whether your octave
+$[N, 2N]$ **straddles** $N^{*} = \sqrt{C/c}$ for the cliff. The derivative refines
+the exponent; the threshold catches the discontinuity the exponent cannot see.
+
+---
+
+## 10. What we could and could not analyze
 
 Of the 53 PolyBench programs (31 symbolic-size, 22 fixed-size), the analyzer
 handled **48 under the single-shot model**, and **43 of those also under
 infinite-repeat**. That single-shot figure is up from 41 before this work: the
-reduction-loop fix in §10 recovered the six accumulator kernels (`convolution`,
+reduction-loop fix in §11 recovered the six accumulator kernels (`convolution`,
 `symm`, `gramschmidt` in both size families) that the extractor had previously
 refused. The growth-rate table in §5 covers the 27 symbolic kernels that yield a
 size-dependent formula (the fixed-size kernels give one number, not a growth
@@ -402,7 +468,7 @@ kernels that do produce clean formulas.
 
 ---
 
-## 10. Implementation notes
+## 11. Implementation notes
 
 Two toolchain changes made this study possible; both live in this branch.
 
@@ -438,6 +504,7 @@ matches the line cachegrind simulates.
 ```sh
 python3 run_analysis.py both --resume   # analyze all kernels, both models -> results/
 python3 analyze_math.py                 # growth rates + coefficients -> order_table.json
+python3 local_analysis.py               # local exponent / doubling cost / cache threshold N*
 cd confirm && python3 sweep.py          # cachegrind miss-scaling -> cg.json
 pandoc REPORT.md -o REPORT.pdf --pdf-engine=xelatex \
    -V mainfont="DejaVu Serif" -V monofont="DejaVu Sans Mono"
