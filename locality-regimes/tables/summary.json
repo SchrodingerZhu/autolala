@@ -1,0 +1,163 @@
+{
+ "kernels": [
+  {
+   "name": "sym_2mm",
+   "model": "inf",
+   "footprint_lead": "5/8 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_3mm",
+   "model": "inf",
+   "footprint_lead": "7/8 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_atax",
+   "model": "inf",
+   "footprint_lead": "1/8 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_bicg",
+   "model": "inf",
+   "footprint_lead": "1/8 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_cholesky",
+   "model": "inf",
+   "footprint_lead": "1/16 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_convolution9",
+   "model": "inf",
+   "footprint_lead": "1/4 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_correlation",
+   "model": "inf",
+   "footprint_lead": "1/64 n^3",
+   "cold": "0"
+  },
+  {
+   "name": "sym_covariance",
+   "model": "inf",
+   "footprint_lead": "1/32 n^3",
+   "cold": "0"
+  },
+  {
+   "name": "sym_doitgen",
+   "model": "inf",
+   "footprint_lead": "1/8 n^3",
+   "cold": "0"
+  },
+  {
+   "name": "sym_floyd_warshall",
+   "model": "inf",
+   "footprint_lead": "1/512 n^4",
+   "cold": "0"
+  },
+  {
+   "name": "sym_gemm",
+   "model": "inf",
+   "footprint_lead": "3/8 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_gemver",
+   "model": "inf",
+   "footprint_lead": "1/8 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_gesummv",
+   "model": "inf",
+   "footprint_lead": "1/4 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_gramschmidt",
+   "model": "inf",
+   "footprint_lead": "5/128 n^3",
+   "cold": "0"
+  },
+  {
+   "name": "sym_lu",
+   "model": "inf",
+   "footprint_lead": "1/8 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_lu_decomp",
+   "model": "inf",
+   "footprint_lead": "1/512 n^4",
+   "cold": "0"
+  },
+  {
+   "name": "sym_mvt",
+   "model": "inf",
+   "footprint_lead": "1/8 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_symm",
+   "model": "inf",
+   "footprint_lead": "5/16 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_syr2k",
+   "model": "inf",
+   "footprint_lead": "5/16 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_syrk",
+   "model": "inf",
+   "footprint_lead": "3/16 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_trisolve",
+   "model": "inf",
+   "footprint_lead": "1/16 n^2",
+   "cold": "0"
+  },
+  {
+   "name": "sym_trmm",
+   "model": "inf",
+   "footprint_lead": "3/16 n^2",
+   "cold": "0"
+  }
+ ],
+ "excluded_by_conservation": [
+  {
+   "name": "sym_fdtd",
+   "best_coverage": 0.95924528298248
+  },
+  {
+   "name": "sym_heat-3d",
+   "best_coverage": 1.5435059518898164
+  },
+  {
+   "name": "sym_imperfect",
+   "best_coverage": 0.9691471823175394
+  },
+  {
+   "name": "sym_jacobi-1d",
+   "best_coverage": 1.3308641099184193
+  },
+  {
+   "name": "sym_jacobi-2d",
+   "best_coverage": 1.2731022927221494
+  },
+  {
+   "name": "sym_seidel-2d",
+   "best_coverage": 0.9290730010658264
+  }
+ ],
+ "n_inversions": 1
+}
