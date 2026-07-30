@@ -1,29 +1,22 @@
 # locality-regimes
 
-A fresh analysis of how to read and use the output of the algebraic
-locality compiler (symbolic reuse-interval distributions -> cache-size
-and miss-ratio polynomials), replacing the earlier data-movement-
-complexity reading. Built entirely from raw `dmd-cli` output under the
-paper's canonical configuration: infinite repeat, scale approximation,
-block size 8.
+**Read `REPORT.md` (or `REPORT.pdf`).** It is written for a reader who
+knows only that affine kernels (matmul, convolutions, stencils) matter
+and that their scaling behavior is worth measuring — and it builds up,
+from scratch, the discovery this branch studies: for affine kernels,
+memory behavior has *closed form*. A compiler reduces an n³-step
+execution to a few rows of formulas (reuse distances and their
+frequencies, symbolic in every loop bound), and from those rows you can
+read off — without running anything — miss ratios at any cache and
+problem size, the problem sizes where performance falls off a cliff,
+whether and when tiling pays and by how much (36–106x for matmul, with
+the exact condition n > sqrt(C/8)), which parallel decompositions are
+provably useless and which core count merges private caches into one,
+and conservation laws that catch broken analyses automatically.
 
-**Read `REPORT.md` (or `REPORT.pdf`).** In one sentence: collapse the
-symbolic distribution to a scalar and its leading term and you are
-governed by exactly the levels whose probability vanishes (RI Sum
-Invariance forces this, and scalar rankings demonstrably invert at real
-cache sizes); read it instead as a finite list of locality *regimes* —
-polynomial cache-size boundaries with rational miss-ratio plateaus —
-and prediction, problem-size planning, cache provisioning,
-transformation accounting (interchange 4.5x, tiling 36–106x, pointwise
-in cache size), co-scaling laws (a sqrt(2)-rule with per-kernel validity
-windows), and parallel slicing analysis (by parameter substitution)
-each become a single polynomial evaluation or inversion.
-
-Pipeline: `run_suite.py` -> `data/` (raw analyzer JSON) -> `regimes.py`
--> `regimes/` (exact level structure) -> `derived.py`,
-`parallel_study.py`, `anchor_checks.py` -> `tables/`. All symbolic
-statements are exact (Fraction arithmetic, fitted on a residue class and
-verified on held-out points); all concrete numbers are evaluated from
-the raw guarded quasi-polynomials. Mass conservation and RI Sum
-Invariance run as self-checks; kernels whose analyzer output fails them
-are excluded and listed rather than silently used.
+Everything is derived fresh from `dmd-cli` output (infinite repeat,
+scale approximation, 64-byte lines) over 22 conserving PolyBench
+kernels plus a matmul variant family. Pipeline and tables:
+`run_suite.py` → `regimes.py` → `derived.py` / `parallel_study.py` /
+`anchor_checks.py` → `tables/`. Raw analyzer JSON (`data/`, 29 MB) is
+gitignored; regenerate with `run_suite.py`.
