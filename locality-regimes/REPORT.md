@@ -60,7 +60,7 @@ is the state-reuse knee — the d x d state plus one row set, e.g.
 A **43x per-token traffic jump** between d = 48 and d = 64 at 32 KB:
 once the state does not fit, it is re-streamed twice per token
 (≈ 16d² bytes), swamping the 32d-byte QKVO streaming that is all a
-resident state pays. The residency condition is d²·(bytes/elt) ≲ C,
+resident state pays. The residency condition is d²·(bytes/elt) <= C,
 i.e. **d\*(32 KB) ≈ 62 in fp64, 90 in fp32, 128 in bf16** — the
 precision-dependent boundary lands exactly on the d = 64 and d = 128
 head dimensions modern models use: d = 64 heads are L1-resident in
