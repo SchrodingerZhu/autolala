@@ -1,322 +1,246 @@
-# Affine Kernels Have Closed-Form Memory Behavior
+# Derived, Not Measured: Closed-Form Memory Behavior for Affine Kernels
 
-*What an automatic symbolic analysis derives about scientific and ML
-kernels, and what you can do with the formulas.*
+## 1. A fifty-year asymmetry
 
-## 1. The cost that arithmetic doesn't count
+Ask what a matrix multiplication costs in arithmetic and you get a
+formula: 2n³ operations. Symbolic, exact, valid for every n, derived by
+inspection. Ask what the *memory system* will do — the question that
+actually decides performance on modern hardware, where fetching a value
+from main memory costs tens to hundreds of times more than multiplying
+it — and for fifty years the only honest answer has been: *run it and
+see*.
 
-The kernels at the heart of scientific computing and machine learning —
-matrix multiplication, convolutions, stencils, the building blocks of
-attention — are *affine loop nests*: loops whose array subscripts are
-linear in the loop counters. For such kernels, arithmetic cost is a
-solved problem. You count: matrix multiplication of two n x n matrices
-does 2n³ operations. Double n, expect 8x the work. This kind of scaling
-statement is exact, symbolic, and free.
+This is not for lack of theory. Since Mattson et al. (1970) we have
+known the right quantity: for each access, count the distinct data
+touched since the *previous* access to the same value — its **reuse
+distance**. A cache holding C values serves an access from fast memory
+exactly when its reuse distance is at most C; otherwise the access goes
+to main memory (a *miss*). The histogram of reuse distances therefore
+determines the miss ratio of *every* cache size at once, and for a
+simple kernel you can sketch it by hand. Naive matmul touches C[i][j]
+again after ~3 values (the running sum), A[i][k] again after ~2n (a
+row), B[k][j] again after ~n² (a matrix), each about a third of the
+time — so its miss ratio is a staircase: 2/3 until a few values fit,
+1/3 until rows fit, near zero once a matrix fits. All of this is
+textbook.
 
-Run the kernel, though, and the prediction fails in a specific way. Here
-are two versions of matrix multiplication with *identical* arithmetic —
-the same 2n³ operations, the same 3n³ array accesses, only the order of
-the two inner loops swapped:
+What the textbook could not do is *produce that histogram for a real
+kernel without running it*. For half a century the distribution has
+been an empirical object:
 
-```c
-for (i) for (j) for (k)          for (i) for (k) for (j)
-    C[i][j] += A[i][k]*B[k][j];      C[i][j] += A[i][k]*B[k][j];
-```
+| how you get it | what you get |
+|---|---|
+| hardware counters, cache simulators | one number per (machine, input, variant) run |
+| reuse-distance profiling (Ding et al.) | one numeric curve per profiled input; other sizes by extrapolation |
+| polyhedral miss counting (cache-miss equations; PolyCache) | exact counts, but only with every loop bound fixed to a constant |
+| I/O complexity (Hong–Kung) | symbolic in n and C — but only exponents: Ω(n³/√C), constants and thresholds gone |
 
-On real hardware the right one runs several times faster. Arithmetic
-cannot explain this; nothing about "2n³" changed. The missing cost is
-*data movement*. A processor computes only on data held in a small fast
-memory next to the core — a *cache*, typically 32 KB close in, a few MB
-further out — and fetching a value that is not there from main memory
-costs tens to hundreds of times more than the multiply it feeds. A
-kernel's real cost is arithmetic plus traffic, and traffic depends on
-something arithmetic counting never sees: *whether the data you touch is
-still in the cache from the last time you touched it*.
+Note the gap: the first three rows have constants but no symbols; the
+last has symbols but no constants. Nobody could write down the thing
+you actually want — *the miss ratio of gemm as a formula in both the
+problem size and the cache size*. That formula is what this repository
+is about.
 
-Scaling behavior of arithmetic: symbolic, exact, effortless. Scaling
-behavior of memory traffic: until recently, you measured it — run the
-kernel (or a cache simulator) at one problem size on one machine, get
-one number, repeat for every size, machine, and program variant you care
-about. This document is about the discovery that for affine kernels the
-memory side can be made just as symbolic as the arithmetic side — by a
-compiler, automatically — and about how much falls out of that.
+## 2. The histogram becomes a formula
 
-## 2. The one quantity that decides everything
+Two ideas, from the algebraic-locality work this study builds on, close
+the fifty-year gap.
 
-When does a memory access cost nothing, and when does it cost a trip to
-main memory? Caches keep the most recently used data. So the question
-for each access is: *since the last time this value was touched, how
-much other data has been touched?* If that in-between amount fits in the
-cache, the value is still there — the access is free. If not, it was
-evicted — the access is a *miss*.
+**First touches were the blocker, and repetition dissolves it.** The
+first access to each value has no previous use, hence no reuse
+distance. Numerically you just count those as misses; *algebraically*
+they poison everything — with infinite distances in the distribution,
+the working-set mathematics (Denning 1968) stops converging, which is
+the real reason the theory stayed numeric for decades. The resolution:
+analyze the kernel *as if it executes repeatedly*, so every first touch
+becomes a re-touch from the previous round — an **imaginary reuse**
+with a finite, computable distance. This is not a convenient fiction:
+time-stepped solvers and ML training loops *do* run their kernels
+repeatedly, and for a genuinely one-shot run the added reuses are
+identifiable and removable. With the distribution made finite and
+complete, the classical recursion is *provably exact* — no stochastic
+assumptions — and it inherits a conservation law (the distances,
+weighted by frequency, must sum to exactly the data size) that will
+earn its keep below.
 
-Call the in-between amount the **reuse distance** of the access: the
-number of distinct values touched since its previous use. This single
-notion compresses everything relevant about a cache of any size C:
+**Counting becomes geometry.** In an affine kernel — subscripts linear
+in loop counters: matmul, convolutions, stencils, attention blocks —
+the set of loop iterations whose reuse distance equals a given symbolic
+expression is a system of linear constraints, and counting integer
+points in such parametric sets is a solved problem with closed-form
+answers. A compiler can therefore emit, for each kernel, a short table:
+*reuse-distance formula, frequency formula* — polynomials in **all**
+loop bounds. Deriving a kernel's table takes on the order of a minute,
+once, ever. (This tractability is not free in general: the underlying
+problem is provably NP-hard, and counting #P-hard, for arbitrary
+loop programs. The affine structure of real kernels is what makes the
+practical case fast — worth knowing when you wonder why this wasn't
+done long ago.)
 
-> an access misses exactly when its reuse distance exceeds C.
+Here is the entire memory behavior of gemm, derived automatically, at
+cache-line granularity (64-byte lines, n x n matrices):
 
-So if you know, for a given kernel, *how many accesses have which reuse
-distance*, you know the fraction of accesses that miss — the traffic —
-for **every** cache size at once. Not a measurement of one
-configuration: the whole curve.
+| once the cache holds ... | ... the miss ratio is |
+|---|---|
+| ~6 lines                 | 1/16       |
+| n/4 lines (two rows)     | 1/32       |
+| n²/8 lines (one matrix)  | 1/(16n)    |
+| 3n²/8 lines (everything) | 0          |
 
-## 3. Matrix multiplication by hand
+Four rows. That object — not a profile, not an exponent, a *formula
+family* — replaces the empirical column of the table above. The paper
+validated it against cycle-accurate cache simulation across 41 kernels
+(≈1% average miss-ratio error), so accuracy is settled; what a reviewer
+should ask instead is: **what can you do with a formula that you could
+not do with measurements?** The rest of this document is that list,
+computed over 22 PolyBench kernels plus a matmul-variant family, with
+nothing measured on hardware.
 
-The remarkable thing about affine kernels is that this histogram of
-reuse distances is not an unstructured mess. Walk through the
-triple loop `for i, for j, for k: C[i][j] += A[i][k] * B[k][j]` and ask,
-for each of the three arrays, when a value is touched again:
+## 3. Formulas make "for all" statements
 
-- **C[i][j]** is touched again on the very next k-iteration. In
-  between: one element of A, one of B. Reuse distance ~3. This happens
-  on essentially every iteration — one third of all accesses.
-- **A[i][k]** is touched again one j-iteration later. In between: one
-  row of B-column-slices and the C entries — about 2n values. Another
-  third of all accesses, at distance ~2n.
-- **B[k][j]** is touched again only when i advances — after a full
-  sweep of one A-row per j, one C-row, and B itself: about n² values.
-  The last third, at distance ~n².
+A measurement asserts a point. A formula asserts a region — and some of
+the most useful facts about kernels are region facts, unprovable by any
+finite profiling campaign:
 
-Three loops, three kinds of reuse, three distances: 3, 2n, n². The
-miss fraction as a function of cache size C is therefore a *staircase*:
+- **gemm's miss ratio is 3.1% at 32 KB — and provably the same at
+  every cache size up to n²/8 lines** (31 MB at n = 2016). L1, L2 and
+  L3 of a real machine sit on one step of the staircase: for this
+  kernel they are interchangeable, and money spent on the middle of
+  the hierarchy buys nothing. A profiler would show you 3.1% at the
+  sizes you tried; the formula says *there is nothing to find in
+  between*.
+- **Row-parallel matmul moves the same total data at every worker
+  count.** Substituting the sliced bound (Section 5) yields aggregate
+  traffic constant in p — 1.02 billion lines whether p is 1 or 1008.
+  Not "we didn't observe an improvement": *independent of p*, as an
+  identity of the formulas.
+- **Tiling gemm is worth exactly nothing once n ≤ √(C/8 bytes)** — 64
+  for a 32 KB cache, 362 for 1 MB, 2048 for 32 MB — and worth 36–106x
+  above it (Section 4). "Should I tile?" finally has an honest answer,
+  and it is not yes or no; it is a condition with the machine in it.
 
-| if the cache holds ...      | then the miss fraction is ... |
-|-----------------------------|-------------------------------|
-| less than 3 values          | 1 (everything misses)         |
-| 3 ... 2n values             | 2/3                           |
-| 2n ... n² values            | 1/3                           |
-| more than ~n² (one matrix)  | ~2/(3n), nearly zero          |
+The cliff schedule in the last bullet generalizes: every kernel's
+staircase boundaries invert into closed-form critical sizes n*(C), the
+problem sizes at which a given machine changes regime. That is scaling
+behavior in the sense practitioners need it — not the exponent, but
+*where the behavior changes and what it costs when it does*.
 
-An execution of n³ steps — billions of accesses — collapses into four
-lines of formulas. Each step of the staircase has a physical meaning:
-the running sum fits; then a row fits; then a whole matrix fits. And
-each machine question becomes a lookup: a cache of C values sits on one
-of the steps, and the step height is the traffic.
+## 4. Formulas correct the accepted summaries
 
-One loose end: the *first* touch of each value has no previous use — no
-distance to assign — and gets awkward in symbolic form. The paper this
-repository builds on resolves it with a move that is as practical as it
-is convenient: analyze the kernel *as if it runs repeatedly*, so every
-first touch is a re-touch from the previous round (its "imaginary
-reuse"). That is not a modeling fiction — it is how these kernels are
-actually used: time steps, solver sweeps, training iterations. (For a
-genuinely one-shot run, the repetition is easy to subtract back out.)
-For matmul, the imagined repetition gives the leftover 2/(3n) of
-accesses a distance of ~3n² — all the data — which is exactly the
-"cache holds everything" step of the staircase.
+If the formulas only confirmed intuition, a reviewer could shrug. They
+do not.
 
-## 4. The step that makes it automatic
+**Asymptotic classification gives wrong answers, not just vague ones.**
+Our own earlier study on this suite classified kernels by the growth
+exponent of their data movement — the standard complexity-style
+summary. It placed trmm and trisolve in the same class: "no locality
+headroom, leave them alone." The formulas split them: trisolve truly
+has nothing to gain (its miss ratio is pinned at 3.1% with *no*
+intermediate step until all data fits — no tiling can help), while trmm
+misses 50% at 32 KB against 3.1% at 1 MB — a sixteen-fold waste sitting
+exactly where the exponent view certified nothing was possible. Same
+class, opposite truths, separated only by the constants and thresholds
+that asymptotics discards.
 
-Hand-deriving that table for matmul takes a paragraph. For a 6-deep
-tiled loop nest, or a kernel with triangular bounds, it is hopeless.
-The result this repository studies is a compiler analysis (built on the
-"algebraic locality" paper) that derives the table *automatically and
-symbolically* for any affine kernel: because subscripts are linear in
-loop counters, "how many accesses have reuse distance D(n)" is a
-question about counting integer points in parametric polyhedra, which
-can be answered in closed form. Machine time: on the order of a minute
-per kernel, once. Output: a table of pairs
+**No single number can rank kernels — provably, and it misranks in
+practice.** It is tempting to compress each table into one "total data
+movement" score. The conservation law forbids it from working: since
+distance x frequency sums to the data size, any score that weights long
+distances is dominated by rows carrying a *vanishing* fraction of
+accesses — precisely the rows real caches never see. Concretely:
+gesummv scores worse than mvt (33.8 vs 29.4) yet misses 3.3x *less* at
+32 KB; kernels with scores within 5% differ by up to 6x in actual
+traffic. The failure of our earlier analysis was not sloppiness; it
+was using a scalar where the object is a staircase.
 
-    (reuse distance as a formula of the loop bounds,
-     number of accesses at that distance, as a formula)
+**A folklore rule becomes a theorem with a validity interval.** The
+"√2 rule" (Hartstein et al.): doubling the data requires √2 x the
+cache to hold the miss ratio. In the formulas this is exactly the
+statement that the active staircase boundary scales as the square root
+of the data size — true for ten of the 22 kernels *in a specific,
+computable cache interval* (for gemm: between the row step and the
+matrix step), false below it, false above it, and false at every size
+for trisolve, which has no square-root step at all. The rule of thumb
+survives — with its domain of validity attached, per kernel, which is
+what an engineering rule was always missing.
 
-For the naive matmul above, the tool's exact table is the hand analysis
-with the constants filled in: distances 3, 2n+2-1/n, n²+3n-1/n, ~3n²,
-each carrying close to one third, one third, one third, and 2/(3n) of
-the accesses. The hand-waving is gone; the fractions are exact, down to
-the 1/n terms.
+## 5. Formulas compose: parallelism by substitution
 
-Two practical notes, then the payoff. First, hardware moves data in
-64-byte *lines* of eight values, which shifts the constants (the same
-analysis at line granularity puts naive matmul's big step at 37% rather
-than 1/3); all machine-level numbers below are line-granular. Second,
-everything below is computed from the tables of 22 PolyBench kernels
-plus a family of matmul variants, derived fresh by the tool; nothing is
-measured on hardware. The paper itself validated the tables against
-cycle-level cache simulation (about 1% average miss-ratio error), so
-the interesting question is not whether the formulas are right — it is
-what they are *for*.
+Because the tables are symbolic in *each loop bound separately*, they
+answer questions nobody analyzed them for. Give each of p cores a
+contiguous slice of one loop, and the per-core access stream *is* the
+original kernel with that bound divided by p. Parallel memory behavior
+= substitution into existing formulas. For matmul at n = 2016:
 
-## 5. What the formulas answer
+- **Slice the i-loop** (rows of the output): the re-swept matrix B
+  appears whole in every worker's formula, so no private cache ever
+  gets relief — the flat-in-p identity of Section 3. A thousand cores,
+  zero traffic reduction, known before running anything.
+- **Slice the j-loop** (columns): the per-worker working set does carry
+  the 1/p, and the formulas predict that p private 1 MB caches begin
+  acting as one large cache at p = n² x 8 B / 1 MB ≈ 32. Substituting
+  confirms: at p = 32, total traffic collapses 61x. The same
+  substitution shows the collapse *cannot* happen at 32 KB — a sliced
+  matrix still spans one 64-byte line per row, so its footprint never
+  drops below n lines = 126 KB — and that slices narrower than the
+  8-value line lose spatial locality and traffic climbs again. The
+  cache-line floor, the classic silent killer of naive parallel
+  reasoning, falls out of the algebra unasked.
 
-### 5.1 Every cache size and every problem size, from one derivation
+Same arithmetic, same core count; a 61x traffic gap between the two
+decompositions, with the threshold p = 32 and the 126 KB floor derived
+in closed form. The tiling family reads the same way — the derived
+variants' tables, divided row by row, give the gain *as a function of
+cache size* (36x to 106x at practical sizes; tile-32 four times worse
+than tile-8 below its 24 KB working set; all variants exactly 1.0x once
+a matrix fits) — turning tile-size selection from an autotuning search
+into an inequality.
 
-The table *is* the miss-ratio curve, for all cache sizes and problem
-sizes simultaneously. Evaluating it at a machine point costs
-microseconds: matmul at n = 2048 on a 32 KB cache — 37% of accesses
-miss; on 1 MB — still 37%; the number becomes small only past ~32 MB.
-A simulation sweep to produce the same curve runs the kernel once per
-cache size; here it is one substitution per question. That alone
-replaces a profiling campaign, but it is the *least* interesting
-consequence.
+## 6. Formulas audit themselves
 
-### 5.2 The cliffs have closed forms
+An empirical curve that is wrong looks exactly like an empirical curve
+that is right. A formula cannot hide: the frequencies must sum to the
+access count, and the conservation law must hit the data size — both
+checkable mechanically. Run over the suite, these checks *caught* six
+kernels (the time-stepped stencils: jacobi, heat-3d, seidel, fdtd)
+whose analyzer output violates conservation by up to 54%; they are
+excluded from every number above and reported, not plotted. The checks
+even localize damage: gemm's table is short exactly one matrix worth of
+long-distance mass, which touches only the final staircase step and
+nothing quoted here. One caveat survives auditing: for triangular
+kernels (cholesky, lu, syrk) the current distance approximation
+under-resolves the longest reuses, and claims about them are withheld
+until an exact mode lands. A framework that can convict its own
+implementation is doing something profilers cannot.
 
-Because the staircase steps are formulas, so are the problem sizes at
-which a given machine falls off them. Naive matmul's last step is "one
-matrix fits": n² values x 8 bytes <= C. So the largest safe problem is
+## 7. What this opens
 
-    n*(C) = sqrt(C_bytes / 8):    64 for 32 KB,  362 for 1 MB,
-                                  2048 for 32 MB.
+The asymmetry of Section 1 is gone: for affine kernels, the memory
+side of performance is now a derived, closed-form object — small
+enough to print, exact enough to invert, symbolic enough to compose.
+The uses demonstrated here from one derivation per kernel:
 
-Below n\*, the kernel is gentle on the memory system no matter what; the
-first n past n\*, traffic jumps by orders of magnitude. Every kernel has
-such a schedule of cliff sizes, and the analysis hands it to you in
-closed form. This is scaling behavior in the practical sense: not "the
-exponent is 3", but *at which n, on your machine, the behavior changes
-regime, and what it costs when it does*.
+- miss ratios for every cache size and problem size at once, replacing
+  per-configuration simulation sweeps;
+- closed-form performance cliffs n*(C) — scaling behavior with the
+  constants in;
+- transformation decisions (interchange: 4.5x flat; tiling: 36–106x)
+  *with their validity conditions*, ending yes/no folklore;
+- corrections to asymptotic classification (trmm) and a proof that no
+  scalar locality score can be trusted;
+- rules of thumb (√2) upgraded to theorems with per-kernel validity
+  windows;
+- parallel decomposition analysis by parameter substitution — provable
+  uselessness of one split, the exact cache-merging core count of
+  another, and line-granularity floors, none requiring new analysis;
+- and mechanical self-verification that catches broken output instead
+  of plotting it.
 
-### 5.3 "Which version should I run?" gets an honest answer
-
-The two matmuls from Section 1: the formulas say the k-inner version
-misses 37% of accesses and the j-inner version 8.3% — at *every* cache
-size up to 512 KB, for every large n. A 4.5x traffic difference between
-programs that every asymptotic method (including our own earlier
-data-movement-complexity study on this suite) scores as *identical*,
-because no exponent changes. Conversely, a single hardware measurement
-would reveal the 4.5x at one point but not that it is flat in C and n —
-that it is a property of the program pair, not of the machine.
-
-Tiling — rewriting matmul to work on b x b blocks — is where the
-formula view pays most. Deriving the tables for tiled variants and
-dividing:
-
-| traffic reduction vs. naive | 4 KB | 8 KB | 32 KB | 512 KB | 16 MB | 64 MB |
-|---|---|---|---|---|---|---|
-| tile 8   | 36x | 36x | 36x | 8x  | 8x  | 1.0x |
-| tile 16  | 48x | 50x | 72x | 8x  | 16x | 1.0x |
-| tile 32  | 8.5x | 8.5x | **106x** | 16x | 31x | 1.0x |
-
-(n = 2048.) Three honest answers to "should I tile?", all visible at
-once and none available from a yes/no analysis:
-
-- *How much it pays depends on the cache*: 36x to 106x at realistic
-  sizes — and exactly 1.0x once one matrix fits (the 64 MB column; or
-  equivalently once n <= n\*(C)). "Tile this kernel" is not a property
-  of the kernel; "tile it when n > sqrt(C/8 bytes)" is.
-- *The best tile size is a cache-size decision*: tile-32's working set
-  is 24 KB, so at 8 KB it is four times *worse* than tile-8. The
-  crossover points are the tiled kernels' own step boundaries.
-- *What tiling actually does* is now precise: it does not change the
-  cliff schedule (all variants share the 64 MB column); it lowers the
-  step heights between the cliffs, by roughly the tile size.
-
-### 5.4 A whole benchmark suite on one page — and a warning
-
-Each of the 22 PolyBench kernels reduces to a handful of staircase
-rows. Reading them side by side (all tables in `tables/`):
-
-- **gemm** (the BLAS-order matmul) misses 3.1% at 32 KB — and still
-  3.1% at 1 MB, and at 16 MB: one long step means *three levels of a
-  real cache hierarchy are equivalent for this kernel*, a fact worth
-  knowing before buying hardware or blaming L2.
-- **2mm/3mm** (chained matmuls) sit at 28% until a 142 KB threshold
-  (= 9n/8 lines, two matrix rows of the chain), then drop to 3.1%.
-- **trisolve** has *no* step between "a few rows" and "the whole
-  matrix": its 3.1% miss floor cannot be improved by any tiling until
-  all data fits. The staircase proves a negative: nothing to gain.
-- **trmm** was classified by our earlier asymptotic study as "already
-  local, no headroom" — the same class as trisolve. The formulas
-  disagree: trmm misses 50% at 32 KB and 3.1% at 1 MB. Sixteen-fold
-  waste at L1, invisible to the exponent view that lumped the two
-  kernels together, obvious in the staircase.
-
-The warning generalizes. It is tempting to compress each kernel's table
-into a single "total data movement" score and rank kernels by it. The
-compression is provably treacherous: the table obeys a sum rule (reuse
-distances times their frequencies add up to the data size), so any
-score that weights long distances is dominated by rows carrying
-*vanishing* fractions of the accesses — precisely the rows that real
-caches never notice. On this suite the score misranks concretely:
-gesummv scores *worse* than mvt (33.8 vs 29.4) yet misses 3.3x *less*
-at 32 KB. Kernels within 5% of each other's scores differ up to 6x in
-actual traffic. The staircase is small — keep all of it; the constants
-and thresholds, which any single number discards, are where the
-machine-level truth lives.
-
-### 5.5 Parallelism, by substituting into the same formulas
-
-The derived formulas are symbolic in *each loop bound separately* —
-not just in one size n. That has a consequence that would be easy to
-miss: giving each of p cores a slice of one loop produces, per core,
-*the same kernel with that bound divided by p*. Parallel memory
-behavior needs no new theory and no new analysis run — only
-substitution into formulas that already exist. Doing so for matmul
-(n = 2016, per-core caches):
-
-- **Split by rows of the output** (slice the i-loop): total traffic is
-  *provably independent of p* — 1.02e9 lines whether p is 1 or 1008,
-  at 32 KB and at 1 MB per core. The reason is visible in the algebra:
-  the re-swept matrix B appears whole in every worker's formula; row
-  parallelism never shrinks anyone's working set. A thousand private
-  caches buy zero traffic relief.
-- **Split by columns** (slice j): the per-worker working set *does*
-  carry the 1/p, and the formulas predict that p one-MB caches begin
-  to act as one big cache at p = n²·8B/1MB ≈ 32. Substituting: at
-  p = 32 exactly, total traffic collapses 61x (1.02e9 → 1.7e7 lines).
-  The same substitution at 32 KB shows the collapse *never* comes —
-  a sliced matrix still spans one 64-byte line per row, n lines =
-  126 KB minimum, so no column count fits it into 32 KB; and slices
-  narrower than the 8-value line *raise* traffic again (visible as the
-  p = 1008 row worsening). Cache-line granularity, the classic silent
-  killer of naive parallel reasoning, falls out of the formulas
-  unasked.
-
-Same kernel, same arithmetic, same degree of parallelism — and the two
-decompositions differ by 61x in memory traffic, with the threshold
-p = 32 and the 126 KB floor both computed before running anything.
-
-### 5.6 Formulas that check themselves
-
-A last property with practical weight: the tables carry internal
-consistency laws — the access fractions must sum to one, and the
-sum-rule above must hit the data size exactly. These are not decorative.
-Run mechanically over the suite, they *caught* six kernels (the
-time-stepped stencils, e.g. jacobi, heat-3d) whose analyzer output
-violates conservation by up to 54%; those are excluded above and
-reported rather than silently plotted. They also localized a smaller
-defect: gemm's table is short exactly one matrix worth of
-long-distance mass — the checks say not only *that* something is
-missing but *what and where it matters* (only the final step). A
-simulator that double-counted 13% of a trace would hand you a
-plausible-looking curve; a broken formula cannot hide from its own
-conservation law. (One honest caveat survives the checks: for
-triangular kernels — cholesky, lu, syrk — the tool's current
-approximation under-resolves the longest distances; their staircases
-look too flat, and we withhold claims about them until an exact mode
-lands.)
-
-## 6. What this adds up to
-
-Affine kernels — the loops scientific computing and machine learning
-are made of — turn out to admit *closed-form memory behavior*: a
-compiler can reduce an n³-step execution to a four-row table of
-formulas, automatically, in about a minute, and the table answers in
-microseconds what previously required simulation sweeps per machine,
-per size, per variant:
-
-- the miss ratio at any cache size and problem size;
-- the problem sizes where behavior falls off a cliff, per machine, in
-  closed form (sqrt(C/8) for matmul);
-- which program version wins, by how much, and *under what conditions*
-  — loop order (4.5x, unconditionally), tiling (36–106x, exactly when
-  one matrix doesn't fit, with the tile size a formula of the cache);
-- which kernels have improvement headroom at which cache level, and
-  which provably have none — including cases where asymptotic
-  classification gets the answer backwards;
-- how memory traffic responds to parallel decomposition, including
-  which splits are provably useless, the core count where private
-  caches merge into one, and line-granularity floors — all by
-  substituting p into formulas derived once;
-- and whether to trust any of it, via conservation laws the tables must
-  satisfy.
-
-Arithmetic scaling has been symbolic since we learned to count
-operations. The memory side — the side that actually limits these
-kernels on real machines — was measurement-only. For affine programs
-it no longer is: the program *is* the model, the compiler extracts it,
-and locality becomes something you solve, not something you sample.
+Arithmetic complexity has been symbolic since we learned to count
+operations. This line of work makes the memory side — the side that
+limits these kernels on real machines — symbolic too: the program is
+the model, a compiler extracts it in a minute, and questions that used
+to cost a measurement campaign become algebra.
 
 ---
 
@@ -326,22 +250,26 @@ All numbers derive from the AutoLALA analyzer (`dmd-cli`) under the
 paper's canonical configuration — infinite repeat, scale approximation
 in Barvinok, 64-byte lines of eight f64 values — over the extracted
 PolyBench DSLs in `dsl/` plus matmul variants (naive ijk/ikj, tiles
-8/16/32) written for this study; the naive-matmul table also reproduces
-the paper's element-granularity Table 1 exactly (`tables/anchors.md`).
-Suite evaluations use n = 2016 (2048 for the matmul family); cache
-sizes are counted in lines (32 KB = 512 lines).
+8/16/32) written for this study. The naive-matmul run also reproduces
+the paper's element-granularity Table 1 exactly, and its block-8
+staircase matches the paper's Table 6 in structure (`tables/anchors.md`).
+Suite evaluations use n = 2016 (2048 for the matmul family); caches are
+counted in 64-byte lines (32 KB = 512 lines). The paper's own
+evaluation establishes accuracy against Cachegrind/Dinero and hardware
+counters (~1% average miss-ratio error; 99.6% data-movement accuracy).
 
 Pipeline: `run_suite.py` (analyzer runs, ~10 min) → `regimes.py`
 (exact symbolic extraction: piecewise quasi-polynomial parsing, exact
 polynomial fits with held-out verification, scale clustering; Fraction
-arithmetic throughout) → `derived.py`, `parallel_study.py`,
-`anchor_checks.py` (all tables cited above, under `tables/`:
-`machine_map.md`, `tiling.md`, `parallel.md`, `signatures.md`,
-`dmd_inversion.md`, `suite_regimes.md`, `anchors.md`). Conservation
-excluded heat-3d (1.54), jacobi-1d (1.33), jacobi-2d (1.27),
-seidel-2d (0.93), fdtd (0.96), imperfect (0.97); convolution is
-analyzed as a 9x9-filter variant (its image and filter are genuinely
-different scales and cannot both be bound to n).
+arithmetic throughout; entries gated by their region domains) →
+`derived.py`, `parallel_study.py`, `anchor_checks.py` → `tables/`
+(`machine_map.md`, `tiling.md`, `parallel.md`, `signatures.md`,
+`dmd_inversion.md`, `suite_regimes.md`, `anchors.md`, `summary.json`).
+Conservation excluded heat-3d (1.54), jacobi-1d (1.33), jacobi-2d
+(1.27), seidel-2d (0.93), fdtd (0.96), imperfect (0.97); convolution
+is analyzed as a 9x9-filter variant (image and filter are genuinely
+different scales and cannot both be bound to n). Raw analyzer JSON
+(`data/`, 29 MB) is gitignored and regenerable.
 
 ```sh
 python3 run_suite.py && python3 regimes.py && python3 derived.py
