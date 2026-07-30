@@ -1,279 +1,264 @@
-# Derived, Not Measured: Closed-Form Memory Behavior for Affine Kernels
+# Findings from Closed-Form Locality Analysis
 
-## 1. A fifty-year asymmetry
+For fifty years, a kernel's arithmetic cost has been a formula (matmul:
+2n³) while its memory cost — the quantity that actually limits
+performance — has been an experiment: run it, or simulate it, once per
+machine, per input size, per program variant. The algebraic locality
+compiler closes that asymmetry for affine kernels (loops with linear
+subscripts: matmuls, convolutions, stencils, attention blocks): it
+derives, in about a minute per kernel, the complete distribution of
+*reuse distances* — for each memory access, how much other data was
+touched since the previous access to the same value — as exact
+polynomials in **all** loop bounds at once. Since an access hits a
+cache of capacity C exactly when its reuse distance is at most C, these
+polynomials are the kernel's miss ratio *as a formula* in every problem
+parameter and the cache size simultaneously. Accuracy is settled in the
+paper (≈1% against cycle-level simulation across 41 kernels).
 
-Ask what a matrix multiplication costs in arithmetic and you get a
-formula: 2n³ operations. Symbolic, exact, valid for every n, derived by
-inspection. Ask what the *memory system* will do — the question that
-actually decides performance on modern hardware, where fetching a value
-from main memory costs tens to hundreds of times more than multiplying
-it — and for fifty years the only honest answer has been: *run it and
-see*.
+A capability, however, is only as interesting as what it finds. This
+report uses the tool as an instrument and reports findings — statements
+we did not know, could not have measured, and in one case would have
+gotten wrong by hand. The main study takes the attention family
+(softmax attention, linear/recurrent attention, chunked linear
+attention) with sequence length n and head dimension d as *separate*
+symbols; a second part reports what the same instrument found across
+the PolyBench suite. All claims pass the framework's built-in
+conservation checks (Section 5); everything is derived, nothing is
+profiled.
 
-This is not for lack of theory. Since Mattson et al. (1970) we have
-known the right quantity: for each access, count the distinct data
-touched since the *previous* access to the same value — its **reuse
-distance**. A cache holding C values serves an access from fast memory
-exactly when its reuse distance is at most C; otherwise the access goes
-to main memory (a *miss*). The histogram of reuse distances therefore
-determines the miss ratio of *every* cache size at once, and for a
-simple kernel you can sketch it by hand. Naive matmul touches C[i][j]
-again after ~3 values (the running sum), A[i][k] again after ~2n (a
-row), B[k][j] again after ~n² (a matrix), each about a third of the
-time — so its miss ratio is a staircase: 2/3 until a few values fit,
-1/3 until rows fit, near zero once a matrix fits. All of this is
-textbook.
+---
 
-What the textbook could not do is *produce that histogram for a real
-kernel without running it*. For half a century the distribution has
-been an empirical object:
+## Finding 1. Linear attention is context-length-free; its one cliff is in head dimension, exactly where the field operates
 
-| how you get it | what you get |
-|---|---|
-| hardware counters, cache simulators | one number per (machine, input, variant) run |
-| reuse-distance profiling (Ding et al.) | one numeric curve per profiled input; other sizes by extrapolation |
-| polyhedral miss counting (cache-miss equations; PolyCache) | exact counts, but only with every loop bound fixed to a constant |
-| I/O complexity (Hong–Kung) | symbolic in n and C — but only exponents: Ω(n³/√C), constants and thresholds gone |
+Linear (recurrent) attention maintains a d x d state S; per token it
+updates S with K_i ⊗ V_i and emits O_i = Q_i S. Deriving its table
+(params n, d) and inspecting the reuse-distance *formulas*:
 
-Note the gap: the first three rows have constants but no symbols; the
-last has symbols but no constants. Nobody could write down the thing
-you actually want — *the miss ratio of gemm as a formula in both the
-problem size and the cache size*. That formula is what this repository
-is about.
+> **98.97% of all accesses have reuse distances whose formulas do not
+> contain n.** The only n-dependent distances are the whole-footprint
+> (cross-invocation) reuses, carrying 0.11% of accesses (0.9% of mass
+> is filtered by the analyzer; Section 5).
 
-## 2. The histogram becomes a formula
+This is a for-all statement, not an extrapolation: the miss ratio of
+linear attention is the same at context 2k and context 65k — verified
+numerically to five digits (mr = 0.03580 at n = 2048, 8192, 65536;
+d = 128, 32 KB). No measurement campaign can establish independence;
+a formula free of n *is* the proof. Growing context costs linear
+attention arithmetic, but not one byte per token of extra traffic.
 
-Two ideas, from the algebraic-locality work this study builds on, close
-the fifty-year gap.
+Its only cliff is in the head dimension. The largest n-free distance
+is the state-reuse knee — the d x d state plus one row set, e.g.
+33.8 KB at d = 64 — and crossing it is violent:
 
-**First touches were the blocker, and repetition dissolves it.** The
-first access to each value has no previous use, hence no reuse
-distance. Numerically you just count those as misses; *algebraically*
-they poison everything — with infinite distances in the distribution,
-the working-set mathematics (Denning 1968) stops converging, which is
-the real reason the theory stayed numeric for decades. The resolution:
-analyze the kernel *as if it executes repeatedly*, so every first touch
-becomes a re-touch from the previous round — an **imaginary reuse**
-with a finite, computable distance. This is not a convenient fiction:
-time-stepped solvers and ML training loops *do* run their kernels
-repeatedly, and for a genuinely one-shot run the added reuses are
-identifiable and removable. With the distribution made finite and
-complete, the classical recursion is *provably exact* — no stochastic
-assumptions — and it inherits a conservation law (the distances,
-weighted by frequency, must sum to exactly the data size) that will
-earn its keep below.
+| d  | mr @ 32 KB | per-token traffic @ 32 KB | @ 1 MB |
+|----|-----------|---------------------------|--------|
+| 48 | 0.0015    | 1.5 KB                    | 1.5 KB |
+| 64 | 0.0359    | **64.3 KB**               | 2 KB   |
+| 128| 0.0358    | 257 KB                    | 4 KB   |
+| 256| 0.0358    | 1 MB                      | 8 KB   |
 
-**Counting becomes geometry.** In an affine kernel — subscripts linear
-in loop counters: matmul, convolutions, stencils, attention blocks —
-the set of loop iterations whose reuse distance equals a given symbolic
-expression is a system of linear constraints, and counting integer
-points in such parametric sets is a solved problem with closed-form
-answers. A compiler can therefore emit, for each kernel, a short table:
-*reuse-distance formula, frequency formula* — polynomials in **all**
-loop bounds. Deriving a kernel's table takes on the order of a minute,
-once, ever. (This tractability is not free in general: the underlying
-problem is provably NP-hard, and counting #P-hard, for arbitrary
-loop programs. The affine structure of real kernels is what makes the
-practical case fast — worth knowing when you wonder why this wasn't
-done long ago.)
+A **43x per-token traffic jump** between d = 48 and d = 64 at 32 KB:
+once the state does not fit, it is re-streamed twice per token
+(≈ 16d² bytes), swamping the 32d-byte QKVO streaming that is all a
+resident state pays. The residency condition is d²·(bytes/elt) ≲ C,
+i.e. **d\*(32 KB) ≈ 62 in fp64, 90 in fp32, 128 in bf16** — the
+precision-dependent boundary lands exactly on the d = 64 and d = 128
+head dimensions modern models use: d = 64 heads are L1-resident in
+fp32/bf16 but not fp64; d = 128 only in bf16; d = 256 is L1-resident
+never, L2-resident always (mr ≤ 0.0006 at 1 MB for all d ≤ 256).
+Whether the field's head sizes co-evolved with this boundary or merely
+collide with it, the boundary itself was not written down before; it
+falls out of the state-reuse formula.
 
-Here is the entire memory behavior of gemm, derived automatically, at
-cache-line granularity (64-byte lines, n x n matrices):
+**In one sentence: softmax attention cliffs in context length, linear
+attention cliffs in head dimension — the two families' cache behavior
+is organized along orthogonal parameters, and both cliff locations are
+closed-form.**
 
-| once the cache holds ... | ... the miss ratio is |
-|---|---|
-| ~6 lines                 | 1/16       |
-| n/4 lines (two rows)     | 1/32       |
-| n²/8 lines (one matrix)  | 1/(16n)    |
-| 3n²/8 lines (everything) | 0          |
+## Finding 2. Softmax attention's cliff is n\* = C/d — a 50x jump — and below it *all* traffic is the score matrix
 
-Four rows. That object — not a profile, not an exponent, a *formula
-family* — replaces the empirical column of the table above. The paper
-validated it against cycle-accurate cache simulation across 41 kernels
-(≈1% average miss-ratio error), so accuracy is settled; what a reviewer
-should ask instead is: **what can you do with a formula that you could
-not do with measurements?** The rest of this document is that list,
-computed over 22 PolyBench kernels plus a matmul-variant family, with
-nothing measured on hardware.
+Dense attention (S = QK^T, row softmax, O = PV; unfused, params n, d)
+per-token DRAM traffic from the tables, d = 64:
 
-## 3. Formulas make "for all" statements
+| n     | @ 32 KB  | @ 1 MB    | @ 32 MB |
+|-------|----------|-----------|---------|
+| 1024  | 1.04 MB  | 41.9 KB   | 0       |
+| 2048  | 2.08 MB  | **2.08 MB** | 81.9 KB |
+| 8192  | 8.31 MB  | 8.31 MB   | 322 KB  |
 
-A measurement asserts a point. A formula asserts a region — and some of
-the most useful facts about kernels are region facts, unprovable by any
-finite profiling campaign:
+The 1 MB column jumps **50x between n = 1024 and n = 2048** — and the
+formulas say exactly why and exactly where: the K/V panels (n·d
+elements) fall out of cache at
 
-- **gemm's miss ratio is 3.1% at 32 KB — and provably the same at
-  every cache size up to n²/8 lines** (31 MB at n = 2016). L1, L2 and
-  L3 of a real machine sit on one step of the staircase: for this
-  kernel they are interchangeable, and money spent on the middle of
-  the hierarchy buys nothing. A profiler would show you 3.1% at the
-  sizes you tried; the formula says *there is nothing to find in
-  between*.
-- **Row-parallel matmul moves the same total data at every worker
-  count.** Substituting the sliced bound (Section 5) yields aggregate
-  traffic constant in p — 1.02 billion lines whether p is 1 or 1008.
-  Not "we didn't observe an improvement": *independent of p*, as an
-  identity of the formulas.
-- **Tiling gemm is worth exactly nothing once n ≤ √(C/8 bytes)** — 64
-  for a 32 KB cache, 362 for 1 MB, 2048 for 32 MB — and worth 36–106x
-  above it (Section 4). "Should I tile?" finally has an honest answer,
-  and it is not yes or no; it is a condition with the machine in it.
+    n*(C, d) = C_elements / d      (= 2048 at 1 MB, d = 64;
+                                      1024 at d = 128 — confirmed),
 
-The cliff schedule in the last bullet generalizes: every kernel's
-staircase boundaries invert into closed-form critical sizes n*(C), the
-problem sizes at which a given machine changes regime. That is scaling
-behavior in the sense practitioners need it — not the exponent, but
-*where the behavior changes and what it costs when it does*.
+after which both panels re-stream per token (16nd bytes). Below the
+cliff, the surviving traffic is 40n bytes per token — five streaming
+passes over the n-length score row (write S, two softmax reads,
+write P, read P) — which the numbers match to within 2% (41.9 KB vs
+40·1024 = 41 KB). That is: **in the K/V-resident regime, essentially
+100% of unfused attention's DRAM traffic is the materialized score
+matrix — precisely the traffic FlashAttention-style fusion eliminates
+— and the regime's extent, n < C/d, is now a formula rather than a
+rule of thumb.** Above n\*, fusion's payoff changes character (K/V
+re-streaming joins the bill at 16nd bytes/token, 25x the score term at
+d = 64). The tool prices the fusion decision, with its validity
+boundary, per (n, d, C).
 
-## 4. Formulas correct the accepted summaries
+## Finding 3. Chunking linear attention has a computable free window — and naive working-set analysis mis-prices it
 
-If the formulas only confirmed intuition, a reviewer could shrug. They
-do not.
+Practical linear-attention kernels process chunks of L tokens (dense
+L x L block within a chunk, state update between chunks) to regain
+matmul efficiency. The tables price the memory side of that trade
+(n = 8192):
 
-**Asymptotic classification gives wrong answers, not just vague ones.**
-Our own earlier study on this suite classified kernels by the growth
-exponent of their data movement — the standard complexity-style
-summary. It placed trmm and trisolve in the same class: "no locality
-headroom, leave them alone." The formulas split them: trisolve truly
-has nothing to gain (its miss ratio is pinned at 3.1% with *no*
-intermediate step until all data fits — no tiling can help), while trmm
-misses 50% at 32 KB against 3.1% at 1 MB — a sixteen-fold waste sitting
-exactly where the exponent view certified nothing was possible. Same
-class, opposite truths, separated only by the constants and thresholds
-that asymptotics discards.
+| per-token traffic | d=64 @32KB | d=64 @1MB | d=128 @1MB | d=256 @1MB |
+|---|---|---|---|---|
+| recurrent (L=1) | 64.3 KB | 2 KB | 4 KB | 8 KB |
+| chunk 16        | 66.4 KB | 2 KB | 4 KB | 8 KB |
+| chunk 64        | 130 KB  | 2 KB | 4 KB | 20.4 KB |
+| chunk 256       | 325 KB  | 5.12 KB | 11.5 KB | 22 KB |
 
-**No single number can rank kernels — provably, and it misranks in
-practice.** It is tempting to compress each table into one "total data
-movement" score. The conservation law forbids it from working: since
-distance x frequency sums to the data size, any score that weights long
-distances is dominated by rows carrying a *vanishing* fraction of
-accesses — precisely the rows real caches never see. Concretely:
-gesummv scores worse than mvt (33.8 vs 29.4) yet misses 3.3x *less* at
-32 KB; kernels with scores within 5% differ by up to 6x in actual
-traffic. The failure of our earlier analysis was not sloppiness; it
-was using a scalar where the object is a staircase.
+Three statements, none obvious in advance:
 
-**A folklore rule becomes a theorem with a validity interval.** The
-"√2 rule" (Hartstein et al.): doubling the data requires √2 x the
-cache to hold the miss ratio. In the formulas this is exactly the
-statement that the active staircase boundary scales as the square root
-of the data size — true for ten of the 22 kernels *in a specific,
-computable cache interval* (for gemm: between the row step and the
-matrix step), false below it, false above it, and false at every size
-for trisolve, which has no square-root step at all. The rule of thumb
-survives — with its domain of validity attached, per kernel, which is
-what an engineering rule was always missing.
+- **The recurrent form is the traffic floor everywhere.** Chunking
+  buys arithmetic efficiency, never memory efficiency; the premium is
+  the price of the L x L score block and its extra passes.
+- **There is a free window and it is computable**: chunk 64 costs
+  *zero* premium at 1 MB (d ≤ 128) — its block working set stays
+  resident — while chunk 256 pays 2.5x. The memory-optimal chunk is
+  the largest L inside the window, and the window boundary comes out
+  of the same tables.
+- **Hand analysis gets chunk 256 wrong.** A working-set estimate says
+  a 256-chunk at d = 64 (score block 512 KB + panels + state) fits
+  1 MB, predicting zero premium. The tables show 2.5x: the phase
+  structure of the chunk (score block written in one nest, re-read two
+  nests later while V streams through) evicts the block between
+  phases. The symbolic analysis accounts for *when* data is touched,
+  not just how much exists — and here that distinction changes the
+  answer.
 
-## 5. Formulas compose: parallelism by substitution
+## Finding 4. The dense/linear traffic ratio has a closed form
 
-Because the tables are symbolic in *each loop bound separately*, they
-answer questions nobody analyzed them for. Give each of p cores a
-contiguous slice of one loop, and the per-core access stream *is* the
-original kernel with that bound divided by p. Parallel memory behavior
-= substitution into existing formulas. For matmul at n = 2016:
+Combining the tables: per-token traffic ratio (dense / linear) at 1 MB
+follows 5n/4d while K/V stay resident — 21x at (n = 1024, d = 64),
+matching the formula — and after the dense cliff grows like n/2:
+2,100x at 4k context, 34,000x at 64k. Everyone knows dense attention
+"moves more data"; the tables replace the sentiment with a two-regime
+law with constants. (Arithmetic comparisons are textbook — O(n²d) vs
+O(nd²); the memory law, with its cache-conditioned regime switch, is
+not.)
 
-- **Slice the i-loop** (rows of the output): the re-swept matrix B
-  appears whole in every worker's formula, so no private cache ever
-  gets relief — the flat-in-p identity of Section 3. A thousand cores,
-  zero traffic reduction, known before running anything.
-- **Slice the j-loop** (columns): the per-worker working set does carry
-  the 1/p, and the formulas predict that p private 1 MB caches begin
-  acting as one large cache at p = n² x 8 B / 1 MB ≈ 32. Substituting
-  confirms: at p = 32, total traffic collapses 61x. The same
-  substitution shows the collapse *cannot* happen at 32 KB — a sliced
-  matrix still spans one 64-byte line per row, so its footprint never
-  drops below n lines = 126 KB — and that slices narrower than the
-  8-value line lose spatial locality and traffic climbs again. The
-  cache-line floor, the classic silent killer of naive parallel
-  reasoning, falls out of the algebra unasked.
+---
 
-Same arithmetic, same core count; a 61x traffic gap between the two
-decompositions, with the threshold p = 32 and the 126 KB floor derived
-in closed form. The tiling family reads the same way — the derived
-variants' tables, divided row by row, give the gain *as a function of
-cache size* (36x to 106x at practical sizes; tile-32 four times worse
-than tile-8 below its 24 KB working set; all variants exactly 1.0x once
-a matrix fits) — turning tile-size selection from an autotuning search
-into an inequality.
+## 5. Why these numbers can be trusted (and when not)
 
-## 6. Formulas audit themselves
+Three gates, all mechanical:
 
-An empirical curve that is wrong looks exactly like an empirical curve
-that is right. A formula cannot hide: the frequencies must sum to the
-access count, and the conservation law must hit the data size — both
-checkable mechanically. Run over the suite, these checks *caught* six
-kernels (the time-stepped stencils: jacobi, heat-3d, seidel, fdtd)
-whose analyzer output violates conservation by up to 54%; they are
-excluded from every number above and reported, not plotted. The checks
-even localize damage: gemm's table is short exactly one matrix worth of
-long-distance mass, which touches only the final staircase step and
-nothing quoted here. One caveat survives auditing: for triangular
-kernels (cholesky, lu, syrk) the current distance approximation
-under-resolves the longest reuses, and claims about them are withheld
-until an exact mode lands. A framework that can convict its own
-implementation is doing something profilers cannot.
+- **Conservation.** Summed access fractions must equal the access
+  count. All six attention kernels pass at 98–99.5% (the residual is
+  the analyzer's documented filtering of degenerate boundary regions)
+  — including the *causal* variant (0.982–0.991), notable because
+  triangular iteration spaces are where the tool's distance
+  approximation is weakest.
+- **A sum rule.** Distances weighted by frequency must equal the data
+  footprint exactly (a theorem of the model); on matmul it holds to
+  4e-5, and where it fails it *localizes* the filtered mass.
+- **Exclusion, not absorption.** Applied to PolyBench, the same gates
+  *caught* six kernels (time-stepped stencils) whose analyzer output
+  violates conservation by up to 54%, and they are excluded from all
+  suite claims; the triangular suite kernels (cholesky, lu, syrk)
+  conserve but their distance values are under-resolved, so claims
+  about them are withheld. An instrument that can convict its own
+  implementation is doing something a profiler cannot: a wrong
+  empirical curve looks exactly like a right one.
 
-## 7. What this opens
+Honest scope notes: the attention DSLs model access patterns (softmax
+as streaming row passes; no data-dependent control — none exists in
+these kernels); the analyzer models one level of fully associative LRU
+at 64-byte lines of f64, so fp32/bf16 statements are unit rescalings;
+chunked variants omit intra-chunk masking.
 
-The asymmetry of Section 1 is gone: for affine kernels, the memory
-side of performance is now a derived, closed-form object — small
-enough to print, exact enough to invert, symbolic enough to compose.
-The uses demonstrated here from one derivation per kernel:
+## 6. The same instrument, pointed at a classical suite
 
-- miss ratios for every cache size and problem size at once, replacing
-  per-configuration simulation sweeps;
-- closed-form performance cliffs n*(C) — scaling behavior with the
-  constants in;
-- transformation decisions (interchange: 4.5x flat; tiling: 36–106x)
-  *with their validity conditions*, ending yes/no folklore;
-- corrections to asymptotic classification (trmm) and a proof that no
-  scalar locality score can be trusted;
-- rules of thumb (√2) upgraded to theorems with per-kernel validity
-  windows;
-- parallel decomposition analysis by parameter substitution — provable
-  uselessness of one split, the exact cache-merging core count of
-  another, and line-granularity floors, none requiring new analysis;
-- and mechanical self-verification that catches broken output instead
-  of plotting it.
+Applied to 22 conserving PolyBench kernels (all parameters symbolic),
+the reading that matters is not "locality exists" but what the formulas
+settle:
 
-Arithmetic complexity has been symbolic since we learned to count
-operations. This line of work makes the memory side — the side that
-limits these kernels on real machines — symbolic too: the program is
-the model, a compiler extracts it in a minute, and questions that used
-to cost a measurement campaign become algebra.
+- **Every staircase boundary in the suite sits at a simple rational
+  power of the data footprint D** — D^0, D^1/4, D^1/3, D^1/2, D^2/3,
+  D — with constant or 1/n-decaying miss plateaus between. Locality
+  in this class is *quantized*; a kernel is summarized losslessly by a
+  handful of (exponent, plateau) pairs. The folklore "√2 rule" (double
+  the data, √2x the cache) is exactly the D^1/2 case, now with a
+  per-kernel validity window — and a counterexample, trisolve, which
+  has no intermediate boundary at all: pinned at 3.1% misses until the
+  entire matrix fits, provably beyond help from tiling.
+- **No single "data-movement" score can rank kernels — structurally.**
+  The sum rule forces any distance-weighted scalar to be dominated by
+  rows carrying vanishing access fractions, i.e. by behavior real
+  caches never see. Concretely: gesummv scores worse than mvt yet
+  misses 3.3x less at 32 KB; our earlier exponent-based study
+  classified trmm as "no locality headroom" while the formulas show a
+  16x waste at 32 KB (and confirm trisolve's genuine hopelessness —
+  same asymptotic class, opposite truths).
+- **Parallel decomposition is parameter substitution.** Slicing a loop
+  across p workers substitutes that bound with n/p in already-derived
+  formulas. For matmul this proves row-slicing moves identical total
+  data at every p (1.02e9 lines, p = 1..1008) while column-slicing
+  merges p 1-MB caches into one at exactly p = n²·8B/C = 32 (traffic
+  collapses 61x) — and exposes a line-granularity floor (a sliced
+  matrix still spans ≥ n cache lines = 126 KB, so no worker count ever
+  reaches L1 residency). The general rule is checkable per kernel from
+  the tables: slicing helps only if the sliced loop indexes the array
+  carrying the dominant reuse.
+
+## 7. What to take away
+
+The instrument's outputs are not predictions to be checked against a
+run; they are *laws with validity regions*: linear attention's
+context-freeness (a property no finite set of measurements can
+establish), residency boundaries that land on the field's chosen head
+dimensions, a 50x attention cliff at n = C/d, fusion and chunking
+priced with the regime in which the price applies, quantized locality
+exponents across a numerical suite, impossibility results for scalar
+locality scores, and parallel-slicing laws obtained by substitution
+into formulas derived once. Where the instrument's own gates fail, it
+says so instead of producing plausible noise.
+
+That is the answer to "we made memory behavior symbolic — so what":
+the same jump arithmetic complexity made long ago. When cost became a
+formula, questions stopped being experiments. This work does it for
+the half of performance that experiments were still required for.
 
 ---
 
 ## Appendix: provenance and reproduction
 
-All numbers derive from the AutoLALA analyzer (`dmd-cli`) under the
-paper's canonical configuration — infinite repeat, scale approximation
-in Barvinok, 64-byte lines of eight f64 values — over the extracted
-PolyBench DSLs in `dsl/` plus matmul variants (naive ijk/ikj, tiles
-8/16/32) written for this study. The naive-matmul run also reproduces
-the paper's element-granularity Table 1 exactly, and its block-8
-staircase matches the paper's Table 6 in structure (`tables/anchors.md`).
-Suite evaluations use n = 2016 (2048 for the matmul family); caches are
-counted in 64-byte lines (32 KB = 512 lines). The paper's own
-evaluation establishes accuracy against Cachegrind/Dinero and hardware
-counters (~1% average miss-ratio error; 99.6% data-movement accuracy).
+Analyzer: AutoLALA `dmd-cli`, infinite repeat, scale approximation in
+Barvinok, block size 8 (64-byte lines of f64). Attention kernels in
+`dsl/att_*.dsl` (dense unfused with two softmax row passes; causal
+triangle; recurrent linear; chunked linear at L = 16/64/256 with
+symbolic chunk count), written for this study; PolyBench DSLs in
+`dsl/sym_*.dsl`; matmul family (`matmul3*`) as validation witnesses —
+the pipeline reproduces the paper's Table 1 exactly and Table 6
+structurally (`tables/anchors.md`).
 
-Pipeline: `run_suite.py` (analyzer runs, ~10 min) → `regimes.py`
-(exact symbolic extraction: piecewise quasi-polynomial parsing, exact
-polynomial fits with held-out verification, scale clustering; Fraction
-arithmetic throughout; entries gated by their region domains) →
-`derived.py`, `parallel_study.py`, `anchor_checks.py` → `tables/`
-(`machine_map.md`, `tiling.md`, `parallel.md`, `signatures.md`,
-`dmd_inversion.md`, `suite_regimes.md`, `anchors.md`, `summary.json`).
-Conservation excluded heat-3d (1.54), jacobi-1d (1.33), jacobi-2d
-(1.27), seidel-2d (0.93), fdtd (0.96), imperfect (0.97); convolution
-is analyzed as a 9x9-filter variant (image and filter are genuinely
-different scales and cannot both be bound to n). Raw analyzer JSON
-(`data/`, 29 MB) is gitignored and regenerable.
+Pipeline: `run_suite.py` (analyzer runs) → `regimes.py` (exact
+symbolic extraction; Fraction arithmetic; region-domain gating) →
+`derived.py`, `parallel_study.py`, `anchor_checks.py`,
+`attention_study.py` → `tables/` (`attention.md`, `machine_map.md`,
+`tiling.md`, `parallel.md`, `signatures.md`, `dmd_inversion.md`,
+`suite_regimes.md`, `anchors.md`). Conservation excluded heat-3d
+(1.54), jacobi-1d (1.33), jacobi-2d (1.27), seidel-2d (0.93), fdtd
+(0.96), imperfect (0.97). Raw analyzer JSON (`data/`, ~30 MB) is
+gitignored and regenerable.
 
 ```sh
 python3 run_suite.py && python3 regimes.py && python3 derived.py
 python3 parallel_study.py && python3 anchor_checks.py
+python3 attention_study.py
 pandoc REPORT.md -o REPORT.pdf --pdf-engine=xelatex \
   -V mainfont="DejaVu Serif" -V monofont="DejaVu Sans Mono" \
   -V geometry:margin=1in
