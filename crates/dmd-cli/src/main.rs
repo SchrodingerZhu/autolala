@@ -40,12 +40,16 @@ struct Cli {
 #[derive(Debug, Clone, Copy, ValueEnum)]
 enum CliApproximationMethod {
     Scale,
+    /// Exact Barvinok counting (no approximation): slower, but bin masses are
+    /// exact and the conservation self-check must hold to the integer.
+    Exact,
 }
 
 impl From<CliApproximationMethod> for ApproximationMethod {
     fn from(value: CliApproximationMethod) -> Self {
         match value {
             CliApproximationMethod::Scale => ApproximationMethod::Scale,
+            CliApproximationMethod::Exact => ApproximationMethod::Exact,
         }
     }
 }

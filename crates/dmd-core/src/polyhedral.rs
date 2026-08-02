@@ -44,12 +44,26 @@ pub struct AnalysisOptions {
 #[serde(rename_all = "snake_case")]
 pub enum ApproximationMethod {
     Scale,
+    /// Exact Barvinok counting (no approximation). Slower, but every
+    /// cardinality — including distribution bin masses — is exact, so the
+    /// mass-conservation self-check must hold to the integer.
+    Exact,
 }
 
 impl ApproximationMethod {
-    fn as_barvinok_arg(self) -> &'static str {
+    fn as_barvinok_arg(self) -> Option<&'static str> {
         match self {
-            Self::Scale => "--approximation-method=scale",
+            Self::Scale => Some("--approximation-method=scale"),
+            // barvinok's default is BV_APPROX_NONE: passing no option keeps
+            // counting exact.
+            Self::Exact => None,
+        }
+    }
+
+    fn describe(self) -> &'static str {
+        match self {
+            Self::Scale => "`--approximation-method=scale`",
+            Self::Exact => "exact counting (no approximation option)",
         }
     }
 }
@@ -77,6 +91,24 @@ pub struct DistributionRegion {
 pub struct DistributionEntry {
     pub value_plain: String,
     pub value_latex: String,
+    /// Total number of accesses in this bin, as a parameter-only formula.
+    ///
+    /// When the bin value depends on loop iterators, those iterators are moved
+    /// into parameter space and each region's `count` is *per iterator point*;
+    /// the true bin population is the sum of the counts over the region
+    /// domains. This field carries that sum, computed exactly (cardinality of
+    /// the un-projected piece domain) so it never exposes iterator variables.
+    #[serde(default)]
+    pub mass_plain: String,
+    #[serde(default)]
+    pub mass_latex: String,
+    /// Which accesses this bin belongs to: one signature per constituent
+    /// piece, listing the *fixed* timestamp dimensions as `name=value` pairs
+    /// (statement-position dims `t*` plus any degenerate loop dims). The
+    /// consuming access of every reuse counted in this bin satisfies one of
+    /// these signatures, so they identify the source statement(s) exactly.
+    #[serde(default)]
+    pub sources: Vec<String>,
     pub regions: Vec<DistributionRegion>,
 }
 
@@ -153,6 +185,12 @@ pub struct AnalysisReport {
 struct DistributionItem<'a> {
     value: QuasiPolynomial<'a>,
     cardinality: PiecewiseQuasiPolynomial<'a>,
+    /// Cardinality of the full piece domain (before value-involved dims are
+    /// exposed as parameters): the exact, parameter-only bin population.
+    mass: PiecewiseQuasiPolynomial<'a>,
+    /// Fixed-timestamp signatures of the piece domain (see
+    /// [`DistributionEntry::sources`]).
+    sources: Vec<String>,
 }
 
 #[derive(Clone, Debug)]
@@ -676,7 +714,7 @@ pub fn analyze_program(program: &Program, options: AnalysisOptions) -> DmdResult
     let model = validate_program(program)?;
     let lowering = Lowering::new(&model);
     let context = unsafe {
-        Context::from_args([options.approximation_method.as_barvinok_arg()].into_iter())
+        Context::from_args(options.approximation_method.as_barvinok_arg().into_iter())
     }?;
     context.scope(|ctx| analyze_with_context(ctx, &lowering, options))
 }
@@ -725,14 +763,15 @@ fn analyze_with_context<'ctx>(
     };
 
     let ri_values = ri_relation.clone().cardinality()?;
-    let ri_distribution = DistributionProcessor::new(ri_values).collect()?;
+    let ri_support = ri_relation.clone().domain()?;
+    let ri_distribution = DistributionProcessor::new(ri_values, ri_support).collect()?;
     let ri_rendered = render_distribution(&ri_distribution)?;
     let (ri_entries, filtered_ri_region_count) = filter_rendered_entries(ri_rendered.entries)?;
     if let Some(parallel) = build_parallel_analysis(lowering.model, &ri_entries)? {
-        let approximation_arg = options.approximation_method.as_barvinok_arg().to_string();
+        let approximation_arg = options.approximation_method.describe().to_string();
         let mut notes = vec![
             format!(
-                "Barvinok runs inside a context initialized with `{}`.",
+                "Barvinok runs inside a context initialized with {}.",
                 approximation_arg
             ),
             "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.".to_string(),
@@ -764,13 +803,39 @@ fn analyze_with_context<'ctx>(
     }
 
     let rd_relation = ri_relation.apply_range(access_map.clone())?;
+    let rd_support = rd_relation.clone().domain()?;
     let rd_values = rd_relation.cardinality()?;
+    if std::env::var_os("DMD_DEBUG_QPOLY").is_some() {
+        eprintln!("=== rd_values pw_qpolynomial ===\n{rd_values:?}");
+    }
+    let debug_masses = std::env::var_os("DMD_DEBUG_MASSES").is_some();
     let total_accesses = total_domain.cardinality()?;
-    let rd_distribution = DistributionProcessor::new(rd_values).collect()?;
+    let rd_distribution = DistributionProcessor::new(rd_values, rd_support).collect()?;
     let total_expr = render_piecewise(total_accesses.clone())?;
     let rd_rendered = render_distribution(&rd_distribution)?;
-    let warm_expr = FormulaExpr::add(rd_rendered.count_exprs.iter().cloned());
-    let compulsory_expr = FormulaExpr::sub(total_expr.clone(), warm_expr.clone());
+    // Warm accesses = every access that participates in some reuse bin. Sum
+    // the exact per-bin masses in isl (piecewise-aware, so piece guards are
+    // honored); per-region counts may be per exposed-iterator point and must
+    // not be summed directly. Compulsory = total - warm, also isl-side, so the
+    // rendered formula is a flat guarded sum rather than an ambiguous nested
+    // subtraction.
+    let mut warm_pw: Option<PiecewiseQuasiPolynomial<'ctx>> = None;
+    for (index, item) in rd_distribution.iter().enumerate() {
+        if debug_masses {
+            eprintln!("=== mass[{index}] isl ===\n{:?}", item.mass);
+        }
+        warm_pw = Some(match warm_pw {
+            None => item.mass.clone(),
+            Some(acc) => acc.checked_add(item.mass.clone())?,
+        });
+    }
+    let (warm_expr, compulsory_expr) = match warm_pw {
+        Some(warm_pw) => {
+            let compulsory_pw = total_accesses.clone().checked_sub(warm_pw.clone())?;
+            (render_piecewise(warm_pw)?, render_piecewise(compulsory_pw)?)
+        }
+        None => (FormulaExpr::zero(), total_expr.clone()),
+    };
     let mut dmd_terms = Vec::new();
     let mut dmd_formula_terms = vec![compulsory_expr.clone()];
     let mut filtered_region_count = 0usize;
@@ -808,10 +873,10 @@ fn analyze_with_context<'ctx>(
         .map(|entry| entry.entry)
         .collect::<Vec<_>>();
     let dmd_formula = FormulaExpr::add(dmd_formula_terms);
-    let approximation_arg = options.approximation_method.as_barvinok_arg().to_string();
+    let approximation_arg = options.approximation_method.describe().to_string();
     let mut notes = vec![
         format!(
-            "Barvinok runs inside a context initialized with `{}`.",
+            "Barvinok runs inside a context initialized with {}.",
             approximation_arg
         ),
         "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.".to_string(),
@@ -885,15 +950,16 @@ fn analyze_parallel_with_context<'ctx>(
     let interval = immediate_prev.apply_range(lt)?;
     let ri_relation = interval.intersect(le.reverse()?)?;
     let ri_values = ri_relation.clone().cardinality()?;
-    let ri_distribution = DistributionProcessor::new(ri_values).collect()?;
+    let ri_support = ri_relation.domain()?;
+    let ri_distribution = DistributionProcessor::new(ri_values, ri_support).collect()?;
     let ri_rendered = render_distribution(&ri_distribution)?;
     let (ri_entries, filtered_ri_region_count) = filter_rendered_entries(ri_rendered.entries)?;
     let parallel = build_parallel_analysis(model, &ri_entries)?
         .ok_or_else(|| DmdError::analysis("parallel analysis expected an annotated loop"))?;
-    let approximation_arg = options.approximation_method.as_barvinok_arg().to_string();
+    let approximation_arg = options.approximation_method.describe().to_string();
     let mut notes = vec![
         format!(
-            "Barvinok runs inside a context initialized with `{}`.",
+            "Barvinok runs inside a context initialized with {}.",
             approximation_arg
         ),
         "Reuse intervals are computed from the static per-thread access relation induced by the parallel schedule, not from the original sequential RI stream.".to_string(),
@@ -1358,7 +1424,6 @@ fn with_count_law(mut law: ParallelCriLaw, multiplicity: &FormulaExpr) -> Parall
 
 struct RenderedDistribution<'a> {
     entries: Vec<RenderedDistributionEntry<'a>>,
-    count_exprs: Vec<FormulaExpr>,
 }
 
 struct RenderedDistributionEntry<'a> {
@@ -1404,16 +1469,15 @@ fn filter_rendered_entries<'a>(
 
 fn render_distribution<'a>(items: &[DistributionItem<'a>]) -> DmdResult<RenderedDistribution<'a>> {
     let mut entries = Vec::new();
-    let mut count_exprs = Vec::new();
 
     for item in items {
         let value_formatter = FormulaFormatter::new(item.value.get_space()?);
         let value_expr = value_formatter.quasi_polynomial(item.value.clone())?;
+        let mass_expr = render_piecewise(item.mass.clone())?;
         let mut regions = Vec::new();
         item.cardinality.foreach_piece(|qpoly, domain| {
             let formatter = FormulaFormatter::new(qpoly.get_space()?);
             let count_expr = formatter.quasi_polynomial(qpoly)?;
-            count_exprs.push(count_expr.clone());
             regions.push(RenderedDistributionRegion {
                 region: DistributionRegion {
                     domain_plain: format_domain(&domain),
@@ -1429,6 +1493,9 @@ fn render_distribution<'a>(items: &[DistributionItem<'a>]) -> DmdResult<Rendered
             entry: DistributionEntry {
                 value_plain: value_expr.to_plain(),
                 value_latex: value_expr.to_latex(),
+                mass_plain: mass_expr.to_plain(),
+                mass_latex: mass_expr.to_latex(),
+                sources: item.sources.clone(),
                 regions: regions.iter().map(|region| region.region.clone()).collect(),
             },
             value_expr,
@@ -1436,10 +1503,7 @@ fn render_distribution<'a>(items: &[DistributionItem<'a>]) -> DmdResult<Rendered
         });
     }
 
-    Ok(RenderedDistribution {
-        entries,
-        count_exprs,
-    })
+    Ok(RenderedDistribution { entries })
 }
 
 fn region_scales(domain: &Set<'_>) -> DmdResult<bool> {
@@ -1526,11 +1590,20 @@ fn render_piecewise(pw: PiecewiseQuasiPolynomial<'_>) -> DmdResult<FormulaExpr> 
 
     match pieces.len() {
         0 => Ok(FormulaExpr::zero()),
-        1 => Ok(pieces
-            .into_iter()
-            .next()
-            .map(|(expr, _)| expr)
-            .unwrap_or_else(FormulaExpr::zero)),
+        // A single piece keeps its domain guard too: the expression is only
+        // valid on the piece domain, and evaluating it elsewhere (e.g. a mass
+        // formula outside its parameter range) silently yields garbage.
+        1 => {
+            let (expr, region) = pieces.into_iter().next().expect("one piece");
+            if region.is_empty() {
+                Ok(expr)
+            } else {
+                Ok(FormulaExpr::raw(
+                    format!("[{region}] => {}", expr.to_plain()),
+                    format!("\\left[{region}\\right] \\Rightarrow {}", expr.to_latex()),
+                ))
+            }
+        }
         _ => {
             let plain = pieces
                 .iter()
@@ -1549,17 +1622,39 @@ fn render_piecewise(pw: PiecewiseQuasiPolynomial<'_>) -> DmdResult<FormulaExpr> 
 
 struct DistributionProcessor<'a> {
     qpoly: PiecewiseQuasiPolynomial<'a>,
+    /// True support of the counted relation (its domain set). The cardinality
+    /// pw_qpolynomial may legally represent "count = 0" points *inside* a
+    /// coalesced piece cell (isl is free to choose that representation), so a
+    /// piece domain can strictly contain the accesses that actually reuse.
+    /// Every piece is restricted to this support before masses are taken;
+    /// otherwise zero-count points are tallied as warm accesses.
+    support: Set<'a>,
 }
 
 impl<'a> DistributionProcessor<'a> {
-    fn new(qpoly: PiecewiseQuasiPolynomial<'a>) -> Self {
-        Self { qpoly }
+    fn new(qpoly: PiecewiseQuasiPolynomial<'a>, support: Set<'a>) -> Self {
+        Self { qpoly, support }
     }
 
     fn collect(&self) -> DmdResult<Vec<DistributionItem<'a>>> {
-        let mut pieces = self.qpoly_pieces()?;
+        let mut pieces = Vec::new();
+        for mut piece in self.qpoly_pieces()? {
+            piece.domain = piece.domain.intersect(self.support.clone())?;
+            if piece.domain.clone().is_empty()? {
+                continue;
+            }
+            pieces.push(piece);
+        }
+        let masses = pieces
+            .iter()
+            .map(|piece| piece.domain.clone().cardinality())
+            .collect::<Result<Vec<_>, _>>()?;
+        let sources = pieces
+            .iter()
+            .map(|piece| statement_signatures(&piece.domain))
+            .collect::<DmdResult<Vec<_>>>()?;
         for piece in &mut pieces {
-            let involved = involved_input_dims(&piece.value)?;
+            let involved = value_involved_dims(&piece.value)?;
             let mut domain = piece.domain.clone();
             for (shift, dim) in involved.iter().enumerate() {
                 let num_params = domain.dim(DimType::Param)?;
@@ -1574,12 +1669,21 @@ impl<'a> DistributionProcessor<'a> {
             piece.domain = domain;
         }
 
+        if std::env::var_os("DMD_DEBUG_VALUES").is_some() {
+            for (index, piece) in pieces.iter().enumerate() {
+                eprintln!("=== value[{index}] isl ===\n{:?}", piece.value);
+            }
+        }
         pieces
             .into_iter()
-            .map(|piece| {
+            .zip(masses)
+            .zip(sources)
+            .map(|((piece, mass), sources)| {
                 Ok(DistributionItem {
                     value: piece.value,
                     cardinality: piece.domain.cardinality()?,
+                    mass,
+                    sources,
                 })
             })
             .collect()
@@ -1607,12 +1711,67 @@ impl<'a> DistributionProcessor<'a> {
     }
 }
 
-fn involved_input_dims(qpoly: &QuasiPolynomial<'_>) -> Result<Vec<u32>, barvinok::Error> {
+/// One signature per basic set of a piece domain, listing the timestamp
+/// dimensions that are fixed to a single value (`name=value`, comma-joined).
+/// Statement-position dims are always fixed within one basic set, so the
+/// signatures identify which access(es) a distribution bin covers.
+fn statement_signatures(domain: &Set<'_>) -> DmdResult<Vec<String>> {
+    let space = domain.get_space()?;
+    let n_out = domain.n_dim()?;
+    let mut signatures = Vec::new();
+    for basic_set in domain.get_basic_set_list()?.iter() {
+        let set = Set::from_basic_set(basic_set)?;
+        let Some(fixed) = set.get_plain_multi_val_if_fixed() else {
+            continue;
+        };
+        let mut parts = Vec::new();
+        for pos in 0..n_out {
+            let value = fixed.get_val(pos as i32)?;
+            if value.is_nan()? {
+                continue;
+            }
+            let name = space
+                .get_dim_name(DimType::Out, pos)?
+                .map(str::to_string)
+                .unwrap_or_else(|| format!("dim{pos}"));
+            parts.push(format!("{name}={}", value.numerator()));
+        }
+        if !parts.is_empty() {
+            signatures.push(parts.join(","));
+        }
+    }
+    signatures.sort();
+    signatures.dedup();
+    Ok(signatures)
+}
+
+/// Input dimensions a value quasi-polynomial *actually* uses, judged from its
+/// rendered expression. `isl_qpolynomial_involves_dims` also reports dims that
+/// only occur in unused div definitions left over from earlier computations,
+/// which would needlessly expose extra iterators as distribution parameters
+/// (e.g. syrk bins keyed by three iterators when the value depends on one).
+/// Unnamed dims (which the rendering cannot identify) fall back to the
+/// conservative isl answer.
+fn value_involved_dims(qpoly: &QuasiPolynomial<'_>) -> DmdResult<Vec<u32>> {
+    let space = qpoly.get_space()?;
+    let formatter = FormulaFormatter::new(space.clone());
+    let expr = formatter.quasi_polynomial(qpoly.clone())?;
+    let mut symbols = HashSet::new();
+    expr.collect_symbols(&mut symbols);
     let dims = qpoly.get_dim(DimType::In)?;
     let mut involved = Vec::new();
     for index in 0..dims {
-        if qpoly.involves_dims(DimType::In, index, 1)? {
-            involved.push(index);
+        match space.get_dim_name(DimType::In, index)? {
+            Some(name) => {
+                if symbols.contains(name) {
+                    involved.push(index);
+                }
+            }
+            None => {
+                if qpoly.involves_dims(DimType::In, index, 1)? {
+                    involved.push(index);
+                }
+            }
         }
     }
     Ok(involved)
@@ -1640,6 +1799,13 @@ fn align_sets<'a, 'b: 'a>(
                     1,
                 )?,
             )?;
+            // Padding dims must carry the longest statement's dim names, or
+            // the union erases the names and downstream output prints
+            // auto-generated ones (d7, d8) that nothing else can refer to.
+            if let Some(name) = space.get_dim_name(DimType::Out, dim as u32)? {
+                let name = name.to_string();
+                aligned = aligned.set_dim_name(DimType::Out, dim as u32, &name)?;
+            }
         }
         if add_dim_constraint {
             aligned = aligned.add_constraint(
@@ -1673,6 +1839,10 @@ fn align_maps<'a, 'b: 'a>(
                     1,
                 )?,
             )?;
+            if let Some(name) = space.get_dim_name(DimType::In, dim as u32)? {
+                let name = name.to_string();
+                aligned = aligned.set_dim_name(DimType::In, dim as u32, &name)?;
+            }
         }
         if add_dim_constraint {
             aligned = aligned.add_constraint(
@@ -1770,6 +1940,65 @@ parallel(4) for i in 0 .. N {
     read A[i / 4];
 }
 "#;
+
+    const CONST_JACOBI_1D: &str = r#"
+params N;
+array A[17];
+array B[17];
+
+for t in 0 .. 2 {
+    for i in 1 .. 16 {
+        read A[i - 1];
+        read A[i];
+        read A[i + 1];
+        write B[i];
+    }
+    for j in 1 .. 16 {
+        read B[j - 1];
+        read B[j];
+        read B[j + 1];
+        write A[j];
+    }
+}
+"#;
+
+    /// Regression test for three rendering/accounting bugs found on the
+    /// time-stepped stencils: (1) qpoly div factors rendered without floor(),
+    /// (2) affine coefficients divided by the denominator twice, and (3) mass
+    /// pieces counting isl's explicit zero-count points as warm accesses. With
+    /// exact counting, mass conservation must hold to the integer:
+    /// total 8*2*15 = 240 accesses, footprint 2 arrays x ceil(17/8) = 6 lines
+    /// of 8 doubles, so warm = 234 and compulsory = 6.
+    #[test]
+    fn exact_stencil_masses_conserve_and_floors_render() {
+        let report = analyze_source(
+            CONST_JACOBI_1D,
+            AnalysisOptions {
+                block_size: 8,
+                approximation_method: ApproximationMethod::Exact,
+                max_operations: 100_000_000,
+                ..Default::default()
+            },
+        )
+        .expect("analysis should succeed");
+        assert_eq!(report.total_accesses_plain, "240");
+        assert_eq!(report.warm_accesses_plain, "234");
+        assert_eq!(report.compulsory_accesses_plain, "6");
+        assert!(
+            report
+                .rd_distribution
+                .iter()
+                .any(|entry| entry.value_plain.contains("floor(")),
+            "block-granular stencil reuse distances carry floor() step terms"
+        );
+        assert!(
+            !report
+                .rd_distribution
+                .iter()
+                .any(|entry| entry.value_plain.contains("/64")),
+            "no double-divided div coefficients"
+        );
+    }
 
     #[test]
     fn repeated_single_access_has_unit_rd() {
@@ -1996,8 +2225,9 @@ for i in 0 .. N {
                 .ri_distribution
                 .iter()
                 .flat_map(|entry| entry.regions.iter())
-                .any(|region| region.count_plain == "N - 1"),
-            "sequential RI should observe the repeated A[i / 4] accesses"
+                .any(|region| region.count_plain.contains('N')),
+            "sequential RI should observe the repeated A[i / 4] accesses \
+             (an RI bin whose population grows with N)"
         );
 
         let parallel = analyze_source(

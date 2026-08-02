@@ -1,0 +1,928 @@
+{
+  "options": {
+    "block_size": 8,
+    "num_sets": 1,
+    "max_operations": 300000000,
+    "approximation_method": "scale",
+    "infinite_repeat": true
+  },
+  "total_accesses_plain": "8 * p1 * p0 - 8 * p0",
+  "total_accesses_latex": "8 \\cdot p1 \\cdot p0 - 8 \\cdot p0",
+  "warm_accesses_plain": "(3/4) * p1 + [p0 >= 3 and p1 >= 10] => 4 * p0 + [p0 = 2 and p1 >= 10] => 8 + [p1 = 9 and p0 >= 3] => 2 * p0 + [p0 = 2 and p1 = 9] => 4 + [p0 = 1 and p1 >= 10] => 4 + [p0 = 1 and p1 = 9] => 2 + [p0 >= 2 and 2 <= p1 <= 7] => 2 * p0 + [p0 = 1 and 2 <= p1 <= 7] => 2 + [p0 >= 2 and p1 >= 8] => (1/4) * p1 * p0 - (7/4) * p0 + [p0 = 1 and p1 >= 8] => (1/4) * p1 - (7/4) + [p0 >= 2 and p1 >= 18] => (1/4) * p1 * p0 - (17/4) * p0 + [p0 = 1 and p1 >= 18] => (1/4) * p1 - (17/4) + [p0 >= 2 and 9 <= p1 <= 15] => (1/4) * p1 * p0 - 2 * p0 + [p0 >= 2 and p1 >= 16] => (7/4) * p0 + [p0 = 1 and 9 <= p1 <= 15] => (1/4) * p1 - 2 + [p0 = 1 and p1 >= 16] => (7/4) + [(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => 2 * p0 + [p0 = 1 and (p1) mod 8 = 0 and p1 >= 16] => 2 + [(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17] => 2 * p0 + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17] => 2 + [(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (23/8) * p1 * p0 - (13/2) * p0 + 2 + [(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17] => (23/8) * p1 * p0 - 8 * p0 + 2 + [p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1] => (11/8) * p1 * p0 - (9/2) * p0 + 2 + [p1 = 8 and p0 >= 2] => (67/4) * p0 + (7/4) + [p1 = 9 and p0 >= 2] => (143/8) * p0 + 2 + [p0 >= 2 and 3 <= p1 <= 7] => (9/8) * p1 * p0 - (9/4) * p0 + (1/4) * p1 - (1/4) + [p0 = 1 and (p1) mod 8 = 0 and p1 >= 16] => (23/8) * p1 - (9/2) + [p0 = 1 and p1 = 8] => (37/2) + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17] => (23/8) * p1 - 6 + [p0 = 1 and p1 = 9] => (159/8) + [p0 = 1 and p1 >= 3 and (p1 <= 7 or (p1 >= 10 and 8*floor((p1)/8) <= -2 + p1))] => (11/8) * p1 - (5/2) + [p1 = 2 and (p0 >= 2 or p0 = 1)] => (1/4) + [p0 >= 3 and p1 >= 17] => (1/4) * p1 * p0 - 4 * p0 - p1 + 4 + [p0 = 2 and p1 >= 17] => (1/4) * p1 - 4 + 2 * [p0 >= 2 and p1 >= 9] => (1/4) * p1 * p0 - 2 * p0 + [p0 = 1 and p1 >= 9] => (1/4) * p1 - 2 + [p0 >= 2 and p1 >= 10] => (1/4) * p1 * p0 - (9/4) * p0 + [p0 = 1 and p1 >= 10] => (1/4) * p1 - (9/4) + [p0 >= 2 and p1 >= 10] => (3/2) * p1 * p0 - 3 * p0 + (7/16) * p1 - (119/32) + [p1 = 9 and p0 >= 2] => (3/2) * p1 * p0 - 3 * p0 + (7/32) * p1 - (7/4) + [p0 >= 2 and 3 <= p1 <= 8] => (3/2) * p1 * p0 - 3 * p0 + [p0 = 1 and p1 >= 10] => (31/16) * p1 - (215/32) + [p0 = 1 and p1 = 9] => (55/32) * p1 - (19/4) + [p0 = 1 and 3 <= p1 <= 8] => (3/2) * p1 - 3 + [p0 >= 3 and 9 <= p1 <= 16] => (1/4) * p1 * p0 - 2 * p0 - p1 + 2 + [p0 = 2 and 9 <= p1 <= 16] => (1/4) * p1 - 2 + [p0 >= 3 and p1 >= 17] => 2 * p0 - 2 + [p0 = 2 and p1 >= 17] => 2 + [p0 >= 3 and 2 <= p1 <= 8] => 4 * p0 + [p0 = 2 and 2 <= p1 <= 8] => 8 + [p0 >= 2 and p1 >= 9] => 2 * p0 + [p0 = 1 and 2 <= p1 <= 8] => 4 + [p0 = 1 and p1 >= 9] => 2 + [p1 = 9 and p0 >= 2] => 2 * p0 + [p0 = 1 and p1 = 9] => 2 + [p1 = 8 and p0 >= 2] => 2 * p0 + [p0 = 1 and p1 = 8] => 2 + [p1 = 8 and p0 >= 3] => 2 * p0 - 2 + [p0 = 2 and p1 = 8] => 2 + [(p1) mod 8 = 0 and p0 >= 3 and p1 >= 16] => 2 * p0 - 2 + [p0 = 2 and (p1) mod 8 = 0 and p1 >= 16] => 2 + [(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (105/32) * p1 * p0 - (407/32) * p0 - (105/32) * p1 + (407/32) + [p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1] => (49/32) * p1 * p0 + (41/32) * p0 - (49/32) * p1 - (41/32) + [p1 = 8 and p0 >= 2] => 12 * p0 - 12 + [p0 >= 2 and 2 <= p1 <= 7] => 2 * p1 * p0 - 2 * p0 - 2 * p1 + 2 + [p0 >= 2 and p1 >= 3] => (3/2) * p1 * p0 - 3 * p0 + (3/2) + [(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)] => (3/2) * p1 - (3/2) + [p0 > 0 and 9 <= p1 <= 16] => (1/4) * p1 - 2 + [p0 > 0 and p1 >= 17] => 2 + [(p1) mod 8 = 0 and p0 > 0 and p1 >= 16] => (75/32) * p1 - (245/32) + [p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1] => (35/32) * p1 + (75/32) + [p1 = 8 and p0 > 0] => 10 + [p0 > 0 and 3 <= p1 <= 7] => 2 * p1 - 4 - 4",
+  "warm_accesses_latex": "\\frac{3}{4} \\cdot p1 + \\left[p0 >= 3 and p1 >= 10\\right] \\Rightarrow 4 \\cdot p0 + \\left[p0 = 2 and p1 >= 10\\right] \\Rightarrow 8 + \\left[p1 = 9 and p0 >= 3\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 2 and p1 = 9\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow 2 + \\left[p0 >= 2 and 2 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and 2 <= p1 <= 7\\right] \\Rightarrow 2 + \\left[p0 >= 2 and p1 >= 8\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 8\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{7}{4} + \\left[p0 >= 2 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{17}{4} + \\left[p0 >= 2 and 9 <= p1 <= 15\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{7}{4} \\cdot p0 + \\left[p0 = 1 and 9 <= p1 <= 15\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 = 1 and p1 >= 16\\right] \\Rightarrow \\frac{7}{4} + \\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow 2 + \\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17\\right] \\Rightarrow 2 + \\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 \\cdot p0 - \\frac{13}{2} \\cdot p0 + 2 + \\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 \\cdot p0 - 8 \\cdot p0 + 2 + \\left[p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1\\right] \\Rightarrow \\frac{11}{8} \\cdot p1 \\cdot p0 - \\frac{9}{2} \\cdot p0 + 2 + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow \\frac{67}{4} \\cdot p0 + \\frac{7}{4} + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{143}{8} \\cdot p0 + 2 + \\left[p0 >= 2 and 3 <= p1 <= 7\\right] \\Rightarrow \\frac{9}{8} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\frac{1}{4} \\cdot p1 - \\frac{1}{4} + \\left[p0 = 1 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 - \\frac{9}{2} + \\left[p0 = 1 and p1 = 8\\right] \\Rightarrow \\frac{37}{2} + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 - 6 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{159}{8} + \\left[p0 = 1 and p1 >= 3 and (p1 <= 7 or (p1 >= 10 and 8*floor((p1)/8) <= -2 + p1))\\right] \\Rightarrow \\frac{11}{8} \\cdot p1 - \\frac{5}{2} + \\left[p1 = 2 and (p0 >= 2 or p0 = 1)\\right] \\Rightarrow \\frac{1}{4} + \\left[p0 >= 3 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4 + \\left[p0 = 2 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 4 + 2 \\cdot \\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{9}{4} + \\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{16} \\cdot p1 - \\frac{119}{32} + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4} + \\left[p0 >= 2 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow \\frac{31}{16} \\cdot p1 - \\frac{215}{32} + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{55}{32} \\cdot p1 - \\frac{19}{4} + \\left[p0 = 1 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - 3 + \\left[p0 >= 3 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 - p1 + 2 + \\left[p0 = 2 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 >= 3 and p1 >= 17\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and p1 >= 17\\right] \\Rightarrow 2 + \\left[p0 >= 3 and 2 <= p1 <= 8\\right] \\Rightarrow 4 \\cdot p0 + \\left[p0 = 2 and 2 <= p1 <= 8\\right] \\Rightarrow 8 + \\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and 2 <= p1 <= 8\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow 2 + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow 2 + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 = 8\\right] \\Rightarrow 2 + \\left[p1 = 8 and p0 >= 3\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and p1 = 8\\right] \\Rightarrow 2 + \\left[(p1) mod 8 = 0 and p0 >= 3 and p1 >= 16\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow 2 + \\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{105}{32} \\cdot p1 \\cdot p0 - \\frac{407}{32} \\cdot p0 - \\frac{105}{32} \\cdot p1 + \\frac{407}{32} + \\left[p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{49}{32} \\cdot p1 \\cdot p0 + \\frac{41}{32} \\cdot p0 - \\frac{49}{32} \\cdot p1 - \\frac{41}{32} + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow 12 \\cdot p0 - 12 + \\left[p0 >= 2 and 2 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 \\cdot p0 - 2 \\cdot p0 - 2 \\cdot p1 + 2 + \\left[p0 >= 2 and p1 >= 3\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{3}{2} + \\left[(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - \\frac{3}{2} + \\left[p0 > 0 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 > 0 and p1 >= 17\\right] \\Rightarrow 2 + \\left[(p1) mod 8 = 0 and p0 > 0 and p1 >= 16\\right] \\Rightarrow \\frac{75}{32} \\cdot p1 - \\frac{245}{32} + \\left[p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{35}{32} \\cdot p1 + \\frac{75}{32} + \\left[p1 = 8 and p0 > 0\\right] \\Rightarrow 10 + \\left[p0 > 0 and 3 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 - 4 - 4",
+  "compulsory_accesses_plain": "8 * p1 * p0 - 8 * p0 - (3/4) * p1 - [p0 >= 3 and p1 >= 10] => 4 * p0 + [p0 = 2 and p1 >= 10] => 8 + [p1 = 9 and p0 >= 3] => 2 * p0 + [p0 = 2 and p1 = 9] => 4 + [p0 = 1 and p1 >= 10] => 4 + [p0 = 1 and p1 = 9] => 2 - [p0 >= 2 and 2 <= p1 <= 7] => 2 * p0 + [p0 = 1 and 2 <= p1 <= 7] => 2 - [p0 >= 2 and p1 >= 8] => (1/4) * p1 * p0 - (7/4) * p0 + [p0 = 1 and p1 >= 8] => (1/4) * p1 - (7/4) - [p0 >= 2 and p1 >= 18] => (1/4) * p1 * p0 - (17/4) * p0 + [p0 = 1 and p1 >= 18] => (1/4) * p1 - (17/4) - [p0 >= 2 and 9 <= p1 <= 15] => (1/4) * p1 * p0 - 2 * p0 + [p0 >= 2 and p1 >= 16] => (7/4) * p0 + [p0 = 1 and 9 <= p1 <= 15] => (1/4) * p1 - 2 + [p0 = 1 and p1 >= 16] => (7/4) - [(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => 2 * p0 + [p0 = 1 and (p1) mod 8 = 0 and p1 >= 16] => 2 - [(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17] => 2 * p0 + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17] => 2 - [(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (23/8) * p1 * p0 - (13/2) * p0 + 2 + [(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17] => (23/8) * p1 * p0 - 8 * p0 + 2 + [p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1] => (11/8) * p1 * p0 - (9/2) * p0 + 2 + [p1 = 8 and p0 >= 2] => (67/4) * p0 + (7/4) + [p1 = 9 and p0 >= 2] => (143/8) * p0 + 2 + [p0 >= 2 and 3 <= p1 <= 7] => (9/8) * p1 * p0 - (9/4) * p0 + (1/4) * p1 - (1/4) + [p0 = 1 and (p1) mod 8 = 0 and p1 >= 16] => (23/8) * p1 - (9/2) + [p0 = 1 and p1 = 8] => (37/2) + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17] => (23/8) * p1 - 6 + [p0 = 1 and p1 = 9] => (159/8) + [p0 = 1 and p1 >= 3 and (p1 <= 7 or (p1 >= 10 and 8*floor((p1)/8) <= -2 + p1))] => (11/8) * p1 - (5/2) + [p1 = 2 and (p0 >= 2 or p0 = 1)] => (1/4) - [p0 >= 3 and p1 >= 17] => (1/4) * p1 * p0 - 4 * p0 - p1 + 4 + [p0 = 2 and p1 >= 17] => (1/4) * p1 - 4 - 2 * [p0 >= 2 and p1 >= 9] => (1/4) * p1 * p0 - 2 * p0 + [p0 = 1 and p1 >= 9] => (1/4) * p1 - 2 - [p0 >= 2 and p1 >= 10] => (1/4) * p1 * p0 - (9/4) * p0 + [p0 = 1 and p1 >= 10] => (1/4) * p1 - (9/4) - [p0 >= 2 and p1 >= 10] => (3/2) * p1 * p0 - 3 * p0 + (7/16) * p1 - (119/32) + [p1 = 9 and p0 >= 2] => (3/2) * p1 * p0 - 3 * p0 + (7/32) * p1 - (7/4) + [p0 >= 2 and 3 <= p1 <= 8] => (3/2) * p1 * p0 - 3 * p0 + [p0 = 1 and p1 >= 10] => (31/16) * p1 - (215/32) + [p0 = 1 and p1 = 9] => (55/32) * p1 - (19/4) + [p0 = 1 and 3 <= p1 <= 8] => (3/2) * p1 - 3 - [p0 >= 3 and 9 <= p1 <= 16] => (1/4) * p1 * p0 - 2 * p0 - p1 + 2 + [p0 = 2 and 9 <= p1 <= 16] => (1/4) * p1 - 2 + [p0 >= 3 and p1 >= 17] => 2 * p0 - 2 + [p0 = 2 and p1 >= 17] => 2 - [p0 >= 3 and 2 <= p1 <= 8] => 4 * p0 + [p0 = 2 and 2 <= p1 <= 8] => 8 + [p0 >= 2 and p1 >= 9] => 2 * p0 + [p0 = 1 and 2 <= p1 <= 8] => 4 + [p0 = 1 and p1 >= 9] => 2 - [p1 = 9 and p0 >= 2] => 2 * p0 + [p0 = 1 and p1 = 9] => 2 - [p1 = 8 and p0 >= 2] => 2 * p0 + [p0 = 1 and p1 = 8] => 2 - [p1 = 8 and p0 >= 3] => 2 * p0 - 2 + [p0 = 2 and p1 = 8] => 2 - [(p1) mod 8 = 0 and p0 >= 3 and p1 >= 16] => 2 * p0 - 2 + [p0 = 2 and (p1) mod 8 = 0 and p1 >= 16] => 2 - [(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (105/32) * p1 * p0 - (407/32) * p0 - (105/32) * p1 + (407/32) + [p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1] => (49/32) * p1 * p0 + (41/32) * p0 - (49/32) * p1 - (41/32) + [p1 = 8 and p0 >= 2] => 12 * p0 - 12 + [p0 >= 2 and 2 <= p1 <= 7] => 2 * p1 * p0 - 2 * p0 - 2 * p1 + 2 - [p0 >= 2 and p1 >= 3] => (3/2) * p1 * p0 - 3 * p0 + (3/2) + [(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)] => (3/2) * p1 - (3/2) - [p0 > 0 and 9 <= p1 <= 16] => (1/4) * p1 - 2 + [p0 > 0 and p1 >= 17] => 2 - [(p1) mod 8 = 0 and p0 > 0 and p1 >= 16] => (75/32) * p1 - (245/32) + [p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1] => (35/32) * p1 + (75/32) + [p1 = 8 and p0 > 0] => 10 + [p0 > 0 and 3 <= p1 <= 7] => 2 * p1 - 4 + 4",
+  "compulsory_accesses_latex": "8 \\cdot p1 \\cdot p0 - 8 \\cdot p0 - \\frac{3}{4} \\cdot p1 - \\left[p0 >= 3 and p1 >= 10\\right] \\Rightarrow 4 \\cdot p0 + \\left[p0 = 2 and p1 >= 10\\right] \\Rightarrow 8 + \\left[p1 = 9 and p0 >= 3\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 2 and p1 = 9\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow 2 - \\left[p0 >= 2 and 2 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and 2 <= p1 <= 7\\right] \\Rightarrow 2 - \\left[p0 >= 2 and p1 >= 8\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 8\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{7}{4} - \\left[p0 >= 2 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{17}{4} - \\left[p0 >= 2 and 9 <= p1 <= 15\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{7}{4} \\cdot p0 + \\left[p0 = 1 and 9 <= p1 <= 15\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 = 1 and p1 >= 16\\right] \\Rightarrow \\frac{7}{4} - \\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow 2 - \\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17\\right] \\Rightarrow 2 - \\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 \\cdot p0 - \\frac{13}{2} \\cdot p0 + 2 + \\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 \\cdot p0 - 8 \\cdot p0 + 2 + \\left[p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1\\right] \\Rightarrow \\frac{11}{8} \\cdot p1 \\cdot p0 - \\frac{9}{2} \\cdot p0 + 2 + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow \\frac{67}{4} \\cdot p0 + \\frac{7}{4} + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{143}{8} \\cdot p0 + 2 + \\left[p0 >= 2 and 3 <= p1 <= 7\\right] \\Rightarrow \\frac{9}{8} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\frac{1}{4} \\cdot p1 - \\frac{1}{4} + \\left[p0 = 1 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 - \\frac{9}{2} + \\left[p0 = 1 and p1 = 8\\right] \\Rightarrow \\frac{37}{2} + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 - 6 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{159}{8} + \\left[p0 = 1 and p1 >= 3 and (p1 <= 7 or (p1 >= 10 and 8*floor((p1)/8) <= -2 + p1))\\right] \\Rightarrow \\frac{11}{8} \\cdot p1 - \\frac{5}{2} + \\left[p1 = 2 and (p0 >= 2 or p0 = 1)\\right] \\Rightarrow \\frac{1}{4} - \\left[p0 >= 3 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4 + \\left[p0 = 2 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 4 - 2 \\cdot \\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 - \\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{9}{4} - \\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{16} \\cdot p1 - \\frac{119}{32} + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4} + \\left[p0 >= 2 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow \\frac{31}{16} \\cdot p1 - \\frac{215}{32} + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{55}{32} \\cdot p1 - \\frac{19}{4} + \\left[p0 = 1 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - 3 - \\left[p0 >= 3 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 - p1 + 2 + \\left[p0 = 2 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 >= 3 and p1 >= 17\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and p1 >= 17\\right] \\Rightarrow 2 - \\left[p0 >= 3 and 2 <= p1 <= 8\\right] \\Rightarrow 4 \\cdot p0 + \\left[p0 = 2 and 2 <= p1 <= 8\\right] \\Rightarrow 8 + \\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and 2 <= p1 <= 8\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow 2 - \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow 2 - \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 = 8\\right] \\Rightarrow 2 - \\left[p1 = 8 and p0 >= 3\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and p1 = 8\\right] \\Rightarrow 2 - \\left[(p1) mod 8 = 0 and p0 >= 3 and p1 >= 16\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow 2 - \\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{105}{32} \\cdot p1 \\cdot p0 - \\frac{407}{32} \\cdot p0 - \\frac{105}{32} \\cdot p1 + \\frac{407}{32} + \\left[p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{49}{32} \\cdot p1 \\cdot p0 + \\frac{41}{32} \\cdot p0 - \\frac{49}{32} \\cdot p1 - \\frac{41}{32} + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow 12 \\cdot p0 - 12 + \\left[p0 >= 2 and 2 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 \\cdot p0 - 2 \\cdot p0 - 2 \\cdot p1 + 2 - \\left[p0 >= 2 and p1 >= 3\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{3}{2} + \\left[(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - \\frac{3}{2} - \\left[p0 > 0 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 > 0 and p1 >= 17\\right] \\Rightarrow 2 - \\left[(p1) mod 8 = 0 and p0 > 0 and p1 >= 16\\right] \\Rightarrow \\frac{75}{32} \\cdot p1 - \\frac{245}{32} + \\left[p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{35}{32} \\cdot p1 + \\frac{75}{32} + \\left[p1 = 8 and p0 > 0\\right] \\Rightarrow 10 + \\left[p0 > 0 and 3 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 - 4 + 4",
+  "timestamp_space": "[p0, p1, A_d0, B_d0] -> { [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 1, i2, t4 = 3] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 0, i2, t4 = 3] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 1, i2, t4 = 2] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 0, i2, t4 = 2] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 1, i2, t4 = 1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 0, i2, t4 = 1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 1, i2, t4 = 0] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 0, i2, t4 = 0] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1 }",
+  "access_map": "[p0, p1, A_d0, B_d0] -> { [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 0, i2, t4 = 3] -> [1, o1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1 and -6 + i2 <= 8o1 <= 1 + i2; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 1, i2, t4 = 2] -> [1, o1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1 and -5 + i2 <= 8o1 <= 2 + i2; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 1, i2, t4 = 1] -> [1, o1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1 and -6 + i2 <= 8o1 <= 1 + i2; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 1, i2, t4 = 0] -> [1, o1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1 and -7 + i2 <= 8o1 <= i2; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 1, i2, t4 = 3] -> [0, o1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1 and -6 + i2 <= 8o1 <= 1 + i2; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 0, i2, t4 = 2] -> [0, o1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1 and -5 + i2 <= 8o1 <= 2 + i2; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 0, i2, t4 = 1] -> [0, o1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1 and -6 + i2 <= 8o1 <= 1 + i2; [t0 = 0, __repeat, t1 = 0, i0 = 0, t2 = 0, i1, t3 = 0, i2, t4 = 0] -> [0, o1] : 0 <= __repeat <= 1 and 0 <= i1 < p0 and 0 <= i2 <= -2 + p1 and -7 + i2 <= 8o1 <= i2 }",
+  "ri_distribution": [
+    {
+      "value_plain": "4 * p1 - 29",
+      "value_latex": "4 \\cdot p1 - 29",
+      "mass_plain": "[p0 >= 2 and p1 >= 10] => 2 * p0 + [p0 = 1 and p1 >= 10] => 2",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 10",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * p1 - 31",
+      "value_latex": "4 \\cdot p1 - 31",
+      "mass_plain": "[p0 >= 3 and p1 >= 9] => 2 * p0 + [p0 = 2 and p1 >= 9] => 4 + [p0 = 1 and p1 >= 9] => 2",
+      "mass_latex": "\\left[p0 >= 3 and p1 >= 9\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 2 and p1 >= 9\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 3 and p1 >= 9",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * p1 - (59/2)",
+      "value_latex": "4 \\cdot p1 - \\frac{59}{2}",
+      "mass_plain": "[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 18] => (1/4) * p1 * p0 - (9/4) * p0 + [p0 >= 2 and p1 >= 18 and 8*floor((-1 + p1)/8) <= -2 + p1] => (1/4) * p1 * p0 - (17/4) * p0 + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 18] => (1/4) * p1 - (9/4) + [p0 = 1 and p1 >= 18 and 8*floor((-1 + p1)/8) <= -2 + p1] => (1/4) * p1 - (17/4) + [p1 = 17 and p0 >= 2] => 2 * p0 + [p0 = 1 and p1 = 17] => 2",
+      "mass_latex": "\\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\left[p0 >= 2 and p1 >= 18 and 8*floor((-1 + p1)/8) <= -2 + p1\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0 + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{9}{4} + \\left[p0 = 1 and p1 >= 18 and 8*floor((-1 + p1)/8) <= -2 + p1\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{17}{4} + \\left[p1 = 17 and p0 >= 2\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 = 17\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 18 and 8*floor((-1 + p1)/8) <= -2 + p1",
+          "count_plain": "(1/4) * p1 * p0 - (17/4) * p0",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0"
+        }
+      ]
+    },
+    {
+      "value_plain": "(7/2)",
+      "value_latex": "\\frac{7}{2}",
+      "mass_plain": "[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (53/16) * p1 * p0 - (55/8) * p0 + [(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17] => (53/16) * p1 * p0 - (69/8) * p0 + [p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1] => (25/16) * p1 * p0 - (39/8) * p0 + [p1 = 8 and p0 >= 2] => (159/8) * p0 + [p1 = 9 and p0 >= 2] => (339/16) * p0 + [p0 >= 2 and 3 <= p1 <= 7] => (21/16) * p1 * p0 - (21/8) * p0 + [p0 = 1 and (p1) mod 8 = 0 and p1 >= 16] => (53/16) * p1 - (55/8) + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17] => (53/16) * p1 - (69/8) + [p0 = 1 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1] => (25/16) * p1 - (39/8) + [p0 = 1 and p1 = 8] => (159/8) + [p0 = 1 and p1 = 9] => (339/16) + [p0 = 1 and 3 <= p1 <= 7] => (21/16) * p1 - (21/8)",
+      "mass_latex": "\\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{53}{16} \\cdot p1 \\cdot p0 - \\frac{55}{8} \\cdot p0 + \\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17\\right] \\Rightarrow \\frac{53}{16} \\cdot p1 \\cdot p0 - \\frac{69}{8} \\cdot p0 + \\left[p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1\\right] \\Rightarrow \\frac{25}{16} \\cdot p1 \\cdot p0 - \\frac{39}{8} \\cdot p0 + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow \\frac{159}{8} \\cdot p0 + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{339}{16} \\cdot p0 + \\left[p0 >= 2 and 3 <= p1 <= 7\\right] \\Rightarrow \\frac{21}{16} \\cdot p1 \\cdot p0 - \\frac{21}{8} \\cdot p0 + \\left[p0 = 1 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow \\frac{53}{16} \\cdot p1 - \\frac{55}{8} + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17\\right] \\Rightarrow \\frac{53}{16} \\cdot p1 - \\frac{69}{8} + \\left[p0 = 1 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1\\right] \\Rightarrow \\frac{25}{16} \\cdot p1 - \\frac{39}{8} + \\left[p0 = 1 and p1 = 8\\right] \\Rightarrow \\frac{159}{8} + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{339}{16} + \\left[p0 = 1 and 3 <= p1 <= 7\\right] \\Rightarrow \\frac{21}{16} \\cdot p1 - \\frac{21}{8}",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1",
+          "count_plain": "(25/16) * p1 * p0 - (39/8) * p0",
+          "count_latex": "\\frac{25}{16} \\cdot p1 \\cdot p0 - \\frac{39}{8} \\cdot p0"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * p1 - (289/8)",
+      "value_latex": "4 \\cdot p1 - \\frac{289}{8}",
+      "mass_plain": "[p0 >= 3 and p1 >= 17] => (1/4) * p1 * p0 - 4 * p0 - p1 + 4 + [p0 = 2 and p1 >= 17] => (1/4) * p1 - 4",
+      "mass_latex": "\\left[p0 >= 3 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4 + \\left[p0 = 2 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 4",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 3 and p1 >= 17",
+          "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 4",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "(9/2)",
+      "value_latex": "\\frac{9}{2}",
+      "mass_plain": "[p0 >= 2 and p1 >= 9] => (1/4) * p1 * p0 - 2 * p0 + [p0 = 1 and p1 >= 9] => (1/4) * p1 - 2",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 9",
+          "count_plain": "(1/4) * p1 * p0 - 2 * p0",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/2)",
+      "value_latex": "\\frac{3}{2}",
+      "mass_plain": "[p0 >= 2 and p1 >= 10] => (3/2) * p1 * p0 - 3 * p0 + (7/16) * p1 - (119/32) + [p1 = 9 and p0 >= 2] => (3/2) * p1 * p0 - 3 * p0 + (7/32) * p1 - (7/4) + [p0 >= 2 and 3 <= p1 <= 8] => (3/2) * p1 * p0 - 3 * p0 + [p0 = 1 and p1 >= 10] => (31/16) * p1 - (215/32) + [p0 = 1 and p1 = 9] => (55/32) * p1 - (19/4) + [p0 = 1 and 3 <= p1 <= 8] => (3/2) * p1 - 3",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{16} \\cdot p1 - \\frac{119}{32} + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4} + \\left[p0 >= 2 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow \\frac{31}{16} \\cdot p1 - \\frac{215}{32} + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{55}{32} \\cdot p1 - \\frac{19}{4} + \\left[p0 = 1 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - 3",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 10",
+          "count_plain": "(3/2) * p1 * p0 - 3 * p0 + (7/16) * p1 - (119/32)",
+          "count_latex": "\\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{16} \\cdot p1 - \\frac{119}{32}"
+        }
+      ]
+    },
+    {
+      "value_plain": "1",
+      "value_latex": "1",
+      "mass_plain": "[p0 >= 3 and 2 <= p1 <= 8] => 4 * p0 + [p0 = 2 and 2 <= p1 <= 8] => 8 + [p0 >= 2 and p1 >= 9] => 2 * p0 + [p0 = 1 and 2 <= p1 <= 8] => 4 + [p0 = 1 and p1 >= 9] => 2",
+      "mass_latex": "\\left[p0 >= 3 and 2 <= p1 <= 8\\right] \\Rightarrow 4 \\cdot p0 + \\left[p0 = 2 and 2 <= p1 <= 8\\right] \\Rightarrow 8 + \\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and 2 <= p1 <= 8\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 9",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        }
+      ]
+    },
+    {
+      "value_plain": "(15/4)",
+      "value_latex": "\\frac{15}{4}",
+      "mass_plain": "[p0 >= 2 and p1 >= 9] => (1/4) * p1 * p0 - 2 * p0 + [p0 = 1 and p1 >= 9] => (1/4) * p1 - 2",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 9",
+          "count_plain": "(1/4) * p1 * p0 - 2 * p0",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * p1 - (291/8)",
+      "value_latex": "4 \\cdot p1 - \\frac{291}{8}",
+      "mass_plain": "(1/4) * p1 - 4",
+      "mass_latex": "\\frac{1}{4} \\cdot p1 - 4",
+      "regions": [
+        {
+          "domain_plain": "p0 > 0 and p1 >= 17",
+          "count_plain": "(1/4) * p1 - 4",
+          "count_latex": "\\frac{1}{4} \\cdot p1 - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "(7/8)",
+      "value_latex": "\\frac{7}{8}",
+      "mass_plain": "[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (105/32) * p1 * p0 - (407/32) * p0 - (105/32) * p1 + (407/32) + [p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1] => (49/32) * p1 * p0 + (41/32) * p0 - (49/32) * p1 - (41/32) + [p1 = 8 and p0 >= 2] => 12 * p0 - 12 + [p0 >= 2 and 2 <= p1 <= 7] => 2 * p1 * p0 - 2 * p0 - 2 * p1 + 2",
+      "mass_latex": "\\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{105}{32} \\cdot p1 \\cdot p0 - \\frac{407}{32} \\cdot p0 - \\frac{105}{32} \\cdot p1 + \\frac{407}{32} + \\left[p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{49}{32} \\cdot p1 \\cdot p0 + \\frac{41}{32} \\cdot p0 - \\frac{49}{32} \\cdot p1 - \\frac{41}{32} + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow 12 \\cdot p0 - 12 + \\left[p0 >= 2 and 2 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 \\cdot p0 - 2 \\cdot p0 - 2 \\cdot p1 + 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1",
+          "count_plain": "(49/32) * p1 * p0 + (41/32) * p0 - (49/32) * p1 - (41/32)",
+          "count_latex": "\\frac{49}{32} \\cdot p1 \\cdot p0 + \\frac{41}{32} \\cdot p0 - \\frac{49}{32} \\cdot p1 - \\frac{41}{32}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(7/4)",
+      "value_latex": "\\frac{7}{4}",
+      "mass_plain": "[p0 >= 2 and p1 >= 10] => (1/4) * p1 * p0 - (9/4) * p0 + 2 + [p1 >= 2 and ((p0 >= 2 and p1 <= 9) or p0 = 1)] => (1/4) * p1 - (1/4)",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + 2 + \\left[p1 >= 2 and ((p0 >= 2 and p1 <= 9) or p0 = 1)\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{1}{4}",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 10",
+          "count_plain": "(1/4) * p1 * p0 - (9/4) * p0 + 2",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/4)",
+      "value_latex": "\\frac{3}{4}",
+      "mass_plain": "[p0 >= 2 and p1 >= 3] => (3/2) * p1 * p0 - 3 * p0 + (3/2) + [(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)] => (3/2) * p1 - (3/2)",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 3\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{3}{2} + \\left[(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - \\frac{3}{2}",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 3",
+          "count_plain": "(3/2) * p1 * p0 - 3 * p0 + (3/2)",
+          "count_latex": "\\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{3}{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(5/8)",
+      "value_latex": "\\frac{5}{8}",
+      "mass_plain": "[(p1) mod 8 = 0 and p0 > 0 and p1 >= 16] => (75/32) * p1 - (245/32) + [p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1] => (35/32) * p1 + (75/32) + [p1 = 8 and p0 > 0] => 10 + [p0 > 0 and 3 <= p1 <= 7] => 2 * p1 - 4",
+      "mass_latex": "\\left[(p1) mod 8 = 0 and p0 > 0 and p1 >= 16\\right] \\Rightarrow \\frac{75}{32} \\cdot p1 - \\frac{245}{32} + \\left[p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{35}{32} \\cdot p1 + \\frac{75}{32} + \\left[p1 = 8 and p0 > 0\\right] \\Rightarrow 10 + \\left[p0 > 0 and 3 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 - 4",
+      "regions": [
+        {
+          "domain_plain": "p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1",
+          "count_plain": "(35/32) * p1 + (75/32)",
+          "count_latex": "\\frac{35}{32} \\cdot p1 + \\frac{75}{32}"
+        }
+      ]
+    }
+  ],
+  "rd_distribution": [
+    {
+      "value_plain": "(1/4) * p1 + (1/8)",
+      "value_latex": "\\frac{1}{4} \\cdot p1 + \\frac{1}{8}",
+      "mass_plain": "[p0 >= 3 and p1 >= 10] => 4 * p0 + [p0 = 2 and p1 >= 10] => 8 + [p1 = 9 and p0 >= 3] => 2 * p0 + [p0 = 2 and p1 = 9] => 4 + [p0 = 1 and p1 >= 10] => 4 + [p0 = 1 and p1 = 9] => 2",
+      "mass_latex": "\\left[p0 >= 3 and p1 >= 10\\right] \\Rightarrow 4 \\cdot p0 + \\left[p0 = 2 and p1 >= 10\\right] \\Rightarrow 8 + \\left[p1 = 9 and p0 >= 3\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 2 and p1 = 9\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 3 and p1 >= 10",
+          "count_plain": "4 * p0",
+          "count_latex": "4 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 2 and p1 >= 10",
+          "count_plain": "8",
+          "count_latex": "8"
+        },
+        {
+          "domain_plain": "p1 = 9 and p0 >= 3",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 2 and p1 = 9",
+          "count_plain": "4",
+          "count_latex": "4"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 >= 10",
+          "count_plain": "4",
+          "count_latex": "4"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 = 9",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "2",
+      "value_latex": "2",
+      "mass_plain": "[p0 >= 2 and 2 <= p1 <= 7] => 2 * p0 + [p0 = 1 and 2 <= p1 <= 7] => 2",
+      "mass_latex": "\\left[p0 >= 2 and 2 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and 2 <= p1 <= 7\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and 2 <= p1 <= 7",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and 2 <= p1 <= 7",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(11/4)",
+      "value_latex": "\\frac{11}{4}",
+      "mass_plain": "[p0 >= 2 and p1 >= 8] => (1/4) * p1 * p0 - (7/4) * p0 + [p0 = 1 and p1 >= 8] => (1/4) * p1 - (7/4)",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 8\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 8\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{7}{4}",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 8",
+          "count_plain": "(1/4) * p1 * p0 - (7/4) * p0",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 >= 8",
+          "count_plain": "(1/4) * p1 - (7/4)",
+          "count_latex": "\\frac{1}{4} \\cdot p1 - \\frac{7}{4}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * p1 + (15/8)",
+      "value_latex": "\\frac{1}{4} \\cdot p1 + \\frac{15}{8}",
+      "mass_plain": "[p0 >= 2 and p1 >= 18] => (1/4) * p1 * p0 - (17/4) * p0 + [p0 = 1 and p1 >= 18] => (1/4) * p1 - (17/4)",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{17}{4}",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 18",
+          "count_plain": "(1/4) * p1 * p0 - (17/4) * p0",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 >= 18",
+          "count_plain": "(1/4) * p1 - (17/4)",
+          "count_latex": "\\frac{1}{4} \\cdot p1 - \\frac{17}{4}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(17/4)",
+      "value_latex": "\\frac{17}{4}",
+      "mass_plain": "[p0 >= 2 and 9 <= p1 <= 15] => (1/4) * p1 * p0 - 2 * p0 + [p0 >= 2 and p1 >= 16] => (7/4) * p0 + [p0 = 1 and 9 <= p1 <= 15] => (1/4) * p1 - 2 + [p0 = 1 and p1 >= 16] => (7/4)",
+      "mass_latex": "\\left[p0 >= 2 and 9 <= p1 <= 15\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{7}{4} \\cdot p0 + \\left[p0 = 1 and 9 <= p1 <= 15\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 = 1 and p1 >= 16\\right] \\Rightarrow \\frac{7}{4}",
+      "regions": [
+        {
+          "domain_plain": "(1 + i3) mod 8 = 0 and p0 >= 2 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and (1 + i3) mod 8 = 0 and i3 >= -8 + p1 and 7 <= i3 <= -2 + p1",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * p1 + (11/4)",
+      "value_latex": "\\frac{1}{4} \\cdot p1 + \\frac{11}{4}",
+      "mass_plain": "[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => 2 * p0 + [p0 = 1 and (p1) mod 8 = 0 and p1 >= 16] => 2",
+      "mass_latex": "\\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * p1 + (7/2)",
+      "value_latex": "\\frac{1}{4} \\cdot p1 + \\frac{7}{2}",
+      "mass_plain": "[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17] => 2 * p0 + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17] => 2",
+      "mass_latex": "\\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(7/4)",
+      "value_latex": "\\frac{7}{4}",
+      "mass_plain": "[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (23/8) * p1 * p0 - (13/2) * p0 + 2 + [(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17] => (23/8) * p1 * p0 - 8 * p0 + 2 + [p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1] => (11/8) * p1 * p0 - (9/2) * p0 + 2 + [p1 = 8 and p0 >= 2] => (67/4) * p0 + (7/4) + [p1 = 9 and p0 >= 2] => (143/8) * p0 + 2 + [p0 >= 2 and 3 <= p1 <= 7] => (9/8) * p1 * p0 - (9/4) * p0 + (1/4) * p1 - (1/4) + [p0 = 1 and (p1) mod 8 = 0 and p1 >= 16] => (23/8) * p1 - (9/2) + [p0 = 1 and p1 = 8] => (37/2) + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17] => (23/8) * p1 - 6 + [p0 = 1 and p1 = 9] => (159/8) + [p0 = 1 and p1 >= 3 and (p1 <= 7 or (p1 >= 10 and 8*floor((p1)/8) <= -2 + p1))] => (11/8) * p1 - (5/2) + [p1 = 2 and (p0 >= 2 or p0 = 1)] => (1/4)",
+      "mass_latex": "\\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 \\cdot p0 - \\frac{13}{2} \\cdot p0 + 2 + \\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 \\cdot p0 - 8 \\cdot p0 + 2 + \\left[p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1\\right] \\Rightarrow \\frac{11}{8} \\cdot p1 \\cdot p0 - \\frac{9}{2} \\cdot p0 + 2 + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow \\frac{67}{4} \\cdot p0 + \\frac{7}{4} + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{143}{8} \\cdot p0 + 2 + \\left[p0 >= 2 and 3 <= p1 <= 7\\right] \\Rightarrow \\frac{9}{8} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\frac{1}{4} \\cdot p1 - \\frac{1}{4} + \\left[p0 = 1 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 - \\frac{9}{2} + \\left[p0 = 1 and p1 = 8\\right] \\Rightarrow \\frac{37}{2} + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 - 6 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{159}{8} + \\left[p0 = 1 and p1 >= 3 and (p1 <= 7 or (p1 >= 10 and 8*floor((p1)/8) <= -2 + p1))\\right] \\Rightarrow \\frac{11}{8} \\cdot p1 - \\frac{5}{2} + \\left[p1 = 2 and (p0 >= 2 or p0 = 1)\\right] \\Rightarrow \\frac{1}{4}",
+      "regions": [
+        {
+          "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+          "count_plain": "(23/8) * p1 * p0 - (13/2) * p0 + 2",
+          "count_latex": "\\frac{23}{8} \\cdot p1 \\cdot p0 - \\frac{13}{2} \\cdot p0 + 2"
+        },
+        {
+          "domain_plain": "(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17",
+          "count_plain": "(23/8) * p1 * p0 - 8 * p0 + 2",
+          "count_latex": "\\frac{23}{8} \\cdot p1 \\cdot p0 - 8 \\cdot p0 + 2"
+        },
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1",
+          "count_plain": "(11/8) * p1 * p0 - (9/2) * p0 + 2",
+          "count_latex": "\\frac{11}{8} \\cdot p1 \\cdot p0 - \\frac{9}{2} \\cdot p0 + 2"
+        },
+        {
+          "domain_plain": "p1 = 8 and p0 >= 2",
+          "count_plain": "(67/4) * p0 + (7/4)",
+          "count_latex": "\\frac{67}{4} \\cdot p0 + \\frac{7}{4}"
+        },
+        {
+          "domain_plain": "p1 = 9 and p0 >= 2",
+          "count_plain": "(143/8) * p0 + 2",
+          "count_latex": "\\frac{143}{8} \\cdot p0 + 2"
+        },
+        {
+          "domain_plain": "p0 >= 2 and 3 <= p1 <= 7",
+          "count_plain": "(9/8) * p1 * p0 - (9/4) * p0 + (1/4) * p1 - (1/4)",
+          "count_latex": "\\frac{9}{8} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\frac{1}{4} \\cdot p1 - \\frac{1}{4}"
+        },
+        {
+          "domain_plain": "p0 = 1 and (p1) mod 8 = 0 and p1 >= 16",
+          "count_plain": "(23/8) * p1 - (9/2)",
+          "count_latex": "\\frac{23}{8} \\cdot p1 - \\frac{9}{2}"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 = 8",
+          "count_plain": "(37/2)",
+          "count_latex": "\\frac{37}{2}"
+        },
+        {
+          "domain_plain": "p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17",
+          "count_plain": "(23/8) * p1 - 6",
+          "count_latex": "\\frac{23}{8} \\cdot p1 - 6"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 = 9",
+          "count_plain": "(159/8)",
+          "count_latex": "\\frac{159}{8}"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 >= 3 and (p1 <= 7 or (p1 >= 10 and 8*floor((p1)/8) <= -2 + p1))",
+          "count_plain": "(11/8) * p1 - (5/2)",
+          "count_latex": "\\frac{11}{8} \\cdot p1 - \\frac{5}{2}"
+        },
+        {
+          "domain_plain": "p1 = 2 and (p0 >= 2 or p0 = 1)",
+          "count_plain": "(1/4)",
+          "count_latex": "\\frac{1}{4}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * p1 + 1",
+      "value_latex": "\\frac{1}{4} \\cdot p1 + 1",
+      "mass_plain": "[p0 >= 3 and p1 >= 17] => (1/4) * p1 * p0 - 4 * p0 - p1 + 4 + [p0 = 2 and p1 >= 17] => (1/4) * p1 - 4",
+      "mass_latex": "\\left[p0 >= 3 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4 + \\left[p0 = 2 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 4",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 3 and p1 >= 17",
+          "count_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 4",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4"
+        },
+        {
+          "domain_plain": "p0 = 2 and p1 >= 17",
+          "count_plain": "(1/4) * p1 - 4",
+          "count_latex": "\\frac{1}{4} \\cdot p1 - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "(9/2)",
+      "value_latex": "\\frac{9}{2}",
+      "mass_plain": "[p0 >= 2 and p1 >= 9] => (1/4) * p1 * p0 - 2 * p0 + [p0 = 1 and p1 >= 9] => (1/4) * p1 - 2",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 9",
+          "count_plain": "(1/4) * p1 * p0 - 2 * p0",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 >= 9",
+          "count_plain": "(1/4) * p1 - 2",
+          "count_latex": "\\frac{1}{4} \\cdot p1 - 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(7/2)",
+      "value_latex": "\\frac{7}{2}",
+      "mass_plain": "[p0 >= 2 and p1 >= 10] => (1/4) * p1 * p0 - (9/4) * p0 + [p0 = 1 and p1 >= 10] => (1/4) * p1 - (9/4)",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{9}{4}",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 10",
+          "count_plain": "(1/4) * p1 * p0 - (9/4) * p0",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 >= 10",
+          "count_plain": "(1/4) * p1 - (9/4)",
+          "count_latex": "\\frac{1}{4} \\cdot p1 - \\frac{9}{4}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/2)",
+      "value_latex": "\\frac{3}{2}",
+      "mass_plain": "[p0 >= 2 and p1 >= 10] => (3/2) * p1 * p0 - 3 * p0 + (7/16) * p1 - (119/32) + [p1 = 9 and p0 >= 2] => (3/2) * p1 * p0 - 3 * p0 + (7/32) * p1 - (7/4) + [p0 >= 2 and 3 <= p1 <= 8] => (3/2) * p1 * p0 - 3 * p0 + [p0 = 1 and p1 >= 10] => (31/16) * p1 - (215/32) + [p0 = 1 and p1 = 9] => (55/32) * p1 - (19/4) + [p0 = 1 and 3 <= p1 <= 8] => (3/2) * p1 - 3",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{16} \\cdot p1 - \\frac{119}{32} + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4} + \\left[p0 >= 2 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow \\frac{31}{16} \\cdot p1 - \\frac{215}{32} + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{55}{32} \\cdot p1 - \\frac{19}{4} + \\left[p0 = 1 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - 3",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 10",
+          "count_plain": "(3/2) * p1 * p0 - 3 * p0 + (7/16) * p1 - (119/32)",
+          "count_latex": "\\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{16} \\cdot p1 - \\frac{119}{32}"
+        },
+        {
+          "domain_plain": "p1 = 9 and p0 >= 2",
+          "count_plain": "(3/2) * p1 * p0 - 3 * p0 + (7/32) * p1 - (7/4)",
+          "count_latex": "\\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4}"
+        },
+        {
+          "domain_plain": "p0 >= 2 and 3 <= p1 <= 8",
+          "count_plain": "(3/2) * p1 * p0 - 3 * p0",
+          "count_latex": "\\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 >= 10",
+          "count_plain": "(31/16) * p1 - (215/32)",
+          "count_latex": "\\frac{31}{16} \\cdot p1 - \\frac{215}{32}"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 = 9",
+          "count_plain": "(55/32) * p1 - (19/4)",
+          "count_latex": "\\frac{55}{32} \\cdot p1 - \\frac{19}{4}"
+        },
+        {
+          "domain_plain": "p0 = 1 and 3 <= p1 <= 8",
+          "count_plain": "(3/2) * p1 - 3",
+          "count_latex": "\\frac{3}{2} \\cdot p1 - 3"
+        }
+      ]
+    },
+    {
+      "value_plain": "(21/8)",
+      "value_latex": "\\frac{21}{8}",
+      "mass_plain": "[p0 >= 3 and 9 <= p1 <= 16] => (1/4) * p1 * p0 - 2 * p0 - p1 + 2 + [p0 = 2 and 9 <= p1 <= 16] => (1/4) * p1 - 2 + [p0 >= 3 and p1 >= 17] => 2 * p0 - 2 + [p0 = 2 and p1 >= 17] => 2",
+      "mass_latex": "\\left[p0 >= 3 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 - p1 + 2 + \\left[p0 = 2 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 >= 3 and p1 >= 17\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and p1 >= 17\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "(2 + i2) mod 8 = 0 and p0 >= 3 and i2 >= -10 + p1 and 6 <= i2 <= -3 + p1",
+          "count_plain": "2 * p0 - 2",
+          "count_latex": "2 \\cdot p0 - 2"
+        },
+        {
+          "domain_plain": "p0 = 2 and (2 + i2) mod 8 = 0 and i2 >= -10 + p1 and 6 <= i2 <= -3 + p1",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "1",
+      "value_latex": "1",
+      "mass_plain": "[p0 >= 3 and 2 <= p1 <= 8] => 4 * p0 + [p0 = 2 and 2 <= p1 <= 8] => 8 + [p0 >= 2 and p1 >= 9] => 2 * p0 + [p0 = 1 and 2 <= p1 <= 8] => 4 + [p0 = 1 and p1 >= 9] => 2",
+      "mass_latex": "\\left[p0 >= 3 and 2 <= p1 <= 8\\right] \\Rightarrow 4 \\cdot p0 + \\left[p0 = 2 and 2 <= p1 <= 8\\right] \\Rightarrow 8 + \\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and 2 <= p1 <= 8\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 3 and 2 <= p1 <= 8",
+          "count_plain": "4 * p0",
+          "count_latex": "4 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 2 and 2 <= p1 <= 8",
+          "count_plain": "8",
+          "count_latex": "8"
+        },
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 9",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and 2 <= p1 <= 8",
+          "count_plain": "4",
+          "count_latex": "4"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 >= 9",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(15/4)",
+      "value_latex": "\\frac{15}{4}",
+      "mass_plain": "[p0 >= 2 and p1 >= 9] => (1/4) * p1 * p0 - 2 * p0 + [p0 = 1 and p1 >= 9] => (1/4) * p1 - 2",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 9",
+          "count_plain": "(1/4) * p1 * p0 - 2 * p0",
+          "count_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 >= 9",
+          "count_plain": "(1/4) * p1 - 2",
+          "count_latex": "\\frac{1}{4} \\cdot p1 - 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "4",
+      "value_latex": "4",
+      "mass_plain": "[p1 = 9 and p0 >= 2] => 2 * p0 + [p0 = 1 and p1 = 9] => 2",
+      "mass_latex": "\\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p1 = 9 and p0 >= 2",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 = 9",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "[p1 = 8 and p0 >= 2] => 2 * p0 + [p0 = 1 and p1 = 8] => 2",
+      "mass_latex": "\\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 = 8\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p1 = 8 and p0 >= 2",
+          "count_plain": "2 * p0",
+          "count_latex": "2 \\cdot p0"
+        },
+        {
+          "domain_plain": "p0 = 1 and p1 = 8",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * p1 + (3/4)",
+      "value_latex": "\\frac{1}{4} \\cdot p1 + \\frac{3}{4}",
+      "mass_plain": "(1/4) * p1 - 4",
+      "mass_latex": "\\frac{1}{4} \\cdot p1 - 4",
+      "regions": [
+        {
+          "domain_plain": "p0 > 0 and p1 >= 17",
+          "count_plain": "(1/4) * p1 - 4",
+          "count_latex": "\\frac{1}{4} \\cdot p1 - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "(39/8)",
+      "value_latex": "\\frac{39}{8}",
+      "mass_plain": "[p1 = 8 and p0 >= 3] => 2 * p0 - 2 + [p0 = 2 and p1 = 8] => 2",
+      "mass_latex": "\\left[p1 = 8 and p0 >= 3\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and p1 = 8\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "p1 = 8 and p0 >= 3",
+          "count_plain": "2 * p0 - 2",
+          "count_latex": "2 \\cdot p0 - 2"
+        },
+        {
+          "domain_plain": "p0 = 2 and p1 = 8",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * p1 + (23/8)",
+      "value_latex": "\\frac{1}{4} \\cdot p1 + \\frac{23}{8}",
+      "mass_plain": "[(p1) mod 8 = 0 and p0 >= 3 and p1 >= 16] => 2 * p0 - 2 + [p0 = 2 and (p1) mod 8 = 0 and p1 >= 16] => 2",
+      "mass_latex": "\\left[(p1) mod 8 = 0 and p0 >= 3 and p1 >= 16\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "(p1) mod 8 = 0 and p0 >= 3 and p1 >= 16",
+          "count_plain": "2 * p0 - 2",
+          "count_latex": "2 \\cdot p0 - 2"
+        },
+        {
+          "domain_plain": "p0 = 2 and (p1) mod 8 = 0 and p1 >= 16",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(7/8)",
+      "value_latex": "\\frac{7}{8}",
+      "mass_plain": "[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (105/32) * p1 * p0 - (407/32) * p0 - (105/32) * p1 + (407/32) + [p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1] => (49/32) * p1 * p0 + (41/32) * p0 - (49/32) * p1 - (41/32) + [p1 = 8 and p0 >= 2] => 12 * p0 - 12 + [p0 >= 2 and 2 <= p1 <= 7] => 2 * p1 * p0 - 2 * p0 - 2 * p1 + 2",
+      "mass_latex": "\\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{105}{32} \\cdot p1 \\cdot p0 - \\frac{407}{32} \\cdot p0 - \\frac{105}{32} \\cdot p1 + \\frac{407}{32} + \\left[p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{49}{32} \\cdot p1 \\cdot p0 + \\frac{41}{32} \\cdot p0 - \\frac{49}{32} \\cdot p1 - \\frac{41}{32} + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow 12 \\cdot p0 - 12 + \\left[p0 >= 2 and 2 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 \\cdot p0 - 2 \\cdot p0 - 2 \\cdot p1 + 2",
+      "regions": [
+        {
+          "domain_plain": "(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16",
+          "count_plain": "(105/32) * p1 * p0 - (407/32) * p0 - (105/32) * p1 + (407/32)",
+          "count_latex": "\\frac{105}{32} \\cdot p1 \\cdot p0 - \\frac{407}{32} \\cdot p0 - \\frac{105}{32} \\cdot p1 + \\frac{407}{32}"
+        },
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1",
+          "count_plain": "(49/32) * p1 * p0 + (41/32) * p0 - (49/32) * p1 - (41/32)",
+          "count_latex": "\\frac{49}{32} \\cdot p1 \\cdot p0 + \\frac{41}{32} \\cdot p0 - \\frac{49}{32} \\cdot p1 - \\frac{41}{32}"
+        },
+        {
+          "domain_plain": "p1 = 8 and p0 >= 2",
+          "count_plain": "12 * p0 - 12",
+          "count_latex": "12 \\cdot p0 - 12"
+        },
+        {
+          "domain_plain": "p0 >= 2 and 2 <= p1 <= 7",
+          "count_plain": "2 * p1 * p0 - 2 * p0 - 2 * p1 + 2",
+          "count_latex": "2 \\cdot p1 \\cdot p0 - 2 \\cdot p0 - 2 \\cdot p1 + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/4)",
+      "value_latex": "\\frac{3}{4}",
+      "mass_plain": "[p0 >= 2 and p1 >= 3] => (3/2) * p1 * p0 - 3 * p0 + (3/2) + [(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)] => (3/2) * p1 - (3/2)",
+      "mass_latex": "\\left[p0 >= 2 and p1 >= 3\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{3}{2} + \\left[(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - \\frac{3}{2}",
+      "regions": [
+        {
+          "domain_plain": "p0 >= 2 and p1 >= 3",
+          "count_plain": "(3/2) * p1 * p0 - 3 * p0 + (3/2)",
+          "count_latex": "\\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{3}{2}"
+        },
+        {
+          "domain_plain": "(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)",
+          "count_plain": "(3/2) * p1 - (3/2)",
+          "count_latex": "\\frac{3}{2} \\cdot p1 - \\frac{3}{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(19/8)",
+      "value_latex": "\\frac{19}{8}",
+      "mass_plain": "[p0 > 0 and 9 <= p1 <= 16] => (1/4) * p1 - 2 + [p0 > 0 and p1 >= 17] => 2",
+      "mass_latex": "\\left[p0 > 0 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 > 0 and p1 >= 17\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "(2 + i2) mod 8 = 0 and p0 > 0 and i2 >= -10 + p1 and 6 <= i2 <= -3 + p1",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(37/8)",
+      "value_latex": "\\frac{37}{8}",
+      "mass_plain": "2",
+      "mass_latex": "2",
+      "regions": [
+        {
+          "domain_plain": "p1 = 8 and p0 > 0",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * p1 + (21/8)",
+      "value_latex": "\\frac{1}{4} \\cdot p1 + \\frac{21}{8}",
+      "mass_plain": "2",
+      "mass_latex": "2",
+      "regions": [
+        {
+          "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(5/2)",
+      "value_latex": "\\frac{5}{2}",
+      "mass_plain": "(1/2) * p1 - 4",
+      "mass_latex": "\\frac{1}{2} \\cdot p1 - 4",
+      "regions": [
+        {
+          "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+          "count_plain": "(1/2) * p1 - 4",
+          "count_latex": "\\frac{1}{2} \\cdot p1 - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "(5/8)",
+      "value_latex": "\\frac{5}{8}",
+      "mass_plain": "[(p1) mod 8 = 0 and p0 > 0 and p1 >= 16] => (75/32) * p1 - (245/32) + [p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1] => (35/32) * p1 + (75/32) + [p1 = 8 and p0 > 0] => 10 + [p0 > 0 and 3 <= p1 <= 7] => 2 * p1 - 4",
+      "mass_latex": "\\left[(p1) mod 8 = 0 and p0 > 0 and p1 >= 16\\right] \\Rightarrow \\frac{75}{32} \\cdot p1 - \\frac{245}{32} + \\left[p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{35}{32} \\cdot p1 + \\frac{75}{32} + \\left[p1 = 8 and p0 > 0\\right] \\Rightarrow 10 + \\left[p0 > 0 and 3 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 - 4",
+      "regions": [
+        {
+          "domain_plain": "(p1) mod 8 = 0 and p0 > 0 and p1 >= 16",
+          "count_plain": "(75/32) * p1 - (245/32)",
+          "count_latex": "\\frac{75}{32} \\cdot p1 - \\frac{245}{32}"
+        },
+        {
+          "domain_plain": "p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1",
+          "count_plain": "(35/32) * p1 + (75/32)",
+          "count_latex": "\\frac{35}{32} \\cdot p1 + \\frac{75}{32}"
+        },
+        {
+          "domain_plain": "p1 = 8 and p0 > 0",
+          "count_plain": "10",
+          "count_latex": "10"
+        },
+        {
+          "domain_plain": "p0 > 0 and 3 <= p1 <= 7",
+          "count_plain": "2 * p1 - 4",
+          "count_latex": "2 \\cdot p1 - 4"
+        }
+      ]
+    }
+  ],
+  "dmd_terms": [
+    {
+      "domain_plain": "p0 >= 3 and p1 >= 10",
+      "multiplicity_plain": "4 * p0",
+      "multiplicity_latex": "4 \\cdot p0",
+      "reuse_distance_plain": "(1/4) * p1 + (1/8)",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot p1 + \\frac{1}{8}",
+      "term_plain": "4 * sqrt((1/4) * p1 + (1/8)) * p0",
+      "term_latex": "4 \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{1}{8}} \\cdot p0"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 8",
+      "multiplicity_plain": "(1/4) * p1 * p0 - (7/4) * p0",
+      "multiplicity_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0",
+      "reuse_distance_plain": "(11/4)",
+      "reuse_distance_latex": "\\frac{11}{4}",
+      "term_plain": "(1/4) * sqrt((11/4)) * p1 * p0 - (7/4) * sqrt((11/4)) * p0",
+      "term_latex": "\\frac{1}{4} \\cdot \\sqrt{\\frac{11}{4}} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot \\sqrt{\\frac{11}{4}} \\cdot p0"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 18",
+      "multiplicity_plain": "(1/4) * p1 * p0 - (17/4) * p0",
+      "multiplicity_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0",
+      "reuse_distance_plain": "(1/4) * p1 + (15/8)",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot p1 + \\frac{15}{8}",
+      "term_plain": "(1/4) * sqrt((1/4) * p1 + (15/8)) * p1 * p0 - (17/4) * sqrt((1/4) * p1 + (15/8)) * p0",
+      "term_latex": "\\frac{1}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{15}{8}} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{15}{8}} \\cdot p0"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1",
+      "multiplicity_plain": "(11/8) * p1 * p0 - (9/2) * p0 + 2",
+      "multiplicity_latex": "\\frac{11}{8} \\cdot p1 \\cdot p0 - \\frac{9}{2} \\cdot p0 + 2",
+      "reuse_distance_plain": "(7/4)",
+      "reuse_distance_latex": "\\frac{7}{4}",
+      "term_plain": "(11/8) * sqrt((7/4)) * p1 * p0 - (9/2) * sqrt((7/4)) * p0 + 2 * sqrt((7/4))",
+      "term_latex": "\\frac{11}{8} \\cdot \\sqrt{\\frac{7}{4}} \\cdot p1 \\cdot p0 - \\frac{9}{2} \\cdot \\sqrt{\\frac{7}{4}} \\cdot p0 + 2 \\cdot \\sqrt{\\frac{7}{4}}"
+    },
+    {
+      "domain_plain": "p0 >= 3 and p1 >= 17",
+      "multiplicity_plain": "(1/4) * p1 * p0 - 4 * p0 - p1 + 4",
+      "multiplicity_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4",
+      "reuse_distance_plain": "(1/4) * p1 + 1",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot p1 + 1",
+      "term_plain": "(1/4) * sqrt((1/4) * p1 + 1) * p1 * p0 - 4 * sqrt((1/4) * p1 + 1) * p0 - sqrt((1/4) * p1 + 1) * p1 + 4 * sqrt((1/4) * p1 + 1)",
+      "term_latex": "\\frac{1}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + 1} \\cdot p1 \\cdot p0 - 4 \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + 1} \\cdot p0 - \\sqrt{\\frac{1}{4} \\cdot p1 + 1} \\cdot p1 + 4 \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + 1}"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "multiplicity_plain": "(1/4) * p1 * p0 - 2 * p0",
+      "multiplicity_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0",
+      "reuse_distance_plain": "(9/2)",
+      "reuse_distance_latex": "\\frac{9}{2}",
+      "term_plain": "(1/4) * sqrt((9/2)) * p1 * p0 - 2 * sqrt((9/2)) * p0",
+      "term_latex": "\\frac{1}{4} \\cdot \\sqrt{\\frac{9}{2}} \\cdot p1 \\cdot p0 - 2 \\cdot \\sqrt{\\frac{9}{2}} \\cdot p0"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 10",
+      "multiplicity_plain": "(1/4) * p1 * p0 - (9/4) * p0",
+      "multiplicity_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0",
+      "reuse_distance_plain": "(7/2)",
+      "reuse_distance_latex": "\\frac{7}{2}",
+      "term_plain": "(1/4) * sqrt((7/2)) * p1 * p0 - (9/4) * sqrt((7/2)) * p0",
+      "term_latex": "\\frac{1}{4} \\cdot \\sqrt{\\frac{7}{2}} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot \\sqrt{\\frac{7}{2}} \\cdot p0"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 10",
+      "multiplicity_plain": "(3/2) * p1 * p0 - 3 * p0 + (7/16) * p1 - (119/32)",
+      "multiplicity_latex": "\\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{16} \\cdot p1 - \\frac{119}{32}",
+      "reuse_distance_plain": "(3/2)",
+      "reuse_distance_latex": "\\frac{3}{2}",
+      "term_plain": "(3/2) * sqrt((3/2)) * p1 * p0 - 3 * sqrt((3/2)) * p0 + (7/16) * sqrt((3/2)) * p1 - (119/32) * sqrt((3/2))",
+      "term_latex": "\\frac{3}{2} \\cdot \\sqrt{\\frac{3}{2}} \\cdot p1 \\cdot p0 - 3 \\cdot \\sqrt{\\frac{3}{2}} \\cdot p0 + \\frac{7}{16} \\cdot \\sqrt{\\frac{3}{2}} \\cdot p1 - \\frac{119}{32} \\cdot \\sqrt{\\frac{3}{2}}"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "multiplicity_plain": "2 * p0",
+      "multiplicity_latex": "2 \\cdot p0",
+      "reuse_distance_plain": "1",
+      "reuse_distance_latex": "1",
+      "term_plain": "2 * p0",
+      "term_latex": "2 \\cdot p0"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 9",
+      "multiplicity_plain": "(1/4) * p1 * p0 - 2 * p0",
+      "multiplicity_latex": "\\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0",
+      "reuse_distance_plain": "(15/4)",
+      "reuse_distance_latex": "\\frac{15}{4}",
+      "term_plain": "(1/4) * sqrt((15/4)) * p1 * p0 - 2 * sqrt((15/4)) * p0",
+      "term_latex": "\\frac{1}{4} \\cdot \\sqrt{\\frac{15}{4}} \\cdot p1 \\cdot p0 - 2 \\cdot \\sqrt{\\frac{15}{4}} \\cdot p0"
+    },
+    {
+      "domain_plain": "p0 > 0 and p1 >= 17",
+      "multiplicity_plain": "(1/4) * p1 - 4",
+      "multiplicity_latex": "\\frac{1}{4} \\cdot p1 - 4",
+      "reuse_distance_plain": "(1/4) * p1 + (3/4)",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot p1 + \\frac{3}{4}",
+      "term_plain": "(1/4) * sqrt((1/4) * p1 + (3/4)) * p1 - 4 * sqrt((1/4) * p1 + (3/4))",
+      "term_latex": "\\frac{1}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{3}{4}} \\cdot p1 - 4 \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{3}{4}}"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1",
+      "multiplicity_plain": "(49/32) * p1 * p0 + (41/32) * p0 - (49/32) * p1 - (41/32)",
+      "multiplicity_latex": "\\frac{49}{32} \\cdot p1 \\cdot p0 + \\frac{41}{32} \\cdot p0 - \\frac{49}{32} \\cdot p1 - \\frac{41}{32}",
+      "reuse_distance_plain": "(7/8)",
+      "reuse_distance_latex": "\\frac{7}{8}",
+      "term_plain": "(49/32) * sqrt((7/8)) * p1 * p0 + (41/32) * sqrt((7/8)) * p0 - (49/32) * sqrt((7/8)) * p1 - (41/32) * sqrt((7/8))",
+      "term_latex": "\\frac{49}{32} \\cdot \\sqrt{\\frac{7}{8}} \\cdot p1 \\cdot p0 + \\frac{41}{32} \\cdot \\sqrt{\\frac{7}{8}} \\cdot p0 - \\frac{49}{32} \\cdot \\sqrt{\\frac{7}{8}} \\cdot p1 - \\frac{41}{32} \\cdot \\sqrt{\\frac{7}{8}}"
+    },
+    {
+      "domain_plain": "p0 >= 2 and p1 >= 3",
+      "multiplicity_plain": "(3/2) * p1 * p0 - 3 * p0 + (3/2)",
+      "multiplicity_latex": "\\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{3}{2}",
+      "reuse_distance_plain": "(3/4)",
+      "reuse_distance_latex": "\\frac{3}{4}",
+      "term_plain": "(3/2) * sqrt((3/4)) * p1 * p0 - 3 * sqrt((3/4)) * p0 + (3/2) * sqrt((3/4))",
+      "term_latex": "\\frac{3}{2} \\cdot \\sqrt{\\frac{3}{4}} \\cdot p1 \\cdot p0 - 3 \\cdot \\sqrt{\\frac{3}{4}} \\cdot p0 + \\frac{3}{2} \\cdot \\sqrt{\\frac{3}{4}}"
+    },
+    {
+      "domain_plain": "p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1",
+      "multiplicity_plain": "(35/32) * p1 + (75/32)",
+      "multiplicity_latex": "\\frac{35}{32} \\cdot p1 + \\frac{75}{32}",
+      "reuse_distance_plain": "(5/8)",
+      "reuse_distance_latex": "\\frac{5}{8}",
+      "term_plain": "(35/32) * sqrt((5/8)) * p1 + (75/32) * sqrt((5/8))",
+      "term_latex": "\\frac{35}{32} \\cdot \\sqrt{\\frac{5}{8}} \\cdot p1 + \\frac{75}{32} \\cdot \\sqrt{\\frac{5}{8}}"
+    }
+  ],
+  "dmd_formula_plain": "(1/4) * sqrt((1/4) * p1 + (15/8)) * p1 * p0 + (1/4) * sqrt((1/4) * p1 + 1) * p1 * p0 + 8 * p1 * p0 + 4 * sqrt((1/4) * p1 + (1/8)) * p0 + (1/4) * sqrt((11/4)) * p1 * p0 - (17/4) * sqrt((1/4) * p1 + (15/8)) * p0 + (11/8) * sqrt((7/4)) * p1 * p0 - 4 * sqrt((1/4) * p1 + 1) * p0 - sqrt((1/4) * p1 + 1) * p1 + (1/4) * sqrt((9/2)) * p1 * p0 + (1/4) * sqrt((7/2)) * p1 * p0 + (3/2) * sqrt((3/2)) * p1 * p0 + (1/4) * sqrt((15/4)) * p1 * p0 + (1/4) * sqrt((1/4) * p1 + (3/4)) * p1 + (49/32) * sqrt((7/8)) * p1 * p0 + (3/2) * sqrt((3/4)) * p1 * p0 - 6 * p0 - (3/4) * p1 - (7/4) * sqrt((11/4)) * p0 - (9/2) * sqrt((7/4)) * p0 + 4 * sqrt((1/4) * p1 + 1) - 2 * sqrt((9/2)) * p0 - (9/4) * sqrt((7/2)) * p0 - 3 * sqrt((3/2)) * p0 + (7/16) * sqrt((3/2)) * p1 - 2 * sqrt((15/4)) * p0 - 4 * sqrt((1/4) * p1 + (3/4)) + (41/32) * sqrt((7/8)) * p0 - (49/32) * sqrt((7/8)) * p1 - 3 * sqrt((3/4)) * p0 + (35/32) * sqrt((5/8)) * p1 - [p0 >= 3 and p1 >= 10] => 4 * p0 + [p0 = 2 and p1 >= 10] => 8 + [p1 = 9 and p0 >= 3] => 2 * p0 + [p0 = 2 and p1 = 9] => 4 + [p0 = 1 and p1 >= 10] => 4 + [p0 = 1 and p1 = 9] => 2 - [p0 >= 2 and 2 <= p1 <= 7] => 2 * p0 + [p0 = 1 and 2 <= p1 <= 7] => 2 - [p0 >= 2 and p1 >= 8] => (1/4) * p1 * p0 - (7/4) * p0 + [p0 = 1 and p1 >= 8] => (1/4) * p1 - (7/4) - [p0 >= 2 and p1 >= 18] => (1/4) * p1 * p0 - (17/4) * p0 + [p0 = 1 and p1 >= 18] => (1/4) * p1 - (17/4) - [p0 >= 2 and 9 <= p1 <= 15] => (1/4) * p1 * p0 - 2 * p0 + [p0 >= 2 and p1 >= 16] => (7/4) * p0 + [p0 = 1 and 9 <= p1 <= 15] => (1/4) * p1 - 2 + [p0 = 1 and p1 >= 16] => (7/4) - [(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => 2 * p0 + [p0 = 1 and (p1) mod 8 = 0 and p1 >= 16] => 2 - [(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17] => 2 * p0 + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17] => 2 - [(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (23/8) * p1 * p0 - (13/2) * p0 + 2 + [(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17] => (23/8) * p1 * p0 - 8 * p0 + 2 + [p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1] => (11/8) * p1 * p0 - (9/2) * p0 + 2 + [p1 = 8 and p0 >= 2] => (67/4) * p0 + (7/4) + [p1 = 9 and p0 >= 2] => (143/8) * p0 + 2 + [p0 >= 2 and 3 <= p1 <= 7] => (9/8) * p1 * p0 - (9/4) * p0 + (1/4) * p1 - (1/4) + [p0 = 1 and (p1) mod 8 = 0 and p1 >= 16] => (23/8) * p1 - (9/2) + [p0 = 1 and p1 = 8] => (37/2) + [p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17] => (23/8) * p1 - 6 + [p0 = 1 and p1 = 9] => (159/8) + [p0 = 1 and p1 >= 3 and (p1 <= 7 or (p1 >= 10 and 8*floor((p1)/8) <= -2 + p1))] => (11/8) * p1 - (5/2) + [p1 = 2 and (p0 >= 2 or p0 = 1)] => (1/4) - [p0 >= 3 and p1 >= 17] => (1/4) * p1 * p0 - 4 * p0 - p1 + 4 + [p0 = 2 and p1 >= 17] => (1/4) * p1 - 4 - 2 * [p0 >= 2 and p1 >= 9] => (1/4) * p1 * p0 - 2 * p0 + [p0 = 1 and p1 >= 9] => (1/4) * p1 - 2 - [p0 >= 2 and p1 >= 10] => (1/4) * p1 * p0 - (9/4) * p0 + [p0 = 1 and p1 >= 10] => (1/4) * p1 - (9/4) - [p0 >= 2 and p1 >= 10] => (3/2) * p1 * p0 - 3 * p0 + (7/16) * p1 - (119/32) + [p1 = 9 and p0 >= 2] => (3/2) * p1 * p0 - 3 * p0 + (7/32) * p1 - (7/4) + [p0 >= 2 and 3 <= p1 <= 8] => (3/2) * p1 * p0 - 3 * p0 + [p0 = 1 and p1 >= 10] => (31/16) * p1 - (215/32) + [p0 = 1 and p1 = 9] => (55/32) * p1 - (19/4) + [p0 = 1 and 3 <= p1 <= 8] => (3/2) * p1 - 3 - [p0 >= 3 and 9 <= p1 <= 16] => (1/4) * p1 * p0 - 2 * p0 - p1 + 2 + [p0 = 2 and 9 <= p1 <= 16] => (1/4) * p1 - 2 + [p0 >= 3 and p1 >= 17] => 2 * p0 - 2 + [p0 = 2 and p1 >= 17] => 2 - [p0 >= 3 and 2 <= p1 <= 8] => 4 * p0 + [p0 = 2 and 2 <= p1 <= 8] => 8 + [p0 >= 2 and p1 >= 9] => 2 * p0 + [p0 = 1 and 2 <= p1 <= 8] => 4 + [p0 = 1 and p1 >= 9] => 2 - [p1 = 9 and p0 >= 2] => 2 * p0 + [p0 = 1 and p1 = 9] => 2 - [p1 = 8 and p0 >= 2] => 2 * p0 + [p0 = 1 and p1 = 8] => 2 - [p1 = 8 and p0 >= 3] => 2 * p0 - 2 + [p0 = 2 and p1 = 8] => 2 - [(p1) mod 8 = 0 and p0 >= 3 and p1 >= 16] => 2 * p0 - 2 + [p0 = 2 and (p1) mod 8 = 0 and p1 >= 16] => 2 - [(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16] => (105/32) * p1 * p0 - (407/32) * p0 - (105/32) * p1 + (407/32) + [p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1] => (49/32) * p1 * p0 + (41/32) * p0 - (49/32) * p1 - (41/32) + [p1 = 8 and p0 >= 2] => 12 * p0 - 12 + [p0 >= 2 and 2 <= p1 <= 7] => 2 * p1 * p0 - 2 * p0 - 2 * p1 + 2 - [p0 >= 2 and p1 >= 3] => (3/2) * p1 * p0 - 3 * p0 + (3/2) + [(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)] => (3/2) * p1 - (3/2) - [p0 > 0 and 9 <= p1 <= 16] => (1/4) * p1 - 2 + [p0 > 0 and p1 >= 17] => 2 - [(p1) mod 8 = 0 and p0 > 0 and p1 >= 16] => (75/32) * p1 - (245/32) + [p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1] => (35/32) * p1 + (75/32) + [p1 = 8 and p0 > 0] => 10 + [p0 > 0 and 3 <= p1 <= 7] => 2 * p1 - 4 + 2 * sqrt((7/4)) - (119/32) * sqrt((3/2)) - (41/32) * sqrt((7/8)) + (3/2) * sqrt((3/4)) + (75/32) * sqrt((5/8)) + 4",
+  "dmd_formula_latex": "\\frac{1}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{15}{8}} \\cdot p1 \\cdot p0 + \\frac{1}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + 1} \\cdot p1 \\cdot p0 + 8 \\cdot p1 \\cdot p0 + 4 \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{1}{8}} \\cdot p0 + \\frac{1}{4} \\cdot \\sqrt{\\frac{11}{4}} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{15}{8}} \\cdot p0 + \\frac{11}{8} \\cdot \\sqrt{\\frac{7}{4}} \\cdot p1 \\cdot p0 - 4 \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + 1} \\cdot p0 - \\sqrt{\\frac{1}{4} \\cdot p1 + 1} \\cdot p1 + \\frac{1}{4} \\cdot \\sqrt{\\frac{9}{2}} \\cdot p1 \\cdot p0 + \\frac{1}{4} \\cdot \\sqrt{\\frac{7}{2}} \\cdot p1 \\cdot p0 + \\frac{3}{2} \\cdot \\sqrt{\\frac{3}{2}} \\cdot p1 \\cdot p0 + \\frac{1}{4} \\cdot \\sqrt{\\frac{15}{4}} \\cdot p1 \\cdot p0 + \\frac{1}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{3}{4}} \\cdot p1 + \\frac{49}{32} \\cdot \\sqrt{\\frac{7}{8}} \\cdot p1 \\cdot p0 + \\frac{3}{2} \\cdot \\sqrt{\\frac{3}{4}} \\cdot p1 \\cdot p0 - 6 \\cdot p0 - \\frac{3}{4} \\cdot p1 - \\frac{7}{4} \\cdot \\sqrt{\\frac{11}{4}} \\cdot p0 - \\frac{9}{2} \\cdot \\sqrt{\\frac{7}{4}} \\cdot p0 + 4 \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + 1} - 2 \\cdot \\sqrt{\\frac{9}{2}} \\cdot p0 - \\frac{9}{4} \\cdot \\sqrt{\\frac{7}{2}} \\cdot p0 - 3 \\cdot \\sqrt{\\frac{3}{2}} \\cdot p0 + \\frac{7}{16} \\cdot \\sqrt{\\frac{3}{2}} \\cdot p1 - 2 \\cdot \\sqrt{\\frac{15}{4}} \\cdot p0 - 4 \\cdot \\sqrt{\\frac{1}{4} \\cdot p1 + \\frac{3}{4}} + \\frac{41}{32} \\cdot \\sqrt{\\frac{7}{8}} \\cdot p0 - \\frac{49}{32} \\cdot \\sqrt{\\frac{7}{8}} \\cdot p1 - 3 \\cdot \\sqrt{\\frac{3}{4}} \\cdot p0 + \\frac{35}{32} \\cdot \\sqrt{\\frac{5}{8}} \\cdot p1 - \\left[p0 >= 3 and p1 >= 10\\right] \\Rightarrow 4 \\cdot p0 + \\left[p0 = 2 and p1 >= 10\\right] \\Rightarrow 8 + \\left[p1 = 9 and p0 >= 3\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 2 and p1 = 9\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow 2 - \\left[p0 >= 2 and 2 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and 2 <= p1 <= 7\\right] \\Rightarrow 2 - \\left[p0 >= 2 and p1 >= 8\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{7}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 8\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{7}{4} - \\left[p0 >= 2 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{17}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 18\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{17}{4} - \\left[p0 >= 2 and 9 <= p1 <= 15\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{7}{4} \\cdot p0 + \\left[p0 = 1 and 9 <= p1 <= 15\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 = 1 and p1 >= 16\\right] \\Rightarrow \\frac{7}{4} - \\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow 2 - \\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17\\right] \\Rightarrow 2 - \\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 \\cdot p0 - \\frac{13}{2} \\cdot p0 + 2 + \\left[(-1 + p1) mod 8 = 0 and p0 >= 2 and p1 >= 17\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 \\cdot p0 - 8 \\cdot p0 + 2 + \\left[p0 >= 2 and p1 >= 10 and 8*floor((p1)/8) <= -2 + p1\\right] \\Rightarrow \\frac{11}{8} \\cdot p1 \\cdot p0 - \\frac{9}{2} \\cdot p0 + 2 + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow \\frac{67}{4} \\cdot p0 + \\frac{7}{4} + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{143}{8} \\cdot p0 + 2 + \\left[p0 >= 2 and 3 <= p1 <= 7\\right] \\Rightarrow \\frac{9}{8} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\frac{1}{4} \\cdot p1 - \\frac{1}{4} + \\left[p0 = 1 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 - \\frac{9}{2} + \\left[p0 = 1 and p1 = 8\\right] \\Rightarrow \\frac{37}{2} + \\left[p0 = 1 and (-1 + p1) mod 8 = 0 and p1 >= 17\\right] \\Rightarrow \\frac{23}{8} \\cdot p1 - 6 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{159}{8} + \\left[p0 = 1 and p1 >= 3 and (p1 <= 7 or (p1 >= 10 and 8*floor((p1)/8) <= -2 + p1))\\right] \\Rightarrow \\frac{11}{8} \\cdot p1 - \\frac{5}{2} + \\left[p1 = 2 and (p0 >= 2 or p0 = 1)\\right] \\Rightarrow \\frac{1}{4} - \\left[p0 >= 3 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 4 \\cdot p0 - p1 + 4 + \\left[p0 = 2 and p1 >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 4 - 2 \\cdot \\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 - \\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - \\frac{9}{4} \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - \\frac{9}{4} - \\left[p0 >= 2 and p1 >= 10\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{16} \\cdot p1 - \\frac{119}{32} + \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{7}{32} \\cdot p1 - \\frac{7}{4} + \\left[p0 >= 2 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\left[p0 = 1 and p1 >= 10\\right] \\Rightarrow \\frac{31}{16} \\cdot p1 - \\frac{215}{32} + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow \\frac{55}{32} \\cdot p1 - \\frac{19}{4} + \\left[p0 = 1 and 3 <= p1 <= 8\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - 3 - \\left[p0 >= 3 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 \\cdot p0 - 2 \\cdot p0 - p1 + 2 + \\left[p0 = 2 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 >= 3 and p1 >= 17\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and p1 >= 17\\right] \\Rightarrow 2 - \\left[p0 >= 3 and 2 <= p1 <= 8\\right] \\Rightarrow 4 \\cdot p0 + \\left[p0 = 2 and 2 <= p1 <= 8\\right] \\Rightarrow 8 + \\left[p0 >= 2 and p1 >= 9\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and 2 <= p1 <= 8\\right] \\Rightarrow 4 + \\left[p0 = 1 and p1 >= 9\\right] \\Rightarrow 2 - \\left[p1 = 9 and p0 >= 2\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 = 9\\right] \\Rightarrow 2 - \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow 2 \\cdot p0 + \\left[p0 = 1 and p1 = 8\\right] \\Rightarrow 2 - \\left[p1 = 8 and p0 >= 3\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and p1 = 8\\right] \\Rightarrow 2 - \\left[(p1) mod 8 = 0 and p0 >= 3 and p1 >= 16\\right] \\Rightarrow 2 \\cdot p0 - 2 + \\left[p0 = 2 and (p1) mod 8 = 0 and p1 >= 16\\right] \\Rightarrow 2 - \\left[(p1) mod 8 = 0 and p0 >= 2 and p1 >= 16\\right] \\Rightarrow \\frac{105}{32} \\cdot p1 \\cdot p0 - \\frac{407}{32} \\cdot p0 - \\frac{105}{32} \\cdot p1 + \\frac{407}{32} + \\left[p0 >= 2 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{49}{32} \\cdot p1 \\cdot p0 + \\frac{41}{32} \\cdot p0 - \\frac{49}{32} \\cdot p1 - \\frac{41}{32} + \\left[p1 = 8 and p0 >= 2\\right] \\Rightarrow 12 \\cdot p0 - 12 + \\left[p0 >= 2 and 2 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 \\cdot p0 - 2 \\cdot p0 - 2 \\cdot p1 + 2 - \\left[p0 >= 2 and p1 >= 3\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 \\cdot p0 - 3 \\cdot p0 + \\frac{3}{2} + \\left[(p1 = 2 and p0 >= 2) or (p0 = 1 and p1 >= 2)\\right] \\Rightarrow \\frac{3}{2} \\cdot p1 - \\frac{3}{2} - \\left[p0 > 0 and 9 <= p1 <= 16\\right] \\Rightarrow \\frac{1}{4} \\cdot p1 - 2 + \\left[p0 > 0 and p1 >= 17\\right] \\Rightarrow 2 - \\left[(p1) mod 8 = 0 and p0 > 0 and p1 >= 16\\right] \\Rightarrow \\frac{75}{32} \\cdot p1 - \\frac{245}{32} + \\left[p0 > 0 and p1 >= 9 and 8*floor((p1)/8) < p1\\right] \\Rightarrow \\frac{35}{32} \\cdot p1 + \\frac{75}{32} + \\left[p1 = 8 and p0 > 0\\right] \\Rightarrow 10 + \\left[p0 > 0 and 3 <= p1 <= 7\\right] \\Rightarrow 2 \\cdot p1 - 4 + 2 \\cdot \\sqrt{\\frac{7}{4}} - \\frac{119}{32} \\cdot \\sqrt{\\frac{3}{2}} - \\frac{41}{32} \\cdot \\sqrt{\\frac{7}{8}} + \\frac{3}{2} \\cdot \\sqrt{\\frac{3}{4}} + \\frac{75}{32} \\cdot \\sqrt{\\frac{5}{8}} + 4",
+  "parallel": null,
+  "notes": [
+    "Barvinok runs inside a context initialized with `--approximation-method=scale`.",
+    "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.",
+    "Reuse distance is derived from the cardinality of the access-image inside each reuse interval window, without Denning recursion.",
+    "The compulsory-access term is modeled separately as total accesses minus warm reuses.",
+    "Filtered 60 DMD region(s) whose domains add equality or upper-bound constraints on named scaling dimensions.",
+    "Filtered 59 RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+  ]
+}

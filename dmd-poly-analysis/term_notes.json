@@ -1,0 +1,91 @@
+{
+ "gemm": {
+  "both": "The n^4 order is carried by two bins of `read C[i3,i4]`: each C element is re-touched on the next outer iteration at distance (1/8)n^2 + (3/8)n + 1 lines \u2014 the streamed matrix plus one row \u2014 with combined population n^3/8 (one reuse per line element per sweep). Their coefficients sum to 0.0442 = (1/8)*sqrt(1/8), the constant the earlier study measured. Below it: A-row reuse at (1/4)n lines (order n^3.5) and the line-reuse bulk at distance 1\u20133 (order n^3, >90% of accesses). Under infinite repeat the same terms persist (the wraparound consumers are the first C reads of the next pass, annotated i1=0); no new order arises because all matrices are already re-touched within a pass. Miss reading: the miss ratio steps at 64\u00b7((1/4)n) bytes (row) and 64\u00b7((1/8)n^2) bytes (matrix) \u2014 the second is the tiling cliff."
+ },
+ "2mm": {
+  "both": "Two chained matmuls: the intermediate C and the result E each contribute a verbatim copy of gemm's n^4 term (0.0387 + 0.0055 each, i.e. 0.0442 per matmul), so the total leading coefficient 0.0884 is exactly twice gemm's at the same boundaries. Everything else mirrors gemm per stage."
+ },
+ "3mm": {
+  "both": "Three chained matmuls: three copies of gemm's n^4 term, total coefficient 3 \u00d7 0.0442 = 0.133, at the same (1/8)n^2-line boundary. The 1:2:3 gemm:2mm:3mm ratio is exact in the term table."
+ },
+ "atax": {
+  "single": "Single-shot, the matrix C is streamed once and never re-touched: no n^2-distance term exists. The top terms are vector reuses \u2014 `read D[i3]`/`read A[i4]` ramps between (3/8)n and (1/2)n lines and the row-window level at (1/4)n + 2 \u2014 giving d = 2.5, headroom +0.5. The right transformation at this scope is fusion/interchange of the two nests.",
+  "inf": "Infinite repeat adds the single decisive term: the matrix wraparound at distance (1/8)n^2 + (3/8)n with population n^2/8 and coefficient 0.0442 \u2014 the same constant as gemm's matrix term. This is the closed form of the Krylov-solver argument: across iterations the matrix is genuine reuse, worth keeping resident; single-shot files it as unavoidable cold traffic."
+ },
+ "bicg": {
+  "single": "Same structure as atax: matrix streamed once, vector ramps only (d = 2.5, +0.5).",
+  "inf": "The matrix wraparound term appears (0.0442\u00b7n^3 at the (1/8)n^2-line boundary), lifting d to 3.0, headroom +1.0."
+ },
+ "gesummv": {
+  "single": "Two matrices are streamed once per pass; single-shot sees only vector reuse (d = 2.5).",
+  "inf": "Both matrices return as wraparound terms: coefficient 0.125 = 2 \u00d7 0.0625 at the two-matrix footprint boundary \u2014 twice atax's jump because gesummv streams two matrices."
+ },
+ "mvt": {
+  "both": "Unlike atax, mvt multiplies by A and A^T in one pass, so the matrix is re-touched *within* a single invocation: the transposed walk `read B[i4,i3]` forms ramp families from (5/2)n up to (1/8)n^2 + (1/2)n lines with population n^2/8 \u2014 d = 3.0, headroom +1.0 already single-shot (the earlier +0.5 reading came from the corrupted iterator terms). The n^2.5 levels below it are the row/vector reuses at (9/8)n and (1/4)n lines. Repetition changes only constants (0.036 \u2192 0.072: the second pass doubles the far reuses)."
+ },
+ "gemver": {
+  "both": "The rank-1-update matrix A is walked twice (by rows, then transposed): ramps from ~(21/8)n up to (1/8)n^2 + (3/4)n lines on both `read A[i4,i3]` and `read A[i6,i7]` give d = 3.0, headroom +1.0 single-shot, same mechanism as mvt."
+ },
+ "trisolve": {
+  "single": "The solution vector `read B[i1]` is re-read against a growing prefix: ramp families from ~9 lines up to (1/4)n + 1 (the vector footprint), d = 2.5, headroom +0.5. The matrix C is streamed once (triangular row by row) and contributes only line-reuse levels at distance 1\u20133.",
+  "inf": "The triangular matrix returns across passes: levels at distance (1/16)n^2 + (3/4)n \u2014 the triangular footprint in lines \u2014 with population ~n^2/16, giving the n^3 order (0.0156). trisolve is the cleanest case of a kernel whose only asymptotic locality lives across invocations."
+ },
+ "syrk": {
+  "both": "The rank-k source `read B[i4,i3]` is re-read for every output row: ramp families from (3/8)n + 4 up to (1/8)n^2 + (1/4)n lines (the growing triangular window) with population n^3/16, giving 0.0166\u00b7n^4 \u2014 headroom +1.0. The old headroom-0 reading was an artifact: the ramp values collapsed to constants under the rendering bug and the scale approximation could not see the whole-matrix distances. The n^3.5 terms are row-window reuses (up to (9/8)n lines) of both A and B. The cache cliff sits at 64\u00b7((1/8)n^2) bytes, a constant factor past gemm's \u2014 matching the measured 0.04% \u2192 1.9% jump at N\u2248560 in the empirical section."
+ },
+ "syr2k": {
+  "both": "Two rank-k sources (B and C) double syrk's structure: ramps to (1/4)n^2 + (1/4)n lines with combined 0.0466\u00b7n^4 (\u2248 2.8\u00d7 syrk, two matrices and a wider window), headroom +1.0."
+ },
+ "symm": {
+  "both": "Symmetric multiply: the symmetric operand and the accumulating output are re-read across output rows \u2014 ramps to (1/4)n^2 + O(n) lines with population n^3/16, coefficient 0.0466\u00b7n^4 (numerically identical to syr2k's two-source structure), headroom +1.0. The old headroom-0 reading was the rendering artifact."
+ },
+ "trmm": {
+  "both": "Triangular multiply: `read A[i3,i2]` ramps from (3/8)n + 5 to (1/8)n^2 + n lines (population n^3/16, 0.0148\u00b7n^4). The wide n^3.5 band (0.49 + 0.49) is the B-panel and A-row reuse ramping to 2n lines \u2014 trmm reaches its matrix boundary with a much larger runner-up coefficient than syrk, which is why its n^4 term anchors earlier."
+ },
+ "cholesky": {
+  "both": "The factorization re-reads the trailing triangle: `read A[i2,i3]` ramps from tens of lines up to (1/16)n^2 + (1/2)n (the triangular footprint), population ~n^3/60, coefficient 0.0027 + smaller siblings \u2014 headroom +1.0 with the *smallest* leading coefficients in the suite. The term list quantifies exactly how latent cholesky's tiling payoff is: the n^4 term exists, but its boundary crossover against the n^3 bulk sits far beyond the sizes any flat-miss-curve sweep reaches."
+ },
+ "lu": {
+  "both": "Row-panel and trailing-submatrix re-reads (`read A[i3,i2]`, `read A[i5,i4]`) ramp to (1/16)n^2 + (3/4)n lines with cubic populations \u2014 d = 4.0, headroom +1.0. At the anchor sizes (n \u2248 256\u2013312) the finite-size slope of these families still reads \u2248 4.4 because the negative n^2 corrections in their populations have not yet died out; the exact degrees settle it at 4.0."
+ },
+ "lu_decomp": {
+  "both": "Same structure as lu in a different schedule: submatrix re-reads at up to (1/8)n^2 lines, 0.0076\u00b7n^4 leading, headroom +1.0."
+ },
+ "gramschmidt": {
+  "both": "Column orthogonalization re-reads the factor panel: `read A[i5,i4]` ramps from ~5n to (1/8)n^2 + (9/8)n lines (d = 4.0, headroom +1.0 \u2014 corrected from the old +0.5, whose fits ran over corrupted terms). The large n^3.5 coefficient (2.74, `read C[i5,i1]` at 2n + 1 lines) means the pre-asymptotic behavior is dominated by column-pair reuse until the panel term takes over."
+ },
+ "covariance": {
+  "both": "The column-pair sweep re-reads data columns: `read B[i7,i6]` ramps 4n \u2192 (1/8)n^2 + (9/8)n (0.016\u00b7n^4 combined), and the fixed column reuse at 2n + 2 lines carries a heavy n^3.5 band (0.62 + 0.46). Headroom +1.0; the miss curve steps first at the two-column boundary (128n bytes), then at the matrix boundary."
+ },
+ "correlation": {
+  "both": "Structurally identical to covariance after normalization: same 4n \u2192 (1/8)n^2 ramps on `read B[i9,i8]`, same 2n-line column levels, d = 4.0, headroom +1.0."
+ },
+ "floyd_warshall": {
+  "both": "Each k-sweep re-reads the whole distance matrix: two n^4 level terms of `read A[i1,i2]`/`read A[i0,i2]` at exactly (1/8)n^2 lines (no row additive term \u2014 the k-row is already resident), combined coefficient 0.0442, identical to gemm's constant. The n^3.5 terms are the k-row reuses at (1/4)n + 2 lines."
+ },
+ "doitgen": {
+  "both": "The contraction buffer `read C[i4,i3]` is re-read per (r,q) pair at (1/8)n^2 + (3/8)n lines \u2014 gemm's boundary \u2014 but the access count is n^4, so the term order is n^5 (0.0387 + 0.0055 \u2248 0.044, gemm's constant one dimension up). The n^4.5 band is the row-window reuse at (9/8)n + 1 lines."
+ },
+ "jacobi-1d": {
+  "both": "Two-array 1-D stencil: the cross-sweep reuses (`write B[i2]` consumed by the next sweep, right-neighbor reads) sit at the array footprint (1/4)n + 1 lines \u2014 order n^2.5, headroom +0.5, coefficient 0.25 (two arrays \u00d7 two sweep directions). The bulk (distance \u2264 2) is neighbor line reuse. The correct transformation is time-tiling/fusion of the two sweeps; repetition adds nothing (the arrays are re-touched every time step already)."
+ },
+ "jacobi-2d": {
+  "both": "Two-array 2-D stencil: cross-sweep plane reuses at (1/4)n^2 + O(n) lines (four symmetric write/read families, combined 0.5\u00b7n^4, headroom +1.0), row-window reuses at (3/8)n lines at order n^3.5. The plane boundary 64\u00b7((1/4)n^2) bytes = both arrays is the time-tiling cliff."
+ },
+ "seidel-2d": {
+  "both": "In-place 2-D sweep: the south-east neighbor `read A[i2+1,i3+1]` is the value written a full sweep earlier \u2014 distance (1/8)n^2 (+ (7/8)n at the row seam), one array's footprint, 0.0884\u00b7n^4 total. The three-row working window shows up as n^3.5 terms at (3/8)n lines. Headroom +1.0 with a single-array boundary, half of jacobi-2d's."
+ },
+ "fdtd": {
+  "both": "Multi-field 2-D stencil (B, C, D fields): cross-sweep re-reads at (3/8)n^2 + O(n) lines \u2014 three field planes \u2014 with 0.077-coefficient families per field pair and a (1/4)n^2 \u2192 (3/8)n^2 ramp on `read D[i7,i8+1]`. Headroom +1.0; the boundary is 3\u00d7 a single plane, so fdtd crosses the cache one third the size of a same-n single-field stencil."
+ },
+ "convolution": {
+  "single": "Two-scale kernel (image n \u00d7 n, filter fixed 9 \u00d7 9; all parameters except the filter extent bound to n). Single-shot: the sliding image window `read B[i1+i3, i2+i4]` is re-read across output columns at (5/4)n + 15 lines (nine rows' working set), order n^2.5; the filter lives at constant distances (2 and 37 lines \u2014 fully resident) and carries the n^2 bulk with huge constants (81 touches per output). Headroom +0.5 over the n^2 access count.",
+  "inf": "Across invocations the image itself wraps at (1/4)n^2 + O(n) lines (0.0625 + 0.0625 for the two image arrays), giving d = 3.0. The filter never leaves cache at any realistic size."
+ },
+ "heat-3d": {
+  "both": "3-D two-array stencil, the suite's only headroom +1.5 kernel: accesses grow as n^4 (time \u00d7 volume) while the cross-sweep reuses of `write B[i2,i3,i4]` and the neighbor reads sit at the two-array volume footprint (1/4)n^3 + O(n^2) lines \u2014 reuse-distance growth \u03c1 = 3, so d = a + \u03c1/2 = 5.5. Eight symmetric families of coefficient 0.125 sum to 0.75\u00b7n^5.5. The time-tiling cliff is at 64\u00b7((1/4)n^3) bytes; below it every sweep refetches both volumes."
+ },
+ "imperfect": {
+  "both": "Imperfectly nested example with 16-strided subscripts; its reuse mixes a 1-D footprint (data order ~n) with n^3 work, so the headroom band sits between the vector and matrix classes."
+ }
+}

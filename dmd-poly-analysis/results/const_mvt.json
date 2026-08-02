@@ -2,14 +2,22 @@
  "status": "ok",
  "dsl_len": 439,
  "single": {
+  "method": "exact",
   "total": "1280000",
-  "warm": "(10062877/8)",
-  "compulsory": "(177123/8)",
-  "dmd": "137550 * sqrt((25207/64)) + sqrt((1311777/64)) + 2401 * sqrt((3581/8)) + 16800 * sqrt((3573/8)) + 439698 * sqrt((21/8)) + 2401 * sqrt((837/8)) + 16800 * sqrt((829/8)) + sqrt((160807/8)) + 49 * sqrt(445) + 350 * sqrt(444) + 49 * sqrt(102) + 350 * sqrt(101) + 798 * sqrt((7/8)) + sqrt((4407/8)) + 320000 * sqrt(3) + (2730723/8)",
+  "warm": "1259800",
+  "compulsory": "20200",
+  "dmd": "sqrt(20102) + 2450 * sqrt(445) + 17150 * sqrt(444) + 2450 * sqrt(102) + 17150 * sqrt(101) + sqrt(20101) + sqrt(551) + 320000 * sqrt(3) + 339400",
   "ri": [
    {
-    "value_plain": "1400",
-    "value_latex": "1400",
+    "value_plain": "1600",
+    "value_latex": "1600",
+    "mass_plain": "140000",
+    "mass_latex": "140000",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,i4=0,t3=1",
+     "t0=0,i0=0,t1=1,t2=0,i4=399,t3=1",
+     "t0=0,i0=0,t1=1,t2=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -19,549 +27,13 @@
     ]
    },
    {
-    "value_plain": "630200",
-    "value_latex": "630200",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "1267004",
-    "value_latex": "1267004",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "1",
-    "value_latex": "1",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "319200",
-      "count_latex": "319200"
-     }
-    ]
-   },
-   {
-    "value_plain": "(3151/2)",
-    "value_latex": "\\frac{3151}{2}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "39102",
-      "count_latex": "39102"
-     }
-    ]
-   },
-   {
-    "value_plain": "(7/2)",
-    "value_latex": "\\frac{7}{2}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "439698",
-      "count_latex": "439698"
-     }
-    ]
-   },
-   {
-    "value_plain": "639972",
-    "value_latex": "639972",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "1572",
-    "value_latex": "1572",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "798",
-      "count_latex": "798"
-     }
-    ]
-   },
-   {
-    "value_plain": "(7/8)",
-    "value_latex": "\\frac{7}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "798",
-      "count_latex": "798"
-     }
-    ]
-   },
-   {
-    "value_plain": "3168",
-    "value_latex": "3168",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "3",
-    "value_latex": "3",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "320000",
-      "count_latex": "320000"
-     }
-    ]
-   }
-  ],
-  "rd": [
-   {
-    "value_plain": "(1311799/64)",
-    "value_latex": "\\frac{1311799}{64}",
-    "regions": [
-     {
-      "domain_plain": "(i3) mod 8 = 0 and (1 + i4) mod 8 = 0 and 8 <= i3 <= 384 and 7 <= i4 <= 391",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(1311735/64)",
-    "value_latex": "\\frac{1311735}{64}",
-    "regions": [
-     {
-      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384 and 0 < i4 <= 392",
-      "count_plain": "(7/8)",
-      "count_latex": "\\frac{7}{8}"
-     }
-    ]
-   },
-   {
-    "value_plain": "(1318055/64)",
-    "value_latex": "\\frac{1318055}{64}",
-    "regions": [
-     {
-      "domain_plain": "(1 + i4) mod 8 = 0 and 7 <= i4 <= 391",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(1308607/64)",
-    "value_latex": "\\frac{1308607}{64}",
-    "regions": [
-     {
-      "domain_plain": "i3 = 392 and 0 < i4 <= 392",
-      "count_plain": "(7/8)",
-      "count_latex": "\\frac{7}{8}"
-     }
-    ]
-   },
-   {
-    "value_plain": "(25207/64)",
-    "value_latex": "\\frac{25207}{64}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "137550",
-      "count_latex": "137550"
-     }
-    ]
-   },
-   {
-    "value_plain": "(1308991/64)",
-    "value_latex": "\\frac{1308991}{64}",
-    "regions": [
-     {
-      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384 and 393 <= i4 <= 398",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(1305863/64)",
-    "value_latex": "\\frac{1305863}{64}",
-    "regions": [
-     {
-      "domain_plain": "i3 = 392 and 393 <= i4 <= 398",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(22463/64)",
-    "value_latex": "\\frac{22463}{64}",
-    "regions": [
-     {
-      "domain_plain": "393 <= i4 <= 398",
-      "count_plain": "350",
-      "count_latex": "350"
-     }
-    ]
-   },
-   {
-    "value_plain": "(63705/64)",
-    "value_latex": "\\frac{63705}{64}",
-    "regions": [
-     {
-      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(1311777/64)",
-    "value_latex": "\\frac{1311777}{64}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(175/64)",
-    "value_latex": "\\frac{175}{64}",
-    "regions": [
-     {
-      "domain_plain": "i4 = 399",
-      "count_plain": "350",
-      "count_latex": "350"
-     }
-    ]
-   },
-   {
-    "value_plain": "(1314871/64)",
-    "value_latex": "\\frac{1314871}{64}",
-    "regions": [
-     {
-      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(1311743/64)",
-    "value_latex": "\\frac{1311743}{64}",
-    "regions": [
-     {
-      "domain_plain": "i3 = 392",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "1",
-    "value_latex": "1",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "319200",
-      "count_latex": "319200"
-     }
-    ]
-   },
-   {
-    "value_plain": "(3581/8)",
-    "value_latex": "\\frac{3581}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "2401",
-      "count_latex": "2401"
-     }
-    ]
-   },
-   {
-    "value_plain": "(3573/8)",
-    "value_latex": "\\frac{3573}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "16800",
-      "count_latex": "16800"
-     }
-    ]
-   },
-   {
-    "value_plain": "(27/4)",
-    "value_latex": "\\frac{27}{4}",
-    "regions": [
-     {
-      "domain_plain": "i4 = 392",
-      "count_plain": "350",
-      "count_latex": "350"
-     }
-    ]
-   },
-   {
-    "value_plain": "(21/8)",
-    "value_latex": "\\frac{21}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "439698",
-      "count_latex": "439698"
-     }
-    ]
-   },
-   {
-    "value_plain": "(837/8)",
-    "value_latex": "\\frac{837}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "2401",
-      "count_latex": "2401"
-     }
-    ]
-   },
-   {
-    "value_plain": "(829/8)",
-    "value_latex": "\\frac{829}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "16800",
-      "count_latex": "16800"
-     }
-    ]
-   },
-   {
-    "value_plain": "(47/8)",
-    "value_latex": "\\frac{47}{8}",
-    "regions": [
-     {
-      "domain_plain": "i2 = 392",
-      "count_plain": "350",
-      "count_latex": "350"
-     }
-    ]
-   },
-   {
-    "value_plain": "(160423/8)",
-    "value_latex": "\\frac{160423}{8}",
-    "regions": [
-     {
-      "domain_plain": "(1 + i4) mod 8 = 0 and 7 <= i4 <= 391",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(160415/8)",
-    "value_latex": "\\frac{160415}{8}",
-    "regions": [
-     {
-      "domain_plain": "0 < i4 <= 398",
-      "count_plain": "(7/8)",
-      "count_latex": "\\frac{7}{8}"
-     }
-    ]
-   },
-   {
-    "value_plain": "(160807/8)",
-    "value_latex": "\\frac{160807}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "445",
-    "value_latex": "445",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "49",
-      "count_latex": "49"
-     }
-    ]
-   },
-   {
-    "value_plain": "444",
-    "value_latex": "444",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "350",
-      "count_latex": "350"
-     }
-    ]
-   },
-   {
-    "value_plain": "102",
-    "value_latex": "102",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "49",
-      "count_latex": "49"
-     }
-    ]
-   },
-   {
-    "value_plain": "101",
-    "value_latex": "101",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "350",
-      "count_latex": "350"
-     }
-    ]
-   },
-   {
-    "value_plain": "(7/8)",
-    "value_latex": "\\frac{7}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "798",
-      "count_latex": "798"
-     }
-    ]
-   },
-   {
-    "value_plain": "(4407/8)",
-    "value_latex": "\\frac{4407}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "3",
-    "value_latex": "3",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "320000",
-      "count_latex": "320000"
-     }
-    ]
-   }
-  ],
-  "n_ri": 11,
-  "n_rd": 31,
-  "n_dmd_terms": 16
- },
- "inf": {
-  "total": "1280000",
-  "warm": "(9906209/8)",
-  "compulsory": "(333791/8)",
-  "dmd": "137550 * sqrt((25207/64)) + sqrt((1311777/64)) + 2401 * sqrt((3581/8)) + 16800 * sqrt((3573/8)) + 700000 * sqrt((21/8)) + 2401 * sqrt((837/8)) + 16800 * sqrt((829/8)) + sqrt((40209/2)) + sqrt((1105/2)) + sqrt((160807/8)) + sqrt((161599/8)) + sqrt(20101) + 49 * sqrt(445) + 350 * sqrt(444) + 49 * sqrt(102) + 350 * sqrt(101) + 98 * sqrt((161607/8)) + 280000 * sqrt((7/8)) + 39900 * sqrt((15/8)) + sqrt((4407/8)) + 98 * sqrt((161237/8)) + 2 * sqrt(20200) + 40000 * sqrt((45/8)) + 2 * sqrt(20152) + (333791/8)",
-  "ri": [
-   {
-    "value_plain": "1400",
-    "value_latex": "1400",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "140000",
-      "count_latex": "140000"
-     }
-    ]
-   },
-   {
-    "value_plain": "630200",
-    "value_latex": "630200",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "1267004",
-    "value_latex": "1267004",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(3151/2)",
-    "value_latex": "\\frac{3151}{2}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "39102",
-      "count_latex": "39102"
-     }
-    ]
-   },
-   {
-    "value_plain": "(7/2)",
-    "value_latex": "\\frac{7}{2}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "420000",
-      "count_latex": "420000"
-     }
-    ]
-   },
-   {
-    "value_plain": "(1279951/2)",
-    "value_latex": "\\frac{1279951}{2}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(6343/2)",
-    "value_latex": "\\frac{6343}{2}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "639972",
-    "value_latex": "639972",
+    "value_plain": "628800",
+    "value_latex": "628800",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=392,t2=0,i4=399,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -573,6 +45,11 @@
    {
     "value_plain": "1265604",
     "value_latex": "1265604",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=392,t2=0,i4=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -582,63 +59,66 @@
     ]
    },
    {
-    "value_plain": "628800",
-    "value_latex": "628800",
+    "value_plain": "1",
+    "value_latex": "1",
+    "mass_plain": "319200",
+    "mass_latex": "319200",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,t3=0",
+     "t0=0,i0=0,t1=1,t2=0,t3=0"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
+      "count_plain": "319200",
+      "count_latex": "319200"
      }
     ]
    },
    {
     "value_plain": "1572",
     "value_latex": "1572",
+    "mass_plain": "38304",
+    "mass_latex": "38304",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,t3=2",
+     "t0=0,i0=0,t1=1,t2=0,t3=2"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "798",
-      "count_latex": "798"
+      "count_plain": "38304",
+      "count_latex": "38304"
      }
     ]
    },
    {
-    "value_plain": "(10137615/8)",
-    "value_latex": "\\frac{10137615}{8}",
+    "value_plain": "1572",
+    "value_latex": "1572",
+    "mass_plain": "1596",
+    "mass_latex": "1596",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,i4=0,t3=2",
+     "t0=0,i0=0,t1=0,t2=0,i4=392,t3=2",
+     "t0=0,i0=0,t1=1,t2=0,i4=0,t3=2",
+     "t0=0,i0=0,t1=1,t2=0,i4=392,t3=2"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "98",
-      "count_latex": "98"
+      "count_plain": "1596",
+      "count_latex": "1596"
      }
     ]
    },
    {
-    "value_plain": "(7/8)",
-    "value_latex": "\\frac{7}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "280000",
-      "count_latex": "280000"
-     }
-    ]
-   },
-   {
-    "value_plain": "(15/8)",
-    "value_latex": "\\frac{15}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "39900",
-      "count_latex": "39900"
-     }
-    ]
-   },
-   {
-    "value_plain": "3168",
-    "value_latex": "3168",
+    "value_plain": "639972",
+    "value_latex": "639972",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=0,t2=0,i4=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -648,65 +128,48 @@
     ]
    },
    {
-    "value_plain": "(1283151/2)",
-    "value_latex": "\\frac{1283151}{2}",
+    "value_plain": "3168",
+    "value_latex": "3168",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=0,t2=0,i4=399,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "98",
-      "count_latex": "98"
+      "count_plain": "1",
+      "count_latex": "1"
      }
     ]
    },
    {
-    "value_plain": "1267201",
-    "value_latex": "1267201",
+    "value_plain": "3",
+    "value_latex": "3",
+    "mass_plain": "320000",
+    "mass_latex": "320000",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,t3=3",
+     "t0=0,i0=0,t1=1,t2=0,t3=3"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "2",
-      "count_latex": "2"
-     }
-    ]
-   },
-   {
-    "value_plain": "(45/8)",
-    "value_latex": "\\frac{45}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "40000",
-      "count_latex": "40000"
-     }
-    ]
-   },
-   {
-    "value_plain": "(21/8)",
-    "value_latex": "\\frac{21}{8}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "280000",
-      "count_latex": "280000"
-     }
-    ]
-   },
-   {
-    "value_plain": "641572",
-    "value_latex": "641572",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "2",
-      "count_latex": "2"
+      "count_plain": "320000",
+      "count_latex": "320000"
      }
     ]
    }
   ],
   "rd": [
    {
-    "value_plain": "(1311799/64)",
-    "value_latex": "\\frac{1311799}{64}",
+    "value_plain": "(1/8) * i4 * i3 + (1/8) * i3 - (393/8) * i4 + (161215/8)",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{8} \\cdot i3 - \\frac{393}{8} \\cdot i4 + \\frac{161215}{8}",
+    "mass_plain": "2352",
+    "mass_latex": "2352",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i3) mod 8 = 0 and (1 + i4) mod 8 = 0 and 8 <= i3 <= 384 and 7 <= i4 <= 391",
@@ -716,19 +179,29 @@
     ]
    },
    {
-    "value_plain": "(1311735/64)",
-    "value_latex": "\\frac{1311735}{64}",
+    "value_plain": "(1/8) * i4 * i3 + (1/8) * i3 - 49 * i4 - floor((1/8) * i4 + (1/8)) + 20151",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{8} \\cdot i3 - 49 \\cdot i4 - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 20151",
+    "mass_plain": "16464",
+    "mass_latex": "16464",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384 and 0 < i4 <= 392",
-      "count_plain": "(7/8)",
-      "count_latex": "\\frac{7}{8}"
+      "count_plain": "floor((1/8) * i4) - floor((1/8) * i4 + (1/8)) + 1",
+      "count_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 1"
      }
     ]
    },
    {
-    "value_plain": "(1318055/64)",
-    "value_latex": "\\frac{1318055}{64}",
+    "value_plain": "-(1/8) * i4 + (161607/8)",
+    "value_latex": "-\\frac{1}{8} \\cdot i4 + \\frac{161607}{8}",
+    "mass_plain": "49",
+    "mass_latex": "49",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=392,t2=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "(1 + i4) mod 8 = 0 and 7 <= i4 <= 391",
@@ -738,30 +211,45 @@
     ]
    },
    {
-    "value_plain": "(1308607/64)",
-    "value_latex": "\\frac{1308607}{64}",
+    "value_plain": "(1/8) * i4 * i3 + (1/4) * i3 - 49 * i4 - floor((1/8) * i4 + (1/8)) + 20102",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{4} \\cdot i3 - 49 \\cdot i4 - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 20102",
+    "mass_plain": "343",
+    "mass_latex": "343",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "i3 = 392 and 0 < i4 <= 392",
-      "count_plain": "(7/8)",
-      "count_latex": "\\frac{7}{8}"
+      "count_plain": "floor((1/8) * i4) - floor((1/8) * i4 + (1/8)) + 1",
+      "count_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 1"
      }
     ]
    },
    {
-    "value_plain": "(25207/64)",
-    "value_latex": "\\frac{25207}{64}",
+    "value_plain": "-451 * floor((1/8) * i3) + 451 * floor((1/8) * i3 + (7/8))",
+    "value_latex": "-451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "139300",
+    "mass_latex": "139300",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,t3=1"
+    ],
     "regions": [
      {
-      "domain_plain": "",
-      "count_plain": "137550",
-      "count_latex": "137550"
+      "domain_plain": "0 < i3 <= 399",
+      "count_plain": "-398 * floor((1/8) * i3) + 398 * floor((1/8) * i3 + (7/8))",
+      "count_latex": "-398 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 398 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
      }
     ]
    },
    {
-    "value_plain": "(1308991/64)",
-    "value_latex": "\\frac{1308991}{64}",
+    "value_plain": "(1/8) * i4 * i3 + (1/8) * i3 - 49 * i4 + 20102",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{8} \\cdot i3 - 49 \\cdot i4 + 20102",
+    "mass_plain": "288",
+    "mass_latex": "288",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384 and 393 <= i4 <= 398",
@@ -771,8 +259,13 @@
     ]
    },
    {
-    "value_plain": "(1305863/64)",
-    "value_latex": "\\frac{1305863}{64}",
+    "value_plain": "(1/8) * i4 * i3 + (1/4) * i3 - 49 * i4 + 20053",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{4} \\cdot i3 - 49 \\cdot i4 + 20053",
+    "mass_plain": "6",
+    "mass_latex": "6",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "i3 = 392 and 393 <= i4 <= 398",
@@ -782,19 +275,13 @@
     ]
    },
    {
-    "value_plain": "(22463/64)",
-    "value_latex": "\\frac{22463}{64}",
-    "regions": [
-     {
-      "domain_plain": "393 <= i4 <= 398",
-      "count_plain": "350",
-      "count_latex": "350"
-     }
-    ]
-   },
-   {
-    "value_plain": "(63705/64)",
-    "value_latex": "\\frac{63705}{64}",
+    "value_plain": "(399/8) * i3 + 551",
+    "value_latex": "\\frac{399}{8} \\cdot i3 + 551",
+    "mass_plain": "48",
+    "mass_latex": "48",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,i4=399,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384",
@@ -804,8 +291,13 @@
     ]
    },
    {
-    "value_plain": "(1311777/64)",
-    "value_latex": "\\frac{1311777}{64}",
+    "value_plain": "20102",
+    "value_latex": "20102",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=392,t2=0,i4=399,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -815,19 +307,29 @@
     ]
    },
    {
-    "value_plain": "(175/64)",
-    "value_latex": "\\frac{175}{64}",
+    "value_plain": "-i4 * floor((1/8) * i3) + i4 * floor((1/8) * i3 + (7/8)) - floor((1/8) * i4 + (7/8)) * floor((1/8) * i3) + floor((1/8) * i4 + (7/8)) * floor((1/8) * i3 + (7/8)) - 2 * floor((1/8) * i3) + 2 * floor((1/8) * i3 + (7/8))",
+    "value_latex": "-i4 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + i4 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor - 2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,i4=399,t3=1"
+    ],
     "regions": [
      {
-      "domain_plain": "i4 = 399",
-      "count_plain": "350",
-      "count_latex": "350"
+      "domain_plain": "i4 = 399 and 0 < i3 <= 399",
+      "count_plain": "-floor((1/8) * i3) + floor((1/8) * i3 + (7/8))",
+      "count_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
      }
     ]
    },
    {
-    "value_plain": "(1314871/64)",
-    "value_latex": "\\frac{1314871}{64}",
+    "value_plain": "(1/8) * i3 + 20151",
+    "value_latex": "\\frac{1}{8} \\cdot i3 + 20151",
+    "mass_plain": "48",
+    "mass_latex": "48",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,i4=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384",
@@ -837,8 +339,13 @@
     ]
    },
    {
-    "value_plain": "(1311743/64)",
-    "value_latex": "\\frac{1311743}{64}",
+    "value_plain": "(1/4) * i3 + 20102",
+    "value_latex": "\\frac{1}{4} \\cdot i3 + 20102",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,i4=0,t3=1"
+    ],
     "regions": [
      {
       "domain_plain": "i3 = 392",
@@ -848,19 +355,62 @@
     ]
    },
    {
-    "value_plain": "(3581/8)",
-    "value_latex": "\\frac{3581}{8}",
+    "value_plain": "-451 * floor((1/8) * i3) + 451 * floor((1/8) * i3 + (7/8))",
+    "value_latex": "-451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,i4=0,t3=1"
+    ],
     "regions": [
      {
-      "domain_plain": "",
-      "count_plain": "2401",
-      "count_latex": "2401"
+      "domain_plain": "0 < i3 <= 399",
+      "count_plain": "-floor((1/8) * i3) + floor((1/8) * i3 + (7/8))",
+      "count_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
      }
     ]
    },
    {
-    "value_plain": "(3573/8)",
-    "value_latex": "\\frac{3573}{8}",
+    "value_plain": "1",
+    "value_latex": "1",
+    "mass_plain": "319200",
+    "mass_latex": "319200",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,t3=0",
+     "t0=0,i0=0,t1=1,t2=0,t3=0"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "319200",
+      "count_latex": "319200"
+     }
+    ]
+   },
+   {
+    "value_plain": "445",
+    "value_latex": "445",
+    "mass_plain": "2352",
+    "mass_latex": "2352",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,t3=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "2352",
+      "count_latex": "2352"
+     }
+    ]
+   },
+   {
+    "value_plain": "444",
+    "value_latex": "444",
+    "mass_plain": "16800",
+    "mass_latex": "16800",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,t3=2"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -870,8 +420,30 @@
     ]
    },
    {
-    "value_plain": "(27/4)",
-    "value_latex": "\\frac{27}{4}",
+    "value_plain": "445",
+    "value_latex": "445",
+    "mass_plain": "98",
+    "mass_latex": "98",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,i4=0,t3=2",
+     "t0=0,i0=0,t1=1,t2=0,i4=392,t3=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "98",
+      "count_latex": "98"
+     }
+    ]
+   },
+   {
+    "value_plain": "(9/8) * i4 + 3",
+    "value_latex": "\\frac{9}{8} \\cdot i4 + 3",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,t3=2"
+    ],
     "regions": [
      {
       "domain_plain": "i4 = 392",
@@ -881,30 +453,47 @@
     ]
    },
    {
-    "value_plain": "(21/8)",
-    "value_latex": "\\frac{21}{8}",
+    "value_plain": "-3 * floor((1/8) * i4) + 3 * floor((1/8) * i4 + (7/8))",
+    "value_latex": "-3 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor + 3 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "420000",
+    "mass_latex": "420000",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,t3=1",
+     "t0=0,i0=0,t1=0,t2=0,t3=2",
+     "t0=0,i0=0,t1=1,t2=0,t3=2"
+    ],
     "regions": [
      {
-      "domain_plain": "",
-      "count_plain": "700000",
-      "count_latex": "700000"
+      "domain_plain": "0 < i4 <= 399",
+      "count_plain": "-1200 * floor((1/8) * i4) + 1200 * floor((1/8) * i4 + (7/8))",
+      "count_latex": "-1200 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor + 1200 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor"
      }
     ]
    },
    {
-    "value_plain": "(837/8)",
-    "value_latex": "\\frac{837}{8}",
+    "value_plain": "102",
+    "value_latex": "102",
+    "mass_plain": "2352",
+    "mass_latex": "2352",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,t3=2"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "2401",
-      "count_latex": "2401"
+      "count_plain": "2352",
+      "count_latex": "2352"
      }
     ]
    },
    {
-    "value_plain": "(829/8)",
-    "value_latex": "\\frac{829}{8}",
+    "value_plain": "101",
+    "value_latex": "101",
+    "mass_plain": "16800",
+    "mass_latex": "16800",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,t3=2"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -914,8 +503,30 @@
     ]
    },
    {
-    "value_plain": "(47/8)",
-    "value_latex": "\\frac{47}{8}",
+    "value_plain": "102",
+    "value_latex": "102",
+    "mass_plain": "98",
+    "mass_latex": "98",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,i2=0,t3=2",
+     "t0=0,i0=0,t1=0,t2=0,i2=392,t3=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "98",
+      "count_latex": "98"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * i2 + 3",
+    "value_latex": "\\frac{1}{4} \\cdot i2 + 3",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,t3=2"
+    ],
     "regions": [
      {
       "domain_plain": "i2 = 392",
@@ -925,8 +536,764 @@
     ]
    },
    {
-    "value_plain": "(160831/8)",
-    "value_latex": "\\frac{160831}{8}",
+    "value_plain": "-49 * i4 + 20102",
+    "value_latex": "-49 \\cdot i4 + 20102",
+    "mass_plain": "49",
+    "mass_latex": "49",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=0,t2=0,t3=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "(1 + i4) mod 8 = 0 and 7 <= i4 <= 391",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "-49 * i4 + floor((1/8) * i4 + (7/8)) - floor((1/8) * i4 + (1/8)) + 20101",
+    "value_latex": "-49 \\cdot i4 + \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 20101",
+    "mass_plain": "349",
+    "mass_latex": "349",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=0,t2=0,t3=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "0 < i4 <= 398",
+      "count_plain": "floor((1/8) * i4) - floor((1/8) * i4 + (1/8)) + 1",
+      "count_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "20101",
+    "value_latex": "20101",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=0,t2=0,i4=0,t3=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "444",
+    "value_latex": "444",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,i0=0,t1=1,t2=0,i4=0,t3=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "350",
+      "count_latex": "350"
+     }
+    ]
+   },
+   {
+    "value_plain": "101",
+    "value_latex": "101",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,i2=0,t3=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "350",
+      "count_latex": "350"
+     }
+    ]
+   },
+   {
+    "value_plain": "-floor((1/8) * i3) + floor((1/8) * i3 + (7/8))",
+    "value_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "700",
+    "mass_latex": "700",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,i4=0,t3=0",
+     "t0=0,i0=0,t1=1,t2=0,i4=0,t3=0"
+    ],
+    "regions": [
+     {
+      "domain_plain": "0 < i3 <= 399",
+      "count_plain": "-2 * floor((1/8) * i3) + 2 * floor((1/8) * i3 + (7/8))",
+      "count_latex": "-2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
+     }
+    ]
+   },
+   {
+    "value_plain": "551",
+    "value_latex": "551",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,i0=0,t1=1,i3=0,t2=0,i4=399,t3=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "3",
+    "value_latex": "3",
+    "mass_plain": "320000",
+    "mass_latex": "320000",
+    "sources": [
+     "t0=0,i0=0,t1=0,t2=0,t3=3",
+     "t0=0,i0=0,t1=1,t2=0,t3=3"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "320000",
+      "count_latex": "320000"
+     }
+    ]
+   }
+  ],
+  "n_ri": 9,
+  "n_rd": 31,
+  "n_dmd_terms": 13
+ },
+ "inf": {
+  "method": "exact",
+  "total": "1280000",
+  "warm": "1280000",
+  "compulsory": "0",
+  "dmd": "2 * sqrt(20102) + 2450 * sqrt(445) + 17150 * sqrt(444) + 459300 * sqrt(3) + 2450 * sqrt(102) + 17150 * sqrt(101) + sqrt(550) + 2 * sqrt(20101) + 101 * sqrt(20200) + sqrt(551) + 100 * sqrt(20152) + 39900",
+  "ri": [
+   {
+    "value_plain": "1600",
+    "value_latex": "1600",
+    "mass_plain": "140000",
+    "mass_latex": "140000",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=399,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "140000",
+      "count_latex": "140000"
+     }
+    ]
+   },
+   {
+    "value_plain": "628800",
+    "value_latex": "628800",
+    "mass_plain": "2",
+    "mass_latex": "2",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,i4=0,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=392,t3=0,i4=399,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "2",
+      "count_latex": "2"
+     }
+    ]
+   },
+   {
+    "value_plain": "1265604",
+    "value_latex": "1265604",
+    "mass_plain": "2",
+    "mass_latex": "2",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=399,t3=0,i4=0,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=392,t3=0,i4=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "2",
+      "count_latex": "2"
+     }
+    ]
+   },
+   {
+    "value_plain": "1572",
+    "value_latex": "1572",
+    "mass_plain": "38304",
+    "mass_latex": "38304",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "38304",
+      "count_latex": "38304"
+     }
+    ]
+   },
+   {
+    "value_plain": "1572",
+    "value_latex": "1572",
+    "mass_plain": "1596",
+    "mass_latex": "1596",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i4=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i4=392,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=392,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "1596",
+      "count_latex": "1596"
+     }
+    ]
+   },
+   {
+    "value_plain": "4",
+    "value_latex": "4",
+    "mass_plain": "420000",
+    "mass_latex": "420000",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "420000",
+      "count_latex": "420000"
+     }
+    ]
+   },
+   {
+    "value_plain": "639972",
+    "value_latex": "639972",
+    "mass_plain": "2",
+    "mass_latex": "2",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i1=399,t3=0,i2=392,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i1=0,t3=0,i2=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "2",
+      "count_latex": "2"
+     }
+    ]
+   },
+   {
+    "value_plain": "3168",
+    "value_latex": "3168",
+    "mass_plain": "2",
+    "mass_latex": "2",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i1=0,t3=0,i2=392,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i1=0,t3=0,i2=399,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "2",
+      "count_latex": "2"
+     }
+    ]
+   },
+   {
+    "value_plain": "1267201",
+    "value_latex": "1267201",
+    "mass_plain": "96",
+    "mass_latex": "96",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i4=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=0"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "96",
+      "count_latex": "96"
+     }
+    ]
+   },
+   {
+    "value_plain": "1267201",
+    "value_latex": "1267201",
+    "mass_plain": "4",
+    "mass_latex": "4",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,i4=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=392,t3=0,i4=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,i4=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=392,t3=0,i4=0,t4=0"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "4",
+      "count_latex": "4"
+     }
+    ]
+   },
+   {
+    "value_plain": "1",
+    "value_latex": "1",
+    "mass_plain": "39900",
+    "mass_latex": "39900",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=0"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "39900",
+      "count_latex": "39900"
+     }
+    ]
+   },
+   {
+    "value_plain": "641572",
+    "value_latex": "641572",
+    "mass_plain": "96",
+    "mass_latex": "96",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "96",
+      "count_latex": "96"
+     }
+    ]
+   },
+   {
+    "value_plain": "641572",
+    "value_latex": "641572",
+    "mass_plain": "4",
+    "mass_latex": "4",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,i4=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,i4=392,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,i4=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,i4=392,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "4",
+      "count_latex": "4"
+     }
+    ]
+   },
+   {
+    "value_plain": "3",
+    "value_latex": "3",
+    "mass_plain": "40000",
+    "mass_latex": "40000",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i4=0,t4=3",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=3",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=3",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=3"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "40000",
+      "count_latex": "40000"
+     }
+    ]
+   }
+  ],
+  "rd": [
+   {
+    "value_plain": "(1/8) * i4 * i3 + (1/8) * i3 - (393/8) * i4 + (161215/8)",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{8} \\cdot i3 - \\frac{393}{8} \\cdot i4 + \\frac{161215}{8}",
+    "mass_plain": "2352",
+    "mass_latex": "2352",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "(i3) mod 8 = 0 and (1 + i4) mod 8 = 0 and 8 <= i3 <= 384 and 7 <= i4 <= 391",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/8) * i4 * i3 + (1/8) * i3 - 49 * i4 - floor((1/8) * i4 + (1/8)) + 20151",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{8} \\cdot i3 - 49 \\cdot i4 - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 20151",
+    "mass_plain": "16464",
+    "mass_latex": "16464",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384 and 0 < i4 <= 392",
+      "count_plain": "floor((1/8) * i4) - floor((1/8) * i4 + (1/8)) + 1",
+      "count_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "-(1/8) * i4 + (161607/8)",
+    "value_latex": "-\\frac{1}{8} \\cdot i4 + \\frac{161607}{8}",
+    "mass_plain": "49",
+    "mass_latex": "49",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=392,t3=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "(1 + i4) mod 8 = 0 and 7 <= i4 <= 391",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/8) * i4 * i3 + (1/4) * i3 - 49 * i4 - floor((1/8) * i4 + (1/8)) + 20102",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{4} \\cdot i3 - 49 \\cdot i4 - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 20102",
+    "mass_plain": "343",
+    "mass_latex": "343",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "i3 = 392 and 0 < i4 <= 392",
+      "count_plain": "floor((1/8) * i4) - floor((1/8) * i4 + (1/8)) + 1",
+      "count_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 1"
+     }
+    ]
+   },
+   {
+    "value_plain": "-451 * floor((1/8) * i3) + 451 * floor((1/8) * i3 + (7/8))",
+    "value_latex": "-451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "139300",
+    "mass_latex": "139300",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "0 < i3 <= 399",
+      "count_plain": "-398 * floor((1/8) * i3) + 398 * floor((1/8) * i3 + (7/8))",
+      "count_latex": "-398 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 398 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/8) * i4 * i3 + (1/8) * i3 - 49 * i4 + 20102",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{8} \\cdot i3 - 49 \\cdot i4 + 20102",
+    "mass_plain": "288",
+    "mass_latex": "288",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384 and 393 <= i4 <= 398",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/8) * i4 * i3 + (1/4) * i3 - 49 * i4 + 20053",
+    "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{4} \\cdot i3 - 49 \\cdot i4 + 20053",
+    "mass_plain": "6",
+    "mass_latex": "6",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "i3 = 392 and 393 <= i4 <= 398",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(399/8) * i3 + 551",
+    "value_latex": "\\frac{399}{8} \\cdot i3 + 551",
+    "mass_plain": "48",
+    "mass_latex": "48",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=399,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "20102",
+    "value_latex": "20102",
+    "mass_plain": "2",
+    "mass_latex": "2",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=399,t3=0,i4=392,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=392,t3=0,i4=399,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "2",
+      "count_latex": "2"
+     }
+    ]
+   },
+   {
+    "value_plain": "-i4 * floor((1/8) * i3) + i4 * floor((1/8) * i3 + (7/8)) - floor((1/8) * i4 + (7/8)) * floor((1/8) * i3) + floor((1/8) * i4 + (7/8)) * floor((1/8) * i3 + (7/8)) - 2 * floor((1/8) * i3) + 2 * floor((1/8) * i3 + (7/8))",
+    "value_latex": "-i4 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + i4 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor - 2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=399,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "i4 = 399 and 0 < i3 <= 399",
+      "count_plain": "-floor((1/8) * i3) + floor((1/8) * i3 + (7/8))",
+      "count_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/8) * i3 + 20151",
+    "value_latex": "\\frac{1}{8} \\cdot i3 + 20151",
+    "mass_plain": "48",
+    "mass_latex": "48",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * i3 + 20102",
+    "value_latex": "\\frac{1}{4} \\cdot i3 + 20102",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "i3 = 392",
+      "count_plain": "1",
+      "count_latex": "1"
+     }
+    ]
+   },
+   {
+    "value_plain": "-451 * floor((1/8) * i3) + 451 * floor((1/8) * i3 + (7/8))",
+    "value_latex": "-451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=1"
+    ],
+    "regions": [
+     {
+      "domain_plain": "0 < i3 <= 399",
+      "count_plain": "-floor((1/8) * i3) + floor((1/8) * i3 + (7/8))",
+      "count_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
+     }
+    ]
+   },
+   {
+    "value_plain": "445",
+    "value_latex": "445",
+    "mass_plain": "2352",
+    "mass_latex": "2352",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "2352",
+      "count_latex": "2352"
+     }
+    ]
+   },
+   {
+    "value_plain": "444",
+    "value_latex": "444",
+    "mass_plain": "16800",
+    "mass_latex": "16800",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "16800",
+      "count_latex": "16800"
+     }
+    ]
+   },
+   {
+    "value_plain": "445",
+    "value_latex": "445",
+    "mass_plain": "98",
+    "mass_latex": "98",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=392,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "98",
+      "count_latex": "98"
+     }
+    ]
+   },
+   {
+    "value_plain": "(9/8) * i4 + 3",
+    "value_latex": "\\frac{9}{8} \\cdot i4 + 3",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "i4 = 392",
+      "count_plain": "350",
+      "count_latex": "350"
+     }
+    ]
+   },
+   {
+    "value_plain": "3",
+    "value_latex": "3",
+    "mass_plain": "419300",
+    "mass_latex": "419300",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "419300",
+      "count_latex": "419300"
+     }
+    ]
+   },
+   {
+    "value_plain": "102",
+    "value_latex": "102",
+    "mass_plain": "2352",
+    "mass_latex": "2352",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "2352",
+      "count_latex": "2352"
+     }
+    ]
+   },
+   {
+    "value_plain": "101",
+    "value_latex": "101",
+    "mass_plain": "16800",
+    "mass_latex": "16800",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "16800",
+      "count_latex": "16800"
+     }
+    ]
+   },
+   {
+    "value_plain": "102",
+    "value_latex": "102",
+    "mass_plain": "98",
+    "mass_latex": "98",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i2=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i2=392,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "",
+      "count_plain": "98",
+      "count_latex": "98"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/4) * i2 + 3",
+    "value_latex": "\\frac{1}{4} \\cdot i2 + 3",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "i2 = 392",
+      "count_plain": "350",
+      "count_latex": "350"
+     }
+    ]
+   },
+   {
+    "value_plain": "(1/8) * i2 * i1 + (1/8) * i1 - 50 * i2 + 20151",
+    "value_latex": "\\frac{1}{8} \\cdot i2 \\cdot i1 + \\frac{1}{8} \\cdot i1 - 50 \\cdot i2 + 20151",
+    "mass_plain": "2352",
+    "mass_latex": "2352",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i1) mod 8 = 0 and (i2) mod 8 = 0 and 8 <= i1 <= 392 and 8 <= i2 <= 384",
@@ -936,19 +1303,29 @@
     ]
    },
    {
-    "value_plain": "(160823/8)",
-    "value_latex": "\\frac{160823}{8}",
+    "value_plain": "(1/8) * i2 * i1 - 50 * i2 + floor((1/8) * i1 + (7/8)) + 20150",
+    "value_latex": "\\frac{1}{8} \\cdot i2 \\cdot i1 - 50 \\cdot i2 + \\left\\lfloor \\frac{1}{8} \\cdot i1 + \\frac{7}{8} \\right\\rfloor + 20150",
+    "mass_plain": "16752",
+    "mass_latex": "16752",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i2) mod 8 = 0 and 0 < i1 <= 398 and 8 <= i2 <= 384",
-      "count_plain": "(7/8)",
-      "count_latex": "\\frac{7}{8}"
+      "count_plain": "-floor((1/8) * i1) + floor((1/8) * i1 + (7/8))",
+      "count_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i1 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i1 + \\frac{7}{8} \\right\\rfloor"
      }
     ]
    },
    {
-    "value_plain": "(161619/8)",
-    "value_latex": "\\frac{161619}{8}",
+    "value_plain": "-(1/8) * i2 + 20200",
+    "value_latex": "-\\frac{1}{8} \\cdot i2 + 20200",
+    "mass_plain": "48",
+    "mass_latex": "48",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i1=399,t3=0,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i2) mod 8 = 0 and 8 <= i2 <= 384",
@@ -958,8 +1335,13 @@
     ]
    },
    {
-    "value_plain": "(80215/4)",
-    "value_latex": "\\frac{80215}{4}",
+    "value_plain": "-(399/8) * i2 + 20101",
+    "value_latex": "-\\frac{399}{8} \\cdot i2 + 20101",
+    "mass_plain": "48",
+    "mass_latex": "48",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i1=0,t3=0,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i2) mod 8 = 0 and 8 <= i2 <= 384",
@@ -969,8 +1351,13 @@
     ]
    },
    {
-    "value_plain": "(1205/2)",
-    "value_latex": "\\frac{1205}{2}",
+    "value_plain": "49 * i1 + 551",
+    "value_latex": "49 \\cdot i1 + 551",
+    "mass_plain": "98",
+    "mass_latex": "98",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i2=392,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i1) mod 8 = 0 and 8 <= i1 <= 392",
@@ -985,19 +1372,29 @@
     ]
    },
    {
-    "value_plain": "(1203/2)",
-    "value_latex": "\\frac{1203}{2}",
+    "value_plain": "49 * i1 - floor((1/8) * i1 + (1/8)) + floor((1/8) * i1 + (7/8)) + 550",
+    "value_latex": "49 \\cdot i1 - \\left\\lfloor \\frac{1}{8} \\cdot i1 + \\frac{1}{8} \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i1 + \\frac{7}{8} \\right\\rfloor + 550",
+    "mass_plain": "300",
+    "mass_latex": "300",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i2=392,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "0 < i1 <= 398",
-      "count_plain": "(3/4)",
-      "count_latex": "\\frac{3}{4}"
+      "count_plain": "-floor((1/8) * i1 + (1/8)) + floor((1/8) * i1 + (7/8))",
+      "count_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i1 + \\frac{1}{8} \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i1 + \\frac{7}{8} \\right\\rfloor"
      }
     ]
    },
    {
-    "value_plain": "(40209/2)",
-    "value_latex": "\\frac{40209}{2}",
+    "value_plain": "550",
+    "value_latex": "550",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i1=0,t3=0,i2=392,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -1007,19 +1404,13 @@
     ]
    },
    {
-    "value_plain": "(1105/2)",
-    "value_latex": "\\frac{1105}{2}",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "(160423/8)",
-    "value_latex": "\\frac{160423}{8}",
+    "value_plain": "-49 * i4 + 20102",
+    "value_latex": "-49 \\cdot i4 + 20102",
+    "mass_plain": "49",
+    "mass_latex": "49",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "(1 + i4) mod 8 = 0 and 7 <= i4 <= 391",
@@ -1029,30 +1420,46 @@
     ]
    },
    {
-    "value_plain": "(160415/8)",
-    "value_latex": "\\frac{160415}{8}",
+    "value_plain": "-49 * i4 + floor((1/8) * i4 + (7/8)) - floor((1/8) * i4 + (1/8)) + 20101",
+    "value_latex": "-49 \\cdot i4 + \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 20101",
+    "mass_plain": "349",
+    "mass_latex": "349",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "0 < i4 <= 398",
-      "count_plain": "(7/8)",
-      "count_latex": "\\frac{7}{8}"
+      "count_plain": "floor((1/8) * i4) - floor((1/8) * i4 + (1/8)) + 1",
+      "count_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 1"
      }
     ]
    },
    {
-    "value_plain": "(160807/8)",
-    "value_latex": "\\frac{160807}{8}",
+    "value_plain": "20101",
+    "value_latex": "20101",
+    "mass_plain": "2",
+    "mass_latex": "2",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,i4=0,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,i4=0,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
+      "count_plain": "2",
+      "count_latex": "2"
      }
     ]
    },
    {
-    "value_plain": "(161209/8)",
-    "value_latex": "\\frac{161209}{8}",
+    "value_plain": "(1/8) * i1 + 20151",
+    "value_latex": "\\frac{1}{8} \\cdot i1 + 20151",
+    "mass_plain": "49",
+    "mass_latex": "49",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i2=0,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "(i1) mod 8 = 0 and 8 <= i1 <= 392",
@@ -1062,74 +1469,65 @@
     ]
    },
    {
-    "value_plain": "(161201/8)",
-    "value_latex": "\\frac{161201}{8}",
+    "value_plain": "floor((1/8) * i1 + (7/8)) + 20150",
+    "value_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i1 + \\frac{7}{8} \\right\\rfloor + 20150",
+    "mass_plain": "349",
+    "mass_latex": "349",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i2=0,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "0 < i1 <= 398",
-      "count_plain": "(7/8)",
-      "count_latex": "\\frac{7}{8}"
+      "count_plain": "-floor((1/8) * i1) + floor((1/8) * i1 + (7/8))",
+      "count_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i1 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i1 + \\frac{7}{8} \\right\\rfloor"
      }
     ]
    },
    {
-    "value_plain": "(161599/8)",
-    "value_latex": "\\frac{161599}{8}",
+    "value_plain": "20200",
+    "value_latex": "20200",
+    "mass_plain": "5",
+    "mass_latex": "5",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i1=0,t3=0,i2=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i1=392,t3=0,i2=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i1=399,t3=0,i2=0,t4=1",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i1=0,t3=0,i2=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i1=392,t3=0,i2=0,t4=0"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "20101",
-    "value_latex": "20101",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "1",
-      "count_latex": "1"
-     }
-    ]
-   },
-   {
-    "value_plain": "445",
-    "value_latex": "445",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "49",
-      "count_latex": "49"
+      "count_plain": "5",
+      "count_latex": "5"
      }
     ]
    },
    {
     "value_plain": "444",
     "value_latex": "444",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=2"
+    ],
     "regions": [
      {
       "domain_plain": "",
       "count_plain": "350",
       "count_latex": "350"
-     }
-    ]
-   },
-   {
-    "value_plain": "102",
-    "value_latex": "102",
-    "regions": [
-     {
-      "domain_plain": "",
-      "count_plain": "49",
-      "count_latex": "49"
      }
     ]
    },
    {
     "value_plain": "101",
     "value_latex": "101",
+    "mass_plain": "350",
+    "mass_latex": "350",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i2=0,t4=2"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -1139,30 +1537,55 @@
     ]
    },
    {
-    "value_plain": "(161607/8)",
-    "value_latex": "\\frac{161607}{8}",
+    "value_plain": "20200",
+    "value_latex": "20200",
+    "mass_plain": "96",
+    "mass_latex": "96",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i4=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=0"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "98",
-      "count_latex": "98"
+      "count_plain": "96",
+      "count_latex": "96"
      }
     ]
    },
    {
-    "value_plain": "(7/8)",
-    "value_latex": "\\frac{7}{8}",
+    "value_plain": "-floor((1/8) * i3) + floor((1/8) * i3 + (7/8))",
+    "value_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "280000",
+    "mass_latex": "280000",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i4=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=0"
+    ],
     "regions": [
      {
-      "domain_plain": "",
-      "count_plain": "280000",
-      "count_latex": "280000"
+      "domain_plain": "0 < i3 <= 399",
+      "count_plain": "-800 * floor((1/8) * i3) + 800 * floor((1/8) * i3 + (7/8))",
+      "count_latex": "-800 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 800 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
+     },
+     {
+      "domain_plain": "i3 = 0",
+      "count_plain": "-798 * floor((1/8) * i3) + 798 * floor((1/8) * i3 + (7/8))",
+      "count_latex": "-798 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 798 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
      }
     ]
    },
    {
-    "value_plain": "(15/8)",
-    "value_latex": "\\frac{15}{8}",
+    "value_plain": "1",
+    "value_latex": "1",
+    "mass_plain": "39900",
+    "mass_latex": "39900",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=0",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=0"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -1172,8 +1595,13 @@
     ]
    },
    {
-    "value_plain": "(4407/8)",
-    "value_latex": "\\frac{4407}{8}",
+    "value_plain": "551",
+    "value_latex": "551",
+    "mass_plain": "1",
+    "mass_latex": "1",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,i4=399,t4=1"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -1183,30 +1611,69 @@
     ]
    },
    {
-    "value_plain": "(161237/8)",
-    "value_latex": "\\frac{161237}{8}",
+    "value_plain": "20152",
+    "value_latex": "20152",
+    "mass_plain": "96",
+    "mass_latex": "96",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,t4=2"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "98",
-      "count_latex": "98"
+      "count_plain": "96",
+      "count_latex": "96"
      }
     ]
    },
    {
-    "value_plain": "20200",
-    "value_latex": "20200",
+    "value_plain": "20152",
+    "value_latex": "20152",
+    "mass_plain": "4",
+    "mass_latex": "4",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,i4=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,i4=392,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,i4=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,i4=392,t4=2"
+    ],
     "regions": [
      {
       "domain_plain": "",
-      "count_plain": "2",
-      "count_latex": "2"
+      "count_plain": "4",
+      "count_latex": "4"
      }
     ]
    },
    {
-    "value_plain": "(45/8)",
-    "value_latex": "\\frac{45}{8}",
+    "value_plain": "-3 * floor((1/8) * i4) + 3 * floor((1/8) * i4 + (7/8))",
+    "value_latex": "-3 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor + 3 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "700",
+    "mass_latex": "700",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,i3=0,t3=0,t4=2",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,i3=0,t3=0,t4=2"
+    ],
+    "regions": [
+     {
+      "domain_plain": "0 < i4 <= 399",
+      "count_plain": "-2 * floor((1/8) * i4) + 2 * floor((1/8) * i4 + (7/8))",
+      "count_latex": "-2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor + 2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor"
+     }
+    ]
+   },
+   {
+    "value_plain": "3",
+    "value_latex": "3",
+    "mass_plain": "40000",
+    "mass_latex": "40000",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,i4=0,t4=3",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=3",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,i4=0,t4=3",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=3"
+    ],
     "regions": [
      {
       "domain_plain": "",
@@ -1216,30 +1683,44 @@
     ]
    },
    {
-    "value_plain": "20152",
-    "value_latex": "20152",
+    "value_plain": "-3 * floor((1/8) * i3) + 3 * floor((1/8) * i3 + (7/8))",
+    "value_latex": "-3 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 3 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+    "mass_plain": "280000",
+    "mass_latex": "280000",
+    "sources": [
+     "t0=0,__repeat=1,t1=0,i0=0,t2=0,t3=0,t4=3",
+     "t0=0,__repeat=1,t1=0,i0=0,t2=1,t3=0,t4=3"
+    ],
     "regions": [
      {
-      "domain_plain": "",
-      "count_plain": "2",
-      "count_latex": "2"
+      "domain_plain": "0 <= i3 <= 399",
+      "count_plain": "-800 * floor((1/8) * i3) + 800 * floor((1/8) * i3 + (7/8))",
+      "count_latex": "-800 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 800 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
      }
     ]
    }
   ],
-  "n_ri": 20,
-  "n_rd": 47,
-  "n_dmd_terms": 24
+  "n_ri": 14,
+  "n_rd": 46,
+  "n_dmd_terms": 19
  },
  "inf_error": null,
+ "method": "exact",
  "total": "1280000",
- "warm": "(10062877/8)",
- "compulsory": "(177123/8)",
- "dmd": "137550 * sqrt((25207/64)) + sqrt((1311777/64)) + 2401 * sqrt((3581/8)) + 16800 * sqrt((3573/8)) + 439698 * sqrt((21/8)) + 2401 * sqrt((837/8)) + 16800 * sqrt((829/8)) + sqrt((160807/8)) + 49 * sqrt(445) + 350 * sqrt(444) + 49 * sqrt(102) + 350 * sqrt(101) + 798 * sqrt((7/8)) + sqrt((4407/8)) + 320000 * sqrt(3) + (2730723/8)",
+ "warm": "1259800",
+ "compulsory": "20200",
+ "dmd": "sqrt(20102) + 2450 * sqrt(445) + 17150 * sqrt(444) + 2450 * sqrt(102) + 17150 * sqrt(101) + sqrt(20101) + sqrt(551) + 320000 * sqrt(3) + 339400",
  "ri": [
   {
-   "value_plain": "1400",
-   "value_latex": "1400",
+   "value_plain": "1600",
+   "value_latex": "1600",
+   "mass_plain": "140000",
+   "mass_latex": "140000",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,i4=0,t3=1",
+    "t0=0,i0=0,t1=1,t2=0,i4=399,t3=1",
+    "t0=0,i0=0,t1=1,t2=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1249,8 +1730,13 @@
    ]
   },
   {
-   "value_plain": "630200",
-   "value_latex": "630200",
+   "value_plain": "628800",
+   "value_latex": "628800",
+   "mass_plain": "1",
+   "mass_latex": "1",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=392,t2=0,i4=399,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1260,8 +1746,13 @@
    ]
   },
   {
-   "value_plain": "1267004",
-   "value_latex": "1267004",
+   "value_plain": "1265604",
+   "value_latex": "1265604",
+   "mass_plain": "1",
+   "mass_latex": "1",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=392,t2=0,i4=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1273,6 +1764,12 @@
   {
    "value_plain": "1",
    "value_latex": "1",
+   "mass_plain": "319200",
+   "mass_latex": "319200",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,t3=0",
+    "t0=0,i0=0,t1=1,t2=0,t3=0"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1282,30 +1779,49 @@
    ]
   },
   {
-   "value_plain": "(3151/2)",
-   "value_latex": "\\frac{3151}{2}",
+   "value_plain": "1572",
+   "value_latex": "1572",
+   "mass_plain": "38304",
+   "mass_latex": "38304",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,t3=2",
+    "t0=0,i0=0,t1=1,t2=0,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "",
-     "count_plain": "39102",
-     "count_latex": "39102"
+     "count_plain": "38304",
+     "count_latex": "38304"
     }
    ]
   },
   {
-   "value_plain": "(7/2)",
-   "value_latex": "\\frac{7}{2}",
+   "value_plain": "1572",
+   "value_latex": "1572",
+   "mass_plain": "1596",
+   "mass_latex": "1596",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,i4=0,t3=2",
+    "t0=0,i0=0,t1=0,t2=0,i4=392,t3=2",
+    "t0=0,i0=0,t1=1,t2=0,i4=0,t3=2",
+    "t0=0,i0=0,t1=1,t2=0,i4=392,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "",
-     "count_plain": "439698",
-     "count_latex": "439698"
+     "count_plain": "1596",
+     "count_latex": "1596"
     }
    ]
   },
   {
    "value_plain": "639972",
    "value_latex": "639972",
+   "mass_plain": "1",
+   "mass_latex": "1",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=0,t2=0,i4=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1315,30 +1831,13 @@
    ]
   },
   {
-   "value_plain": "1572",
-   "value_latex": "1572",
-   "regions": [
-    {
-     "domain_plain": "",
-     "count_plain": "798",
-     "count_latex": "798"
-    }
-   ]
-  },
-  {
-   "value_plain": "(7/8)",
-   "value_latex": "\\frac{7}{8}",
-   "regions": [
-    {
-     "domain_plain": "",
-     "count_plain": "798",
-     "count_latex": "798"
-    }
-   ]
-  },
-  {
    "value_plain": "3168",
    "value_latex": "3168",
+   "mass_plain": "1",
+   "mass_latex": "1",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=0,t2=0,i4=399,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1350,6 +1849,12 @@
   {
    "value_plain": "3",
    "value_latex": "3",
+   "mass_plain": "320000",
+   "mass_latex": "320000",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,t3=3",
+    "t0=0,i0=0,t1=1,t2=0,t3=3"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1361,8 +1866,13 @@
  ],
  "rd": [
   {
-   "value_plain": "(1311799/64)",
-   "value_latex": "\\frac{1311799}{64}",
+   "value_plain": "(1/8) * i4 * i3 + (1/8) * i3 - (393/8) * i4 + (161215/8)",
+   "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{8} \\cdot i3 - \\frac{393}{8} \\cdot i4 + \\frac{161215}{8}",
+   "mass_plain": "2352",
+   "mass_latex": "2352",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "(i3) mod 8 = 0 and (1 + i4) mod 8 = 0 and 8 <= i3 <= 384 and 7 <= i4 <= 391",
@@ -1372,19 +1882,29 @@
    ]
   },
   {
-   "value_plain": "(1311735/64)",
-   "value_latex": "\\frac{1311735}{64}",
+   "value_plain": "(1/8) * i4 * i3 + (1/8) * i3 - 49 * i4 - floor((1/8) * i4 + (1/8)) + 20151",
+   "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{8} \\cdot i3 - 49 \\cdot i4 - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 20151",
+   "mass_plain": "16464",
+   "mass_latex": "16464",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384 and 0 < i4 <= 392",
-     "count_plain": "(7/8)",
-     "count_latex": "\\frac{7}{8}"
+     "count_plain": "floor((1/8) * i4) - floor((1/8) * i4 + (1/8)) + 1",
+     "count_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 1"
     }
    ]
   },
   {
-   "value_plain": "(1318055/64)",
-   "value_latex": "\\frac{1318055}{64}",
+   "value_plain": "-(1/8) * i4 + (161607/8)",
+   "value_latex": "-\\frac{1}{8} \\cdot i4 + \\frac{161607}{8}",
+   "mass_plain": "49",
+   "mass_latex": "49",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=392,t2=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "(1 + i4) mod 8 = 0 and 7 <= i4 <= 391",
@@ -1394,30 +1914,45 @@
    ]
   },
   {
-   "value_plain": "(1308607/64)",
-   "value_latex": "\\frac{1308607}{64}",
+   "value_plain": "(1/8) * i4 * i3 + (1/4) * i3 - 49 * i4 - floor((1/8) * i4 + (1/8)) + 20102",
+   "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{4} \\cdot i3 - 49 \\cdot i4 - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 20102",
+   "mass_plain": "343",
+   "mass_latex": "343",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "i3 = 392 and 0 < i4 <= 392",
-     "count_plain": "(7/8)",
-     "count_latex": "\\frac{7}{8}"
+     "count_plain": "floor((1/8) * i4) - floor((1/8) * i4 + (1/8)) + 1",
+     "count_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 1"
     }
    ]
   },
   {
-   "value_plain": "(25207/64)",
-   "value_latex": "\\frac{25207}{64}",
+   "value_plain": "-451 * floor((1/8) * i3) + 451 * floor((1/8) * i3 + (7/8))",
+   "value_latex": "-451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+   "mass_plain": "139300",
+   "mass_latex": "139300",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,t3=1"
+   ],
    "regions": [
     {
-     "domain_plain": "",
-     "count_plain": "137550",
-     "count_latex": "137550"
+     "domain_plain": "0 < i3 <= 399",
+     "count_plain": "-398 * floor((1/8) * i3) + 398 * floor((1/8) * i3 + (7/8))",
+     "count_latex": "-398 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 398 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
     }
    ]
   },
   {
-   "value_plain": "(1308991/64)",
-   "value_latex": "\\frac{1308991}{64}",
+   "value_plain": "(1/8) * i4 * i3 + (1/8) * i3 - 49 * i4 + 20102",
+   "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{8} \\cdot i3 - 49 \\cdot i4 + 20102",
+   "mass_plain": "288",
+   "mass_latex": "288",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384 and 393 <= i4 <= 398",
@@ -1427,8 +1962,13 @@
    ]
   },
   {
-   "value_plain": "(1305863/64)",
-   "value_latex": "\\frac{1305863}{64}",
+   "value_plain": "(1/8) * i4 * i3 + (1/4) * i3 - 49 * i4 + 20053",
+   "value_latex": "\\frac{1}{8} \\cdot i4 \\cdot i3 + \\frac{1}{4} \\cdot i3 - 49 \\cdot i4 + 20053",
+   "mass_plain": "6",
+   "mass_latex": "6",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "i3 = 392 and 393 <= i4 <= 398",
@@ -1438,19 +1978,13 @@
    ]
   },
   {
-   "value_plain": "(22463/64)",
-   "value_latex": "\\frac{22463}{64}",
-   "regions": [
-    {
-     "domain_plain": "393 <= i4 <= 398",
-     "count_plain": "350",
-     "count_latex": "350"
-    }
-   ]
-  },
-  {
-   "value_plain": "(63705/64)",
-   "value_latex": "\\frac{63705}{64}",
+   "value_plain": "(399/8) * i3 + 551",
+   "value_latex": "\\frac{399}{8} \\cdot i3 + 551",
+   "mass_plain": "48",
+   "mass_latex": "48",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,i4=399,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384",
@@ -1460,8 +1994,13 @@
    ]
   },
   {
-   "value_plain": "(1311777/64)",
-   "value_latex": "\\frac{1311777}{64}",
+   "value_plain": "20102",
+   "value_latex": "20102",
+   "mass_plain": "1",
+   "mass_latex": "1",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=392,t2=0,i4=399,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1471,19 +2010,29 @@
    ]
   },
   {
-   "value_plain": "(175/64)",
-   "value_latex": "\\frac{175}{64}",
+   "value_plain": "-i4 * floor((1/8) * i3) + i4 * floor((1/8) * i3 + (7/8)) - floor((1/8) * i4 + (7/8)) * floor((1/8) * i3) + floor((1/8) * i4 + (7/8)) * floor((1/8) * i3 + (7/8)) - 2 * floor((1/8) * i3) + 2 * floor((1/8) * i3 + (7/8))",
+   "value_latex": "-i4 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + i4 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor - 2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+   "mass_plain": "350",
+   "mass_latex": "350",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,i4=399,t3=1"
+   ],
    "regions": [
     {
-     "domain_plain": "i4 = 399",
-     "count_plain": "350",
-     "count_latex": "350"
+     "domain_plain": "i4 = 399 and 0 < i3 <= 399",
+     "count_plain": "-floor((1/8) * i3) + floor((1/8) * i3 + (7/8))",
+     "count_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
     }
    ]
   },
   {
-   "value_plain": "(1314871/64)",
-   "value_latex": "\\frac{1314871}{64}",
+   "value_plain": "(1/8) * i3 + 20151",
+   "value_latex": "\\frac{1}{8} \\cdot i3 + 20151",
+   "mass_plain": "48",
+   "mass_latex": "48",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,i4=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "(i3) mod 8 = 0 and 8 <= i3 <= 384",
@@ -1493,8 +2042,13 @@
    ]
   },
   {
-   "value_plain": "(1311743/64)",
-   "value_latex": "\\frac{1311743}{64}",
+   "value_plain": "(1/4) * i3 + 20102",
+   "value_latex": "\\frac{1}{4} \\cdot i3 + 20102",
+   "mass_plain": "1",
+   "mass_latex": "1",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,i4=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "i3 = 392",
@@ -1504,8 +2058,30 @@
    ]
   },
   {
+   "value_plain": "-451 * floor((1/8) * i3) + 451 * floor((1/8) * i3 + (7/8))",
+   "value_latex": "-451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 451 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+   "mass_plain": "350",
+   "mass_latex": "350",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,i4=0,t3=1"
+   ],
+   "regions": [
+    {
+     "domain_plain": "0 < i3 <= 399",
+     "count_plain": "-floor((1/8) * i3) + floor((1/8) * i3 + (7/8))",
+     "count_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
+    }
+   ]
+  },
+  {
    "value_plain": "1",
    "value_latex": "1",
+   "mass_plain": "319200",
+   "mass_latex": "319200",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,t3=0",
+    "t0=0,i0=0,t1=1,t2=0,t3=0"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1515,19 +2091,29 @@
    ]
   },
   {
-   "value_plain": "(3581/8)",
-   "value_latex": "\\frac{3581}{8}",
+   "value_plain": "445",
+   "value_latex": "445",
+   "mass_plain": "2352",
+   "mass_latex": "2352",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "",
-     "count_plain": "2401",
-     "count_latex": "2401"
+     "count_plain": "2352",
+     "count_latex": "2352"
     }
    ]
   },
   {
-   "value_plain": "(3573/8)",
-   "value_latex": "\\frac{3573}{8}",
+   "value_plain": "444",
+   "value_latex": "444",
+   "mass_plain": "16800",
+   "mass_latex": "16800",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1537,8 +2123,30 @@
    ]
   },
   {
-   "value_plain": "(27/4)",
-   "value_latex": "\\frac{27}{4}",
+   "value_plain": "445",
+   "value_latex": "445",
+   "mass_plain": "98",
+   "mass_latex": "98",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,i4=0,t3=2",
+    "t0=0,i0=0,t1=1,t2=0,i4=392,t3=2"
+   ],
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "98",
+     "count_latex": "98"
+    }
+   ]
+  },
+  {
+   "value_plain": "(9/8) * i4 + 3",
+   "value_latex": "\\frac{9}{8} \\cdot i4 + 3",
+   "mass_plain": "350",
+   "mass_latex": "350",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "i4 = 392",
@@ -1548,30 +2156,47 @@
    ]
   },
   {
-   "value_plain": "(21/8)",
-   "value_latex": "\\frac{21}{8}",
+   "value_plain": "-3 * floor((1/8) * i4) + 3 * floor((1/8) * i4 + (7/8))",
+   "value_latex": "-3 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor + 3 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor",
+   "mass_plain": "420000",
+   "mass_latex": "420000",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,t3=1",
+    "t0=0,i0=0,t1=0,t2=0,t3=2",
+    "t0=0,i0=0,t1=1,t2=0,t3=2"
+   ],
    "regions": [
     {
-     "domain_plain": "",
-     "count_plain": "439698",
-     "count_latex": "439698"
+     "domain_plain": "0 < i4 <= 399",
+     "count_plain": "-1200 * floor((1/8) * i4) + 1200 * floor((1/8) * i4 + (7/8))",
+     "count_latex": "-1200 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor + 1200 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor"
     }
    ]
   },
   {
-   "value_plain": "(837/8)",
-   "value_latex": "\\frac{837}{8}",
+   "value_plain": "102",
+   "value_latex": "102",
+   "mass_plain": "2352",
+   "mass_latex": "2352",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "",
-     "count_plain": "2401",
-     "count_latex": "2401"
+     "count_plain": "2352",
+     "count_latex": "2352"
     }
    ]
   },
   {
-   "value_plain": "(829/8)",
-   "value_latex": "\\frac{829}{8}",
+   "value_plain": "101",
+   "value_latex": "101",
+   "mass_plain": "16800",
+   "mass_latex": "16800",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1581,8 +2206,30 @@
    ]
   },
   {
-   "value_plain": "(47/8)",
-   "value_latex": "\\frac{47}{8}",
+   "value_plain": "102",
+   "value_latex": "102",
+   "mass_plain": "98",
+   "mass_latex": "98",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,i2=0,t3=2",
+    "t0=0,i0=0,t1=0,t2=0,i2=392,t3=2"
+   ],
+   "regions": [
+    {
+     "domain_plain": "",
+     "count_plain": "98",
+     "count_latex": "98"
+    }
+   ]
+  },
+  {
+   "value_plain": "(1/4) * i2 + 3",
+   "value_latex": "\\frac{1}{4} \\cdot i2 + 3",
+   "mass_plain": "350",
+   "mass_latex": "350",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "i2 = 392",
@@ -1592,8 +2239,13 @@
    ]
   },
   {
-   "value_plain": "(160423/8)",
-   "value_latex": "\\frac{160423}{8}",
+   "value_plain": "-49 * i4 + 20102",
+   "value_latex": "-49 \\cdot i4 + 20102",
+   "mass_plain": "49",
+   "mass_latex": "49",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=0,t2=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "(1 + i4) mod 8 = 0 and 7 <= i4 <= 391",
@@ -1603,19 +2255,29 @@
    ]
   },
   {
-   "value_plain": "(160415/8)",
-   "value_latex": "\\frac{160415}{8}",
+   "value_plain": "-49 * i4 + floor((1/8) * i4 + (7/8)) - floor((1/8) * i4 + (1/8)) + 20101",
+   "value_latex": "-49 \\cdot i4 + \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{7}{8} \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 20101",
+   "mass_plain": "349",
+   "mass_latex": "349",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=0,t2=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "0 < i4 <= 398",
-     "count_plain": "(7/8)",
-     "count_latex": "\\frac{7}{8}"
+     "count_plain": "floor((1/8) * i4) - floor((1/8) * i4 + (1/8)) + 1",
+     "count_latex": "\\left\\lfloor \\frac{1}{8} \\cdot i4 \\right\\rfloor - \\left\\lfloor \\frac{1}{8} \\cdot i4 + \\frac{1}{8} \\right\\rfloor + 1"
     }
    ]
   },
   {
-   "value_plain": "(160807/8)",
-   "value_latex": "\\frac{160807}{8}",
+   "value_plain": "20101",
+   "value_latex": "20101",
+   "mass_plain": "1",
+   "mass_latex": "1",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=0,t2=0,i4=0,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1625,41 +2287,29 @@
    ]
   },
   {
-   "value_plain": "445",
-   "value_latex": "445",
-   "regions": [
-    {
-     "domain_plain": "",
-     "count_plain": "49",
-     "count_latex": "49"
-    }
-   ]
-  },
-  {
    "value_plain": "444",
    "value_latex": "444",
+   "mass_plain": "350",
+   "mass_latex": "350",
+   "sources": [
+    "t0=0,i0=0,t1=1,t2=0,i4=0,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "",
      "count_plain": "350",
      "count_latex": "350"
-    }
-   ]
-  },
-  {
-   "value_plain": "102",
-   "value_latex": "102",
-   "regions": [
-    {
-     "domain_plain": "",
-     "count_plain": "49",
-     "count_latex": "49"
     }
    ]
   },
   {
    "value_plain": "101",
    "value_latex": "101",
+   "mass_plain": "350",
+   "mass_latex": "350",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,i2=0,t3=2"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1669,19 +2319,30 @@
    ]
   },
   {
-   "value_plain": "(7/8)",
-   "value_latex": "\\frac{7}{8}",
+   "value_plain": "-floor((1/8) * i3) + floor((1/8) * i3 + (7/8))",
+   "value_latex": "-\\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor",
+   "mass_plain": "700",
+   "mass_latex": "700",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,i4=0,t3=0",
+    "t0=0,i0=0,t1=1,t2=0,i4=0,t3=0"
+   ],
    "regions": [
     {
-     "domain_plain": "",
-     "count_plain": "798",
-     "count_latex": "798"
+     "domain_plain": "0 < i3 <= 399",
+     "count_plain": "-2 * floor((1/8) * i3) + 2 * floor((1/8) * i3 + (7/8))",
+     "count_latex": "-2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 \\right\\rfloor + 2 \\cdot \\left\\lfloor \\frac{1}{8} \\cdot i3 + \\frac{7}{8} \\right\\rfloor"
     }
    ]
   },
   {
-   "value_plain": "(4407/8)",
-   "value_latex": "\\frac{4407}{8}",
+   "value_plain": "551",
+   "value_latex": "551",
+   "mass_plain": "1",
+   "mass_latex": "1",
+   "sources": [
+    "t0=0,i0=0,t1=1,i3=0,t2=0,i4=399,t3=1"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1693,6 +2354,12 @@
   {
    "value_plain": "3",
    "value_latex": "3",
+   "mass_plain": "320000",
+   "mass_latex": "320000",
+   "sources": [
+    "t0=0,i0=0,t1=0,t2=0,t3=3",
+    "t0=0,i0=0,t1=1,t2=0,t3=3"
+   ],
    "regions": [
     {
      "domain_plain": "",
@@ -1702,9 +2369,9 @@
    ]
   }
  ],
- "n_ri": 11,
+ "n_ri": 9,
  "n_rd": 31,
- "n_dmd_terms": 16,
- "secs": 2.2,
+ "n_dmd_terms": 13,
+ "secs": 2.4,
  "family": "const"
 }

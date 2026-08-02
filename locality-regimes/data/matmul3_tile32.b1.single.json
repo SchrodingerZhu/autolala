@@ -1,0 +1,1550 @@
+{
+  "options": {
+    "block_size": 1,
+    "num_sets": 1,
+    "max_operations": 3000000000,
+    "approximation_method": "scale",
+    "infinite_repeat": false
+  },
+  "total_accesses_plain": "98304 * T^3",
+  "total_accesses_latex": "98304 \\cdot T^{3}",
+  "warm_accesses_plain": "98303 * T^3 - 3071 * T^2 + [T >= 3] => T^3 - T^2 + [T = 2] => 4",
+  "warm_accesses_latex": "98303 \\cdot T^{3} - 3071 \\cdot T^{2} + \\left[T >= 3\\right] \\Rightarrow T^{3} - T^{2} + \\left[T = 2\\right] \\Rightarrow 4",
+  "compulsory_accesses_plain": "T^3 + 3071 * T^2 - [T >= 3] => T^3 - T^2 + [T = 2] => 4",
+  "compulsory_accesses_latex": "T^{3} + 3071 \\cdot T^{2} - \\left[T >= 3\\right] \\Rightarrow T^{3} - T^{2} + \\left[T = 2\\right] \\Rightarrow 4",
+  "timestamp_space": "[T, Ad0, Ad1, Bd0, Bd1, Cd0, Cd1] -> { [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 2] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 1] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 0] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31 }",
+  "access_map": "[T, Ad0, Ad1, Bd0, Bd1, Cd0, Cd1] -> { [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 2] -> [2, 32i0 + i, 32j0 + j] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 1] -> [1, 32k0 + k, 32j0 + j] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 0] -> [0, 32i0 + i, 32k0 + k] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31 }",
+  "ri_distribution": [
+    {
+      "value_plain": "98304 * T^2 - 95232",
+      "value_latex": "98304 \\cdot T^{2} - 95232",
+      "mass_plain": "[T >= 3] => 1024 * T^3 - 1024 * T^2 + [T = 2] => 4096",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow 1024 \\cdot T^{3} - 1024 \\cdot T^{2} + \\left[T = 2\\right] \\Rightarrow 4096",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "1024 * T^3 - 1024 * T^2",
+          "count_latex": "1024 \\cdot T^{3} - 1024 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "98304 * T - 2976",
+      "value_latex": "98304 \\cdot T - 2976",
+      "mass_plain": "[T >= 3] => 1024 * T^3 - 1024 * T^2 + [T = 2] => 4096",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow 1024 \\cdot T^{3} - 1024 \\cdot T^{2} + \\left[T = 2\\right] \\Rightarrow 4096",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "1024 * T^3 - 1024 * T^2",
+          "count_latex": "1024 \\cdot T^{3} - 1024 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3072",
+      "value_latex": "3072",
+      "mass_plain": "31744 * T^3",
+      "mass_latex": "31744 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31744 * T^3",
+          "count_latex": "31744 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "98211",
+      "value_latex": "98211",
+      "mass_plain": "992 * T^3 - 992 * T^2",
+      "mass_latex": "992 \\cdot T^{3} - 992 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "992 * T^3 - 992 * T^2",
+          "count_latex": "992 \\cdot T^{3} - 992 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "96",
+      "value_latex": "96",
+      "mass_plain": "31744 * T^3",
+      "mass_latex": "31744 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31744 * T^3",
+          "count_latex": "31744 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "31744 * T^3",
+      "mass_latex": "31744 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31744 * T^3",
+          "count_latex": "31744 \\cdot T^{3}"
+        }
+      ]
+    }
+  ],
+  "rd_distribution": [
+    {
+      "value_plain": "1024 * T^2 + 3072 * T + 1024",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 1024",
+      "mass_plain": "992 * T^3 - 4960 * T^2 + 7936 * T - 3968",
+      "mass_latex": "992 \\cdot T^{3} - 4960 \\cdot T^{2} + 7936 \\cdot T - 3968",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "992 * T^3 - 4960 * T^2 + 7936 * T - 3968",
+          "count_latex": "992 \\cdot T^{3} - 4960 \\cdot T^{2} + 7936 \\cdot T - 3968"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T + 994",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 994",
+      "mass_plain": "31 * T^3 - 155 * T^2 + 248 * T - 124",
+      "mass_latex": "31 \\cdot T^{3} - 155 \\cdot T^{2} + 248 \\cdot T - 124",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 3",
+          "count_plain": "31 * T^3 - 155 * T^2 + 248 * T - 124",
+          "count_latex": "31 \\cdot T^{3} - 155 \\cdot T^{2} + 248 \\cdot T - 124"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T + 34",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 34",
+      "mass_plain": "T^3 - 5 * T^2 + 8 * T - 4",
+      "mass_latex": "T^{3} - 5 \\cdot T^{2} + 8 \\cdot T - 4",
+      "regions": [
+        {
+          "domain_plain": "j = 31 and k = 31 and T >= 3",
+          "count_plain": "T^3 - 5 * T^2 + 8 * T - 4",
+          "count_latex": "T^{3} - 5 \\cdot T^{2} + 8 \\cdot T - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T + 31",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 31",
+      "mass_plain": "960 * T^2 - 2880 * T + 1920",
+      "mass_latex": "960 \\cdot T^{2} - 2880 \\cdot T + 1920",
+      "regions": [
+        {
+          "domain_plain": "T >= 3 and 0 < j <= 30",
+          "count_plain": "32 * T^2 - 96 * T + 64",
+          "count_latex": "32 \\cdot T^{2} - 96 \\cdot T + 64"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T + 1",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 1",
+      "mass_plain": "62 * T^2 - 186 * T + 124",
+      "mass_latex": "62 \\cdot T^{2} - 186 \\cdot T + 124",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "62 * T^2 - 186 * T + 124",
+          "count_latex": "62 \\cdot T^{2} - 186 \\cdot T + 124"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 992",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 992",
+      "mass_plain": "961 * T^2 - 2883 * T + 1922",
+      "mass_latex": "961 \\cdot T^{2} - 2883 \\cdot T + 1922",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "961 * T - 961",
+          "count_latex": "961 \\cdot T - 961"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 1022",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 1022",
+      "mass_plain": "31 * T^2 - 93 * T + 62",
+      "mass_latex": "31 \\cdot T^{2} - 93 \\cdot T + 62",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and 0 < k0 <= -2 + T",
+          "count_plain": "31 * T - 31",
+          "count_latex": "31 \\cdot T - 31"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 994",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 994",
+      "mass_plain": "30 * T^2 - 90 * T + 60",
+      "mass_latex": "30 \\cdot T^{2} - 90 \\cdot T + 60",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T and 0 < k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 2014",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 2014",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "j = 31 and k = 31 and 0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 63",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 63",
+      "mass_plain": "960 * T - 960",
+      "mass_latex": "960 \\cdot T - 960",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < j <= 30",
+          "count_plain": "32 * T - 32",
+          "count_latex": "32 \\cdot T - 32"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 31",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 31",
+      "mass_plain": "30 * T - 30",
+      "mass_latex": "30 \\cdot T - 30",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 1",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 1",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "2 * T - 2",
+          "count_latex": "2 \\cdot T - 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 993",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 993",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 32",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 32",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T + 32",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 32",
+      "mass_plain": "62 * T^2 - 186 * T + 124",
+      "mass_latex": "62 \\cdot T^{2} - 186 \\cdot T + 124",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "62 * T^2 - 186 * T + 124",
+          "count_latex": "62 \\cdot T^{2} - 186 \\cdot T + 124"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 64",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 64",
+      "mass_plain": "62 * T - 62",
+      "mass_latex": "62 \\cdot T - 62",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "62 * T - 62",
+          "count_latex": "62 \\cdot T - 62"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T + 2",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 2",
+      "mass_plain": "900 * T^2 - 2700 * T + 1800",
+      "mass_latex": "900 \\cdot T^{2} - 2700 \\cdot T + 1800",
+      "regions": [
+        {
+          "domain_plain": "T >= 3 and 0 < j <= 30",
+          "count_plain": "30 * T^2 - 90 * T + 60",
+          "count_latex": "30 \\cdot T^{2} - 90 \\cdot T + 60"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 28",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 28",
+      "mass_plain": "30 * T^2 - 90 * T + 60",
+      "mass_latex": "30 \\cdot T^{2} - 90 \\cdot T + 60",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 3 and 0 < j <= 30",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 988",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 988",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "j = 31 and k = 31 and T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 990",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 990",
+      "mass_plain": "900 * T - 900",
+      "mass_latex": "900 \\cdot T - 900",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < j <= 30",
+          "count_plain": "30 * T - 30",
+          "count_latex": "30 \\cdot T - 30"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 1020",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 1020",
+      "mass_plain": "30 * T - 30",
+      "mass_latex": "30 \\cdot T - 30",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 2 and 0 < j <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 962",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 962",
+      "mass_plain": "30 * T - 30",
+      "mass_latex": "30 \\cdot T - 30",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 2012",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 2012",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "j = 31 and k = 31 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T + 1",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 1",
+      "mass_plain": "30 * T^2 - 90 * T + 60",
+      "mass_latex": "30 \\cdot T^{2} - 90 \\cdot T + 60",
+      "regions": [
+        {
+          "domain_plain": "T >= 3 and 0 < j <= 30",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T + 31",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 31",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 991",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 991",
+      "mass_plain": "30 * T - 30",
+      "mass_latex": "30 \\cdot T - 30",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < j <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 962",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 962",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 29",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 29",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 991",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 991",
+      "mass_plain": "63 * T - 63",
+      "mass_latex": "63 \\cdot T - 63",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "63 * T - 63",
+          "count_latex": "63 \\cdot T - 63"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 1021",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 1021",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 992",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 992",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 2080",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 2080",
+      "mass_plain": "961 * T^2 - 2883 * T + 1922",
+      "mass_latex": "961 \\cdot T^{2} - 2883 \\cdot T + 1922",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "961 * T - 961",
+          "count_latex": "961 \\cdot T - 961"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 2050",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 2050",
+      "mass_plain": "60 * T^2 - 180 * T + 120",
+      "mass_latex": "60 \\cdot T^{2} - 180 \\cdot T + 120",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and 0 < k0 <= -2 + T",
+          "count_plain": "30 * T - 30",
+          "count_latex": "30 \\cdot T - 30"
+        },
+        {
+          "domain_plain": "0 < k0 <= -2 + T and 0 < k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 1090",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 1090",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "j = 31 and k = 31 and 0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 961",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 961",
+      "mass_plain": "960 * T - 960",
+      "mass_latex": "960 \\cdot T - 960",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < j <= 30",
+          "count_plain": "32 * T - 32",
+          "count_latex": "32 \\cdot T - 32"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 2020",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 2020",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and 0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 990",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 990",
+      "mass_plain": "30 * T - 30",
+      "mass_latex": "30 \\cdot T - 30",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 3072 * T - 960",
+      "value_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 960",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 2049",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 2049",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 34",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 34",
+      "mass_plain": "900 * T - 900",
+      "mass_latex": "900 \\cdot T - 900",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < j <= 30",
+          "count_plain": "30 * T - 30",
+          "count_latex": "30 \\cdot T - 30"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 4",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 4",
+      "mass_plain": "30 * T - 30",
+      "mass_latex": "30 \\cdot T - 30",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 2 and 0 < j <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T - 956",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T - 956",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "j = 31 and k = 31 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 33",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 33",
+      "mass_plain": "30 * T - 30",
+      "mass_latex": "30 \\cdot T - 30",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < j <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 63",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 63",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T + 3",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 3",
+      "mass_plain": "30 * T - 30",
+      "mass_latex": "30 \\cdot T - 30",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1024 * T^2 + 2048 * T - 27",
+      "value_latex": "1024 \\cdot T^{2} + 2048 \\cdot T - 27",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 3072",
+      "value_latex": "2048 \\cdot T + 3072",
+      "mass_plain": "930 * T^3 - 2790 * T^2 + 1860 * T",
+      "mass_latex": "930 \\cdot T^{3} - 2790 \\cdot T^{2} + 1860 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "930 * T^3 - 2790 * T^2 + 1860 * T",
+          "count_latex": "930 \\cdot T^{3} - 2790 \\cdot T^{2} + 1860 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 3042",
+      "value_latex": "2048 \\cdot T + 3042",
+      "mass_plain": "30 * T^3 - 90 * T^2 + 60 * T",
+      "mass_latex": "30 \\cdot T^{3} - 90 \\cdot T^{2} + 60 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 3",
+          "count_plain": "30 * T^3 - 90 * T^2 + 60 * T",
+          "count_latex": "30 \\cdot T^{3} - 90 \\cdot T^{2} + 60 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2079",
+      "value_latex": "2048 \\cdot T + 2079",
+      "mass_plain": "30 * T^3 - 90 * T^2 + 60 * T",
+      "mass_latex": "30 \\cdot T^{3} - 90 \\cdot T^{2} + 60 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3 and 0 < k <= 30",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2049",
+      "value_latex": "2048 \\cdot T + 2049",
+      "mass_plain": "T^3 - 3 * T^2 + 2 * T",
+      "mass_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 3009",
+      "value_latex": "2048 \\cdot T + 3009",
+      "mass_plain": "960 * T^2 - 960 * T",
+      "mass_latex": "960 \\cdot T^{2} - 960 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < i <= 30",
+          "count_plain": "32 * T^2 - 32 * T",
+          "count_latex": "32 \\cdot T^{2} - 32 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 1056",
+      "value_latex": "2048 \\cdot T + 1056",
+      "mass_plain": "30 * T^2 - 30 * T",
+      "mass_latex": "30 \\cdot T^{2} - 30 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 1026",
+      "value_latex": "2048 \\cdot T + 1026",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2080",
+      "value_latex": "2048 \\cdot T + 2080",
+      "mass_plain": "T^3 - 3 * T^2 + 2 * T",
+      "mass_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 1057",
+      "value_latex": "2048 \\cdot T + 1057",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2049",
+      "value_latex": "2048 \\cdot T + 2049",
+      "mass_plain": "30 * T^3 - 90 * T^2 + 60 * T",
+      "mass_latex": "30 \\cdot T^{3} - 90 \\cdot T^{2} + 60 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3 and 0 < k <= 30",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2019",
+      "value_latex": "2048 \\cdot T + 2019",
+      "mass_plain": "T^3 - 3 * T^2 + 2 * T",
+      "mass_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 3",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2018",
+      "value_latex": "2048 \\cdot T + 2018",
+      "mass_plain": "30 * T^2 - 30 * T",
+      "mass_latex": "30 \\cdot T^{2} - 30 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2048",
+      "value_latex": "2048 \\cdot T + 2048",
+      "mass_plain": "[T >= 3] => T^3 - T^2 + [T = 2] => 4",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow T^{3} - T^{2} + \\left[T = 2\\right] \\Rightarrow 4",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        },
+        {
+          "domain_plain": "T = 2",
+          "count_plain": "4",
+          "count_latex": "4"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2017",
+      "value_latex": "2048 \\cdot T + 2017",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2081",
+      "value_latex": "2048 \\cdot T + 2081",
+      "mass_plain": "900 * T^2 - 900 * T",
+      "mass_latex": "900 \\cdot T^{2} - 900 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < i <= 30",
+          "count_plain": "30 * T^2 - 30 * T",
+          "count_latex": "30 \\cdot T^{2} - 30 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2051",
+      "value_latex": "2048 \\cdot T + 2051",
+      "mass_plain": "30 * T^2 - 30 * T",
+      "mass_latex": "30 \\cdot T^{2} - 30 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 2 and 0 < i <= 30",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2048",
+      "value_latex": "2048 \\cdot T + 2048",
+      "mass_plain": "30 * T^2 - 30 * T",
+      "mass_latex": "30 \\cdot T^{2} - 30 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2018",
+      "value_latex": "2048 \\cdot T + 2018",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 2080",
+      "value_latex": "2048 \\cdot T + 2080",
+      "mass_plain": "30 * T^2 - 30 * T",
+      "mass_latex": "30 \\cdot T^{2} - 30 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < i <= 30",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 1026",
+      "value_latex": "2048 \\cdot T + 1026",
+      "mass_plain": "30 * T^2 - 30 * T",
+      "mass_latex": "30 \\cdot T^{2} - 30 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 996",
+      "value_latex": "2048 \\cdot T + 996",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "2048 * T + 1024",
+      "value_latex": "2048 \\cdot T + 1024",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "1121",
+      "value_latex": "1121",
+      "mass_plain": "28861 * T^3",
+      "mass_latex": "28861 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "28861 * T^3",
+          "count_latex": "28861 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "1119",
+      "value_latex": "1119",
+      "mass_plain": "930 * T^3",
+      "mass_latex": "930 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < k <= 30",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "1089",
+      "value_latex": "1089",
+      "mass_plain": "62 * T^3",
+      "mass_latex": "62 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "62 * T^3",
+          "count_latex": "62 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "1120",
+      "value_latex": "1120",
+      "mass_plain": "930 * T^3",
+      "mass_latex": "930 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "930 * T^3",
+          "count_latex": "930 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "1119",
+      "value_latex": "1119",
+      "mass_plain": "31 * T^3",
+      "mass_latex": "31 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "1091",
+      "value_latex": "1091",
+      "mass_plain": "930 * T^3",
+      "mass_latex": "930 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < k <= 30",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "4128",
+      "value_latex": "4128",
+      "mass_plain": "900 * T^3 - 900 * T^2",
+      "mass_latex": "900 \\cdot T^{3} - 900 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "900 * T^3 - 900 * T^2",
+          "count_latex": "900 \\cdot T^{3} - 900 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "4066",
+      "value_latex": "4066",
+      "mass_plain": "30 * T^3 - 30 * T^2",
+      "mass_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "j = 31 and T >= 2",
+          "count_plain": "30 * T^3 - 30 * T^2",
+          "count_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "4064",
+      "value_latex": "4064",
+      "mass_plain": "30 * T^3 - 30 * T^2",
+      "mass_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < j <= 30",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "1122",
+      "value_latex": "1122",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "i = 31 and j = 31 and T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "4097",
+      "value_latex": "4097",
+      "mass_plain": "30 * T^3 - 30 * T^2",
+      "mass_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "30 * T^3 - 30 * T^2",
+          "count_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "4065",
+      "value_latex": "4065",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3137",
+      "value_latex": "3137",
+      "mass_plain": "30 * T^3 - 30 * T^2",
+      "mass_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < j <= 30",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3075",
+      "value_latex": "3075",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "j = 31 and T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3074",
+      "value_latex": "3074",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "66",
+      "value_latex": "66",
+      "mass_plain": "30752 * T^3",
+      "mass_latex": "30752 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "30752 * T^3",
+          "count_latex": "30752 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "65",
+      "value_latex": "65",
+      "mass_plain": "992 * T^3",
+      "mass_latex": "992 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "992 * T^3",
+          "count_latex": "992 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "31744 * T^3",
+      "mass_latex": "31744 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31744 * T^3",
+          "count_latex": "31744 \\cdot T^{3}"
+        }
+      ]
+    }
+  ],
+  "dmd_terms": [
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "992 * T^3 - 4960 * T^2 + 7936 * T - 3968",
+      "multiplicity_latex": "992 \\cdot T^{3} - 4960 \\cdot T^{2} + 7936 \\cdot T - 3968",
+      "reuse_distance_plain": "1024 * T^2 + 3072 * T + 1024",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 1024",
+      "term_plain": "992 * sqrt(1024 * T^2 + 3072 * T + 1024) * T^3 - 4960 * sqrt(1024 * T^2 + 3072 * T + 1024) * T^2 + 7936 * sqrt(1024 * T^2 + 3072 * T + 1024) * T - 3968 * sqrt(1024 * T^2 + 3072 * T + 1024)",
+      "term_latex": "992 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1024} \\cdot T^{3} - 4960 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1024} \\cdot T^{2} + 7936 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1024} \\cdot T - 3968 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1024}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "62 * T^2 - 186 * T + 124",
+      "multiplicity_latex": "62 \\cdot T^{2} - 186 \\cdot T + 124",
+      "reuse_distance_plain": "1024 * T^2 + 3072 * T + 1",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 1",
+      "term_plain": "62 * sqrt(1024 * T^2 + 3072 * T + 1) * T^2 - 186 * sqrt(1024 * T^2 + 3072 * T + 1) * T + 124 * sqrt(1024 * T^2 + 3072 * T + 1)",
+      "term_latex": "62 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1} \\cdot T^{2} - 186 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1} \\cdot T + 124 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "2 * T - 2",
+      "multiplicity_latex": "2 \\cdot T - 2",
+      "reuse_distance_plain": "1024 * T^2 + 2048 * T + 1",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 1",
+      "term_plain": "2 * sqrt(1024 * T^2 + 2048 * T + 1) * T - 2 * sqrt(1024 * T^2 + 2048 * T + 1)",
+      "term_latex": "2 \\cdot \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 1} \\cdot T - 2 \\cdot \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 1}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "1024 * T^2 + 2048 * T + 32",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 32",
+      "term_plain": "sqrt(1024 * T^2 + 2048 * T + 32) * T - sqrt(1024 * T^2 + 2048 * T + 32)",
+      "term_latex": "\\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 32} \\cdot T - \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 32}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "62 * T^2 - 186 * T + 124",
+      "multiplicity_latex": "62 \\cdot T^{2} - 186 \\cdot T + 124",
+      "reuse_distance_plain": "1024 * T^2 + 3072 * T + 32",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 32",
+      "term_plain": "62 * sqrt(1024 * T^2 + 3072 * T + 32) * T^2 - 186 * sqrt(1024 * T^2 + 3072 * T + 32) * T + 124 * sqrt(1024 * T^2 + 3072 * T + 32)",
+      "term_latex": "62 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 32} \\cdot T^{2} - 186 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 32} \\cdot T + 124 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 32}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "62 * T - 62",
+      "multiplicity_latex": "62 \\cdot T - 62",
+      "reuse_distance_plain": "1024 * T^2 + 2048 * T + 64",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 64",
+      "term_plain": "62 * sqrt(1024 * T^2 + 2048 * T + 64) * T - 62 * sqrt(1024 * T^2 + 2048 * T + 64)",
+      "term_latex": "62 \\cdot \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 64} \\cdot T - 62 \\cdot \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 64}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^2 - 3 * T + 2",
+      "multiplicity_latex": "T^{2} - 3 \\cdot T + 2",
+      "reuse_distance_plain": "1024 * T^2 + 3072 * T + 31",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 3072 \\cdot T + 31",
+      "term_plain": "sqrt(1024 * T^2 + 3072 * T + 31) * T^2 - 3 * sqrt(1024 * T^2 + 3072 * T + 31) * T + 2 * sqrt(1024 * T^2 + 3072 * T + 31)",
+      "term_latex": "\\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 31} \\cdot T^{2} - 3 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 31} \\cdot T + 2 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 31}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "1024 * T^2 + 3072 * T - 962",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 962",
+      "term_plain": "sqrt(1024 * T^2 + 3072 * T - 962) * T - sqrt(1024 * T^2 + 3072 * T - 962)",
+      "term_latex": "\\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 962} \\cdot T - \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 962}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "63 * T - 63",
+      "multiplicity_latex": "63 \\cdot T - 63",
+      "reuse_distance_plain": "1024 * T^2 + 3072 * T - 991",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 991",
+      "term_plain": "63 * sqrt(1024 * T^2 + 3072 * T - 991) * T - 63 * sqrt(1024 * T^2 + 3072 * T - 991)",
+      "term_latex": "63 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 991} \\cdot T - 63 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 991}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^2 - 3 * T + 2",
+      "multiplicity_latex": "T^{2} - 3 \\cdot T + 2",
+      "reuse_distance_plain": "1024 * T^2 + 3072 * T",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 3072 \\cdot T",
+      "term_plain": "sqrt(1024 * T^2 + 3072 * T) * T^2 - 3 * sqrt(1024 * T^2 + 3072 * T) * T + 2 * sqrt(1024 * T^2 + 3072 * T)",
+      "term_latex": "\\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T} \\cdot T^{2} - 3 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T} \\cdot T + 2 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "1024 * T^2 + 3072 * T - 992",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 992",
+      "term_plain": "sqrt(1024 * T^2 + 3072 * T - 992) * T - sqrt(1024 * T^2 + 3072 * T - 992)",
+      "term_latex": "\\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 992} \\cdot T - \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 992}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "1024 * T^2 + 3072 * T - 960",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 3072 \\cdot T - 960",
+      "term_plain": "sqrt(1024 * T^2 + 3072 * T - 960) * T - sqrt(1024 * T^2 + 3072 * T - 960)",
+      "term_latex": "\\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 960} \\cdot T - \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 960}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "1024 * T^2 + 2048 * T + 63",
+      "reuse_distance_latex": "1024 \\cdot T^{2} + 2048 \\cdot T + 63",
+      "term_plain": "sqrt(1024 * T^2 + 2048 * T + 63) * T - sqrt(1024 * T^2 + 2048 * T + 63)",
+      "term_latex": "\\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 63} \\cdot T - \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 63}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "930 * T^3 - 2790 * T^2 + 1860 * T",
+      "multiplicity_latex": "930 \\cdot T^{3} - 2790 \\cdot T^{2} + 1860 \\cdot T",
+      "reuse_distance_plain": "2048 * T + 3072",
+      "reuse_distance_latex": "2048 \\cdot T + 3072",
+      "term_plain": "930 * sqrt(2048 * T + 3072) * T^3 - 2790 * sqrt(2048 * T + 3072) * T^2 + 1860 * sqrt(2048 * T + 3072) * T",
+      "term_latex": "930 \\cdot \\sqrt{2048 \\cdot T + 3072} \\cdot T^{3} - 2790 \\cdot \\sqrt{2048 \\cdot T + 3072} \\cdot T^{2} + 1860 \\cdot \\sqrt{2048 \\cdot T + 3072} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^3 - 3 * T^2 + 2 * T",
+      "multiplicity_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "reuse_distance_plain": "2048 * T + 2049",
+      "reuse_distance_latex": "2048 \\cdot T + 2049",
+      "term_plain": "sqrt(2048 * T + 2049) * T^3 - 3 * sqrt(2048 * T + 2049) * T^2 + 2 * sqrt(2048 * T + 2049) * T",
+      "term_latex": "\\sqrt{2048 \\cdot T + 2049} \\cdot T^{3} - 3 \\cdot \\sqrt{2048 \\cdot T + 2049} \\cdot T^{2} + 2 \\cdot \\sqrt{2048 \\cdot T + 2049} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "2048 * T + 1026",
+      "reuse_distance_latex": "2048 \\cdot T + 1026",
+      "term_plain": "sqrt(2048 * T + 1026) * T^2 - sqrt(2048 * T + 1026) * T",
+      "term_latex": "\\sqrt{2048 \\cdot T + 1026} \\cdot T^{2} - \\sqrt{2048 \\cdot T + 1026} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^3 - 3 * T^2 + 2 * T",
+      "multiplicity_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "reuse_distance_plain": "2048 * T + 2080",
+      "reuse_distance_latex": "2048 \\cdot T + 2080",
+      "term_plain": "sqrt(2048 * T + 2080) * T^3 - 3 * sqrt(2048 * T + 2080) * T^2 + 2 * sqrt(2048 * T + 2080) * T",
+      "term_latex": "\\sqrt{2048 \\cdot T + 2080} \\cdot T^{3} - 3 \\cdot \\sqrt{2048 \\cdot T + 2080} \\cdot T^{2} + 2 \\cdot \\sqrt{2048 \\cdot T + 2080} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "2048 * T + 1057",
+      "reuse_distance_latex": "2048 \\cdot T + 1057",
+      "term_plain": "sqrt(2048 * T + 1057) * T^2 - sqrt(2048 * T + 1057) * T",
+      "term_latex": "\\sqrt{2048 \\cdot T + 1057} \\cdot T^{2} - \\sqrt{2048 \\cdot T + 1057} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^3 - T^2",
+      "multiplicity_latex": "T^{3} - T^{2}",
+      "reuse_distance_plain": "2048 * T + 2048",
+      "reuse_distance_latex": "2048 \\cdot T + 2048",
+      "term_plain": "sqrt(2048 * T + 2048) * T^3 - sqrt(2048 * T + 2048) * T^2",
+      "term_latex": "\\sqrt{2048 \\cdot T + 2048} \\cdot T^{3} - \\sqrt{2048 \\cdot T + 2048} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "2048 * T + 2017",
+      "reuse_distance_latex": "2048 \\cdot T + 2017",
+      "term_plain": "sqrt(2048 * T + 2017) * T^2 - sqrt(2048 * T + 2017) * T",
+      "term_latex": "\\sqrt{2048 \\cdot T + 2017} \\cdot T^{2} - \\sqrt{2048 \\cdot T + 2017} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "2048 * T + 2018",
+      "reuse_distance_latex": "2048 \\cdot T + 2018",
+      "term_plain": "sqrt(2048 * T + 2018) * T^2 - sqrt(2048 * T + 2018) * T",
+      "term_latex": "\\sqrt{2048 \\cdot T + 2018} \\cdot T^{2} - \\sqrt{2048 \\cdot T + 2018} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "2048 * T + 1024",
+      "reuse_distance_latex": "2048 \\cdot T + 1024",
+      "term_plain": "sqrt(2048 * T + 1024) * T^2 - sqrt(2048 * T + 1024) * T",
+      "term_latex": "\\sqrt{2048 \\cdot T + 1024} \\cdot T^{2} - \\sqrt{2048 \\cdot T + 1024} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "28861 * T^3",
+      "multiplicity_latex": "28861 \\cdot T^{3}",
+      "reuse_distance_plain": "1121",
+      "reuse_distance_latex": "1121",
+      "term_plain": "28861 * sqrt(1121) * T^3",
+      "term_latex": "28861 \\cdot \\sqrt{1121} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "62 * T^3",
+      "multiplicity_latex": "62 \\cdot T^{3}",
+      "reuse_distance_plain": "1089",
+      "reuse_distance_latex": "1089",
+      "term_plain": "2046 * T^3",
+      "term_latex": "2046 \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "930 * T^3",
+      "multiplicity_latex": "930 \\cdot T^{3}",
+      "reuse_distance_plain": "1120",
+      "reuse_distance_latex": "1120",
+      "term_plain": "930 * sqrt(1120) * T^3",
+      "term_latex": "930 \\cdot \\sqrt{1120} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "31 * T^3",
+      "multiplicity_latex": "31 \\cdot T^{3}",
+      "reuse_distance_plain": "1119",
+      "reuse_distance_latex": "1119",
+      "term_plain": "31 * sqrt(1119) * T^3",
+      "term_latex": "31 \\cdot \\sqrt{1119} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "900 * T^3 - 900 * T^2",
+      "multiplicity_latex": "900 \\cdot T^{3} - 900 \\cdot T^{2}",
+      "reuse_distance_plain": "4128",
+      "reuse_distance_latex": "4128",
+      "term_plain": "900 * sqrt(4128) * T^3 - 900 * sqrt(4128) * T^2",
+      "term_latex": "900 \\cdot \\sqrt{4128} \\cdot T^{3} - 900 \\cdot \\sqrt{4128} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "30 * T^3 - 30 * T^2",
+      "multiplicity_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}",
+      "reuse_distance_plain": "4097",
+      "reuse_distance_latex": "4097",
+      "term_plain": "30 * sqrt(4097) * T^3 - 30 * sqrt(4097) * T^2",
+      "term_latex": "30 \\cdot \\sqrt{4097} \\cdot T^{3} - 30 \\cdot \\sqrt{4097} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^3 - T^2",
+      "multiplicity_latex": "T^{3} - T^{2}",
+      "reuse_distance_plain": "4065",
+      "reuse_distance_latex": "4065",
+      "term_plain": "sqrt(4065) * T^3 - sqrt(4065) * T^2",
+      "term_latex": "\\sqrt{4065} \\cdot T^{3} - \\sqrt{4065} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^3 - T^2",
+      "multiplicity_latex": "T^{3} - T^{2}",
+      "reuse_distance_plain": "3074",
+      "reuse_distance_latex": "3074",
+      "term_plain": "sqrt(3074) * T^3 - sqrt(3074) * T^2",
+      "term_latex": "\\sqrt{3074} \\cdot T^{3} - \\sqrt{3074} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "30752 * T^3",
+      "multiplicity_latex": "30752 \\cdot T^{3}",
+      "reuse_distance_plain": "66",
+      "reuse_distance_latex": "66",
+      "term_plain": "30752 * sqrt(66) * T^3",
+      "term_latex": "30752 \\cdot \\sqrt{66} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "992 * T^3",
+      "multiplicity_latex": "992 \\cdot T^{3}",
+      "reuse_distance_plain": "65",
+      "reuse_distance_latex": "65",
+      "term_plain": "992 * sqrt(65) * T^3",
+      "term_latex": "992 \\cdot \\sqrt{65} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "31744 * T^3",
+      "multiplicity_latex": "31744 \\cdot T^{3}",
+      "reuse_distance_plain": "3",
+      "reuse_distance_latex": "3",
+      "term_plain": "31744 * sqrt(3) * T^3",
+      "term_latex": "31744 \\cdot \\sqrt{3} \\cdot T^{3}"
+    }
+  ],
+  "dmd_formula_plain": "992 * sqrt(1024 * T^2 + 3072 * T + 1024) * T^3 - 4960 * sqrt(1024 * T^2 + 3072 * T + 1024) * T^2 + 62 * sqrt(1024 * T^2 + 3072 * T + 1) * T^2 + 62 * sqrt(1024 * T^2 + 3072 * T + 32) * T^2 + sqrt(1024 * T^2 + 3072 * T + 31) * T^2 + sqrt(1024 * T^2 + 3072 * T) * T^2 + 930 * sqrt(2048 * T + 3072) * T^3 + sqrt(2048 * T + 2049) * T^3 + sqrt(2048 * T + 2080) * T^3 + sqrt(2048 * T + 2048) * T^3 + 2047 * T^3 + 7936 * sqrt(1024 * T^2 + 3072 * T + 1024) * T - 186 * sqrt(1024 * T^2 + 3072 * T + 1) * T + 2 * sqrt(1024 * T^2 + 2048 * T + 1) * T + sqrt(1024 * T^2 + 2048 * T + 32) * T - 186 * sqrt(1024 * T^2 + 3072 * T + 32) * T + 62 * sqrt(1024 * T^2 + 2048 * T + 64) * T - 3 * sqrt(1024 * T^2 + 3072 * T + 31) * T + sqrt(1024 * T^2 + 3072 * T - 962) * T + 63 * sqrt(1024 * T^2 + 3072 * T - 991) * T - 3 * sqrt(1024 * T^2 + 3072 * T) * T + sqrt(1024 * T^2 + 3072 * T - 992) * T + sqrt(1024 * T^2 + 3072 * T - 960) * T + sqrt(1024 * T^2 + 2048 * T + 63) * T - 2790 * sqrt(2048 * T + 3072) * T^2 - 3 * sqrt(2048 * T + 2049) * T^2 + sqrt(2048 * T + 1026) * T^2 - 3 * sqrt(2048 * T + 2080) * T^2 + sqrt(2048 * T + 1057) * T^2 - sqrt(2048 * T + 2048) * T^2 + sqrt(2048 * T + 2017) * T^2 + sqrt(2048 * T + 2018) * T^2 + sqrt(2048 * T + 1024) * T^2 + 28861 * sqrt(1121) * T^3 + 930 * sqrt(1120) * T^3 + 31 * sqrt(1119) * T^3 + 900 * sqrt(4128) * T^3 + 30 * sqrt(4097) * T^3 + sqrt(4065) * T^3 + sqrt(3074) * T^3 + 30752 * sqrt(66) * T^3 + 992 * sqrt(65) * T^3 + 31744 * sqrt(3) * T^3 + 3071 * T^2 - 3968 * sqrt(1024 * T^2 + 3072 * T + 1024) + 124 * sqrt(1024 * T^2 + 3072 * T + 1) - 2 * sqrt(1024 * T^2 + 2048 * T + 1) - sqrt(1024 * T^2 + 2048 * T + 32) + 124 * sqrt(1024 * T^2 + 3072 * T + 32) - 62 * sqrt(1024 * T^2 + 2048 * T + 64) + 2 * sqrt(1024 * T^2 + 3072 * T + 31) - sqrt(1024 * T^2 + 3072 * T - 962) - 63 * sqrt(1024 * T^2 + 3072 * T - 991) + 2 * sqrt(1024 * T^2 + 3072 * T) - sqrt(1024 * T^2 + 3072 * T - 992) - sqrt(1024 * T^2 + 3072 * T - 960) - sqrt(1024 * T^2 + 2048 * T + 63) + 1860 * sqrt(2048 * T + 3072) * T + 2 * sqrt(2048 * T + 2049) * T - sqrt(2048 * T + 1026) * T + 2 * sqrt(2048 * T + 2080) * T - sqrt(2048 * T + 1057) * T - sqrt(2048 * T + 2017) * T - sqrt(2048 * T + 2018) * T - sqrt(2048 * T + 1024) * T - 900 * sqrt(4128) * T^2 - 30 * sqrt(4097) * T^2 - sqrt(4065) * T^2 - sqrt(3074) * T^2 - [T >= 3] => T^3 - T^2 + [T = 2] => 4",
+  "dmd_formula_latex": "992 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1024} \\cdot T^{3} - 4960 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1024} \\cdot T^{2} + 62 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1} \\cdot T^{2} + 62 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 32} \\cdot T^{2} + \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 31} \\cdot T^{2} + \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T} \\cdot T^{2} + 930 \\cdot \\sqrt{2048 \\cdot T + 3072} \\cdot T^{3} + \\sqrt{2048 \\cdot T + 2049} \\cdot T^{3} + \\sqrt{2048 \\cdot T + 2080} \\cdot T^{3} + \\sqrt{2048 \\cdot T + 2048} \\cdot T^{3} + 2047 \\cdot T^{3} + 7936 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1024} \\cdot T - 186 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1} \\cdot T + 2 \\cdot \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 1} \\cdot T + \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 32} \\cdot T - 186 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 32} \\cdot T + 62 \\cdot \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 64} \\cdot T - 3 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 31} \\cdot T + \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 962} \\cdot T + 63 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 991} \\cdot T - 3 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T} \\cdot T + \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 992} \\cdot T + \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 960} \\cdot T + \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 63} \\cdot T - 2790 \\cdot \\sqrt{2048 \\cdot T + 3072} \\cdot T^{2} - 3 \\cdot \\sqrt{2048 \\cdot T + 2049} \\cdot T^{2} + \\sqrt{2048 \\cdot T + 1026} \\cdot T^{2} - 3 \\cdot \\sqrt{2048 \\cdot T + 2080} \\cdot T^{2} + \\sqrt{2048 \\cdot T + 1057} \\cdot T^{2} - \\sqrt{2048 \\cdot T + 2048} \\cdot T^{2} + \\sqrt{2048 \\cdot T + 2017} \\cdot T^{2} + \\sqrt{2048 \\cdot T + 2018} \\cdot T^{2} + \\sqrt{2048 \\cdot T + 1024} \\cdot T^{2} + 28861 \\cdot \\sqrt{1121} \\cdot T^{3} + 930 \\cdot \\sqrt{1120} \\cdot T^{3} + 31 \\cdot \\sqrt{1119} \\cdot T^{3} + 900 \\cdot \\sqrt{4128} \\cdot T^{3} + 30 \\cdot \\sqrt{4097} \\cdot T^{3} + \\sqrt{4065} \\cdot T^{3} + \\sqrt{3074} \\cdot T^{3} + 30752 \\cdot \\sqrt{66} \\cdot T^{3} + 992 \\cdot \\sqrt{65} \\cdot T^{3} + 31744 \\cdot \\sqrt{3} \\cdot T^{3} + 3071 \\cdot T^{2} - 3968 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1024} + 124 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 1} - 2 \\cdot \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 1} - \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 32} + 124 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 32} - 62 \\cdot \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 64} + 2 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T + 31} - \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 962} - 63 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 991} + 2 \\cdot \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T} - \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 992} - \\sqrt{1024 \\cdot T^{2} + 3072 \\cdot T - 960} - \\sqrt{1024 \\cdot T^{2} + 2048 \\cdot T + 63} + 1860 \\cdot \\sqrt{2048 \\cdot T + 3072} \\cdot T + 2 \\cdot \\sqrt{2048 \\cdot T + 2049} \\cdot T - \\sqrt{2048 \\cdot T + 1026} \\cdot T + 2 \\cdot \\sqrt{2048 \\cdot T + 2080} \\cdot T - \\sqrt{2048 \\cdot T + 1057} \\cdot T - \\sqrt{2048 \\cdot T + 2017} \\cdot T - \\sqrt{2048 \\cdot T + 2018} \\cdot T - \\sqrt{2048 \\cdot T + 1024} \\cdot T - 900 \\cdot \\sqrt{4128} \\cdot T^{2} - 30 \\cdot \\sqrt{4097} \\cdot T^{2} - \\sqrt{4065} \\cdot T^{2} - \\sqrt{3074} \\cdot T^{2} - \\left[T >= 3\\right] \\Rightarrow T^{3} - T^{2} + \\left[T = 2\\right] \\Rightarrow 4",
+  "parallel": null,
+  "notes": [
+    "Barvinok runs inside a context initialized with `--approximation-method=scale`.",
+    "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.",
+    "Reuse distance is derived from the cardinality of the access-image inside each reuse interval window, without Denning recursion.",
+    "The compulsory-access term is modeled separately as total accesses minus warm reuses.",
+    "Filtered 56 DMD region(s) whose domains add equality or upper-bound constraints on named scaling dimensions.",
+    "Filtered 4 RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+  ]
+}

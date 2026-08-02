@@ -1,0 +1,263 @@
+{
+  "options": {
+    "block_size": 1,
+    "num_sets": 1,
+    "max_operations": 300000000,
+    "approximation_method": "scale",
+    "infinite_repeat": false
+  },
+  "total_accesses_plain": "3 * n^3",
+  "total_accesses_latex": "3 \\cdot n^{3}",
+  "warm_accesses_plain": "n^3 + 3 * n^2 - 7 * n + [n >= 3] => n^3 - 4 * n^2 + 6 * n - 3 + [n = 2] => n - 1 + [n >= 3] => n^3 - 2 * n^2 + n + [n = 2] => n^2 - n + 3",
+  "warm_accesses_latex": "n^{3} + 3 \\cdot n^{2} - 7 \\cdot n + \\left[n >= 3\\right] \\Rightarrow n^{3} - 4 \\cdot n^{2} + 6 \\cdot n - 3 + \\left[n = 2\\right] \\Rightarrow n - 1 + \\left[n >= 3\\right] \\Rightarrow n^{3} - 2 \\cdot n^{2} + n + \\left[n = 2\\right] \\Rightarrow n^{2} - n + 3",
+  "compulsory_accesses_plain": "2 * n^3 - 3 * n^2 + 7 * n - [n >= 3] => n^3 - 4 * n^2 + 6 * n - 3 + [n = 2] => n - 1 - [n >= 3] => n^3 - 2 * n^2 + n + [n = 2] => n^2 - n - 3",
+  "compulsory_accesses_latex": "2 \\cdot n^{3} - 3 \\cdot n^{2} + 7 \\cdot n - \\left[n >= 3\\right] \\Rightarrow n^{3} - 4 \\cdot n^{2} + 6 \\cdot n - 3 + \\left[n = 2\\right] \\Rightarrow n - 1 - \\left[n >= 3\\right] \\Rightarrow n^{3} - 2 \\cdot n^{2} + n + \\left[n = 2\\right] \\Rightarrow n^{2} - n - 3",
+  "timestamp_space": "[n] -> { [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 2] : 0 <= i < n and 0 <= j < n and 0 <= k < n; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 1] : 0 <= i < n and 0 <= j < n and 0 <= k < n; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 0] : 0 <= i < n and 0 <= j < n and 0 <= k < n }",
+  "access_map": "[n] -> { [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 2] -> [2, i, j] : 0 <= i < n and 0 <= j < n and 0 <= k < n; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 1] -> [1, k, j] : 0 <= i < n and 0 <= j < n and 0 <= k < n; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 0] -> [0, i, k] : 0 <= i < n and 0 <= j < n and 0 <= k < n }",
+  "ri_distribution": [
+    {
+      "value_plain": "3 * n^2",
+      "value_latex": "3 \\cdot n^{2}",
+      "mass_plain": "[n >= 3] => n^3 - n^2 + [n = 2] => 4",
+      "mass_latex": "\\left[n >= 3\\right] \\Rightarrow n^{3} - n^{2} + \\left[n = 2\\right] \\Rightarrow 4",
+      "regions": [
+        {
+          "domain_plain": "n >= 3",
+          "count_plain": "n^3 - n^2",
+          "count_latex": "n^{3} - n^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3 * n",
+      "value_latex": "3 \\cdot n",
+      "mass_plain": "[n >= 3] => n^3 - n^2 + [n = 2] => 4",
+      "mass_latex": "\\left[n >= 3\\right] \\Rightarrow n^{3} - n^{2} + \\left[n = 2\\right] \\Rightarrow 4",
+      "regions": [
+        {
+          "domain_plain": "n >= 3",
+          "count_plain": "n^3 - n^2",
+          "count_latex": "n^{3} - n^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "n^3 - n^2",
+      "mass_latex": "n^{3} - n^{2}",
+      "regions": [
+        {
+          "domain_plain": "n >= 2",
+          "count_plain": "n^3 - n^2",
+          "count_latex": "n^{3} - n^{2}"
+        }
+      ]
+    }
+  ],
+  "rd_distribution": [
+    {
+      "value_plain": "n^2 + 3 * n + 1",
+      "value_latex": "n^{2} + 3 \\cdot n + 1",
+      "mass_plain": "[n >= 3] => n^3 - 4 * n^2 + 6 * n - 3 + [n = 2] => n - 1",
+      "mass_latex": "\\left[n >= 3\\right] \\Rightarrow n^{3} - 4 \\cdot n^{2} + 6 \\cdot n - 3 + \\left[n = 2\\right] \\Rightarrow n - 1",
+      "regions": [
+        {
+          "domain_plain": "n >= 3",
+          "count_plain": "n^3 - 4 * n^2 + 6 * n - 3",
+          "count_latex": "n^{3} - 4 \\cdot n^{2} + 6 \\cdot n - 3"
+        },
+        {
+          "domain_plain": "n = 2",
+          "count_plain": "n - 1",
+          "count_latex": "n - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "n^2 + 3 * n - 1",
+      "value_latex": "n^{2} + 3 \\cdot n - 1",
+      "mass_plain": "n^2 - 3 * n + 2",
+      "mass_latex": "n^{2} - 3 \\cdot n + 2",
+      "regions": [
+        {
+          "domain_plain": "0 < k <= -2 + n",
+          "count_plain": "n - 1",
+          "count_latex": "n - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "n^2 + 2 * n + 1",
+      "value_latex": "n^{2} + 2 \\cdot n + 1",
+      "mass_plain": "2 * n - 2",
+      "mass_latex": "2 \\cdot n - 2",
+      "regions": [
+        {
+          "domain_plain": "n >= 2",
+          "count_plain": "2 * n - 2",
+          "count_latex": "2 \\cdot n - 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "n^2 + 3 * n",
+      "value_latex": "n^{2} + 3 \\cdot n",
+      "mass_plain": "n^2 - 3 * n + 2",
+      "mass_latex": "n^{2} - 3 \\cdot n + 2",
+      "regions": [
+        {
+          "domain_plain": "n >= 3",
+          "count_plain": "n^2 - 3 * n + 2",
+          "count_latex": "n^{2} - 3 \\cdot n + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "n^2 + 3 * n - 1",
+      "value_latex": "n^{2} + 3 \\cdot n - 1",
+      "mass_plain": "n - 1",
+      "mass_latex": "n - 1",
+      "regions": [
+        {
+          "domain_plain": "n >= 2",
+          "count_plain": "n - 1",
+          "count_latex": "n - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "n^2 + 2 * n + 3",
+      "value_latex": "n^{2} + 2 \\cdot n + 3",
+      "mass_plain": "n^2 - 3 * n + 2",
+      "mass_latex": "n^{2} - 3 \\cdot n + 2",
+      "regions": [
+        {
+          "domain_plain": "0 < k <= -2 + n",
+          "count_plain": "n - 1",
+          "count_latex": "n - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "2 * n + 2",
+      "value_latex": "2 \\cdot n + 2",
+      "mass_plain": "[n >= 3] => n^3 - 2 * n^2 + n + [n = 2] => n^2 - n",
+      "mass_latex": "\\left[n >= 3\\right] \\Rightarrow n^{3} - 2 \\cdot n^{2} + n + \\left[n = 2\\right] \\Rightarrow n^{2} - n",
+      "regions": [
+        {
+          "domain_plain": "n >= 3",
+          "count_plain": "n^3 - 2 * n^2 + n",
+          "count_latex": "n^{3} - 2 \\cdot n^{2} + n"
+        },
+        {
+          "domain_plain": "n = 2",
+          "count_plain": "n^2 - n",
+          "count_latex": "n^{2} - n"
+        }
+      ]
+    },
+    {
+      "value_plain": "2 * n + 1",
+      "value_latex": "2 \\cdot n + 1",
+      "mass_plain": "n^2 - n",
+      "mass_latex": "n^{2} - n",
+      "regions": [
+        {
+          "domain_plain": "n >= 2",
+          "count_plain": "n^2 - n",
+          "count_latex": "n^{2} - n"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "n^3 - n^2",
+      "mass_latex": "n^{3} - n^{2}",
+      "regions": [
+        {
+          "domain_plain": "n >= 2",
+          "count_plain": "n^3 - n^2",
+          "count_latex": "n^{3} - n^{2}"
+        }
+      ]
+    }
+  ],
+  "dmd_terms": [
+    {
+      "domain_plain": "n >= 3",
+      "multiplicity_plain": "n^3 - 4 * n^2 + 6 * n - 3",
+      "multiplicity_latex": "n^{3} - 4 \\cdot n^{2} + 6 \\cdot n - 3",
+      "reuse_distance_plain": "n^2 + 3 * n + 1",
+      "reuse_distance_latex": "n^{2} + 3 \\cdot n + 1",
+      "term_plain": "sqrt(n^2 + 3 * n + 1) * n^3 - 4 * sqrt(n^2 + 3 * n + 1) * n^2 + 6 * sqrt(n^2 + 3 * n + 1) * n - 3 * sqrt(n^2 + 3 * n + 1)",
+      "term_latex": "\\sqrt{n^{2} + 3 \\cdot n + 1} \\cdot n^{3} - 4 \\cdot \\sqrt{n^{2} + 3 \\cdot n + 1} \\cdot n^{2} + 6 \\cdot \\sqrt{n^{2} + 3 \\cdot n + 1} \\cdot n - 3 \\cdot \\sqrt{n^{2} + 3 \\cdot n + 1}"
+    },
+    {
+      "domain_plain": "n >= 2",
+      "multiplicity_plain": "2 * n - 2",
+      "multiplicity_latex": "2 \\cdot n - 2",
+      "reuse_distance_plain": "n^2 + 2 * n + 1",
+      "reuse_distance_latex": "n^{2} + 2 \\cdot n + 1",
+      "term_plain": "2 * sqrt(n^2 + 2 * n + 1) * n - 2 * sqrt(n^2 + 2 * n + 1)",
+      "term_latex": "2 \\cdot \\sqrt{n^{2} + 2 \\cdot n + 1} \\cdot n - 2 \\cdot \\sqrt{n^{2} + 2 \\cdot n + 1}"
+    },
+    {
+      "domain_plain": "n >= 3",
+      "multiplicity_plain": "n^2 - 3 * n + 2",
+      "multiplicity_latex": "n^{2} - 3 \\cdot n + 2",
+      "reuse_distance_plain": "n^2 + 3 * n",
+      "reuse_distance_latex": "n^{2} + 3 \\cdot n",
+      "term_plain": "sqrt(n^2 + 3 * n) * n^2 - 3 * sqrt(n^2 + 3 * n) * n + 2 * sqrt(n^2 + 3 * n)",
+      "term_latex": "\\sqrt{n^{2} + 3 \\cdot n} \\cdot n^{2} - 3 \\cdot \\sqrt{n^{2} + 3 \\cdot n} \\cdot n + 2 \\cdot \\sqrt{n^{2} + 3 \\cdot n}"
+    },
+    {
+      "domain_plain": "n >= 2",
+      "multiplicity_plain": "n - 1",
+      "multiplicity_latex": "n - 1",
+      "reuse_distance_plain": "n^2 + 3 * n - 1",
+      "reuse_distance_latex": "n^{2} + 3 \\cdot n - 1",
+      "term_plain": "sqrt(n^2 + 3 * n - 1) * n - sqrt(n^2 + 3 * n - 1)",
+      "term_latex": "\\sqrt{n^{2} + 3 \\cdot n - 1} \\cdot n - \\sqrt{n^{2} + 3 \\cdot n - 1}"
+    },
+    {
+      "domain_plain": "n >= 3",
+      "multiplicity_plain": "n^3 - 2 * n^2 + n",
+      "multiplicity_latex": "n^{3} - 2 \\cdot n^{2} + n",
+      "reuse_distance_plain": "2 * n + 2",
+      "reuse_distance_latex": "2 \\cdot n + 2",
+      "term_plain": "sqrt(2 * n + 2) * n^3 - 2 * sqrt(2 * n + 2) * n^2 + sqrt(2 * n + 2) * n",
+      "term_latex": "\\sqrt{2 \\cdot n + 2} \\cdot n^{3} - 2 \\cdot \\sqrt{2 \\cdot n + 2} \\cdot n^{2} + \\sqrt{2 \\cdot n + 2} \\cdot n"
+    },
+    {
+      "domain_plain": "n >= 2",
+      "multiplicity_plain": "n^2 - n",
+      "multiplicity_latex": "n^{2} - n",
+      "reuse_distance_plain": "2 * n + 1",
+      "reuse_distance_latex": "2 \\cdot n + 1",
+      "term_plain": "sqrt(2 * n + 1) * n^2 - sqrt(2 * n + 1) * n",
+      "term_latex": "\\sqrt{2 \\cdot n + 1} \\cdot n^{2} - \\sqrt{2 \\cdot n + 1} \\cdot n"
+    },
+    {
+      "domain_plain": "n >= 2",
+      "multiplicity_plain": "n^3 - n^2",
+      "multiplicity_latex": "n^{3} - n^{2}",
+      "reuse_distance_plain": "3",
+      "reuse_distance_latex": "3",
+      "term_plain": "sqrt(3) * n^3 - sqrt(3) * n^2",
+      "term_latex": "\\sqrt{3} \\cdot n^{3} - \\sqrt{3} \\cdot n^{2}"
+    }
+  ],
+  "dmd_formula_plain": "sqrt(n^2 + 3 * n + 1) * n^3 - 4 * sqrt(n^2 + 3 * n + 1) * n^2 + sqrt(n^2 + 3 * n) * n^2 + sqrt(2 * n + 2) * n^3 + 2 * n^3 + 6 * sqrt(n^2 + 3 * n + 1) * n + 2 * sqrt(n^2 + 2 * n + 1) * n - 3 * sqrt(n^2 + 3 * n) * n + sqrt(n^2 + 3 * n - 1) * n - 2 * sqrt(2 * n + 2) * n^2 + sqrt(2 * n + 1) * n^2 + sqrt(3) * n^3 - 3 * n^2 - 3 * sqrt(n^2 + 3 * n + 1) - 2 * sqrt(n^2 + 2 * n + 1) + 2 * sqrt(n^2 + 3 * n) - sqrt(n^2 + 3 * n - 1) + sqrt(2 * n + 2) * n - sqrt(2 * n + 1) * n - sqrt(3) * n^2 + 7 * n - [n >= 3] => n^3 - 4 * n^2 + 6 * n - 3 + [n = 2] => n - 1 - [n >= 3] => n^3 - 2 * n^2 + n + [n = 2] => n^2 - n - 3",
+  "dmd_formula_latex": "\\sqrt{n^{2} + 3 \\cdot n + 1} \\cdot n^{3} - 4 \\cdot \\sqrt{n^{2} + 3 \\cdot n + 1} \\cdot n^{2} + \\sqrt{n^{2} + 3 \\cdot n} \\cdot n^{2} + \\sqrt{2 \\cdot n + 2} \\cdot n^{3} + 2 \\cdot n^{3} + 6 \\cdot \\sqrt{n^{2} + 3 \\cdot n + 1} \\cdot n + 2 \\cdot \\sqrt{n^{2} + 2 \\cdot n + 1} \\cdot n - 3 \\cdot \\sqrt{n^{2} + 3 \\cdot n} \\cdot n + \\sqrt{n^{2} + 3 \\cdot n - 1} \\cdot n - 2 \\cdot \\sqrt{2 \\cdot n + 2} \\cdot n^{2} + \\sqrt{2 \\cdot n + 1} \\cdot n^{2} + \\sqrt{3} \\cdot n^{3} - 3 \\cdot n^{2} - 3 \\cdot \\sqrt{n^{2} + 3 \\cdot n + 1} - 2 \\cdot \\sqrt{n^{2} + 2 \\cdot n + 1} + 2 \\cdot \\sqrt{n^{2} + 3 \\cdot n} - \\sqrt{n^{2} + 3 \\cdot n - 1} + \\sqrt{2 \\cdot n + 2} \\cdot n - \\sqrt{2 \\cdot n + 1} \\cdot n - \\sqrt{3} \\cdot n^{2} + 7 \\cdot n - \\left[n >= 3\\right] \\Rightarrow n^{3} - 4 \\cdot n^{2} + 6 \\cdot n - 3 + \\left[n = 2\\right] \\Rightarrow n - 1 - \\left[n >= 3\\right] \\Rightarrow n^{3} - 2 \\cdot n^{2} + n + \\left[n = 2\\right] \\Rightarrow n^{2} - n - 3",
+  "parallel": null,
+  "notes": [
+    "Barvinok runs inside a context initialized with `--approximation-method=scale`.",
+    "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.",
+    "Reuse distance is derived from the cardinality of the access-image inside each reuse interval window, without Denning recursion.",
+    "The compulsory-access term is modeled separately as total accesses minus warm reuses.",
+    "Filtered 4 DMD region(s) whose domains add equality or upper-bound constraints on named scaling dimensions.",
+    "Filtered 2 RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+  ]
+}

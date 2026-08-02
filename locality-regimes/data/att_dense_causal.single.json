@@ -1,0 +1,1465 @@
+{
+  "options": {
+    "block_size": 8,
+    "num_sets": 1,
+    "max_operations": 3000000000,
+    "approximation_method": "scale",
+    "infinite_repeat": false
+  },
+  "total_accesses_plain": "[n > 0 and d > 0] => 3 * n^2 * d + (5/2) * n^2 + 3 * n * d + (5/2) * n + [n > 0 and d <= 0] => (5/2) * n^2 + (5/2) * n",
+  "total_accesses_latex": "\\left[n > 0 and d > 0\\right] \\Rightarrow 3 \\cdot n^{2} \\cdot d + \\frac{5}{2} \\cdot n^{2} + 3 \\cdot n \\cdot d + \\frac{5}{2} \\cdot n + \\left[n > 0 and d <= 0\\right] \\Rightarrow \\frac{5}{2} \\cdot n^{2} + \\frac{5}{2} \\cdot n",
+  "warm_accesses_plain": "(13/64) * n^2 * d - (29/64) * n * d - (17/8) * n^2 + (455/64) * n + (13/64) * d + [n >= 11 and d >= 17] => (1/32) * n^2 * d - n^2 - (9/16) * n * d + 9 * n + (81/32) * d - (81/2) + [n = 10 and d >= 17] => (1/32) * d - (1/2) + [n >= 10 and d >= 17] => (1/8) * n * d - 2 * n - (23/64) * d + (23/4) + [3 <= n <= 9 and d >= 17] => (7/64) * n * d - (7/4) * n - (7/32) * d + (7/2) + [n >= 11 and d >= 9] => (3/16) * n^2 - (53/16) * n + (117/8) + [n = 10 and d >= 9] => (1/4) + [n >= 11 and d >= 9] => (13/16) * n^2 - (79/16) * n + (81/8) + [4 <= n <= 10 and d >= 9] => (3/4) * n^2 - (15/4) * n + (9/2) + [n >= 4 and 9 <= d <= 16] => (13/128) * n^2 * d - (13/16) * n^2 - (65/128) * n * d + (65/16) * n + (39/64) * d - (39/8) + [n >= 4 and d >= 17] => (13/16) * n^2 + (1/8) * n * d - (97/16) * n - d + (71/8) + [n = 3 and d >= 17] => (1/8) * n * d - 2 * n - d + 4 + [n >= 9 and d >= 17] => (1/64) * n^2 * d - n^2 - (15/64) * n * d + (15/4) * n + (9/8) * d - 18 + [2 <= n <= 8 and d >= 17] => (1/4) * d - 4 + [n >= 11 and d >= 17] => (3/16) * n^2 + (1/8) * n * d - (87/16) * n - d + (79/4) + [n = 10 and d >= 17] => d - (127/8) + [3 <= n <= 9 and d >= 17] => (1/8) * n * d - 2 * n - d + 4 + [n >= 11 and 9 <= d <= 16] => (3/128) * n^2 * d - (3/16) * n^2 - (55/128) * n * d + (55/16) * n + (63/32) * d - (63/4) + [n = 10 and 9 <= d <= 16] => (1/128) * n^2 * d - n^2 - (17/128) * n * d + (17/16) * n + (9/16) * d - (9/2) + [n >= 10 and 9 <= d <= 16] => (1/32) * n * d - n - (9/32) * d + (9/4) + [n >= 10 and d >= 17] => (1/4) * n - (9/4) + [n >= 3 and 9 <= d <= 16] => (7/32) * n * d - (7/4) * n - (7/16) * d + (7/2) + [n >= 3 and d >= 17] => (7/4) * n - (7/2) + [n >= 11 and 0 < d <= 8] => (1/8) * n^2 - (9/4) * n + (81/8) + [n = 10 and 0 < d <= 8] => (1/16) * n^2 - (17/16) * n + (9/2) + [n >= 11 and 0 < d <= 8] => (7/8) * n^2 - (21/4) * n + (21/2) + [4 <= n <= 10 and 0 < d <= 8] => (13/16) * n^2 - (65/16) * n + (39/8) + [n >= 3 and d >= 9] => 2 * n - 4 + [n >= 10 and 0 < d <= 8] => (15/8) * n - (37/8) + [3 <= n <= 9 and 0 < d <= 8] => (7/4) * n - (7/2) + 2 * [n >= 3 and 9 <= d <= 16] => (1/8) * n * d - n - d + 2 + [n >= 3 and d >= 17] => n - 2 + [n >= 2 and 9 <= d <= 16] => (15/128) * n^2 * d - (15/16) * n^2 - (15/128) * n * d + (15/16) * n + (1/8) * d - 1 + [n >= 2 and d >= 17] => (15/16) * n^2 - (15/16) * n + 1 + [n >= 10 and d >= 9] => n - (23/8) + [3 <= n <= 9 and d >= 9] => (7/8) * n - (7/4) + [n >= 9 and 9 <= d <= 16] => (1/128) * n^2 * d - n^2 - (15/128) * n * d + (15/16) * n + (9/16) * d - (9/2) + [2 <= n <= 8 and 9 <= d <= 16] => (1/8) * d - 1 + [n >= 9 and d >= 17] => (1/16) * n^2 - (15/16) * n + (9/2) + [2 <= n <= 8 and d >= 17] => 1 + [n >= 9 and d >= 9] => (1/16) * n^2 - (15/16) * n + (9/2) + [2 <= n <= 8 and d >= 9] => 1 + [n >= 2 and 2 <= d <= 8] => n^2 * d + (1/2) * n^2 + n * d - (5/2) * n + 2 + [n >= 2 and d >= 9] => n^2 * d - n^2 + n * d - (3/2) * n + [n = 1 and d >= 2] => n^2 * d - n^2 + n * d - n + [d = 1 and n >= 2] => (3/2) * n^2 - (3/2) * n + 2 + [n >= 2 and d <= 0] => (1/2) * n^2 - n + [(-1 + n) mod 8 = 0 and n >= 9 and d >= 9] => (7/4) * n^2 * d + (471/1024) * n^2 + (9/4) * n * d - (7199/1024) * n - (7/32) * d + (105/128) + [n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n] => (7/4) * n^2 * d + (79/1024) * n^2 + (9/4) * n * d - (6863/1024) * n - (7/32) * d + (7/8) + [2 <= n <= 8 and d >= 9] => (7/4) * n^2 * d + (79/1024) * n^2 + (71/32) * n * d - (6607/1024) * n + (1/32) * d - (9/8) + [(-1 + n) mod 8 = 0 and n >= 9 and 2 <= d <= 8] => (7/4) * n^2 * d + (471/1024) * n^2 + (7/4) * n * d - (3103/1024) * n - (119/128) + [n >= 2 and 2 <= d <= 8 and 8*floor((-1 + n)/8) <= -2 + n] => (7/4) * n^2 * d + (79/1024) * n^2 + (7/4) * n * d - (2767/1024) * n - (7/8) + [n = 1 and d >= 9] => 4 * d - (15/2) + [n = 1 and 2 <= d <= 8] => (7/4) * n^2 * d - (7/4) * n^2 + (7/4) * n * d - (7/4) * n + [d = 1 and (-1 + n) mod 8 = 0 and n >= 9] => (2263/1024) * n^2 - (1311/1024) * n - (119/128) + [d = 1 and n >= 2 and 8*floor((-1 + n)/8) <= -2 + n] => (1871/1024) * n^2 - (975/1024) * n - (7/8) + [(-1 + n) mod 8 = 0 and n >= 9 and d <= 0] => (1303/1024) * n^2 - (351/1024) * n - (119/128) + [n >= 2 and d <= 0 and 8*floor((-1 + n)/8) <= -2 + n] => (911/1024) * n^2 - (15/1024) * n - (7/8) + [10 <= n <= 17 and d > 0] => (1/16) * n^2 - (17/16) * n + (9/2) + [n >= 18 and d > 0] => n - (25/2) + [9 <= n <= 16 and d > 0] => (1/8) * n - 1 + [n >= 17 and d > 0] => 1 + 2 * [n >= 10 and d > 0] => 7 + [3 <= n <= 9 and d > 0] => n - 2 + [11 <= n <= 17 and d > 0] => (1/16) * n^2 - (19/16) * n + (45/8) + [n >= 18 and d > 0] => (7/8) * n - (91/8) + [2 <= n <= 8] => (1/2) * n^2 - n + 1 + [n >= 9] => (1/2) * n^2 - n + [n = 1] => 2 + [(-1 + n) mod 8 = 0 and n >= 18] => (105/64) * n - (1141/64) + [n >= 18 and 8*floor((-1 + n)/8) <= -2 + n] => (49/64) * n - (637/64) + [n = 17] => (161/16) + [11 <= n <= 16] => (7/128) * n^2 - (133/128) * n + (315/64) + [10 <= n <= 16] => (1/8) * n - (9/8) + [n >= 17] => (7/8) + [10 <= n <= 16 and d > 0] => (1/8) * n - (9/8) + [n >= 17 and d > 0] => (7/8) + [n >= 9 and d <= 0] => (1/2) * n^2 - (3/8) * n + (5/2) + [n >= 2 and ((n >= 9 and d > 0) or n <= 8)] => (7/16) * n^2 + (9/16) * n - 1 + [n >= 10] => 7 + [3 <= n <= 9] => n - 2 + [9 <= n <= 16] => (1/8) * n - 1 + [n >= 17] => 1 + (287/16)",
+  "warm_accesses_latex": "\\frac{13}{64} \\cdot n^{2} \\cdot d - \\frac{29}{64} \\cdot n \\cdot d - \\frac{17}{8} \\cdot n^{2} + \\frac{455}{64} \\cdot n + \\frac{13}{64} \\cdot d + \\left[n >= 11 and d >= 17\\right] \\Rightarrow \\frac{1}{32} \\cdot n^{2} \\cdot d - n^{2} - \\frac{9}{16} \\cdot n \\cdot d + 9 \\cdot n + \\frac{81}{32} \\cdot d - \\frac{81}{2} + \\left[n = 10 and d >= 17\\right] \\Rightarrow \\frac{1}{32} \\cdot d - \\frac{1}{2} + \\left[n >= 10 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - \\frac{23}{64} \\cdot d + \\frac{23}{4} + \\left[3 <= n <= 9 and d >= 17\\right] \\Rightarrow \\frac{7}{64} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{2} + \\left[n >= 11 and d >= 9\\right] \\Rightarrow \\frac{3}{16} \\cdot n^{2} - \\frac{53}{16} \\cdot n + \\frac{117}{8} + \\left[n = 10 and d >= 9\\right] \\Rightarrow \\frac{1}{4} + \\left[n >= 11 and d >= 9\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} - \\frac{79}{16} \\cdot n + \\frac{81}{8} + \\left[4 <= n <= 10 and d >= 9\\right] \\Rightarrow \\frac{3}{4} \\cdot n^{2} - \\frac{15}{4} \\cdot n + \\frac{9}{2} + \\left[n >= 4 and 9 <= d <= 16\\right] \\Rightarrow \\frac{13}{128} \\cdot n^{2} \\cdot d - \\frac{13}{16} \\cdot n^{2} - \\frac{65}{128} \\cdot n \\cdot d + \\frac{65}{16} \\cdot n + \\frac{39}{64} \\cdot d - \\frac{39}{8} + \\left[n >= 4 and d >= 17\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d - \\frac{97}{16} \\cdot n - d + \\frac{71}{8} + \\left[n = 3 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - d + 4 + \\left[n >= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{64} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{64} \\cdot n \\cdot d + \\frac{15}{4} \\cdot n + \\frac{9}{8} \\cdot d - 18 + \\left[2 <= n <= 8 and d >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot d - 4 + \\left[n >= 11 and d >= 17\\right] \\Rightarrow \\frac{3}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d - \\frac{87}{16} \\cdot n - d + \\frac{79}{4} + \\left[n = 10 and d >= 17\\right] \\Rightarrow d - \\frac{127}{8} + \\left[3 <= n <= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - d + 4 + \\left[n >= 11 and 9 <= d <= 16\\right] \\Rightarrow \\frac{3}{128} \\cdot n^{2} \\cdot d - \\frac{3}{16} \\cdot n^{2} - \\frac{55}{128} \\cdot n \\cdot d + \\frac{55}{16} \\cdot n + \\frac{63}{32} \\cdot d - \\frac{63}{4} + \\left[n = 10 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{128} \\cdot n^{2} \\cdot d - n^{2} - \\frac{17}{128} \\cdot n \\cdot d + \\frac{17}{16} \\cdot n + \\frac{9}{16} \\cdot d - \\frac{9}{2} + \\left[n >= 10 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{32} \\cdot n \\cdot d - n - \\frac{9}{32} \\cdot d + \\frac{9}{4} + \\left[n >= 10 and d >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot n - \\frac{9}{4} + \\left[n >= 3 and 9 <= d <= 16\\right] \\Rightarrow \\frac{7}{32} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n - \\frac{7}{16} \\cdot d + \\frac{7}{2} + \\left[n >= 3 and d >= 17\\right] \\Rightarrow \\frac{7}{4} \\cdot n - \\frac{7}{2} + \\left[n >= 11 and 0 < d <= 8\\right] \\Rightarrow \\frac{1}{8} \\cdot n^{2} - \\frac{9}{4} \\cdot n + \\frac{81}{8} + \\left[n = 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{17}{16} \\cdot n + \\frac{9}{2} + \\left[n >= 11 and 0 < d <= 8\\right] \\Rightarrow \\frac{7}{8} \\cdot n^{2} - \\frac{21}{4} \\cdot n + \\frac{21}{2} + \\left[4 <= n <= 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} - \\frac{65}{16} \\cdot n + \\frac{39}{8} + \\left[n >= 3 and d >= 9\\right] \\Rightarrow 2 \\cdot n - 4 + \\left[n >= 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{15}{8} \\cdot n - \\frac{37}{8} + \\left[3 <= n <= 9 and 0 < d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n - \\frac{7}{2} + 2 \\cdot \\left[n >= 3 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - n - d + 2 + \\left[n >= 3 and d >= 17\\right] \\Rightarrow n - 2 + \\left[n >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{15}{128} \\cdot n^{2} \\cdot d - \\frac{15}{16} \\cdot n^{2} - \\frac{15}{128} \\cdot n \\cdot d + \\frac{15}{16} \\cdot n + \\frac{1}{8} \\cdot d - 1 + \\left[n >= 2 and d >= 17\\right] \\Rightarrow \\frac{15}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + 1 + \\left[n >= 10 and d >= 9\\right] \\Rightarrow n - \\frac{23}{8} + \\left[3 <= n <= 9 and d >= 9\\right] \\Rightarrow \\frac{7}{8} \\cdot n - \\frac{7}{4} + \\left[n >= 9 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{128} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{128} \\cdot n \\cdot d + \\frac{15}{16} \\cdot n + \\frac{9}{16} \\cdot d - \\frac{9}{2} + \\left[2 <= n <= 8 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d - 1 + \\left[n >= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2} + \\left[2 <= n <= 8 and d >= 17\\right] \\Rightarrow 1 + \\left[n >= 9 and d >= 9\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2} + \\left[2 <= n <= 8 and d >= 9\\right] \\Rightarrow 1 + \\left[n >= 2 and 2 <= d <= 8\\right] \\Rightarrow n^{2} \\cdot d + \\frac{1}{2} \\cdot n^{2} + n \\cdot d - \\frac{5}{2} \\cdot n + 2 + \\left[n >= 2 and d >= 9\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - \\frac{3}{2} \\cdot n + \\left[n = 1 and d >= 2\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - n + \\left[d = 1 and n >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot n^{2} - \\frac{3}{2} \\cdot n + 2 + \\left[n >= 2 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + \\left[(-1 + n) mod 8 = 0 and n >= 9 and d >= 9\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{7199}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{105}{128} + \\left[n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{6863}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{8} + \\left[2 <= n <= 8 and d >= 9\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{71}{32} \\cdot n \\cdot d - \\frac{6607}{1024} \\cdot n + \\frac{1}{32} \\cdot d - \\frac{9}{8} + \\left[(-1 + n) mod 8 = 0 and n >= 9 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{3103}{1024} \\cdot n - \\frac{119}{128} + \\left[n >= 2 and 2 <= d <= 8 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{2767}{1024} \\cdot n - \\frac{7}{8} + \\left[n = 1 and d >= 9\\right] \\Rightarrow 4 \\cdot d - \\frac{15}{2} + \\left[n = 1 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n + \\left[d = 1 and (-1 + n) mod 8 = 0 and n >= 9\\right] \\Rightarrow \\frac{2263}{1024} \\cdot n^{2} - \\frac{1311}{1024} \\cdot n - \\frac{119}{128} + \\left[d = 1 and n >= 2 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{1871}{1024} \\cdot n^{2} - \\frac{975}{1024} \\cdot n - \\frac{7}{8} + \\left[(-1 + n) mod 8 = 0 and n >= 9 and d <= 0\\right] \\Rightarrow \\frac{1303}{1024} \\cdot n^{2} - \\frac{351}{1024} \\cdot n - \\frac{119}{128} + \\left[n >= 2 and d <= 0 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{911}{1024} \\cdot n^{2} - \\frac{15}{1024} \\cdot n - \\frac{7}{8} + \\left[10 <= n <= 17 and d > 0\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{17}{16} \\cdot n + \\frac{9}{2} + \\left[n >= 18 and d > 0\\right] \\Rightarrow n - \\frac{25}{2} + \\left[9 <= n <= 16 and d > 0\\right] \\Rightarrow \\frac{1}{8} \\cdot n - 1 + \\left[n >= 17 and d > 0\\right] \\Rightarrow 1 + 2 \\cdot \\left[n >= 10 and d > 0\\right] \\Rightarrow 7 + \\left[3 <= n <= 9 and d > 0\\right] \\Rightarrow n - 2 + \\left[11 <= n <= 17 and d > 0\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{19}{16} \\cdot n + \\frac{45}{8} + \\left[n >= 18 and d > 0\\right] \\Rightarrow \\frac{7}{8} \\cdot n - \\frac{91}{8} + \\left[2 <= n <= 8\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + 1 + \\left[n >= 9\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + \\left[n = 1\\right] \\Rightarrow 2 + \\left[(-1 + n) mod 8 = 0 and n >= 18\\right] \\Rightarrow \\frac{105}{64} \\cdot n - \\frac{1141}{64} + \\left[n >= 18 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{49}{64} \\cdot n - \\frac{637}{64} + \\left[n = 17\\right] \\Rightarrow \\frac{161}{16} + \\left[11 <= n <= 16\\right] \\Rightarrow \\frac{7}{128} \\cdot n^{2} - \\frac{133}{128} \\cdot n + \\frac{315}{64} + \\left[10 <= n <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n - \\frac{9}{8} + \\left[n >= 17\\right] \\Rightarrow \\frac{7}{8} + \\left[10 <= n <= 16 and d > 0\\right] \\Rightarrow \\frac{1}{8} \\cdot n - \\frac{9}{8} + \\left[n >= 17 and d > 0\\right] \\Rightarrow \\frac{7}{8} + \\left[n >= 9 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - \\frac{3}{8} \\cdot n + \\frac{5}{2} + \\left[n >= 2 and ((n >= 9 and d > 0) or n <= 8)\\right] \\Rightarrow \\frac{7}{16} \\cdot n^{2} + \\frac{9}{16} \\cdot n - 1 + \\left[n >= 10\\right] \\Rightarrow 7 + \\left[3 <= n <= 9\\right] \\Rightarrow n - 2 + \\left[9 <= n <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n - 1 + \\left[n >= 17\\right] \\Rightarrow 1 + \\frac{287}{16}",
+  "compulsory_accesses_plain": "-(13/64) * n^2 * d + (29/64) * n * d + (17/8) * n^2 - (455/64) * n - (13/64) * d + [n > 0 and d > 0] => 3 * n^2 * d + (5/2) * n^2 + 3 * n * d + (5/2) * n + [n > 0 and d <= 0] => (5/2) * n^2 + (5/2) * n - [n >= 11 and d >= 17] => (1/32) * n^2 * d - n^2 - (9/16) * n * d + 9 * n + (81/32) * d - (81/2) + [n = 10 and d >= 17] => (1/32) * d - (1/2) - [n >= 10 and d >= 17] => (1/8) * n * d - 2 * n - (23/64) * d + (23/4) + [3 <= n <= 9 and d >= 17] => (7/64) * n * d - (7/4) * n - (7/32) * d + (7/2) - [n >= 11 and d >= 9] => (3/16) * n^2 - (53/16) * n + (117/8) + [n = 10 and d >= 9] => (1/4) - [n >= 11 and d >= 9] => (13/16) * n^2 - (79/16) * n + (81/8) + [4 <= n <= 10 and d >= 9] => (3/4) * n^2 - (15/4) * n + (9/2) - [n >= 4 and 9 <= d <= 16] => (13/128) * n^2 * d - (13/16) * n^2 - (65/128) * n * d + (65/16) * n + (39/64) * d - (39/8) + [n >= 4 and d >= 17] => (13/16) * n^2 + (1/8) * n * d - (97/16) * n - d + (71/8) + [n = 3 and d >= 17] => (1/8) * n * d - 2 * n - d + 4 - [n >= 9 and d >= 17] => (1/64) * n^2 * d - n^2 - (15/64) * n * d + (15/4) * n + (9/8) * d - 18 + [2 <= n <= 8 and d >= 17] => (1/4) * d - 4 - [n >= 11 and d >= 17] => (3/16) * n^2 + (1/8) * n * d - (87/16) * n - d + (79/4) + [n = 10 and d >= 17] => d - (127/8) + [3 <= n <= 9 and d >= 17] => (1/8) * n * d - 2 * n - d + 4 + [n >= 11 and 9 <= d <= 16] => (3/128) * n^2 * d - (3/16) * n^2 - (55/128) * n * d + (55/16) * n + (63/32) * d - (63/4) + [n = 10 and 9 <= d <= 16] => (1/128) * n^2 * d - n^2 - (17/128) * n * d + (17/16) * n + (9/16) * d - (9/2) - [n >= 10 and 9 <= d <= 16] => (1/32) * n * d - n - (9/32) * d + (9/4) + [n >= 10 and d >= 17] => (1/4) * n - (9/4) - [n >= 3 and 9 <= d <= 16] => (7/32) * n * d - (7/4) * n - (7/16) * d + (7/2) + [n >= 3 and d >= 17] => (7/4) * n - (7/2) - [n >= 11 and 0 < d <= 8] => (1/8) * n^2 - (9/4) * n + (81/8) + [n = 10 and 0 < d <= 8] => (1/16) * n^2 - (17/16) * n + (9/2) - [n >= 11 and 0 < d <= 8] => (7/8) * n^2 - (21/4) * n + (21/2) + [4 <= n <= 10 and 0 < d <= 8] => (13/16) * n^2 - (65/16) * n + (39/8) + [n >= 3 and d >= 9] => 2 * n - 4 - [n >= 10 and 0 < d <= 8] => (15/8) * n - (37/8) + [3 <= n <= 9 and 0 < d <= 8] => (7/4) * n - (7/2) - 2 * [n >= 3 and 9 <= d <= 16] => (1/8) * n * d - n - d + 2 + [n >= 3 and d >= 17] => n - 2 - [n >= 2 and 9 <= d <= 16] => (15/128) * n^2 * d - (15/16) * n^2 - (15/128) * n * d + (15/16) * n + (1/8) * d - 1 + [n >= 2 and d >= 17] => (15/16) * n^2 - (15/16) * n + 1 - [n >= 10 and d >= 9] => n - (23/8) + [3 <= n <= 9 and d >= 9] => (7/8) * n - (7/4) - [n >= 9 and 9 <= d <= 16] => (1/128) * n^2 * d - n^2 - (15/128) * n * d + (15/16) * n + (9/16) * d - (9/2) + [2 <= n <= 8 and 9 <= d <= 16] => (1/8) * d - 1 + [n >= 9 and d >= 17] => (1/16) * n^2 - (15/16) * n + (9/2) + [2 <= n <= 8 and d >= 17] => 1 - [n >= 9 and d >= 9] => (1/16) * n^2 - (15/16) * n + (9/2) + [2 <= n <= 8 and d >= 9] => 1 - [n >= 2 and 2 <= d <= 8] => n^2 * d + (1/2) * n^2 + n * d - (5/2) * n + 2 + [n >= 2 and d >= 9] => n^2 * d - n^2 + n * d - (3/2) * n + [n = 1 and d >= 2] => n^2 * d - n^2 + n * d - n + [d = 1 and n >= 2] => (3/2) * n^2 - (3/2) * n + 2 + [n >= 2 and d <= 0] => (1/2) * n^2 - n - [(-1 + n) mod 8 = 0 and n >= 9 and d >= 9] => (7/4) * n^2 * d + (471/1024) * n^2 + (9/4) * n * d - (7199/1024) * n - (7/32) * d + (105/128) + [n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n] => (7/4) * n^2 * d + (79/1024) * n^2 + (9/4) * n * d - (6863/1024) * n - (7/32) * d + (7/8) + [2 <= n <= 8 and d >= 9] => (7/4) * n^2 * d + (79/1024) * n^2 + (71/32) * n * d - (6607/1024) * n + (1/32) * d - (9/8) + [(-1 + n) mod 8 = 0 and n >= 9 and 2 <= d <= 8] => (7/4) * n^2 * d + (471/1024) * n^2 + (7/4) * n * d - (3103/1024) * n - (119/128) + [n >= 2 and 2 <= d <= 8 and 8*floor((-1 + n)/8) <= -2 + n] => (7/4) * n^2 * d + (79/1024) * n^2 + (7/4) * n * d - (2767/1024) * n - (7/8) + [n = 1 and d >= 9] => 4 * d - (15/2) + [n = 1 and 2 <= d <= 8] => (7/4) * n^2 * d - (7/4) * n^2 + (7/4) * n * d - (7/4) * n + [d = 1 and (-1 + n) mod 8 = 0 and n >= 9] => (2263/1024) * n^2 - (1311/1024) * n - (119/128) + [d = 1 and n >= 2 and 8*floor((-1 + n)/8) <= -2 + n] => (1871/1024) * n^2 - (975/1024) * n - (7/8) + [(-1 + n) mod 8 = 0 and n >= 9 and d <= 0] => (1303/1024) * n^2 - (351/1024) * n - (119/128) + [n >= 2 and d <= 0 and 8*floor((-1 + n)/8) <= -2 + n] => (911/1024) * n^2 - (15/1024) * n - (7/8) - [10 <= n <= 17 and d > 0] => (1/16) * n^2 - (17/16) * n + (9/2) + [n >= 18 and d > 0] => n - (25/2) - [9 <= n <= 16 and d > 0] => (1/8) * n - 1 + [n >= 17 and d > 0] => 1 - 2 * [n >= 10 and d > 0] => 7 + [3 <= n <= 9 and d > 0] => n - 2 - [11 <= n <= 17 and d > 0] => (1/16) * n^2 - (19/16) * n + (45/8) + [n >= 18 and d > 0] => (7/8) * n - (91/8) - [2 <= n <= 8] => (1/2) * n^2 - n + 1 + [n >= 9] => (1/2) * n^2 - n + [n = 1] => 2 - [(-1 + n) mod 8 = 0 and n >= 18] => (105/64) * n - (1141/64) + [n >= 18 and 8*floor((-1 + n)/8) <= -2 + n] => (49/64) * n - (637/64) + [n = 17] => (161/16) + [11 <= n <= 16] => (7/128) * n^2 - (133/128) * n + (315/64) - [10 <= n <= 16] => (1/8) * n - (9/8) + [n >= 17] => (7/8) - [10 <= n <= 16 and d > 0] => (1/8) * n - (9/8) + [n >= 17 and d > 0] => (7/8) - [n >= 9 and d <= 0] => (1/2) * n^2 - (3/8) * n + (5/2) + [n >= 2 and ((n >= 9 and d > 0) or n <= 8)] => (7/16) * n^2 + (9/16) * n - 1 - [n >= 10] => 7 + [3 <= n <= 9] => n - 2 - [9 <= n <= 16] => (1/8) * n - 1 + [n >= 17] => 1 - (287/16)",
+  "compulsory_accesses_latex": "-\\frac{13}{64} \\cdot n^{2} \\cdot d + \\frac{29}{64} \\cdot n \\cdot d + \\frac{17}{8} \\cdot n^{2} - \\frac{455}{64} \\cdot n - \\frac{13}{64} \\cdot d + \\left[n > 0 and d > 0\\right] \\Rightarrow 3 \\cdot n^{2} \\cdot d + \\frac{5}{2} \\cdot n^{2} + 3 \\cdot n \\cdot d + \\frac{5}{2} \\cdot n + \\left[n > 0 and d <= 0\\right] \\Rightarrow \\frac{5}{2} \\cdot n^{2} + \\frac{5}{2} \\cdot n - \\left[n >= 11 and d >= 17\\right] \\Rightarrow \\frac{1}{32} \\cdot n^{2} \\cdot d - n^{2} - \\frac{9}{16} \\cdot n \\cdot d + 9 \\cdot n + \\frac{81}{32} \\cdot d - \\frac{81}{2} + \\left[n = 10 and d >= 17\\right] \\Rightarrow \\frac{1}{32} \\cdot d - \\frac{1}{2} - \\left[n >= 10 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - \\frac{23}{64} \\cdot d + \\frac{23}{4} + \\left[3 <= n <= 9 and d >= 17\\right] \\Rightarrow \\frac{7}{64} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{2} - \\left[n >= 11 and d >= 9\\right] \\Rightarrow \\frac{3}{16} \\cdot n^{2} - \\frac{53}{16} \\cdot n + \\frac{117}{8} + \\left[n = 10 and d >= 9\\right] \\Rightarrow \\frac{1}{4} - \\left[n >= 11 and d >= 9\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} - \\frac{79}{16} \\cdot n + \\frac{81}{8} + \\left[4 <= n <= 10 and d >= 9\\right] \\Rightarrow \\frac{3}{4} \\cdot n^{2} - \\frac{15}{4} \\cdot n + \\frac{9}{2} - \\left[n >= 4 and 9 <= d <= 16\\right] \\Rightarrow \\frac{13}{128} \\cdot n^{2} \\cdot d - \\frac{13}{16} \\cdot n^{2} - \\frac{65}{128} \\cdot n \\cdot d + \\frac{65}{16} \\cdot n + \\frac{39}{64} \\cdot d - \\frac{39}{8} + \\left[n >= 4 and d >= 17\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d - \\frac{97}{16} \\cdot n - d + \\frac{71}{8} + \\left[n = 3 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - d + 4 - \\left[n >= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{64} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{64} \\cdot n \\cdot d + \\frac{15}{4} \\cdot n + \\frac{9}{8} \\cdot d - 18 + \\left[2 <= n <= 8 and d >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot d - 4 - \\left[n >= 11 and d >= 17\\right] \\Rightarrow \\frac{3}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d - \\frac{87}{16} \\cdot n - d + \\frac{79}{4} + \\left[n = 10 and d >= 17\\right] \\Rightarrow d - \\frac{127}{8} + \\left[3 <= n <= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - d + 4 + \\left[n >= 11 and 9 <= d <= 16\\right] \\Rightarrow \\frac{3}{128} \\cdot n^{2} \\cdot d - \\frac{3}{16} \\cdot n^{2} - \\frac{55}{128} \\cdot n \\cdot d + \\frac{55}{16} \\cdot n + \\frac{63}{32} \\cdot d - \\frac{63}{4} + \\left[n = 10 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{128} \\cdot n^{2} \\cdot d - n^{2} - \\frac{17}{128} \\cdot n \\cdot d + \\frac{17}{16} \\cdot n + \\frac{9}{16} \\cdot d - \\frac{9}{2} - \\left[n >= 10 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{32} \\cdot n \\cdot d - n - \\frac{9}{32} \\cdot d + \\frac{9}{4} + \\left[n >= 10 and d >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot n - \\frac{9}{4} - \\left[n >= 3 and 9 <= d <= 16\\right] \\Rightarrow \\frac{7}{32} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n - \\frac{7}{16} \\cdot d + \\frac{7}{2} + \\left[n >= 3 and d >= 17\\right] \\Rightarrow \\frac{7}{4} \\cdot n - \\frac{7}{2} - \\left[n >= 11 and 0 < d <= 8\\right] \\Rightarrow \\frac{1}{8} \\cdot n^{2} - \\frac{9}{4} \\cdot n + \\frac{81}{8} + \\left[n = 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{17}{16} \\cdot n + \\frac{9}{2} - \\left[n >= 11 and 0 < d <= 8\\right] \\Rightarrow \\frac{7}{8} \\cdot n^{2} - \\frac{21}{4} \\cdot n + \\frac{21}{2} + \\left[4 <= n <= 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} - \\frac{65}{16} \\cdot n + \\frac{39}{8} + \\left[n >= 3 and d >= 9\\right] \\Rightarrow 2 \\cdot n - 4 - \\left[n >= 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{15}{8} \\cdot n - \\frac{37}{8} + \\left[3 <= n <= 9 and 0 < d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n - \\frac{7}{2} - 2 \\cdot \\left[n >= 3 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - n - d + 2 + \\left[n >= 3 and d >= 17\\right] \\Rightarrow n - 2 - \\left[n >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{15}{128} \\cdot n^{2} \\cdot d - \\frac{15}{16} \\cdot n^{2} - \\frac{15}{128} \\cdot n \\cdot d + \\frac{15}{16} \\cdot n + \\frac{1}{8} \\cdot d - 1 + \\left[n >= 2 and d >= 17\\right] \\Rightarrow \\frac{15}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + 1 - \\left[n >= 10 and d >= 9\\right] \\Rightarrow n - \\frac{23}{8} + \\left[3 <= n <= 9 and d >= 9\\right] \\Rightarrow \\frac{7}{8} \\cdot n - \\frac{7}{4} - \\left[n >= 9 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{128} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{128} \\cdot n \\cdot d + \\frac{15}{16} \\cdot n + \\frac{9}{16} \\cdot d - \\frac{9}{2} + \\left[2 <= n <= 8 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d - 1 + \\left[n >= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2} + \\left[2 <= n <= 8 and d >= 17\\right] \\Rightarrow 1 - \\left[n >= 9 and d >= 9\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2} + \\left[2 <= n <= 8 and d >= 9\\right] \\Rightarrow 1 - \\left[n >= 2 and 2 <= d <= 8\\right] \\Rightarrow n^{2} \\cdot d + \\frac{1}{2} \\cdot n^{2} + n \\cdot d - \\frac{5}{2} \\cdot n + 2 + \\left[n >= 2 and d >= 9\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - \\frac{3}{2} \\cdot n + \\left[n = 1 and d >= 2\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - n + \\left[d = 1 and n >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot n^{2} - \\frac{3}{2} \\cdot n + 2 + \\left[n >= 2 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n - \\left[(-1 + n) mod 8 = 0 and n >= 9 and d >= 9\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{7199}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{105}{128} + \\left[n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{6863}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{8} + \\left[2 <= n <= 8 and d >= 9\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{71}{32} \\cdot n \\cdot d - \\frac{6607}{1024} \\cdot n + \\frac{1}{32} \\cdot d - \\frac{9}{8} + \\left[(-1 + n) mod 8 = 0 and n >= 9 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{3103}{1024} \\cdot n - \\frac{119}{128} + \\left[n >= 2 and 2 <= d <= 8 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{2767}{1024} \\cdot n - \\frac{7}{8} + \\left[n = 1 and d >= 9\\right] \\Rightarrow 4 \\cdot d - \\frac{15}{2} + \\left[n = 1 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n + \\left[d = 1 and (-1 + n) mod 8 = 0 and n >= 9\\right] \\Rightarrow \\frac{2263}{1024} \\cdot n^{2} - \\frac{1311}{1024} \\cdot n - \\frac{119}{128} + \\left[d = 1 and n >= 2 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{1871}{1024} \\cdot n^{2} - \\frac{975}{1024} \\cdot n - \\frac{7}{8} + \\left[(-1 + n) mod 8 = 0 and n >= 9 and d <= 0\\right] \\Rightarrow \\frac{1303}{1024} \\cdot n^{2} - \\frac{351}{1024} \\cdot n - \\frac{119}{128} + \\left[n >= 2 and d <= 0 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{911}{1024} \\cdot n^{2} - \\frac{15}{1024} \\cdot n - \\frac{7}{8} - \\left[10 <= n <= 17 and d > 0\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{17}{16} \\cdot n + \\frac{9}{2} + \\left[n >= 18 and d > 0\\right] \\Rightarrow n - \\frac{25}{2} - \\left[9 <= n <= 16 and d > 0\\right] \\Rightarrow \\frac{1}{8} \\cdot n - 1 + \\left[n >= 17 and d > 0\\right] \\Rightarrow 1 - 2 \\cdot \\left[n >= 10 and d > 0\\right] \\Rightarrow 7 + \\left[3 <= n <= 9 and d > 0\\right] \\Rightarrow n - 2 - \\left[11 <= n <= 17 and d > 0\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{19}{16} \\cdot n + \\frac{45}{8} + \\left[n >= 18 and d > 0\\right] \\Rightarrow \\frac{7}{8} \\cdot n - \\frac{91}{8} - \\left[2 <= n <= 8\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + 1 + \\left[n >= 9\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + \\left[n = 1\\right] \\Rightarrow 2 - \\left[(-1 + n) mod 8 = 0 and n >= 18\\right] \\Rightarrow \\frac{105}{64} \\cdot n - \\frac{1141}{64} + \\left[n >= 18 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{49}{64} \\cdot n - \\frac{637}{64} + \\left[n = 17\\right] \\Rightarrow \\frac{161}{16} + \\left[11 <= n <= 16\\right] \\Rightarrow \\frac{7}{128} \\cdot n^{2} - \\frac{133}{128} \\cdot n + \\frac{315}{64} - \\left[10 <= n <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n - \\frac{9}{8} + \\left[n >= 17\\right] \\Rightarrow \\frac{7}{8} - \\left[10 <= n <= 16 and d > 0\\right] \\Rightarrow \\frac{1}{8} \\cdot n - \\frac{9}{8} + \\left[n >= 17 and d > 0\\right] \\Rightarrow \\frac{7}{8} - \\left[n >= 9 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - \\frac{3}{8} \\cdot n + \\frac{5}{2} + \\left[n >= 2 and ((n >= 9 and d > 0) or n <= 8)\\right] \\Rightarrow \\frac{7}{16} \\cdot n^{2} + \\frac{9}{16} \\cdot n - 1 - \\left[n >= 10\\right] \\Rightarrow 7 + \\left[3 <= n <= 9\\right] \\Rightarrow n - 2 - \\left[9 <= n <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n - 1 + \\left[n >= 17\\right] \\Rightarrow 1 - \\frac{287}{16}",
+  "timestamp_space": "[n, d] -> { [t0 = 3, i, t1 = 0, j, t2 = 0, k, t3 = 2] : i < n and 0 <= j <= i and 0 <= k < d; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 2] : i < n and 0 <= j <= i and 0 <= k < d; [t0 = 3, i, t1 = 0, j, t2 = 0, k, t3 = 1] : i < n and 0 <= j <= i and 0 <= k < d; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 1] : i < n and 0 <= j <= i and 0 <= k < d; [t0 = 3, i, t1 = 0, j, t2 = 0, k, t3 = 0] : i < n and 0 <= j <= i and 0 <= k < d; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 0] : i < n and 0 <= j <= i and 0 <= k < d; [t0 = 2, i, t1 = 0, j, t2 = 2, k = 0, t3 = 0] : i < n and 0 <= j <= i; [t0 = 2, i, t1 = 0, j, t2 = 1, k = 0, t3 = 0] : i < n and 0 <= j <= i; [t0 = 1, i, t1 = 0, j, t2 = 1, k = 0, t3 = 0] : i < n and 0 <= j <= i; [t0 = 2, i, t1 = 0, j, t2 = 0, k = 0, t3 = 0] : i < n and 0 <= j <= i; [t0 = 1, i, t1 = 0, j, t2 = 0, k = 0, t3 = 0] : i < n and 0 <= j <= i }",
+  "access_map": "[n, d] -> { [t0 = 3, i, t1 = 0, j, t2 = 0, k, t3 = 2] -> [5, i, o2] : i < n and 0 <= j <= i and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 3, i, t1 = 0, j, t2 = 0, k, t3 = 0] -> [4, i, o2] : i < n and 0 <= j <= i and 0 <= k < d and -7 + j <= 8o2 <= j; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 2] -> [3, i, o2] : i < n and 0 <= j <= i and 0 <= k < d and -7 + j <= 8o2 <= j; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 0] -> [0, i, o2] : i < n and 0 <= j <= i and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 3, i, t1 = 0, j, t2 = 0, k, t3 = 1] -> [2, j, o2] : i < n and 0 <= j <= i and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 0, i, t1 = 0, j, t2 = 0, k, t3 = 1] -> [1, j, o2] : i < n and 0 <= j <= i and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 2, i, t1 = 0, j, t2 = 2, k = 0, t3 = 0] -> [4, i, o2] : i < n and 0 <= j <= i and -7 + j <= 8o2 <= j; [t0 = 2, i, t1 = 0, j, t2 = 0, k = 0, t3 = 0] -> [3, i, o2] : i < n and 0 <= j <= i and -7 + j <= 8o2 <= j; [t0 = 1, i, t1 = 0, j, t2 = 0, k = 0, t3 = 0] -> [3, i, o2] : i < n and 0 <= j <= i and -7 + j <= 8o2 <= j; [t0 = 2, i, t1 = 0, j, t2 = 1, k = 0, t3 = 0] -> [6, 0, o2] : i < n and 0 <= j <= i and -7 + i <= 8o2 <= i; [t0 = 1, i, t1 = 0, j, t2 = 1, k = 0, t3 = 0] -> [6, 0, o2] : i < n and 0 <= j <= i and -7 + i <= 8o2 <= i }",
+  "ri_distribution": [
+    {
+      "value_plain": "3 * d - (147/8)",
+      "value_latex": "3 \\cdot d - \\frac{147}{8}",
+      "mass_plain": "(1/8) * n^2 * d - 2 * n^2 - n * d + 2 * n + (1/4) * d - 4",
+      "mass_latex": "\\frac{1}{8} \\cdot n^{2} \\cdot d - 2 \\cdot n^{2} - n \\cdot d + 2 \\cdot n + \\frac{1}{4} \\cdot d - 4",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d >= 17",
+          "count_plain": "(1/8) * n^2 * d - 2 * n^2 - n * d + 2 * n + (1/4) * d - 4",
+          "count_latex": "\\frac{1}{8} \\cdot n^{2} \\cdot d - 2 \\cdot n^{2} - n \\cdot d + 2 \\cdot n + \\frac{1}{4} \\cdot d - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "3 * d - 21",
+      "value_latex": "3 \\cdot d - 21",
+      "mass_plain": "n^2 - n + 2",
+      "mass_latex": "n^{2} - n + 2",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d >= 9",
+          "count_plain": "n^2 - n + 2",
+          "count_latex": "n^{2} - n + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "[n >= 2 and 2 <= d <= 8] => n^2 * d + (1/2) * n^2 + n * d - (5/2) * n + 2 + [n >= 2 and d >= 9] => n^2 * d - n^2 + n * d - (3/2) * n + [n = 1 and d >= 2] => n^2 * d - n^2 + n * d - n + [d = 1 and n >= 2] => (3/2) * n^2 - (3/2) * n + 2 + [n >= 2 and d <= 0] => (1/2) * n^2 - n",
+      "mass_latex": "\\left[n >= 2 and 2 <= d <= 8\\right] \\Rightarrow n^{2} \\cdot d + \\frac{1}{2} \\cdot n^{2} + n \\cdot d - \\frac{5}{2} \\cdot n + 2 + \\left[n >= 2 and d >= 9\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - \\frac{3}{2} \\cdot n + \\left[n = 1 and d >= 2\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - n + \\left[d = 1 and n >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot n^{2} - \\frac{3}{2} \\cdot n + 2 + \\left[n >= 2 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d >= 9",
+          "count_plain": "n^2 * d - n^2 + n * d - (3/2) * n",
+          "count_latex": "n^{2} \\cdot d - n^{2} + n \\cdot d - \\frac{3}{2} \\cdot n"
+        }
+      ]
+    },
+    {
+      "value_plain": "(21/8)",
+      "value_latex": "\\frac{21}{8}",
+      "mass_plain": "[n >= 2 and d >= 9] => (7/4) * n^2 * d + (1/8) * n^2 + (9/4) * n * d - (27/4) * n - (7/8) + [n >= 2 and 2 <= d <= 8] => (7/4) * n^2 * d + (1/8) * n^2 + (7/4) * n * d - (11/4) * n - (7/8) + [n = 1 and d >= 9] => 4 * d - (15/2) + [n = 1 and 2 <= d <= 8] => (7/4) * n^2 * d - (7/4) * n^2 + (7/4) * n * d - (7/4) * n + [d = 1 and n >= 2] => (15/8) * n^2 - n - (7/8) + [n >= 2 and d <= 0] => (15/16) * n^2 - n - (7/8)",
+      "mass_latex": "\\left[n >= 2 and d >= 9\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{1}{8} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{27}{4} \\cdot n - \\frac{7}{8} + \\left[n >= 2 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{1}{8} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{11}{4} \\cdot n - \\frac{7}{8} + \\left[n = 1 and d >= 9\\right] \\Rightarrow 4 \\cdot d - \\frac{15}{2} + \\left[n = 1 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n + \\left[d = 1 and n >= 2\\right] \\Rightarrow \\frac{15}{8} \\cdot n^{2} - n - \\frac{7}{8} + \\left[n >= 2 and d <= 0\\right] \\Rightarrow \\frac{15}{16} \\cdot n^{2} - n - \\frac{7}{8}",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d >= 9",
+          "count_plain": "(7/4) * n^2 * d + (1/8) * n^2 + (9/4) * n * d - (27/4) * n - (7/8)",
+          "count_latex": "\\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{1}{8} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{27}{4} \\cdot n - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/2) * n^2 * d - (3/2) * n * d + 3 * n - 23",
+      "value_latex": "\\frac{3}{2} \\cdot n^{2} \\cdot d - \\frac{3}{2} \\cdot n \\cdot d + 3 \\cdot n - 23",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 9 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/2) * n^2 * d + (3/2) * n * d - 3 * d + 1",
+      "value_latex": "\\frac{3}{2} \\cdot n^{2} \\cdot d + \\frac{3}{2} \\cdot n \\cdot d - 3 \\cdot d + 1",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/2) * n^2 + (3/2) * n - 2",
+      "value_latex": "\\frac{3}{2} \\cdot n^{2} + \\frac{3}{2} \\cdot n - 2",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "2",
+      "value_latex": "2",
+      "mass_plain": "[2 <= n <= 8] => (1/2) * n^2 - n + 1 + [n >= 9] => (1/2) * n^2 - n + [n = 1] => 2",
+      "mass_latex": "\\left[2 <= n <= 8\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + 1 + \\left[n >= 9\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + \\left[n = 1\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "n >= 9",
+          "count_plain": "(1/2) * n^2 - n",
+          "count_latex": "\\frac{1}{2} \\cdot n^{2} - n"
+        }
+      ]
+    },
+    {
+      "value_plain": "n^2 + 3 * n * d - n - 24 * d + 1",
+      "value_latex": "n^{2} + 3 \\cdot n \\cdot d - n - 24 \\cdot d + 1",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 9 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/2) * n^2 + (1/2) * n - 14",
+      "value_latex": "\\frac{3}{2} \\cdot n^{2} + \\frac{1}{2} \\cdot n - 14",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 9",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(7/4)",
+      "value_latex": "\\frac{7}{4}",
+      "mass_plain": "[n >= 9 and d <= 0] => (1/2) * n^2 - (3/8) * n + (5/2) + [n >= 2 and ((n >= 9 and d > 0) or n <= 8)] => (7/16) * n^2 + (9/16) * n - 1",
+      "mass_latex": "\\left[n >= 9 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - \\frac{3}{8} \\cdot n + \\frac{5}{2} + \\left[n >= 2 and ((n >= 9 and d > 0) or n <= 8)\\right] \\Rightarrow \\frac{7}{16} \\cdot n^{2} + \\frac{9}{16} \\cdot n - 1",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and ((n >= 9 and d > 0) or n <= 8)",
+          "count_plain": "(7/16) * n^2 + (9/16) * n - 1",
+          "count_latex": "\\frac{7}{16} \\cdot n^{2} + \\frac{9}{16} \\cdot n - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "n^2 + n",
+      "value_latex": "n^{2} + n",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 2",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "n^2 + n - 70",
+      "value_latex": "n^{2} + n - 70",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 9",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    }
+  ],
+  "rd_distribution": [
+    {
+      "value_plain": "(3/8) * d + (9/2)",
+      "value_latex": "\\frac{3}{8} \\cdot d + \\frac{9}{2}",
+      "mass_plain": "[n >= 11 and d >= 17] => (1/32) * n^2 * d - n^2 - (9/16) * n * d + 9 * n + (81/32) * d - (81/2) + [n = 10 and d >= 17] => (1/32) * d - (1/2)",
+      "mass_latex": "\\left[n >= 11 and d >= 17\\right] \\Rightarrow \\frac{1}{32} \\cdot n^{2} \\cdot d - n^{2} - \\frac{9}{16} \\cdot n \\cdot d + 9 \\cdot n + \\frac{81}{32} \\cdot d - \\frac{81}{2} + \\left[n = 10 and d >= 17\\right] \\Rightarrow \\frac{1}{32} \\cdot d - \\frac{1}{2}",
+      "regions": [
+        {
+          "domain_plain": "d >= 17 and 10 <= i < n",
+          "count_plain": "(1/16) * i * d - (17/32) * d - i + (17/2)",
+          "count_latex": "\\frac{1}{16} \\cdot i \\cdot d - \\frac{17}{32} \\cdot d - i + \\frac{17}{2}"
+        },
+        {
+          "domain_plain": "i = 9 and n >= 10 and d >= 17",
+          "count_plain": "(1/32) * d - (1/2)",
+          "count_latex": "\\frac{1}{32} \\cdot d - \\frac{1}{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/8) * d + (9/2)",
+      "value_latex": "\\frac{3}{8} \\cdot d + \\frac{9}{2}",
+      "mass_plain": "(1/64) * n * d - n - (9/64) * d + (9/4)",
+      "mass_latex": "\\frac{1}{64} \\cdot n \\cdot d - n - \\frac{9}{64} \\cdot d + \\frac{9}{4}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + i) mod 8 = 0 and (k) mod 8 = 0 and 9 <= i < n and 8 <= k <= -9 + d",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/8) * d + (7/2)",
+      "value_latex": "\\frac{3}{8} \\cdot d + \\frac{7}{2}",
+      "mass_plain": "(3/32) * n^2 * d - (3/2) * n^2 - (15/32) * n * d + (15/2) * n + (9/16) * d - 9",
+      "mass_latex": "\\frac{3}{32} \\cdot n^{2} \\cdot d - \\frac{3}{2} \\cdot n^{2} - \\frac{15}{32} \\cdot n \\cdot d + \\frac{15}{2} \\cdot n + \\frac{9}{16} \\cdot d - 9",
+      "regions": [
+        {
+          "domain_plain": "d >= 17 and 3 <= i < n",
+          "count_plain": "(3/16) * i * d - (3/8) * d - 3 * i + 6",
+          "count_latex": "\\frac{3}{16} \\cdot i \\cdot d - \\frac{3}{8} \\cdot d - 3 \\cdot i + 6"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/8) * d + (7/2)",
+      "value_latex": "\\frac{3}{8} \\cdot d + \\frac{7}{2}",
+      "mass_plain": "[n >= 10 and d >= 17] => (1/8) * n * d - 2 * n - (23/64) * d + (23/4) + [3 <= n <= 9 and d >= 17] => (7/64) * n * d - (7/4) * n - (7/32) * d + (7/2)",
+      "mass_latex": "\\left[n >= 10 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - \\frac{23}{64} \\cdot d + \\frac{23}{4} + \\left[3 <= n <= 9 and d >= 17\\right] \\Rightarrow \\frac{7}{64} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{2}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + i) mod 8 = 0 and (k) mod 8 = 0 and 9 <= i < n and 8 <= k <= -9 + d",
+          "count_plain": "(15/8)",
+          "count_latex": "\\frac{15}{8}"
+        },
+        {
+          "domain_plain": "(k) mod 8 = 0 and 2 <= i < n and 8 <= k <= -9 + d and 8*floor((-1 + i)/8) <= -2 + i",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/8) * d + (15/8)",
+      "value_latex": "\\frac{3}{8} \\cdot d + \\frac{15}{8}",
+      "mass_plain": "[n >= 11 and d >= 9] => (3/16) * n^2 - (53/16) * n + (117/8) + [n = 10 and d >= 9] => (1/4)",
+      "mass_latex": "\\left[n >= 11 and d >= 9\\right] \\Rightarrow \\frac{3}{16} \\cdot n^{2} - \\frac{53}{16} \\cdot n + \\frac{117}{8} + \\left[n = 10 and d >= 9\\right] \\Rightarrow \\frac{1}{4}",
+      "regions": [
+        {
+          "domain_plain": "d >= 9 and 10 <= i < n",
+          "count_plain": "(3/8) * i - (25/8)",
+          "count_latex": "\\frac{3}{8} \\cdot i - \\frac{25}{8}"
+        },
+        {
+          "domain_plain": "i = 9 and n >= 10 and d >= 9",
+          "count_plain": "(1/4)",
+          "count_latex": "\\frac{1}{4}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/8) * d + 2",
+      "value_latex": "\\frac{3}{8} \\cdot d + 2",
+      "mass_plain": "(1/8) * n - (9/8)",
+      "mass_latex": "\\frac{1}{8} \\cdot n - \\frac{9}{8}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + i) mod 8 = 0 and d >= 9 and 9 <= i < n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/8) * d + (7/8)",
+      "value_latex": "\\frac{3}{8} \\cdot d + \\frac{7}{8}",
+      "mass_plain": "[n >= 11 and d >= 9] => (13/16) * n^2 - (79/16) * n + (81/8) + [4 <= n <= 10 and d >= 9] => (3/4) * n^2 - (15/4) * n + (9/2)",
+      "mass_latex": "\\left[n >= 11 and d >= 9\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} - \\frac{79}{16} \\cdot n + \\frac{81}{8} + \\left[4 <= n <= 10 and d >= 9\\right] \\Rightarrow \\frac{3}{4} \\cdot n^{2} - \\frac{15}{4} \\cdot n + \\frac{9}{2}",
+      "regions": [
+        {
+          "domain_plain": "d >= 9 and 10 <= i < n",
+          "count_plain": "(13/8) * i - (33/8)",
+          "count_latex": "\\frac{13}{8} \\cdot i - \\frac{33}{8}"
+        },
+        {
+          "domain_plain": "d >= 9 and 3 <= i <= 9 and i < n",
+          "count_plain": "(3/2) * i - 3",
+          "count_latex": "\\frac{3}{2} \\cdot i - 3"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/8) * d + 1",
+      "value_latex": "\\frac{3}{8} \\cdot d + 1",
+      "mass_plain": "(7/8) * n - (7/4)",
+      "mass_latex": "\\frac{7}{8} \\cdot n - \\frac{7}{4}",
+      "regions": [
+        {
+          "domain_plain": "d >= 9 and 2 <= i < n",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (37/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{37}{8}",
+      "mass_plain": "[n >= 4 and 9 <= d <= 16] => (13/128) * n^2 * d - (13/16) * n^2 - (65/128) * n * d + (65/16) * n + (39/64) * d - (39/8) + [n >= 4 and d >= 17] => (13/16) * n^2 + (1/8) * n * d - (97/16) * n - d + (71/8) + [n = 3 and d >= 17] => (1/8) * n * d - 2 * n - d + 4",
+      "mass_latex": "\\left[n >= 4 and 9 <= d <= 16\\right] \\Rightarrow \\frac{13}{128} \\cdot n^{2} \\cdot d - \\frac{13}{16} \\cdot n^{2} - \\frac{65}{128} \\cdot n \\cdot d + \\frac{65}{16} \\cdot n + \\frac{39}{64} \\cdot d - \\frac{39}{8} + \\left[n >= 4 and d >= 17\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d - \\frac{97}{16} \\cdot n - d + \\frac{71}{8} + \\left[n = 3 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - d + 4",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and 3 <= i < n and k >= -8 + d and 8 <= k < d",
+          "count_plain": "(13/8) * i - (13/4)",
+          "count_latex": "\\frac{13}{8} \\cdot i - \\frac{13}{4}"
+        },
+        {
+          "domain_plain": "(k) mod 8 = 0 and 2 <= i < n and 8 <= k <= -9 + d",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (37/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{37}{8}",
+      "mass_plain": "[n >= 9 and d >= 17] => (1/64) * n^2 * d - n^2 - (15/64) * n * d + (15/4) * n + (9/8) * d - 18 + [2 <= n <= 8 and d >= 17] => (1/4) * d - 4",
+      "mass_latex": "\\left[n >= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{64} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{64} \\cdot n \\cdot d + \\frac{15}{4} \\cdot n + \\frac{9}{8} \\cdot d - 18 + \\left[2 <= n <= 8 and d >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot d - 4",
+      "regions": [
+        {
+          "domain_plain": "n >= 9 and d >= 17",
+          "count_plain": "(1/64) * n^2 * d - n^2 - (15/64) * n * d + (15/4) * n + (9/8) * d - 18",
+          "count_latex": "\\frac{1}{64} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{64} \\cdot n \\cdot d + \\frac{15}{4} \\cdot n + \\frac{9}{8} \\cdot d - 18"
+        },
+        {
+          "domain_plain": "2 <= n <= 8 and d >= 17",
+          "count_plain": "(1/4) * d - 4",
+          "count_latex": "\\frac{1}{4} \\cdot d - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (45/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{45}{8}",
+      "mass_plain": "[n >= 11 and d >= 17] => (3/16) * n^2 + (1/8) * n * d - (87/16) * n - d + (79/4) + [n = 10 and d >= 17] => d - (127/8) + [3 <= n <= 9 and d >= 17] => (1/8) * n * d - 2 * n - d + 4 + [n >= 11 and 9 <= d <= 16] => (3/128) * n^2 * d - (3/16) * n^2 - (55/128) * n * d + (55/16) * n + (63/32) * d - (63/4) + [n = 10 and 9 <= d <= 16] => (1/128) * n^2 * d - n^2 - (17/128) * n * d + (17/16) * n + (9/16) * d - (9/2)",
+      "mass_latex": "\\left[n >= 11 and d >= 17\\right] \\Rightarrow \\frac{3}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d - \\frac{87}{16} \\cdot n - d + \\frac{79}{4} + \\left[n = 10 and d >= 17\\right] \\Rightarrow d - \\frac{127}{8} + \\left[3 <= n <= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - d + 4 + \\left[n >= 11 and 9 <= d <= 16\\right] \\Rightarrow \\frac{3}{128} \\cdot n^{2} \\cdot d - \\frac{3}{16} \\cdot n^{2} - \\frac{55}{128} \\cdot n \\cdot d + \\frac{55}{16} \\cdot n + \\frac{63}{32} \\cdot d - \\frac{63}{4} + \\left[n = 10 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{128} \\cdot n^{2} \\cdot d - n^{2} - \\frac{17}{128} \\cdot n \\cdot d + \\frac{17}{16} \\cdot n + \\frac{9}{16} \\cdot d - \\frac{9}{2}",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and 2 <= i < n and 8 <= k <= -9 + d",
+          "count_plain": "1",
+          "count_latex": "1"
+        },
+        {
+          "domain_plain": "(k) mod 8 = 0 and 10 <= i < n and k >= -8 + d and 8 <= k < d",
+          "count_plain": "(3/8) * i - (13/4)",
+          "count_latex": "\\frac{3}{8} \\cdot i - \\frac{13}{4}"
+        },
+        {
+          "domain_plain": "i = 9 and (k) mod 8 = 0 and n >= 10 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "(1/8) * i - 1",
+          "count_latex": "\\frac{1}{8} \\cdot i - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d + (23/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d + \\frac{23}{4}",
+      "mass_plain": "[n >= 10 and 9 <= d <= 16] => (1/32) * n * d - n - (9/32) * d + (9/4) + [n >= 10 and d >= 17] => (1/4) * n - (9/4)",
+      "mass_latex": "\\left[n >= 10 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{32} \\cdot n \\cdot d - n - \\frac{9}{32} \\cdot d + \\frac{9}{4} + \\left[n >= 10 and d >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot n - \\frac{9}{4}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + i) mod 8 = 0 and (k) mod 8 = 0 and 9 <= i < n and k >= -8 + d and 8 <= k < d",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d + (19/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d + \\frac{19}{4}",
+      "mass_plain": "[n >= 3 and 9 <= d <= 16] => (7/32) * n * d - (7/4) * n - (7/16) * d + (7/2) + [n >= 3 and d >= 17] => (7/4) * n - (7/2)",
+      "mass_latex": "\\left[n >= 3 and 9 <= d <= 16\\right] \\Rightarrow \\frac{7}{32} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n - \\frac{7}{16} \\cdot d + \\frac{7}{2} + \\left[n >= 3 and d >= 17\\right] \\Rightarrow \\frac{7}{4} \\cdot n - \\frac{7}{2}",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and 2 <= i < n and k >= -8 + d and 8 <= k < d",
+          "count_plain": "(7/4)",
+          "count_latex": "\\frac{7}{4}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (23/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{23}{8}",
+      "mass_plain": "[n >= 11 and 0 < d <= 8] => (1/8) * n^2 - (9/4) * n + (81/8) + [n = 10 and 0 < d <= 8] => (1/16) * n^2 - (17/16) * n + (9/2)",
+      "mass_latex": "\\left[n >= 11 and 0 < d <= 8\\right] \\Rightarrow \\frac{1}{8} \\cdot n^{2} - \\frac{9}{4} \\cdot n + \\frac{81}{8} + \\left[n = 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{17}{16} \\cdot n + \\frac{9}{2}",
+      "regions": [
+        {
+          "domain_plain": "0 < d <= 8 and 10 <= i < n",
+          "count_plain": "(1/4) * i - (17/8)",
+          "count_latex": "\\frac{1}{4} \\cdot i - \\frac{17}{8}"
+        },
+        {
+          "domain_plain": "i = 9 and n >= 10 and 0 < d <= 8",
+          "count_plain": "(1/8) * i - 1",
+          "count_latex": "\\frac{1}{8} \\cdot i - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d + 3",
+      "value_latex": "\\frac{1}{8} \\cdot d + 3",
+      "mass_plain": "(1/8) * n - (9/8)",
+      "mass_latex": "\\frac{1}{8} \\cdot n - \\frac{9}{8}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + i) mod 8 = 0 and 0 < d <= 8 and 9 <= i < n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (15/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{15}{8}",
+      "mass_plain": "[n >= 11 and 0 < d <= 8] => (7/8) * n^2 - (21/4) * n + (21/2) + [4 <= n <= 10 and 0 < d <= 8] => (13/16) * n^2 - (65/16) * n + (39/8) + [n >= 3 and d >= 9] => 2 * n - 4",
+      "mass_latex": "\\left[n >= 11 and 0 < d <= 8\\right] \\Rightarrow \\frac{7}{8} \\cdot n^{2} - \\frac{21}{4} \\cdot n + \\frac{21}{2} + \\left[4 <= n <= 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} - \\frac{65}{16} \\cdot n + \\frac{39}{8} + \\left[n >= 3 and d >= 9\\right] \\Rightarrow 2 \\cdot n - 4",
+      "regions": [
+        {
+          "domain_plain": "0 < d <= 8 and 10 <= i < n",
+          "count_plain": "(7/4) * i - (35/8)",
+          "count_latex": "\\frac{7}{4} \\cdot i - \\frac{35}{8}"
+        },
+        {
+          "domain_plain": "0 < d <= 8 and 3 <= i <= 9 and i < n",
+          "count_plain": "(13/8) * i - (13/4)",
+          "count_latex": "\\frac{13}{8} \\cdot i - \\frac{13}{4}"
+        },
+        {
+          "domain_plain": "d >= 9 and 2 <= i < n",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d + 2",
+      "value_latex": "\\frac{1}{8} \\cdot d + 2",
+      "mass_plain": "[n >= 10 and 0 < d <= 8] => (15/8) * n - (37/8) + [3 <= n <= 9 and 0 < d <= 8] => (7/4) * n - (7/2)",
+      "mass_latex": "\\left[n >= 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{15}{8} \\cdot n - \\frac{37}{8} + \\left[3 <= n <= 9 and 0 < d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n - \\frac{7}{2}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + i) mod 8 = 0 and 0 < d <= 8 and 9 <= i < n",
+          "count_plain": "(11/4)",
+          "count_latex": "\\frac{11}{4}"
+        },
+        {
+          "domain_plain": "0 < d <= 8 and 2 <= i < n and 8*floor((-1 + i)/8) <= -2 + i",
+          "count_plain": "(7/4)",
+          "count_latex": "\\frac{7}{4}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d + (23/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d + \\frac{23}{4}",
+      "mass_plain": "[n >= 3 and 9 <= d <= 16] => (1/8) * n * d - n - d + 2 + [n >= 3 and d >= 17] => n - 2",
+      "mass_latex": "\\left[n >= 3 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - n - d + 2 + \\left[n >= 3 and d >= 17\\right] \\Rightarrow n - 2",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and 2 <= i < n and k >= -8 + d and 8 <= k < d",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(47/8)",
+      "value_latex": "\\frac{47}{8}",
+      "mass_plain": "[n >= 2 and 9 <= d <= 16] => (15/128) * n^2 * d - (15/16) * n^2 - (15/128) * n * d + (15/16) * n + (1/8) * d - 1 + [n >= 2 and d >= 17] => (15/16) * n^2 - (15/16) * n + 1",
+      "mass_latex": "\\left[n >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{15}{128} \\cdot n^{2} \\cdot d - \\frac{15}{16} \\cdot n^{2} - \\frac{15}{128} \\cdot n \\cdot d + \\frac{15}{16} \\cdot n + \\frac{1}{8} \\cdot d - 1 + \\left[n >= 2 and d >= 17\\right] \\Rightarrow \\frac{15}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + 1",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and n >= 2 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "(15/16) * n^2 - (15/16) * n + 1",
+          "count_latex": "\\frac{15}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/8) * d + (5/2)",
+      "value_latex": "\\frac{3}{8} \\cdot d + \\frac{5}{2}",
+      "mass_plain": "(7/64) * n * d - (7/4) * n - (7/32) * d + (7/2)",
+      "mass_latex": "\\frac{7}{64} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{2}",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and 2 <= i < n and 8 <= k <= -9 + d",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3/8) * d",
+      "value_latex": "\\frac{3}{8} \\cdot d",
+      "mass_plain": "[n >= 10 and d >= 9] => n - (23/8) + [3 <= n <= 9 and d >= 9] => (7/8) * n - (7/4)",
+      "mass_latex": "\\left[n >= 10 and d >= 9\\right] \\Rightarrow n - \\frac{23}{8} + \\left[3 <= n <= 9 and d >= 9\\right] \\Rightarrow \\frac{7}{8} \\cdot n - \\frac{7}{4}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + i) mod 8 = 0 and d >= 9 and 9 <= i < n",
+          "count_plain": "(15/8)",
+          "count_latex": "\\frac{15}{8}"
+        },
+        {
+          "domain_plain": "d >= 9 and 2 <= i < n and 8*floor((-1 + i)/8) <= -2 + i",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d + (27/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d + \\frac{27}{4}",
+      "mass_plain": "[n >= 3 and 9 <= d <= 16] => (1/8) * n * d - n - d + 2 + [n >= 3 and d >= 17] => n - 2",
+      "mass_latex": "\\left[n >= 3 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - n - d + 2 + \\left[n >= 3 and d >= 17\\right] \\Rightarrow n - 2",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and 2 <= i < n and k >= -8 + d and 8 <= k < d",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(55/8)",
+      "value_latex": "\\frac{55}{8}",
+      "mass_plain": "[n >= 9 and 9 <= d <= 16] => (1/128) * n^2 * d - n^2 - (15/128) * n * d + (15/16) * n + (9/16) * d - (9/2) + [2 <= n <= 8 and 9 <= d <= 16] => (1/8) * d - 1 + [n >= 9 and d >= 17] => (1/16) * n^2 - (15/16) * n + (9/2) + [2 <= n <= 8 and d >= 17] => 1",
+      "mass_latex": "\\left[n >= 9 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{128} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{128} \\cdot n \\cdot d + \\frac{15}{16} \\cdot n + \\frac{9}{16} \\cdot d - \\frac{9}{2} + \\left[2 <= n <= 8 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d - 1 + \\left[n >= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2} + \\left[2 <= n <= 8 and d >= 17\\right] \\Rightarrow 1",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and n >= 9 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "(1/16) * n^2 - (15/16) * n + (9/2)",
+          "count_latex": "\\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2}"
+        },
+        {
+          "domain_plain": "(k) mod 8 = 0 and 2 <= n <= 8 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + 2",
+      "value_latex": "\\frac{1}{4} \\cdot d + 2",
+      "mass_plain": "[n >= 9 and d >= 9] => (1/16) * n^2 - (15/16) * n + (9/2) + [2 <= n <= 8 and d >= 9] => 1",
+      "mass_latex": "\\left[n >= 9 and d >= 9\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2} + \\left[2 <= n <= 8 and d >= 9\\right] \\Rightarrow 1",
+      "regions": [
+        {
+          "domain_plain": "n >= 9 and d >= 9",
+          "count_plain": "(1/16) * n^2 - (15/16) * n + (9/2)",
+          "count_latex": "\\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2}"
+        },
+        {
+          "domain_plain": "2 <= n <= 8 and d >= 9",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d + (23/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d + \\frac{23}{8}",
+      "mass_plain": "2 * n - 4",
+      "mass_latex": "2 \\cdot n - 4",
+      "regions": [
+        {
+          "domain_plain": "0 < d <= 8 and 2 <= i < n",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "[n >= 2 and 2 <= d <= 8] => n^2 * d + (1/2) * n^2 + n * d - (5/2) * n + 2 + [n >= 2 and d >= 9] => n^2 * d - n^2 + n * d - (3/2) * n + [n = 1 and d >= 2] => n^2 * d - n^2 + n * d - n + [d = 1 and n >= 2] => (3/2) * n^2 - (3/2) * n + 2 + [n >= 2 and d <= 0] => (1/2) * n^2 - n",
+      "mass_latex": "\\left[n >= 2 and 2 <= d <= 8\\right] \\Rightarrow n^{2} \\cdot d + \\frac{1}{2} \\cdot n^{2} + n \\cdot d - \\frac{5}{2} \\cdot n + 2 + \\left[n >= 2 and d >= 9\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - \\frac{3}{2} \\cdot n + \\left[n = 1 and d >= 2\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - n + \\left[d = 1 and n >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot n^{2} - \\frac{3}{2} \\cdot n + 2 + \\left[n >= 2 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and 2 <= d <= 8",
+          "count_plain": "n^2 * d + (1/2) * n^2 + n * d - (5/2) * n + 2",
+          "count_latex": "n^{2} \\cdot d + \\frac{1}{2} \\cdot n^{2} + n \\cdot d - \\frac{5}{2} \\cdot n + 2"
+        },
+        {
+          "domain_plain": "n >= 2 and d >= 9",
+          "count_plain": "n^2 * d - n^2 + n * d - (3/2) * n",
+          "count_latex": "n^{2} \\cdot d - n^{2} + n \\cdot d - \\frac{3}{2} \\cdot n"
+        },
+        {
+          "domain_plain": "n = 1 and d >= 2",
+          "count_plain": "n^2 * d - n^2 + n * d - n",
+          "count_latex": "n^{2} \\cdot d - n^{2} + n \\cdot d - n"
+        },
+        {
+          "domain_plain": "d = 1 and n >= 2",
+          "count_plain": "(3/2) * n^2 - (3/2) * n + 2",
+          "count_latex": "\\frac{3}{2} \\cdot n^{2} - \\frac{3}{2} \\cdot n + 2"
+        },
+        {
+          "domain_plain": "n >= 2 and d <= 0",
+          "count_plain": "(1/2) * n^2 - n",
+          "count_latex": "\\frac{1}{2} \\cdot n^{2} - n"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + 1",
+      "value_latex": "\\frac{1}{4} \\cdot d + 1",
+      "mass_plain": "(15/16) * n^2 - (15/16) * n + 1",
+      "mass_latex": "\\frac{15}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + 1",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d >= 9",
+          "count_plain": "(15/16) * n^2 - (15/16) * n + 1",
+          "count_latex": "\\frac{15}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (29/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{29}{8}",
+      "mass_plain": "(7/64) * n^2 * d - (7/4) * n^2 - (7/64) * n * d + (7/4) * n",
+      "mass_latex": "\\frac{7}{64} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot n^{2} - \\frac{7}{64} \\cdot n \\cdot d + \\frac{7}{4} \\cdot n",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d >= 17",
+          "count_plain": "(7/64) * n^2 * d - (7/4) * n^2 - (7/64) * n * d + (7/4) * n",
+          "count_latex": "\\frac{7}{64} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot n^{2} - \\frac{7}{64} \\cdot n \\cdot d + \\frac{7}{4} \\cdot n"
+        }
+      ]
+    },
+    {
+      "value_plain": "(21/8)",
+      "value_latex": "\\frac{21}{8}",
+      "mass_plain": "[(-1 + n) mod 8 = 0 and n >= 9 and d >= 9] => (7/4) * n^2 * d + (471/1024) * n^2 + (9/4) * n * d - (7199/1024) * n - (7/32) * d + (105/128) + [n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n] => (7/4) * n^2 * d + (79/1024) * n^2 + (9/4) * n * d - (6863/1024) * n - (7/32) * d + (7/8) + [2 <= n <= 8 and d >= 9] => (7/4) * n^2 * d + (79/1024) * n^2 + (71/32) * n * d - (6607/1024) * n + (1/32) * d - (9/8) + [(-1 + n) mod 8 = 0 and n >= 9 and 2 <= d <= 8] => (7/4) * n^2 * d + (471/1024) * n^2 + (7/4) * n * d - (3103/1024) * n - (119/128) + [n >= 2 and 2 <= d <= 8 and 8*floor((-1 + n)/8) <= -2 + n] => (7/4) * n^2 * d + (79/1024) * n^2 + (7/4) * n * d - (2767/1024) * n - (7/8) + [n = 1 and d >= 9] => 4 * d - (15/2) + [n = 1 and 2 <= d <= 8] => (7/4) * n^2 * d - (7/4) * n^2 + (7/4) * n * d - (7/4) * n + [d = 1 and (-1 + n) mod 8 = 0 and n >= 9] => (2263/1024) * n^2 - (1311/1024) * n - (119/128) + [d = 1 and n >= 2 and 8*floor((-1 + n)/8) <= -2 + n] => (1871/1024) * n^2 - (975/1024) * n - (7/8) + [(-1 + n) mod 8 = 0 and n >= 9 and d <= 0] => (1303/1024) * n^2 - (351/1024) * n - (119/128) + [n >= 2 and d <= 0 and 8*floor((-1 + n)/8) <= -2 + n] => (911/1024) * n^2 - (15/1024) * n - (7/8)",
+      "mass_latex": "\\left[(-1 + n) mod 8 = 0 and n >= 9 and d >= 9\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{7199}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{105}{128} + \\left[n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{6863}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{8} + \\left[2 <= n <= 8 and d >= 9\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{71}{32} \\cdot n \\cdot d - \\frac{6607}{1024} \\cdot n + \\frac{1}{32} \\cdot d - \\frac{9}{8} + \\left[(-1 + n) mod 8 = 0 and n >= 9 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{3103}{1024} \\cdot n - \\frac{119}{128} + \\left[n >= 2 and 2 <= d <= 8 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{2767}{1024} \\cdot n - \\frac{7}{8} + \\left[n = 1 and d >= 9\\right] \\Rightarrow 4 \\cdot d - \\frac{15}{2} + \\left[n = 1 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n + \\left[d = 1 and (-1 + n) mod 8 = 0 and n >= 9\\right] \\Rightarrow \\frac{2263}{1024} \\cdot n^{2} - \\frac{1311}{1024} \\cdot n - \\frac{119}{128} + \\left[d = 1 and n >= 2 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{1871}{1024} \\cdot n^{2} - \\frac{975}{1024} \\cdot n - \\frac{7}{8} + \\left[(-1 + n) mod 8 = 0 and n >= 9 and d <= 0\\right] \\Rightarrow \\frac{1303}{1024} \\cdot n^{2} - \\frac{351}{1024} \\cdot n - \\frac{119}{128} + \\left[n >= 2 and d <= 0 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{911}{1024} \\cdot n^{2} - \\frac{15}{1024} \\cdot n - \\frac{7}{8}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + n) mod 8 = 0 and n >= 9 and d >= 9",
+          "count_plain": "(7/4) * n^2 * d + (471/1024) * n^2 + (9/4) * n * d - (7199/1024) * n - (7/32) * d + (105/128)",
+          "count_latex": "\\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{7199}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{105}{128}"
+        },
+        {
+          "domain_plain": "n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n",
+          "count_plain": "(7/4) * n^2 * d + (79/1024) * n^2 + (9/4) * n * d - (6863/1024) * n - (7/32) * d + (7/8)",
+          "count_latex": "\\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{6863}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{8}"
+        },
+        {
+          "domain_plain": "2 <= n <= 8 and d >= 9",
+          "count_plain": "(7/4) * n^2 * d + (79/1024) * n^2 + (71/32) * n * d - (6607/1024) * n + (1/32) * d - (9/8)",
+          "count_latex": "\\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{71}{32} \\cdot n \\cdot d - \\frac{6607}{1024} \\cdot n + \\frac{1}{32} \\cdot d - \\frac{9}{8}"
+        },
+        {
+          "domain_plain": "(-1 + n) mod 8 = 0 and n >= 9 and 2 <= d <= 8",
+          "count_plain": "(7/4) * n^2 * d + (471/1024) * n^2 + (7/4) * n * d - (3103/1024) * n - (119/128)",
+          "count_latex": "\\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{3103}{1024} \\cdot n - \\frac{119}{128}"
+        },
+        {
+          "domain_plain": "n >= 2 and 2 <= d <= 8 and 8*floor((-1 + n)/8) <= -2 + n",
+          "count_plain": "(7/4) * n^2 * d + (79/1024) * n^2 + (7/4) * n * d - (2767/1024) * n - (7/8)",
+          "count_latex": "\\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{2767}{1024} \\cdot n - \\frac{7}{8}"
+        },
+        {
+          "domain_plain": "n = 1 and d >= 9",
+          "count_plain": "4 * d - (15/2)",
+          "count_latex": "4 \\cdot d - \\frac{15}{2}"
+        },
+        {
+          "domain_plain": "n = 1 and 2 <= d <= 8",
+          "count_plain": "(7/4) * n^2 * d - (7/4) * n^2 + (7/4) * n * d - (7/4) * n",
+          "count_latex": "\\frac{7}{4} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n"
+        },
+        {
+          "domain_plain": "d = 1 and (-1 + n) mod 8 = 0 and n >= 9",
+          "count_plain": "(2263/1024) * n^2 - (1311/1024) * n - (119/128)",
+          "count_latex": "\\frac{2263}{1024} \\cdot n^{2} - \\frac{1311}{1024} \\cdot n - \\frac{119}{128}"
+        },
+        {
+          "domain_plain": "d = 1 and n >= 2 and 8*floor((-1 + n)/8) <= -2 + n",
+          "count_plain": "(1871/1024) * n^2 - (975/1024) * n - (7/8)",
+          "count_latex": "\\frac{1871}{1024} \\cdot n^{2} - \\frac{975}{1024} \\cdot n - \\frac{7}{8}"
+        },
+        {
+          "domain_plain": "(-1 + n) mod 8 = 0 and n >= 9 and d <= 0",
+          "count_plain": "(1303/1024) * n^2 - (351/1024) * n - (119/128)",
+          "count_latex": "\\frac{1303}{1024} \\cdot n^{2} - \\frac{351}{1024} \\cdot n - \\frac{119}{128}"
+        },
+        {
+          "domain_plain": "n >= 2 and d <= 0 and 8*floor((-1 + n)/8) <= -2 + n",
+          "count_plain": "(911/1024) * n^2 - (15/1024) * n - (7/8)",
+          "count_latex": "\\frac{911}{1024} \\cdot n^{2} - \\frac{15}{1024} \\cdot n - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/4) * n + (3/8) * d + 3",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{3}{8} \\cdot d + 3",
+      "mass_plain": "(1/128) * n^2 - (47/128) * n + (69/16)",
+      "mass_latex": "\\frac{1}{128} \\cdot n^{2} - \\frac{47}{128} \\cdot n + \\frac{69}{16}",
+      "regions": [
+        {
+          "domain_plain": "(1 + i) mod 8 = 0 and (j) mod 8 = 0 and d > 0 and i <= -2 + n and 8 <= j <= -15 + i",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/4) * n + (3/8) * d + 2",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{3}{8} \\cdot d + 2",
+      "mass_plain": "(7/128) * n^2 - (231/128) * n + (119/8)",
+      "mass_latex": "\\frac{7}{128} \\cdot n^{2} - \\frac{231}{128} \\cdot n + \\frac{119}{8}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and d > 0 and i <= -2 + n and 8 <= j <= -8 + i",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d + (3/16) * n - d + (5/2)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - d + \\frac{5}{2}",
+      "mass_plain": "(1/8) * n - 2",
+      "mass_latex": "\\frac{1}{8} \\cdot n - 2",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and d > 0 and 8 <= j <= -9 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/4) * n + (1/4) * d + (1/2)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{1}{4} \\cdot d + \\frac{1}{2}",
+      "mass_plain": "(1/8) * n - 2",
+      "mass_latex": "\\frac{1}{8} \\cdot n - 2",
+      "regions": [
+        {
+          "domain_plain": "(1 + i) mod 8 = 0 and d > 0 and 15 <= i <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/4) * n + (1/4) * d - (1/2)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{1}{4} \\cdot d - \\frac{1}{2}",
+      "mass_plain": "(7/8) * n - (63/8)",
+      "mass_latex": "\\frac{7}{8} \\cdot n - \\frac{63}{8}",
+      "regions": [
+        {
+          "domain_plain": "d > 0 and 8 <= i <= -2 + n",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d + (3/16) * n - d",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - d",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 9 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (23/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{23}{8}",
+      "mass_plain": "(1/128) * n^2 - (33/128) * n + (17/8)",
+      "mass_latex": "\\frac{1}{128} \\cdot n^{2} - \\frac{33}{128} \\cdot n + \\frac{17}{8}",
+      "regions": [
+        {
+          "domain_plain": "(i) mod 8 = 0 and d > 0 and 16 <= i <= -2 + n",
+          "count_plain": "(1/8) * i - 1",
+          "count_latex": "\\frac{1}{8} \\cdot i - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (15/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{15}{8}",
+      "mass_plain": "(7/128) * n^2 - (231/128) * n + (119/8)",
+      "mass_latex": "\\frac{7}{128} \\cdot n^{2} - \\frac{231}{128} \\cdot n + \\frac{119}{8}",
+      "regions": [
+        {
+          "domain_plain": "d > 0 and 16 <= i <= -2 + n",
+          "count_plain": "(7/64) * i - (105/64)",
+          "count_latex": "\\frac{7}{64} \\cdot i - \\frac{105}{64}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (1/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{1}{8}",
+      "mass_plain": "n - 9",
+      "mass_latex": "n - 9",
+      "regions": [
+        {
+          "domain_plain": "d > 0 and 8 <= i <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/4) * n + (3/8) * d + (15/4)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{3}{8} \\cdot d + \\frac{15}{4}",
+      "mass_plain": "[10 <= n <= 17 and d > 0] => (1/16) * n^2 - (17/16) * n + (9/2) + [n >= 18 and d > 0] => n - (25/2)",
+      "mass_latex": "\\left[10 <= n <= 17 and d > 0\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{17}{16} \\cdot n + \\frac{9}{2} + \\left[n >= 18 and d > 0\\right] \\Rightarrow n - \\frac{25}{2}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and d > 0 and i <= -2 + n and j >= -7 + i and 8 <= j <= i",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d - n - d + (15/4)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d - n - d + \\frac{15}{4}",
+      "mass_plain": "[9 <= n <= 16 and d > 0] => (1/8) * n - 1 + [n >= 17 and d > 0] => 1",
+      "mass_latex": "\\left[9 <= n <= 16 and d > 0\\right] \\Rightarrow \\frac{1}{8} \\cdot n - 1 + \\left[n >= 17 and d > 0\\right] \\Rightarrow 1",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and d > 0 and j >= -8 + n and 8 <= j < n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/4) * n + (1/4) * d + 1",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{1}{4} \\cdot d + 1",
+      "mass_plain": "[n >= 10 and d > 0] => 7 + [3 <= n <= 9 and d > 0] => n - 2",
+      "mass_latex": "\\left[n >= 10 and d > 0\\right] \\Rightarrow 7 + \\left[3 <= n <= 9 and d > 0\\right] \\Rightarrow n - 2",
+      "regions": [
+        {
+          "domain_plain": "d > 0 and 0 < i <= 7 and i <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (9/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{9}{8}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "i = -1 + n and 2 <= n <= 8 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (15/4)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{15}{4}",
+      "mass_plain": "(1/8) * n - (9/8)",
+      "mass_latex": "\\frac{1}{8} \\cdot n - \\frac{9}{8}",
+      "regions": [
+        {
+          "domain_plain": "(i) mod 8 = 0 and d > 0 and 8 <= i <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (11/4)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{11}{4}",
+      "mass_plain": "[11 <= n <= 17 and d > 0] => (1/16) * n^2 - (19/16) * n + (45/8) + [n >= 18 and d > 0] => (7/8) * n - (91/8)",
+      "mass_latex": "\\left[11 <= n <= 17 and d > 0\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{19}{16} \\cdot n + \\frac{45}{8} + \\left[n >= 18 and d > 0\\right] \\Rightarrow \\frac{7}{8} \\cdot n - \\frac{91}{8}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and d > 0 and i <= -2 + n and j >= -7 + i and 8 <= j < i",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (7/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{7}{8}",
+      "mass_plain": "[n >= 10 and d > 0] => 7 + [3 <= n <= 9 and d > 0] => n - 2",
+      "mass_latex": "\\left[n >= 10 and d > 0\\right] \\Rightarrow 7 + \\left[3 <= n <= 9 and d > 0\\right] \\Rightarrow n - 2",
+      "regions": [
+        {
+          "domain_plain": "d > 0 and 0 < i <= 7 and i <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (7/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{7}{8}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/4) * n + (3/2)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{3}{2}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 2 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "1",
+      "value_latex": "1",
+      "mass_plain": "2",
+      "mass_latex": "2",
+      "regions": [
+        {
+          "domain_plain": "n = 1 and d > 0",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "2",
+      "value_latex": "2",
+      "mass_plain": "[2 <= n <= 8] => (1/2) * n^2 - n + 1 + [n >= 9] => (1/2) * n^2 - n + [n = 1] => 2",
+      "mass_latex": "\\left[2 <= n <= 8\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + 1 + \\left[n >= 9\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + \\left[n = 1\\right] \\Rightarrow 2",
+      "regions": [
+        {
+          "domain_plain": "2 <= n <= 8",
+          "count_plain": "(1/2) * n^2 - n + 1",
+          "count_latex": "\\frac{1}{2} \\cdot n^{2} - n + 1"
+        },
+        {
+          "domain_plain": "n >= 9",
+          "count_plain": "(1/2) * n^2 - n",
+          "count_latex": "\\frac{1}{2} \\cdot n^{2} - n"
+        },
+        {
+          "domain_plain": "n = 1",
+          "count_plain": "2",
+          "count_latex": "2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/8) * n * d + (3/16) * n - d + (21/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - d + \\frac{21}{8}",
+      "mass_plain": "(1/8) * n - (9/8)",
+      "mass_latex": "\\frac{1}{8} \\cdot n - \\frac{9}{8}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + n) mod 8 = 0 and (j) mod 8 = 0 and d > 0 and 8 <= j <= -9 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/8) * n * d + (3/16) * n - d + (13/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - d + \\frac{13}{8}",
+      "mass_plain": "(7/64) * n - (7/4)",
+      "mass_latex": "\\frac{7}{64} \\cdot n - \\frac{7}{4}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and d > 0 and 8 <= j <= -9 + n",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/8) * n * d + (3/16) * n - (7/8) * d - (1/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - \\frac{7}{8} \\cdot d - \\frac{1}{8}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 9 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n + (15/4)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{15}{4}",
+      "mass_plain": "(1/128) * n^2 - (33/128) * n + (17/8)",
+      "mass_latex": "\\frac{1}{128} \\cdot n^{2} - \\frac{33}{128} \\cdot n + \\frac{17}{8}",
+      "regions": [
+        {
+          "domain_plain": "(i) mod 8 = 0 and (j) mod 8 = 0 and i <= -2 + n and 8 <= j <= -8 + i",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/8) * n + (29/8)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{8} \\cdot n + \\frac{29}{8}",
+      "mass_plain": "(1/8) * n - (9/8)",
+      "mass_latex": "\\frac{1}{8} \\cdot n - \\frac{9}{8}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + n) mod 8 = 0 and (j) mod 8 = 0 and 8 <= j <= -9 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n + (11/4)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{11}{4}",
+      "mass_plain": "(7/128) * n^2 - (231/128) * n + (119/8)",
+      "mass_latex": "\\frac{7}{128} \\cdot n^{2} - \\frac{231}{128} \\cdot n + \\frac{119}{8}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and i <= -2 + n and 8 <= j <= -8 + i",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/8) * n + (21/8)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{8} \\cdot n + \\frac{21}{8}",
+      "mass_plain": "(7/64) * n - (7/4)",
+      "mass_latex": "\\frac{7}{64} \\cdot n - \\frac{7}{4}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and 8 <= j <= -9 + n",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n + 1",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + 1",
+      "mass_plain": "(1/8) * n - (9/8)",
+      "mass_latex": "\\frac{1}{8} \\cdot n - \\frac{9}{8}",
+      "regions": [
+        {
+          "domain_plain": "(i) mod 8 = 0 and 8 <= i <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n",
+      "mass_plain": "(7/8) * n - (63/8)",
+      "mass_latex": "\\frac{7}{8} \\cdot n - \\frac{63}{8}",
+      "regions": [
+        {
+          "domain_plain": "8 <= i <= -2 + n",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/8) * n + (7/8)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{8} \\cdot n + \\frac{7}{8}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "(-1 + n) mod 8 = 0 and n >= 9",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/8) * n - (1/8)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{8} \\cdot n - \\frac{1}{8}",
+      "mass_plain": "(7/8)",
+      "mass_latex": "\\frac{7}{8}",
+      "regions": [
+        {
+          "domain_plain": "n >= 9",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n + (37/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{37}{8}",
+      "mass_plain": "(1/8) * n - (9/8)",
+      "mass_latex": "\\frac{1}{8} \\cdot n - \\frac{9}{8}",
+      "regions": [
+        {
+          "domain_plain": "(i) mod 8 = 0 and 8 <= i <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (1/4) * n + (17/4)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{17}{4}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "(-1 + n) mod 8 = 0 and n >= 9",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n + (29/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{29}{8}",
+      "mass_plain": "[(-1 + n) mod 8 = 0 and n >= 18] => (105/64) * n - (1141/64) + [n >= 18 and 8*floor((-1 + n)/8) <= -2 + n] => (49/64) * n - (637/64) + [n = 17] => (161/16) + [11 <= n <= 16] => (7/128) * n^2 - (133/128) * n + (315/64)",
+      "mass_latex": "\\left[(-1 + n) mod 8 = 0 and n >= 18\\right] \\Rightarrow \\frac{105}{64} \\cdot n - \\frac{1141}{64} + \\left[n >= 18 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{49}{64} \\cdot n - \\frac{637}{64} + \\left[n = 17\\right] \\Rightarrow \\frac{161}{16} + \\left[11 <= n <= 16\\right] \\Rightarrow \\frac{7}{128} \\cdot n^{2} - \\frac{133}{128} \\cdot n + \\frac{315}{64}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + n) mod 8 = 0 and (j) mod 8 = 0 and i <= -2 + n and j >= -7 + i and 8 <= j < i",
+          "count_plain": "(15/8)",
+          "count_latex": "\\frac{15}{8}"
+        },
+        {
+          "domain_plain": "(j) mod 8 = 0 and i <= -2 + n and j >= -7 + i and 8 <= j < i and 8*floor((-1 + n)/8) <= -2 + n",
+          "count_plain": "(7/8)",
+          "count_latex": "\\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (15/4)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{15}{4}",
+      "mass_plain": "[10 <= n <= 16] => (1/8) * n - (9/8) + [n >= 17] => (7/8)",
+      "mass_latex": "\\left[10 <= n <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n - \\frac{9}{8} + \\left[n >= 17\\right] \\Rightarrow \\frac{7}{8}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and j >= -8 + n and 8 <= j <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n + (7/2)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{7}{2}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "(-1 + n) mod 8 = 0 and n >= 9 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/16) * n + (11/4)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{16} \\cdot n + \\frac{11}{4}",
+      "mass_plain": "[10 <= n <= 16 and d > 0] => (1/8) * n - (9/8) + [n >= 17 and d > 0] => (7/8)",
+      "mass_latex": "\\left[10 <= n <= 16 and d > 0\\right] \\Rightarrow \\frac{1}{8} \\cdot n - \\frac{9}{8} + \\left[n >= 17 and d > 0\\right] \\Rightarrow \\frac{7}{8}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and d > 0 and j >= -8 + n and 8 <= j <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(7/4)",
+      "value_latex": "\\frac{7}{4}",
+      "mass_plain": "[n >= 9 and d <= 0] => (1/2) * n^2 - (3/8) * n + (5/2) + [n >= 2 and ((n >= 9 and d > 0) or n <= 8)] => (7/16) * n^2 + (9/16) * n - 1",
+      "mass_latex": "\\left[n >= 9 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - \\frac{3}{8} \\cdot n + \\frac{5}{2} + \\left[n >= 2 and ((n >= 9 and d > 0) or n <= 8)\\right] \\Rightarrow \\frac{7}{16} \\cdot n^{2} + \\frac{9}{16} \\cdot n - 1",
+      "regions": [
+        {
+          "domain_plain": "n >= 9 and d <= 0",
+          "count_plain": "(1/2) * n^2 - (3/8) * n + (5/2)",
+          "count_latex": "\\frac{1}{2} \\cdot n^{2} - \\frac{3}{8} \\cdot n + \\frac{5}{2}"
+        },
+        {
+          "domain_plain": "n >= 2 and ((n >= 9 and d > 0) or n <= 8)",
+          "count_plain": "(7/16) * n^2 + (9/16) * n - 1",
+          "count_latex": "\\frac{7}{16} \\cdot n^{2} + \\frac{9}{16} \\cdot n - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n + (3/4)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{3}{4}",
+      "mass_plain": "[n >= 10] => 7 + [3 <= n <= 9] => n - 2",
+      "mass_latex": "\\left[n >= 10\\right] \\Rightarrow 7 + \\left[3 <= n <= 9\\right] \\Rightarrow n - 2",
+      "regions": [
+        {
+          "domain_plain": "0 < i <= 7 and i <= -2 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * n^2 + (7/8)",
+      "value_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{7}{8}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "2 <= n <= 8",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n + (7/4)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{7}{4}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 2",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n - (7/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n - \\frac{7}{8}",
+      "mass_plain": "(1/8) * n - 2",
+      "mass_latex": "\\frac{1}{8} \\cdot n - 2",
+      "regions": [
+        {
+          "domain_plain": "(i) mod 8 = 0 and 8 <= i <= -9 + n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(47/8)",
+      "value_latex": "\\frac{47}{8}",
+      "mass_plain": "[9 <= n <= 16] => (1/8) * n - 1 + [n >= 17] => 1",
+      "mass_latex": "\\left[9 <= n <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n - 1 + \\left[n >= 17\\right] \\Rightarrow 1",
+      "regions": [
+        {
+          "domain_plain": "(i) mod 8 = 0 and i >= -8 + n and 8 <= i < n",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (1/16) * n + (7/8)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{16} \\cdot n + \\frac{7}{8}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "2 <= n <= 8 and d > 0",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/16) * n^2 + (3/16) * n - (7/2)",
+      "value_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n - \\frac{7}{2}",
+      "mass_plain": "1",
+      "mass_latex": "1",
+      "regions": [
+        {
+          "domain_plain": "n >= 9",
+          "count_plain": "1",
+          "count_latex": "1"
+        }
+      ]
+    }
+  ],
+  "dmd_terms": [
+    {
+      "domain_plain": "n >= 9 and d >= 17",
+      "multiplicity_plain": "(1/64) * n^2 * d - n^2 - (15/64) * n * d + (15/4) * n + (9/8) * d - 18",
+      "multiplicity_latex": "\\frac{1}{64} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{64} \\cdot n \\cdot d + \\frac{15}{4} \\cdot n + \\frac{9}{8} \\cdot d - 18",
+      "reuse_distance_plain": "(1/4) * d + (37/8)",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot d + \\frac{37}{8}",
+      "term_plain": "(1/64) * sqrt((1/4) * d + (37/8)) * n^2 * d - sqrt((1/4) * d + (37/8)) * n^2 - (15/64) * sqrt((1/4) * d + (37/8)) * n * d + (15/4) * sqrt((1/4) * d + (37/8)) * n + (9/8) * sqrt((1/4) * d + (37/8)) * d - 18 * sqrt((1/4) * d + (37/8))",
+      "term_latex": "\\frac{1}{64} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot n^{2} \\cdot d - \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot n^{2} - \\frac{15}{64} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot n \\cdot d + \\frac{15}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot n + \\frac{9}{8} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot d - 18 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}}"
+    },
+    {
+      "domain_plain": "n >= 9 and d >= 9",
+      "multiplicity_plain": "(1/16) * n^2 - (15/16) * n + (9/2)",
+      "multiplicity_latex": "\\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2}",
+      "reuse_distance_plain": "(1/4) * d + 2",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot d + 2",
+      "term_plain": "(1/16) * sqrt((1/4) * d + 2) * n^2 - (15/16) * sqrt((1/4) * d + 2) * n + (9/2) * sqrt((1/4) * d + 2)",
+      "term_latex": "\\frac{1}{16} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2} \\cdot n^{2} - \\frac{15}{16} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2} \\cdot n + \\frac{9}{2} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2}"
+    },
+    {
+      "domain_plain": "n >= 2 and d >= 9",
+      "multiplicity_plain": "n^2 * d - n^2 + n * d - (3/2) * n",
+      "multiplicity_latex": "n^{2} \\cdot d - n^{2} + n \\cdot d - \\frac{3}{2} \\cdot n",
+      "reuse_distance_plain": "3",
+      "reuse_distance_latex": "3",
+      "term_plain": "sqrt(3) * n^2 * d - sqrt(3) * n^2 + sqrt(3) * n * d - (3/2) * sqrt(3) * n",
+      "term_latex": "\\sqrt{3} \\cdot n^{2} \\cdot d - \\sqrt{3} \\cdot n^{2} + \\sqrt{3} \\cdot n \\cdot d - \\frac{3}{2} \\cdot \\sqrt{3} \\cdot n"
+    },
+    {
+      "domain_plain": "n >= 2 and d >= 9",
+      "multiplicity_plain": "(15/16) * n^2 - (15/16) * n + 1",
+      "multiplicity_latex": "\\frac{15}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + 1",
+      "reuse_distance_plain": "(1/4) * d + 1",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot d + 1",
+      "term_plain": "(15/16) * sqrt((1/4) * d + 1) * n^2 - (15/16) * sqrt((1/4) * d + 1) * n + sqrt((1/4) * d + 1)",
+      "term_latex": "\\frac{15}{16} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 1} \\cdot n^{2} - \\frac{15}{16} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 1} \\cdot n + \\sqrt{\\frac{1}{4} \\cdot d + 1}"
+    },
+    {
+      "domain_plain": "n >= 2 and d >= 17",
+      "multiplicity_plain": "(7/64) * n^2 * d - (7/4) * n^2 - (7/64) * n * d + (7/4) * n",
+      "multiplicity_latex": "\\frac{7}{64} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot n^{2} - \\frac{7}{64} \\cdot n \\cdot d + \\frac{7}{4} \\cdot n",
+      "reuse_distance_plain": "(1/4) * d + (29/8)",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot d + \\frac{29}{8}",
+      "term_plain": "(7/64) * sqrt((1/4) * d + (29/8)) * n^2 * d - (7/4) * sqrt((1/4) * d + (29/8)) * n^2 - (7/64) * sqrt((1/4) * d + (29/8)) * n * d + (7/4) * sqrt((1/4) * d + (29/8)) * n",
+      "term_latex": "\\frac{7}{64} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot n^{2} - \\frac{7}{64} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot n \\cdot d + \\frac{7}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot n"
+    },
+    {
+      "domain_plain": "n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n",
+      "multiplicity_plain": "(7/4) * n^2 * d + (79/1024) * n^2 + (9/4) * n * d - (6863/1024) * n - (7/32) * d + (7/8)",
+      "multiplicity_latex": "\\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{6863}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{8}",
+      "reuse_distance_plain": "(21/8)",
+      "reuse_distance_latex": "\\frac{21}{8}",
+      "term_plain": "(7/4) * sqrt((21/8)) * n^2 * d + (79/1024) * sqrt((21/8)) * n^2 + (9/4) * sqrt((21/8)) * n * d - (6863/1024) * sqrt((21/8)) * n - (7/32) * sqrt((21/8)) * d + (7/8) * sqrt((21/8))",
+      "term_latex": "\\frac{7}{4} \\cdot \\sqrt{\\frac{21}{8}} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot \\sqrt{\\frac{21}{8}} \\cdot n^{2} + \\frac{9}{4} \\cdot \\sqrt{\\frac{21}{8}} \\cdot n \\cdot d - \\frac{6863}{1024} \\cdot \\sqrt{\\frac{21}{8}} \\cdot n - \\frac{7}{32} \\cdot \\sqrt{\\frac{21}{8}} \\cdot d + \\frac{7}{8} \\cdot \\sqrt{\\frac{21}{8}}"
+    },
+    {
+      "domain_plain": "n >= 9 and d > 0",
+      "multiplicity_plain": "1",
+      "multiplicity_latex": "1",
+      "reuse_distance_plain": "(1/16) * n^2 + (1/4) * n * d + (3/16) * n - d",
+      "reuse_distance_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - d",
+      "term_plain": "sqrt((1/16) * n^2 + (1/4) * n * d + (3/16) * n - d)",
+      "term_latex": "\\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - d}"
+    },
+    {
+      "domain_plain": "n >= 2 and d > 0",
+      "multiplicity_plain": "1",
+      "multiplicity_latex": "1",
+      "reuse_distance_plain": "(1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (7/8)",
+      "reuse_distance_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{7}{8}",
+      "term_plain": "sqrt((1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (7/8))",
+      "term_latex": "\\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{7}{8}}"
+    },
+    {
+      "domain_plain": "n >= 2 and d > 0",
+      "multiplicity_plain": "1",
+      "multiplicity_latex": "1",
+      "reuse_distance_plain": "(1/8) * n^2 + (1/4) * n + (3/2)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{3}{2}",
+      "term_plain": "sqrt((1/8) * n^2 + (1/4) * n + (3/2))",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{3}{2}}"
+    },
+    {
+      "domain_plain": "n >= 9",
+      "multiplicity_plain": "(1/2) * n^2 - n",
+      "multiplicity_latex": "\\frac{1}{2} \\cdot n^{2} - n",
+      "reuse_distance_plain": "2",
+      "reuse_distance_latex": "2",
+      "term_plain": "(1/2) * sqrt(2) * n^2 - sqrt(2) * n",
+      "term_latex": "\\frac{1}{2} \\cdot \\sqrt{2} \\cdot n^{2} - \\sqrt{2} \\cdot n"
+    },
+    {
+      "domain_plain": "n >= 9 and d > 0",
+      "multiplicity_plain": "1",
+      "multiplicity_latex": "1",
+      "reuse_distance_plain": "(1/16) * n^2 + (1/8) * n * d + (3/16) * n - (7/8) * d - (1/8)",
+      "reuse_distance_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - \\frac{7}{8} \\cdot d - \\frac{1}{8}",
+      "term_plain": "sqrt((1/16) * n^2 + (1/8) * n * d + (3/16) * n - (7/8) * d - (1/8))",
+      "term_latex": "\\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - \\frac{7}{8} \\cdot d - \\frac{1}{8}}"
+    },
+    {
+      "domain_plain": "n >= 9",
+      "multiplicity_plain": "(7/8)",
+      "multiplicity_latex": "\\frac{7}{8}",
+      "reuse_distance_plain": "(1/8) * n^2 + (1/8) * n - (1/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot n^{2} + \\frac{1}{8} \\cdot n - \\frac{1}{8}",
+      "term_plain": "(7/8) * sqrt((1/8) * n^2 + (1/8) * n - (1/8))",
+      "term_latex": "\\frac{7}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot n^{2} + \\frac{1}{8} \\cdot n - \\frac{1}{8}}"
+    },
+    {
+      "domain_plain": "n >= 2 and ((n >= 9 and d > 0) or n <= 8)",
+      "multiplicity_plain": "(7/16) * n^2 + (9/16) * n - 1",
+      "multiplicity_latex": "\\frac{7}{16} \\cdot n^{2} + \\frac{9}{16} \\cdot n - 1",
+      "reuse_distance_plain": "(7/4)",
+      "reuse_distance_latex": "\\frac{7}{4}",
+      "term_plain": "(7/16) * sqrt((7/4)) * n^2 + (9/16) * sqrt((7/4)) * n - sqrt((7/4))",
+      "term_latex": "\\frac{7}{16} \\cdot \\sqrt{\\frac{7}{4}} \\cdot n^{2} + \\frac{9}{16} \\cdot \\sqrt{\\frac{7}{4}} \\cdot n - \\sqrt{\\frac{7}{4}}"
+    },
+    {
+      "domain_plain": "n >= 2",
+      "multiplicity_plain": "1",
+      "multiplicity_latex": "1",
+      "reuse_distance_plain": "(1/16) * n^2 + (3/16) * n + (7/4)",
+      "reuse_distance_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{7}{4}",
+      "term_plain": "sqrt((1/16) * n^2 + (3/16) * n + (7/4))",
+      "term_latex": "\\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{7}{4}}"
+    },
+    {
+      "domain_plain": "n >= 9",
+      "multiplicity_plain": "1",
+      "multiplicity_latex": "1",
+      "reuse_distance_plain": "(1/16) * n^2 + (3/16) * n - (7/2)",
+      "reuse_distance_latex": "\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n - \\frac{7}{2}",
+      "term_plain": "sqrt((1/16) * n^2 + (3/16) * n - (7/2))",
+      "term_latex": "\\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n - \\frac{7}{2}}"
+    }
+  ],
+  "dmd_formula_plain": "(1/64) * sqrt((1/4) * d + (37/8)) * n^2 * d + (7/64) * sqrt((1/4) * d + (29/8)) * n^2 * d - (13/64) * n^2 * d - sqrt((1/4) * d + (37/8)) * n^2 - (15/64) * sqrt((1/4) * d + (37/8)) * n * d + (1/16) * sqrt((1/4) * d + 2) * n^2 + sqrt(3) * n^2 * d + (15/16) * sqrt((1/4) * d + 1) * n^2 - (7/4) * sqrt((1/4) * d + (29/8)) * n^2 - (7/64) * sqrt((1/4) * d + (29/8)) * n * d + (7/4) * sqrt((21/8)) * n^2 * d + (29/64) * n * d + (17/8) * n^2 + (15/4) * sqrt((1/4) * d + (37/8)) * n + (9/8) * sqrt((1/4) * d + (37/8)) * d - (15/16) * sqrt((1/4) * d + 2) * n - sqrt(3) * n^2 + sqrt(3) * n * d - (15/16) * sqrt((1/4) * d + 1) * n + (7/4) * sqrt((1/4) * d + (29/8)) * n + (79/1024) * sqrt((21/8)) * n^2 + (9/4) * sqrt((21/8)) * n * d + sqrt((1/16) * n^2 + (1/4) * n * d + (3/16) * n - d) + sqrt((1/16) * n^2 + (1/4) * n * d + (1/16) * n - d + (7/8)) + sqrt((1/8) * n^2 + (1/4) * n + (3/2)) + (1/2) * sqrt(2) * n^2 + sqrt((1/16) * n^2 + (1/8) * n * d + (3/16) * n - (7/8) * d - (1/8)) + (7/8) * sqrt((1/8) * n^2 + (1/8) * n - (1/8)) + (7/16) * sqrt((7/4)) * n^2 + sqrt((1/16) * n^2 + (3/16) * n + (7/4)) + sqrt((1/16) * n^2 + (3/16) * n - (7/2)) - (455/64) * n - (13/64) * d - 18 * sqrt((1/4) * d + (37/8)) + (9/2) * sqrt((1/4) * d + 2) - (3/2) * sqrt(3) * n + sqrt((1/4) * d + 1) - (6863/1024) * sqrt((21/8)) * n - (7/32) * sqrt((21/8)) * d - sqrt(2) * n + (9/16) * sqrt((7/4)) * n + [n > 0 and d > 0] => 3 * n^2 * d + (5/2) * n^2 + 3 * n * d + (5/2) * n + [n > 0 and d <= 0] => (5/2) * n^2 + (5/2) * n - [n >= 11 and d >= 17] => (1/32) * n^2 * d - n^2 - (9/16) * n * d + 9 * n + (81/32) * d - (81/2) + [n = 10 and d >= 17] => (1/32) * d - (1/2) - [n >= 10 and d >= 17] => (1/8) * n * d - 2 * n - (23/64) * d + (23/4) + [3 <= n <= 9 and d >= 17] => (7/64) * n * d - (7/4) * n - (7/32) * d + (7/2) - [n >= 11 and d >= 9] => (3/16) * n^2 - (53/16) * n + (117/8) + [n = 10 and d >= 9] => (1/4) - [n >= 11 and d >= 9] => (13/16) * n^2 - (79/16) * n + (81/8) + [4 <= n <= 10 and d >= 9] => (3/4) * n^2 - (15/4) * n + (9/2) - [n >= 4 and 9 <= d <= 16] => (13/128) * n^2 * d - (13/16) * n^2 - (65/128) * n * d + (65/16) * n + (39/64) * d - (39/8) + [n >= 4 and d >= 17] => (13/16) * n^2 + (1/8) * n * d - (97/16) * n - d + (71/8) + [n = 3 and d >= 17] => (1/8) * n * d - 2 * n - d + 4 - [n >= 9 and d >= 17] => (1/64) * n^2 * d - n^2 - (15/64) * n * d + (15/4) * n + (9/8) * d - 18 + [2 <= n <= 8 and d >= 17] => (1/4) * d - 4 - [n >= 11 and d >= 17] => (3/16) * n^2 + (1/8) * n * d - (87/16) * n - d + (79/4) + [n = 10 and d >= 17] => d - (127/8) + [3 <= n <= 9 and d >= 17] => (1/8) * n * d - 2 * n - d + 4 + [n >= 11 and 9 <= d <= 16] => (3/128) * n^2 * d - (3/16) * n^2 - (55/128) * n * d + (55/16) * n + (63/32) * d - (63/4) + [n = 10 and 9 <= d <= 16] => (1/128) * n^2 * d - n^2 - (17/128) * n * d + (17/16) * n + (9/16) * d - (9/2) - [n >= 10 and 9 <= d <= 16] => (1/32) * n * d - n - (9/32) * d + (9/4) + [n >= 10 and d >= 17] => (1/4) * n - (9/4) - [n >= 3 and 9 <= d <= 16] => (7/32) * n * d - (7/4) * n - (7/16) * d + (7/2) + [n >= 3 and d >= 17] => (7/4) * n - (7/2) - [n >= 11 and 0 < d <= 8] => (1/8) * n^2 - (9/4) * n + (81/8) + [n = 10 and 0 < d <= 8] => (1/16) * n^2 - (17/16) * n + (9/2) - [n >= 11 and 0 < d <= 8] => (7/8) * n^2 - (21/4) * n + (21/2) + [4 <= n <= 10 and 0 < d <= 8] => (13/16) * n^2 - (65/16) * n + (39/8) + [n >= 3 and d >= 9] => 2 * n - 4 - [n >= 10 and 0 < d <= 8] => (15/8) * n - (37/8) + [3 <= n <= 9 and 0 < d <= 8] => (7/4) * n - (7/2) - 2 * [n >= 3 and 9 <= d <= 16] => (1/8) * n * d - n - d + 2 + [n >= 3 and d >= 17] => n - 2 - [n >= 2 and 9 <= d <= 16] => (15/128) * n^2 * d - (15/16) * n^2 - (15/128) * n * d + (15/16) * n + (1/8) * d - 1 + [n >= 2 and d >= 17] => (15/16) * n^2 - (15/16) * n + 1 - [n >= 10 and d >= 9] => n - (23/8) + [3 <= n <= 9 and d >= 9] => (7/8) * n - (7/4) - [n >= 9 and 9 <= d <= 16] => (1/128) * n^2 * d - n^2 - (15/128) * n * d + (15/16) * n + (9/16) * d - (9/2) + [2 <= n <= 8 and 9 <= d <= 16] => (1/8) * d - 1 + [n >= 9 and d >= 17] => (1/16) * n^2 - (15/16) * n + (9/2) + [2 <= n <= 8 and d >= 17] => 1 - [n >= 9 and d >= 9] => (1/16) * n^2 - (15/16) * n + (9/2) + [2 <= n <= 8 and d >= 9] => 1 - [n >= 2 and 2 <= d <= 8] => n^2 * d + (1/2) * n^2 + n * d - (5/2) * n + 2 + [n >= 2 and d >= 9] => n^2 * d - n^2 + n * d - (3/2) * n + [n = 1 and d >= 2] => n^2 * d - n^2 + n * d - n + [d = 1 and n >= 2] => (3/2) * n^2 - (3/2) * n + 2 + [n >= 2 and d <= 0] => (1/2) * n^2 - n - [(-1 + n) mod 8 = 0 and n >= 9 and d >= 9] => (7/4) * n^2 * d + (471/1024) * n^2 + (9/4) * n * d - (7199/1024) * n - (7/32) * d + (105/128) + [n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n] => (7/4) * n^2 * d + (79/1024) * n^2 + (9/4) * n * d - (6863/1024) * n - (7/32) * d + (7/8) + [2 <= n <= 8 and d >= 9] => (7/4) * n^2 * d + (79/1024) * n^2 + (71/32) * n * d - (6607/1024) * n + (1/32) * d - (9/8) + [(-1 + n) mod 8 = 0 and n >= 9 and 2 <= d <= 8] => (7/4) * n^2 * d + (471/1024) * n^2 + (7/4) * n * d - (3103/1024) * n - (119/128) + [n >= 2 and 2 <= d <= 8 and 8*floor((-1 + n)/8) <= -2 + n] => (7/4) * n^2 * d + (79/1024) * n^2 + (7/4) * n * d - (2767/1024) * n - (7/8) + [n = 1 and d >= 9] => 4 * d - (15/2) + [n = 1 and 2 <= d <= 8] => (7/4) * n^2 * d - (7/4) * n^2 + (7/4) * n * d - (7/4) * n + [d = 1 and (-1 + n) mod 8 = 0 and n >= 9] => (2263/1024) * n^2 - (1311/1024) * n - (119/128) + [d = 1 and n >= 2 and 8*floor((-1 + n)/8) <= -2 + n] => (1871/1024) * n^2 - (975/1024) * n - (7/8) + [(-1 + n) mod 8 = 0 and n >= 9 and d <= 0] => (1303/1024) * n^2 - (351/1024) * n - (119/128) + [n >= 2 and d <= 0 and 8*floor((-1 + n)/8) <= -2 + n] => (911/1024) * n^2 - (15/1024) * n - (7/8) - [10 <= n <= 17 and d > 0] => (1/16) * n^2 - (17/16) * n + (9/2) + [n >= 18 and d > 0] => n - (25/2) - [9 <= n <= 16 and d > 0] => (1/8) * n - 1 + [n >= 17 and d > 0] => 1 - 2 * [n >= 10 and d > 0] => 7 + [3 <= n <= 9 and d > 0] => n - 2 - [11 <= n <= 17 and d > 0] => (1/16) * n^2 - (19/16) * n + (45/8) + [n >= 18 and d > 0] => (7/8) * n - (91/8) - [2 <= n <= 8] => (1/2) * n^2 - n + 1 + [n >= 9] => (1/2) * n^2 - n + [n = 1] => 2 - [(-1 + n) mod 8 = 0 and n >= 18] => (105/64) * n - (1141/64) + [n >= 18 and 8*floor((-1 + n)/8) <= -2 + n] => (49/64) * n - (637/64) + [n = 17] => (161/16) + [11 <= n <= 16] => (7/128) * n^2 - (133/128) * n + (315/64) - [10 <= n <= 16] => (1/8) * n - (9/8) + [n >= 17] => (7/8) - [10 <= n <= 16 and d > 0] => (1/8) * n - (9/8) + [n >= 17 and d > 0] => (7/8) - [n >= 9 and d <= 0] => (1/2) * n^2 - (3/8) * n + (5/2) + [n >= 2 and ((n >= 9 and d > 0) or n <= 8)] => (7/16) * n^2 + (9/16) * n - 1 - [n >= 10] => 7 + [3 <= n <= 9] => n - 2 - [9 <= n <= 16] => (1/8) * n - 1 + [n >= 17] => 1 + (7/8) * sqrt((21/8)) - sqrt((7/4)) - (287/16)",
+  "dmd_formula_latex": "\\frac{1}{64} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot n^{2} \\cdot d + \\frac{7}{64} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot n^{2} \\cdot d - \\frac{13}{64} \\cdot n^{2} \\cdot d - \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot n^{2} - \\frac{15}{64} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot n \\cdot d + \\frac{1}{16} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2} \\cdot n^{2} + \\sqrt{3} \\cdot n^{2} \\cdot d + \\frac{15}{16} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 1} \\cdot n^{2} - \\frac{7}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot n^{2} - \\frac{7}{64} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot n \\cdot d + \\frac{7}{4} \\cdot \\sqrt{\\frac{21}{8}} \\cdot n^{2} \\cdot d + \\frac{29}{64} \\cdot n \\cdot d + \\frac{17}{8} \\cdot n^{2} + \\frac{15}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot n + \\frac{9}{8} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot d - \\frac{15}{16} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2} \\cdot n - \\sqrt{3} \\cdot n^{2} + \\sqrt{3} \\cdot n \\cdot d - \\frac{15}{16} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 1} \\cdot n + \\frac{7}{4} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot n + \\frac{79}{1024} \\cdot \\sqrt{\\frac{21}{8}} \\cdot n^{2} + \\frac{9}{4} \\cdot \\sqrt{\\frac{21}{8}} \\cdot n \\cdot d + \\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - d} + \\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{1}{4} \\cdot n \\cdot d + \\frac{1}{16} \\cdot n - d + \\frac{7}{8}} + \\sqrt{\\frac{1}{8} \\cdot n^{2} + \\frac{1}{4} \\cdot n + \\frac{3}{2}} + \\frac{1}{2} \\cdot \\sqrt{2} \\cdot n^{2} + \\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d + \\frac{3}{16} \\cdot n - \\frac{7}{8} \\cdot d - \\frac{1}{8}} + \\frac{7}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot n^{2} + \\frac{1}{8} \\cdot n - \\frac{1}{8}} + \\frac{7}{16} \\cdot \\sqrt{\\frac{7}{4}} \\cdot n^{2} + \\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n + \\frac{7}{4}} + \\sqrt{\\frac{1}{16} \\cdot n^{2} + \\frac{3}{16} \\cdot n - \\frac{7}{2}} - \\frac{455}{64} \\cdot n - \\frac{13}{64} \\cdot d - 18 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} + \\frac{9}{2} \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2} - \\frac{3}{2} \\cdot \\sqrt{3} \\cdot n + \\sqrt{\\frac{1}{4} \\cdot d + 1} - \\frac{6863}{1024} \\cdot \\sqrt{\\frac{21}{8}} \\cdot n - \\frac{7}{32} \\cdot \\sqrt{\\frac{21}{8}} \\cdot d - \\sqrt{2} \\cdot n + \\frac{9}{16} \\cdot \\sqrt{\\frac{7}{4}} \\cdot n + \\left[n > 0 and d > 0\\right] \\Rightarrow 3 \\cdot n^{2} \\cdot d + \\frac{5}{2} \\cdot n^{2} + 3 \\cdot n \\cdot d + \\frac{5}{2} \\cdot n + \\left[n > 0 and d <= 0\\right] \\Rightarrow \\frac{5}{2} \\cdot n^{2} + \\frac{5}{2} \\cdot n - \\left[n >= 11 and d >= 17\\right] \\Rightarrow \\frac{1}{32} \\cdot n^{2} \\cdot d - n^{2} - \\frac{9}{16} \\cdot n \\cdot d + 9 \\cdot n + \\frac{81}{32} \\cdot d - \\frac{81}{2} + \\left[n = 10 and d >= 17\\right] \\Rightarrow \\frac{1}{32} \\cdot d - \\frac{1}{2} - \\left[n >= 10 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - \\frac{23}{64} \\cdot d + \\frac{23}{4} + \\left[3 <= n <= 9 and d >= 17\\right] \\Rightarrow \\frac{7}{64} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{2} - \\left[n >= 11 and d >= 9\\right] \\Rightarrow \\frac{3}{16} \\cdot n^{2} - \\frac{53}{16} \\cdot n + \\frac{117}{8} + \\left[n = 10 and d >= 9\\right] \\Rightarrow \\frac{1}{4} - \\left[n >= 11 and d >= 9\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} - \\frac{79}{16} \\cdot n + \\frac{81}{8} + \\left[4 <= n <= 10 and d >= 9\\right] \\Rightarrow \\frac{3}{4} \\cdot n^{2} - \\frac{15}{4} \\cdot n + \\frac{9}{2} - \\left[n >= 4 and 9 <= d <= 16\\right] \\Rightarrow \\frac{13}{128} \\cdot n^{2} \\cdot d - \\frac{13}{16} \\cdot n^{2} - \\frac{65}{128} \\cdot n \\cdot d + \\frac{65}{16} \\cdot n + \\frac{39}{64} \\cdot d - \\frac{39}{8} + \\left[n >= 4 and d >= 17\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d - \\frac{97}{16} \\cdot n - d + \\frac{71}{8} + \\left[n = 3 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - d + 4 - \\left[n >= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{64} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{64} \\cdot n \\cdot d + \\frac{15}{4} \\cdot n + \\frac{9}{8} \\cdot d - 18 + \\left[2 <= n <= 8 and d >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot d - 4 - \\left[n >= 11 and d >= 17\\right] \\Rightarrow \\frac{3}{16} \\cdot n^{2} + \\frac{1}{8} \\cdot n \\cdot d - \\frac{87}{16} \\cdot n - d + \\frac{79}{4} + \\left[n = 10 and d >= 17\\right] \\Rightarrow d - \\frac{127}{8} + \\left[3 <= n <= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - 2 \\cdot n - d + 4 + \\left[n >= 11 and 9 <= d <= 16\\right] \\Rightarrow \\frac{3}{128} \\cdot n^{2} \\cdot d - \\frac{3}{16} \\cdot n^{2} - \\frac{55}{128} \\cdot n \\cdot d + \\frac{55}{16} \\cdot n + \\frac{63}{32} \\cdot d - \\frac{63}{4} + \\left[n = 10 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{128} \\cdot n^{2} \\cdot d - n^{2} - \\frac{17}{128} \\cdot n \\cdot d + \\frac{17}{16} \\cdot n + \\frac{9}{16} \\cdot d - \\frac{9}{2} - \\left[n >= 10 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{32} \\cdot n \\cdot d - n - \\frac{9}{32} \\cdot d + \\frac{9}{4} + \\left[n >= 10 and d >= 17\\right] \\Rightarrow \\frac{1}{4} \\cdot n - \\frac{9}{4} - \\left[n >= 3 and 9 <= d <= 16\\right] \\Rightarrow \\frac{7}{32} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n - \\frac{7}{16} \\cdot d + \\frac{7}{2} + \\left[n >= 3 and d >= 17\\right] \\Rightarrow \\frac{7}{4} \\cdot n - \\frac{7}{2} - \\left[n >= 11 and 0 < d <= 8\\right] \\Rightarrow \\frac{1}{8} \\cdot n^{2} - \\frac{9}{4} \\cdot n + \\frac{81}{8} + \\left[n = 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{17}{16} \\cdot n + \\frac{9}{2} - \\left[n >= 11 and 0 < d <= 8\\right] \\Rightarrow \\frac{7}{8} \\cdot n^{2} - \\frac{21}{4} \\cdot n + \\frac{21}{2} + \\left[4 <= n <= 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{13}{16} \\cdot n^{2} - \\frac{65}{16} \\cdot n + \\frac{39}{8} + \\left[n >= 3 and d >= 9\\right] \\Rightarrow 2 \\cdot n - 4 - \\left[n >= 10 and 0 < d <= 8\\right] \\Rightarrow \\frac{15}{8} \\cdot n - \\frac{37}{8} + \\left[3 <= n <= 9 and 0 < d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n - \\frac{7}{2} - 2 \\cdot \\left[n >= 3 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n \\cdot d - n - d + 2 + \\left[n >= 3 and d >= 17\\right] \\Rightarrow n - 2 - \\left[n >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{15}{128} \\cdot n^{2} \\cdot d - \\frac{15}{16} \\cdot n^{2} - \\frac{15}{128} \\cdot n \\cdot d + \\frac{15}{16} \\cdot n + \\frac{1}{8} \\cdot d - 1 + \\left[n >= 2 and d >= 17\\right] \\Rightarrow \\frac{15}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + 1 - \\left[n >= 10 and d >= 9\\right] \\Rightarrow n - \\frac{23}{8} + \\left[3 <= n <= 9 and d >= 9\\right] \\Rightarrow \\frac{7}{8} \\cdot n - \\frac{7}{4} - \\left[n >= 9 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{128} \\cdot n^{2} \\cdot d - n^{2} - \\frac{15}{128} \\cdot n \\cdot d + \\frac{15}{16} \\cdot n + \\frac{9}{16} \\cdot d - \\frac{9}{2} + \\left[2 <= n <= 8 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d - 1 + \\left[n >= 9 and d >= 17\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2} + \\left[2 <= n <= 8 and d >= 17\\right] \\Rightarrow 1 - \\left[n >= 9 and d >= 9\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{15}{16} \\cdot n + \\frac{9}{2} + \\left[2 <= n <= 8 and d >= 9\\right] \\Rightarrow 1 - \\left[n >= 2 and 2 <= d <= 8\\right] \\Rightarrow n^{2} \\cdot d + \\frac{1}{2} \\cdot n^{2} + n \\cdot d - \\frac{5}{2} \\cdot n + 2 + \\left[n >= 2 and d >= 9\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - \\frac{3}{2} \\cdot n + \\left[n = 1 and d >= 2\\right] \\Rightarrow n^{2} \\cdot d - n^{2} + n \\cdot d - n + \\left[d = 1 and n >= 2\\right] \\Rightarrow \\frac{3}{2} \\cdot n^{2} - \\frac{3}{2} \\cdot n + 2 + \\left[n >= 2 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n - \\left[(-1 + n) mod 8 = 0 and n >= 9 and d >= 9\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{7199}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{105}{128} + \\left[n >= 9 and d >= 9 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{9}{4} \\cdot n \\cdot d - \\frac{6863}{1024} \\cdot n - \\frac{7}{32} \\cdot d + \\frac{7}{8} + \\left[2 <= n <= 8 and d >= 9\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{71}{32} \\cdot n \\cdot d - \\frac{6607}{1024} \\cdot n + \\frac{1}{32} \\cdot d - \\frac{9}{8} + \\left[(-1 + n) mod 8 = 0 and n >= 9 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{471}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{3103}{1024} \\cdot n - \\frac{119}{128} + \\left[n >= 2 and 2 <= d <= 8 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d + \\frac{79}{1024} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{2767}{1024} \\cdot n - \\frac{7}{8} + \\left[n = 1 and d >= 9\\right] \\Rightarrow 4 \\cdot d - \\frac{15}{2} + \\left[n = 1 and 2 <= d <= 8\\right] \\Rightarrow \\frac{7}{4} \\cdot n^{2} \\cdot d - \\frac{7}{4} \\cdot n^{2} + \\frac{7}{4} \\cdot n \\cdot d - \\frac{7}{4} \\cdot n + \\left[d = 1 and (-1 + n) mod 8 = 0 and n >= 9\\right] \\Rightarrow \\frac{2263}{1024} \\cdot n^{2} - \\frac{1311}{1024} \\cdot n - \\frac{119}{128} + \\left[d = 1 and n >= 2 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{1871}{1024} \\cdot n^{2} - \\frac{975}{1024} \\cdot n - \\frac{7}{8} + \\left[(-1 + n) mod 8 = 0 and n >= 9 and d <= 0\\right] \\Rightarrow \\frac{1303}{1024} \\cdot n^{2} - \\frac{351}{1024} \\cdot n - \\frac{119}{128} + \\left[n >= 2 and d <= 0 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{911}{1024} \\cdot n^{2} - \\frac{15}{1024} \\cdot n - \\frac{7}{8} - \\left[10 <= n <= 17 and d > 0\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{17}{16} \\cdot n + \\frac{9}{2} + \\left[n >= 18 and d > 0\\right] \\Rightarrow n - \\frac{25}{2} - \\left[9 <= n <= 16 and d > 0\\right] \\Rightarrow \\frac{1}{8} \\cdot n - 1 + \\left[n >= 17 and d > 0\\right] \\Rightarrow 1 - 2 \\cdot \\left[n >= 10 and d > 0\\right] \\Rightarrow 7 + \\left[3 <= n <= 9 and d > 0\\right] \\Rightarrow n - 2 - \\left[11 <= n <= 17 and d > 0\\right] \\Rightarrow \\frac{1}{16} \\cdot n^{2} - \\frac{19}{16} \\cdot n + \\frac{45}{8} + \\left[n >= 18 and d > 0\\right] \\Rightarrow \\frac{7}{8} \\cdot n - \\frac{91}{8} - \\left[2 <= n <= 8\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + 1 + \\left[n >= 9\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - n + \\left[n = 1\\right] \\Rightarrow 2 - \\left[(-1 + n) mod 8 = 0 and n >= 18\\right] \\Rightarrow \\frac{105}{64} \\cdot n - \\frac{1141}{64} + \\left[n >= 18 and 8*floor((-1 + n)/8) <= -2 + n\\right] \\Rightarrow \\frac{49}{64} \\cdot n - \\frac{637}{64} + \\left[n = 17\\right] \\Rightarrow \\frac{161}{16} + \\left[11 <= n <= 16\\right] \\Rightarrow \\frac{7}{128} \\cdot n^{2} - \\frac{133}{128} \\cdot n + \\frac{315}{64} - \\left[10 <= n <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n - \\frac{9}{8} + \\left[n >= 17\\right] \\Rightarrow \\frac{7}{8} - \\left[10 <= n <= 16 and d > 0\\right] \\Rightarrow \\frac{1}{8} \\cdot n - \\frac{9}{8} + \\left[n >= 17 and d > 0\\right] \\Rightarrow \\frac{7}{8} - \\left[n >= 9 and d <= 0\\right] \\Rightarrow \\frac{1}{2} \\cdot n^{2} - \\frac{3}{8} \\cdot n + \\frac{5}{2} + \\left[n >= 2 and ((n >= 9 and d > 0) or n <= 8)\\right] \\Rightarrow \\frac{7}{16} \\cdot n^{2} + \\frac{9}{16} \\cdot n - 1 - \\left[n >= 10\\right] \\Rightarrow 7 + \\left[3 <= n <= 9\\right] \\Rightarrow n - 2 - \\left[9 <= n <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot n - 1 + \\left[n >= 17\\right] \\Rightarrow 1 + \\frac{7}{8} \\cdot \\sqrt{\\frac{21}{8}} - \\sqrt{\\frac{7}{4}} - \\frac{287}{16}",
+  "parallel": null,
+  "notes": [
+    "Barvinok runs inside a context initialized with `--approximation-method=scale`.",
+    "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.",
+    "Reuse distance is derived from the cardinality of the access-image inside each reuse interval window, without Denning recursion.",
+    "The compulsory-access term is modeled separately as total accesses minus warm reuses.",
+    "Filtered 92 DMD region(s) whose domains add equality or upper-bound constraints on named scaling dimensions.",
+    "Filtered 45 RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+  ]
+}

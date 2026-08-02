@@ -1,61 +1,78 @@
-# How much data does PolyBench move? A reuse-distance study
+# Principal contribution terms of PolyBench (reuse-distance study)
 
-Symbolic **data-movement (DMD)** analysis of the PolyBench kernels with the
-AutoLALA `dmd` analyzer (scale approximation, block size **8 elements** = one
-64-byte cache line for `f64`), under **two execution models** — single-shot and
-infinitely-repeating — plus empirical confirmation on real cache hardware.
+Symbolic **reuse-distance** analysis of the PolyBench kernels with the
+AutoLALA `dmd` analyzer at block size **8 elements** (= one 64-byte line of
+`f64`), under two execution models — single-shot and infinitely-repeating —
+with **exact Barvinok counting** wherever it completes (the scale
+approximation only as a marked fallback).
 
-**Read `REPORT.md` / `REPORT.pdf` for the full study.** In one paragraph:
+**The deliverable is `TERMS.md` / `TERMS.pdf`**: for every kernel, the full
+list of *principal contribution terms* — each reuse-distance bin as a pair
+(distance `V(n)`, population `M(n)`), both exact in the problem size — with
+each term's order, the cache range where it contributes misses
+(`C < V(n)` lines), its DMD contribution `M·√V`, and the source access it
+belongs to. `REPORT.md` is the older narrative study; where its numbers
+disagree with `TERMS.md`, `TERMS.md` (produced after the analyzer fixes
+below) supersedes it.
 
-> Each kernel's data movement grows like `coeff · N^d`, and the growth exponent
-> obeys one rule: `d = a + ½·ρ`, where `a` is how fast the access count grows and
-> `ρ` is how fast the largest **reuse distances** grow. The quantity `d − a =
-> ½ρ` — we call it the **headroom** — is how much faster data movement grows than
-> arithmetic, i.e. how much a locality transformation can recover. Across the
-> suite the headroom lands on exactly **0, ½, or 1**, splitting the kernels into
-> three classes: **1.0** (gemm/2mm/3mm/doitgen/floyd/jacobi-2d/seidel-2d — tile
-> for a factor of `N`), **0.5** (mvt/atax/bicg/gemver/gesummv/covariance/… —
-> interchange/fuse for a factor of `√N`), and **0.0** (syrk/syr2k/cholesky/lu/
-> trmm/trisolve — already local, no locality slack). Within a class, the leading
-> **coefficient** ranks kernels (3mm moves 3× gemm's data at the same `N^4`).
-> Switching to the infinite-repeat model **reveals hidden cross-invocation reuse**
-> in the kernels that stream their matrix once per pass (atax/bicg/gesummv rise
-> `N^2.5→N^3`, trisolve `N^2→N^3`). Confirmed on hardware: matmul's last-level
-> misses jump 50× at the cache-crossing size (tiling holds them 22× lower), mvt's
-> grow 3× (interchange caps them 4× lower), syrk's stay flat.
+## Analyzer fixes this iteration (all in `crates/dmd-core`)
+
+The isl/Barvinok arithmetic was always right; the *rendered* formulas were
+not. Six bugs fixed, each pinned by a unit test or suite self-check:
+
+1. **Floors dropped**: qpoly div factors rendered as plain rational affines
+   (`-floor((1+i)/8)+floor((7+i)/8)` printed `3/4`). New `Floor` node.
+2. **Double division**: isl `*_val` getters already divide; dividing by the
+   denominator again turned `floor((i+1)/8)` into `(i+1)/64`.
+3. **Guard dropped on single-piece renders**: masses evaluated garbage
+   outside their validity region; warm/compulsory now isl-side (pw add/sub).
+4. **Zero-count cells counted as warm**: distribution pieces now restricted
+   to the counted relation's domain.
+5. **`-1/k` coefficients lost their magnitude** in sums (`-1/2·x` → `-x`).
+6. **Set-dim monomials dropped**: isl terms expose exponents on param/set
+   slots only; querying `in` silently erased every iterator monomial, so
+   triangular values like `-7 + 2·i1` rendered as constants. This corrupted
+   all previous triangular-kernel distances.
+
+With the fixes and exact counting, **mass conservation holds to the
+integer** suite-wide (`verify_conservation.py`), and the reconstructed
+distance histograms match a brute-force trace interpreter bin-for-bin
+(`validate_bins.py`).
 
 ## Layout
 
 | path | contents |
 |------|----------|
-| `REPORT.md`, `REPORT.pdf` | the full write-up (definitions, the law, results, three classes, infinite-repeat, empirical confirmation) |
-| `run_analysis.py` | batch: tag → `mlir-extract` → `dmd-cli --json`, **both** single-shot and `--infinite-repeat`, over every kernel |
-| `analyze_math.py` | growth rates + leading coefficients (`d = a + ½ρ`, `DMD ≈ coeff·N^d`) |
-| `local_analysis.py` | finite-range analysis: local exponent `p(N)`, exact doubling cost, cache threshold `N* = √(C/c)` |
-| `results/<k>.json` | per-kernel `single` and `inf` records: RI/RD distributions, DMD formula, access counts |
-| `order_table.json` | computed growth rates, headroom, and coefficients for the 27 symbolic kernels, both models |
-| `confirm/` | empirical confirmation: `k.c` kernels, `sweep.py` cachegrind sweep, `cg.json`, `runtime.json` |
-| `dsl/<k>.dsl` | the extracted AutoLALA DSL fed to the analyzer |
+| `TERMS.md` / `TERMS.pdf` | **the deliverable**: per-kernel principal terms, orders, boundaries, attribution |
+| `terms_table.json` | machine-readable term table (exact polynomials on the anchor residue class) |
+| `REPORT.md`, `REPORT.pdf` | the older narrative study (see supersession note at top) |
+| `run_analysis.py` | batch: tag → `mlir-extract` → `dmd-cli --json`, exact-first with scale fallback, both models |
+| `terms_analysis.py` | RD bins → principal terms: levels, residue-class splits, ramp families; exact rational fits |
+| `build_terms_md.py` | renders `terms_table.json` → `TERMS.md` |
+| `qpeval.py` | exact evaluator for the analyzer's plain-formula syntax (piecewise, floor, mod) |
+| `schedule_map.py` | maps analyzer `sources` signatures back to DSL accesses |
+| `dsl_sim.py` | reference trace interpreter (ground truth) |
+| `verify_conservation.py` | suite gate: Σ bin masses = warm accesses, exactly |
+| `validate_bins.py` | bin-for-bin histogram check vs the trace interpreter |
+| `results/<k>.json` | per-kernel `single`/`inf` records (RI/RD bins with exact masses + sources) |
+| `dsl/<k>.dsl` | extracted AutoLALA DSL per kernel |
+| `exact/`, `confirm/` | older exact-trace simulator and cachegrind confirmation |
 
 ## Reproduce
 
 ```sh
-python3 run_analysis.py both --resume   # analyze all kernels, both models -> results/
-python3 analyze_math.py                 # growth rates + coefficients -> order_table.json
-python3 local_analysis.py               # local exponent / doubling cost / cache threshold N*
-cd confirm && python3 sweep.py          # cachegrind miss-scaling -> cg.json
-pandoc REPORT.md -o REPORT.pdf --pdf-engine=xelatex \
+python3 run_analysis.py both            # analyze all kernels -> results/
+python3 verify_conservation.py          # conservation gate (exact: to the integer)
+python3 validate_bins.py                # bin-level check vs brute-force trace
+python3 terms_analysis.py               # principal terms -> terms_table.json
+python3 build_terms_md.py               # -> TERMS.md
+pandoc TERMS.md -o TERMS.pdf --pdf-engine=xelatex \
    -V mainfont="DejaVu Serif" -V monofont="DejaVu Sans Mono"
 ```
 
-## Notes
-
-- **Block size is in elements, not bytes.** A 64-byte line holds 8 doubles, so we
-  use `--block-size 8` (16 would be single precision). This matches the legacy
-  AutoLALA run and the line cachegrind simulates.
-- **`--infinite-repeat`** is a new `dmd-cli` flag added on this branch (see the
-  report's implementation notes); it wraps the kernel in a two-pass outer loop and
-  keeps the steady-state (second-pass) reuse intervals.
-- Coverage: 48/53 programs analyze single-shot (up from 41 after the reduction-loop
-  extractor fix), 43 also under infinite-repeat. The rest are non-affine
-  (`adi`/`deriche`/`durbin`), over budget (`heat-3d`), or excluded (`fdtd-apml`).
+Notes: block size is in elements (8 doubles = one 64-byte line);
+`--infinite-repeat` wraps the kernel in a two-pass loop and keeps
+second-pass reuse intervals (steady state); `--approximation-method exact`
+is the default here — `scale` is only used where exact exceeds the operation
+budget, and such records are marked `method: scale`. Non-affine kernels
+(`adi`, `deriche`, `durbin`) remain out of scope.

@@ -1,0 +1,2533 @@
+{
+  "options": {
+    "block_size": 8,
+    "num_sets": 1,
+    "max_operations": 3000000000,
+    "approximation_method": "scale",
+    "infinite_repeat": false
+  },
+  "total_accesses_plain": "448 * d^2 * T + 24576 * d * T",
+  "total_accesses_latex": "448 \\cdot d^{2} \\cdot T + 24576 \\cdot d \\cdot T",
+  "warm_accesses_plain": "96 * d^2 * T + (3345/2) * d * T - d^2 - (93225/8) * T + (11/32) * d + [(-1 + d) mod 8 = 0 and T > 0 and d >= 17] => (119/8) * d * T - (1463/8) * T + [T > 0 and d >= 17 and 8*floor((-1 + d)/8) <= -2 + d] => 7 * d * T - 112 * T + [T > 0 and d >= 10] => (127/4) * d * T - (2159/8) * T + [d = 9 and T > 0] => (127/8) * T + [(-1 + d) mod 8 = 0 and T > 0 and d >= 9] => 119 * T + [T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d] => 56 * T + [T > 0 and d >= 17] => (191/8) * d * T - (2167/8) * T + [T > 0 and 10 <= d <= 16] => (127/64) * d^2 * T - (2159/64) * d * T + (1143/8) * T + [T > 0 and 9 <= d <= 16] => (889/64) * d^2 * T - (4445/32) * d * T + (889/4) * T + [T > 0 and d >= 17] => 119 * d * T - (1393/4) * T + [T > 0 and 10 <= d <= 16] => (63/8) * d * T - (567/8) * T + [T > 0 and d >= 17] => (441/8) * T + [T > 0 and 3 <= d <= 8] => 127 * d * T - 254 * T + [T > 0 and d >= 9] => 63 * T + [T > 0 and 9 <= d <= 16] => 8 * d * T - 64 * T + [T > 0 and d >= 17] => 64 * T + [T > 0 and 2 <= d <= 8] => 128 * d^2 * T + 8192 * d * T + 640 * T + [T > 0 and d >= 9] => 128 * d^2 * T + 8064 * d * T - 7296 * T + [d = 1 and T > 0] => 9086 * T + [T > 0 and 10 <= d <= 16] => 8 * d * T - 72 * T + [T > 0 and d >= 17] => 56 * T + 3 * [T > 0 and 9 <= d <= 16] => (63/8) * d * T - 63 * T + [T > 0 and d >= 17] => 63 * T + [T >= 2 and d >= 10] => (1/4) * d * T - (17/8) * T - d + (17/8) + [d = 9 and T >= 2] => (1/8) * d * T - T - d + 1 + [T >= 2 and 10 <= d <= 16] => (1/64) * d^2 * T - (17/64) * d * T - d^2 + (9/8) * T + (17/64) * d - (9/8) + [T >= 2 and d >= 17] => (1/8) * d * T - (9/8) * T - d + (9/8) + [T >= 2 and 9 <= d <= 16] => (7/64) * d^2 * T - (35/32) * d * T - (7/64) * d^2 + (7/4) * T + (35/32) * d - (7/4) + [T >= 2 and d >= 17] => (7/8) * d * T - (7/4) * T - (7/8) * d + (7/4) + [T >= 2 and 10 <= d <= 16] => (1/8) * d * T - (9/8) * T - d + (9/8) + [T >= 2 and d >= 17] => (7/8) * T - (7/8) + [T >= 2 and 9 <= d <= 16] => (1/8) * d * T - T - d + 1 + [T >= 2 and d >= 17] => T - 1 + [T > 0 and 9 <= d <= 16] => (6489/8) * d * T - 6489 * T + [T > 0 and d >= 17] => (63/8) * d * T + 6363 * T + [T > 0 and d >= 17] => (63/8) * d * T + 1197 * T + [T > 0 and 9 <= d <= 16] => (1323/8) * d * T - 1323 * T + 2 * [T > 0 and 9 <= d <= 16] => (63/4) * d * T - 126 * T + [T > 0 and d >= 17] => 126 * T + [T > 0 and 0 < d <= 8] => 6930 * T + [T > 0 and d >= 9] => 126 * T + [(-1 + d) mod 8 = 0 and T > 0 and d >= 9] => 224 * d^2 * T + 14256 * d * T + (113/512) * d^2 - 9200 * T - (71/64) * d + (24583/64) + [T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d] => 224 * d^2 * T + 14256 * d * T + (57/512) * d^2 - 9200 * T - (57/64) * d + 384 + [T > 0 and 2 <= d <= 8] => 224 * d^2 * T + 14224 * d * T - 8944 * T + 384 + [d = 1 and T > 0] => 5504 * T + 384 + 2 * [T > 0 and 9 <= d <= 16] => (31/4) * d * T - 62 * T + [T > 0 and d >= 17] => 62 * T + 6 * [T > 0 and 9 <= d <= 16] => (1/8) * d * T - T + [T > 0 and d >= 17] => T + [T > 0 and 9 <= d <= 16] => 16 * d^2 * T + 808 * d * T - 7488 * T + [T > 0 and d >= 17] => 128 * d * T + 7488 * T + [T > 0 and 9 <= d <= 16] => 56 * d * T - 448 * T + [T > 0 and d >= 17] => 448 * T - (2071/4)",
+  "warm_accesses_latex": "96 \\cdot d^{2} \\cdot T + \\frac{3345}{2} \\cdot d \\cdot T - d^{2} - \\frac{93225}{8} \\cdot T + \\frac{11}{32} \\cdot d + \\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 17\\right] \\Rightarrow \\frac{119}{8} \\cdot d \\cdot T - \\frac{1463}{8} \\cdot T + \\left[T > 0 and d >= 17 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 7 \\cdot d \\cdot T - 112 \\cdot T + \\left[T > 0 and d >= 10\\right] \\Rightarrow \\frac{127}{4} \\cdot d \\cdot T - \\frac{2159}{8} \\cdot T + \\left[d = 9 and T > 0\\right] \\Rightarrow \\frac{127}{8} \\cdot T + \\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 9\\right] \\Rightarrow 119 \\cdot T + \\left[T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 56 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{191}{8} \\cdot d \\cdot T - \\frac{2167}{8} \\cdot T + \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow \\frac{127}{64} \\cdot d^{2} \\cdot T - \\frac{2159}{64} \\cdot d \\cdot T + \\frac{1143}{8} \\cdot T + \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{889}{64} \\cdot d^{2} \\cdot T - \\frac{4445}{32} \\cdot d \\cdot T + \\frac{889}{4} \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 119 \\cdot d \\cdot T - \\frac{1393}{4} \\cdot T + \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - \\frac{567}{8} \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{441}{8} \\cdot T + \\left[T > 0 and 3 <= d <= 8\\right] \\Rightarrow 127 \\cdot d \\cdot T - 254 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 63 \\cdot T + \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 8 \\cdot d \\cdot T - 64 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 64 \\cdot T + \\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 128 \\cdot d^{2} \\cdot T + 8192 \\cdot d \\cdot T + 640 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 128 \\cdot d^{2} \\cdot T + 8064 \\cdot d \\cdot T - 7296 \\cdot T + \\left[d = 1 and T > 0\\right] \\Rightarrow 9086 \\cdot T + \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow 8 \\cdot d \\cdot T - 72 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 56 \\cdot T + 3 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - 63 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 63 \\cdot T + \\left[T >= 2 and d >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot d \\cdot T - \\frac{17}{8} \\cdot T - d + \\frac{17}{8} + \\left[d = 9 and T >= 2\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T - d + 1 + \\left[T >= 2 and 10 <= d <= 16\\right] \\Rightarrow \\frac{1}{64} \\cdot d^{2} \\cdot T - \\frac{17}{64} \\cdot d \\cdot T - d^{2} + \\frac{9}{8} \\cdot T + \\frac{17}{64} \\cdot d - \\frac{9}{8} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - \\frac{9}{8} \\cdot T - d + \\frac{9}{8} + \\left[T >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{7}{64} \\cdot d^{2} \\cdot T - \\frac{35}{32} \\cdot d \\cdot T - \\frac{7}{64} \\cdot d^{2} + \\frac{7}{4} \\cdot T + \\frac{35}{32} \\cdot d - \\frac{7}{4} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{7}{8} \\cdot d \\cdot T - \\frac{7}{4} \\cdot T - \\frac{7}{8} \\cdot d + \\frac{7}{4} + \\left[T >= 2 and 10 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - \\frac{9}{8} \\cdot T - d + \\frac{9}{8} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{7}{8} \\cdot T - \\frac{7}{8} + \\left[T >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T - d + 1 + \\left[T >= 2 and d >= 17\\right] \\Rightarrow T - 1 + \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{6489}{8} \\cdot d \\cdot T - 6489 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T + 6363 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T + 1197 \\cdot T + \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1323}{8} \\cdot d \\cdot T - 1323 \\cdot T + 2 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{4} \\cdot d \\cdot T - 126 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 126 \\cdot T + \\left[T > 0 and 0 < d <= 8\\right] \\Rightarrow 6930 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 126 \\cdot T + \\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 9\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{113}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{71}{64} \\cdot d + \\frac{24583}{64} + \\left[T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{57}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{57}{64} \\cdot d + 384 + \\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14224 \\cdot d \\cdot T - 8944 \\cdot T + 384 + \\left[d = 1 and T > 0\\right] \\Rightarrow 5504 \\cdot T + 384 + 2 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{31}{4} \\cdot d \\cdot T - 62 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 62 \\cdot T + 6 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T + \\left[T > 0 and d >= 17\\right] \\Rightarrow T + \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 16 \\cdot d^{2} \\cdot T + 808 \\cdot d \\cdot T - 7488 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 128 \\cdot d \\cdot T + 7488 \\cdot T + \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 56 \\cdot d \\cdot T - 448 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 448 \\cdot T - \\frac{2071}{4}",
+  "compulsory_accesses_plain": "352 * d^2 * T + (45807/2) * d * T + (1/8) * d^2 + (93225/8) * T - (11/32) * d - [(-1 + d) mod 8 = 0 and T > 0 and d >= 17] => (119/8) * d * T - (1463/8) * T + [T > 0 and d >= 17 and 8*floor((-1 + d)/8) <= -2 + d] => 7 * d * T - 112 * T - [T > 0 and d >= 10] => (127/4) * d * T - (2159/8) * T + [d = 9 and T > 0] => (127/8) * T - [(-1 + d) mod 8 = 0 and T > 0 and d >= 9] => 119 * T + [T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d] => 56 * T - [T > 0 and d >= 17] => (191/8) * d * T - (2167/8) * T + [T > 0 and 10 <= d <= 16] => (127/64) * d^2 * T - (2159/64) * d * T + (1143/8) * T - [T > 0 and 9 <= d <= 16] => (889/64) * d^2 * T - (4445/32) * d * T + (889/4) * T + [T > 0 and d >= 17] => 119 * d * T - (1393/4) * T - [T > 0 and 10 <= d <= 16] => (63/8) * d * T - (567/8) * T + [T > 0 and d >= 17] => (441/8) * T - [T > 0 and 3 <= d <= 8] => 127 * d * T - 254 * T + [T > 0 and d >= 9] => 63 * T - [T > 0 and 9 <= d <= 16] => 8 * d * T - 64 * T + [T > 0 and d >= 17] => 64 * T - [T > 0 and 2 <= d <= 8] => 128 * d^2 * T + 8192 * d * T + 640 * T + [T > 0 and d >= 9] => 128 * d^2 * T + 8064 * d * T - 7296 * T + [d = 1 and T > 0] => 9086 * T - [T > 0 and 10 <= d <= 16] => 8 * d * T - 72 * T + [T > 0 and d >= 17] => 56 * T - 3 * [T > 0 and 9 <= d <= 16] => (63/8) * d * T - 63 * T + [T > 0 and d >= 17] => 63 * T - [T >= 2 and d >= 10] => (1/4) * d * T - (17/8) * T - d + (17/8) + [d = 9 and T >= 2] => (1/8) * d * T - T - d + 1 - [T >= 2 and 10 <= d <= 16] => (1/64) * d^2 * T - (17/64) * d * T - d^2 + (9/8) * T + (17/64) * d - (9/8) + [T >= 2 and d >= 17] => (1/8) * d * T - (9/8) * T - d + (9/8) - [T >= 2 and 9 <= d <= 16] => (7/64) * d^2 * T - (35/32) * d * T - (7/64) * d^2 + (7/4) * T + (35/32) * d - (7/4) + [T >= 2 and d >= 17] => (7/8) * d * T - (7/4) * T - (7/8) * d + (7/4) - [T >= 2 and 10 <= d <= 16] => (1/8) * d * T - (9/8) * T - d + (9/8) + [T >= 2 and d >= 17] => (7/8) * T - (7/8) - [T >= 2 and 9 <= d <= 16] => (1/8) * d * T - T - d + 1 + [T >= 2 and d >= 17] => T - 1 - [T > 0 and 9 <= d <= 16] => (6489/8) * d * T - 6489 * T + [T > 0 and d >= 17] => (63/8) * d * T + 6363 * T - [T > 0 and d >= 17] => (63/8) * d * T + 1197 * T + [T > 0 and 9 <= d <= 16] => (1323/8) * d * T - 1323 * T - 2 * [T > 0 and 9 <= d <= 16] => (63/4) * d * T - 126 * T + [T > 0 and d >= 17] => 126 * T - [T > 0 and 0 < d <= 8] => 6930 * T + [T > 0 and d >= 9] => 126 * T - [(-1 + d) mod 8 = 0 and T > 0 and d >= 9] => 224 * d^2 * T + 14256 * d * T + (113/512) * d^2 - 9200 * T - (71/64) * d + (24583/64) + [T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d] => 224 * d^2 * T + 14256 * d * T + (57/512) * d^2 - 9200 * T - (57/64) * d + 384 + [T > 0 and 2 <= d <= 8] => 224 * d^2 * T + 14224 * d * T - 8944 * T + 384 + [d = 1 and T > 0] => 5504 * T + 384 - 2 * [T > 0 and 9 <= d <= 16] => (31/4) * d * T - 62 * T + [T > 0 and d >= 17] => 62 * T - 6 * [T > 0 and 9 <= d <= 16] => (1/8) * d * T - T + [T > 0 and d >= 17] => T - [T > 0 and 9 <= d <= 16] => 16 * d^2 * T + 808 * d * T - 7488 * T + [T > 0 and d >= 17] => 128 * d * T + 7488 * T - [T > 0 and 9 <= d <= 16] => 56 * d * T - 448 * T + [T > 0 and d >= 17] => 448 * T + (2071/4)",
+  "compulsory_accesses_latex": "352 \\cdot d^{2} \\cdot T + \\frac{45807}{2} \\cdot d \\cdot T + \\frac{1}{8} \\cdot d^{2} + \\frac{93225}{8} \\cdot T - \\frac{11}{32} \\cdot d - \\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 17\\right] \\Rightarrow \\frac{119}{8} \\cdot d \\cdot T - \\frac{1463}{8} \\cdot T + \\left[T > 0 and d >= 17 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 7 \\cdot d \\cdot T - 112 \\cdot T - \\left[T > 0 and d >= 10\\right] \\Rightarrow \\frac{127}{4} \\cdot d \\cdot T - \\frac{2159}{8} \\cdot T + \\left[d = 9 and T > 0\\right] \\Rightarrow \\frac{127}{8} \\cdot T - \\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 9\\right] \\Rightarrow 119 \\cdot T + \\left[T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 56 \\cdot T - \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{191}{8} \\cdot d \\cdot T - \\frac{2167}{8} \\cdot T + \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow \\frac{127}{64} \\cdot d^{2} \\cdot T - \\frac{2159}{64} \\cdot d \\cdot T + \\frac{1143}{8} \\cdot T - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{889}{64} \\cdot d^{2} \\cdot T - \\frac{4445}{32} \\cdot d \\cdot T + \\frac{889}{4} \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 119 \\cdot d \\cdot T - \\frac{1393}{4} \\cdot T - \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - \\frac{567}{8} \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{441}{8} \\cdot T - \\left[T > 0 and 3 <= d <= 8\\right] \\Rightarrow 127 \\cdot d \\cdot T - 254 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 63 \\cdot T - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 8 \\cdot d \\cdot T - 64 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 64 \\cdot T - \\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 128 \\cdot d^{2} \\cdot T + 8192 \\cdot d \\cdot T + 640 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 128 \\cdot d^{2} \\cdot T + 8064 \\cdot d \\cdot T - 7296 \\cdot T + \\left[d = 1 and T > 0\\right] \\Rightarrow 9086 \\cdot T - \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow 8 \\cdot d \\cdot T - 72 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 56 \\cdot T - 3 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - 63 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 63 \\cdot T - \\left[T >= 2 and d >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot d \\cdot T - \\frac{17}{8} \\cdot T - d + \\frac{17}{8} + \\left[d = 9 and T >= 2\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T - d + 1 - \\left[T >= 2 and 10 <= d <= 16\\right] \\Rightarrow \\frac{1}{64} \\cdot d^{2} \\cdot T - \\frac{17}{64} \\cdot d \\cdot T - d^{2} + \\frac{9}{8} \\cdot T + \\frac{17}{64} \\cdot d - \\frac{9}{8} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - \\frac{9}{8} \\cdot T - d + \\frac{9}{8} - \\left[T >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{7}{64} \\cdot d^{2} \\cdot T - \\frac{35}{32} \\cdot d \\cdot T - \\frac{7}{64} \\cdot d^{2} + \\frac{7}{4} \\cdot T + \\frac{35}{32} \\cdot d - \\frac{7}{4} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{7}{8} \\cdot d \\cdot T - \\frac{7}{4} \\cdot T - \\frac{7}{8} \\cdot d + \\frac{7}{4} - \\left[T >= 2 and 10 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - \\frac{9}{8} \\cdot T - d + \\frac{9}{8} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{7}{8} \\cdot T - \\frac{7}{8} - \\left[T >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T - d + 1 + \\left[T >= 2 and d >= 17\\right] \\Rightarrow T - 1 - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{6489}{8} \\cdot d \\cdot T - 6489 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T + 6363 \\cdot T - \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T + 1197 \\cdot T + \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1323}{8} \\cdot d \\cdot T - 1323 \\cdot T - 2 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{4} \\cdot d \\cdot T - 126 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 126 \\cdot T - \\left[T > 0 and 0 < d <= 8\\right] \\Rightarrow 6930 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 126 \\cdot T - \\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 9\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{113}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{71}{64} \\cdot d + \\frac{24583}{64} + \\left[T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{57}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{57}{64} \\cdot d + 384 + \\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14224 \\cdot d \\cdot T - 8944 \\cdot T + 384 + \\left[d = 1 and T > 0\\right] \\Rightarrow 5504 \\cdot T + 384 - 2 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{31}{4} \\cdot d \\cdot T - 62 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 62 \\cdot T - 6 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T + \\left[T > 0 and d >= 17\\right] \\Rightarrow T - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 16 \\cdot d^{2} \\cdot T + 808 \\cdot d \\cdot T - 7488 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 128 \\cdot d \\cdot T + 7488 \\cdot T - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 56 \\cdot d \\cdot T - 448 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 448 \\cdot T + \\frac{2071}{4}",
+  "timestamp_space": "[T, d, QT, KT, VT, OT] -> { [t0 = 0, c, t1 = 3, i, t2 = 0, j, t3 = 0, k, t4 = 3] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d; [t0 = 0, c, t1 = 3, i, t2 = 0, j, t3 = 0, k, t4 = 2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d; [t0 = 0, c, t1 = 2, i, t2 = 0, j, t3 = 0, k, t4 = 2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d; [t0 = 0, c, t1 = 1, i, t2 = 0, j, t3 = 0, k, t4 = 2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d; [t0 = 0, c, t1 = 0, i, t2 = 0, j, t3 = 0, k, t4 = 2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d; [t0 = 0, c, t1 = 3, i, t2 = 0, j, t3 = 0, k, t4 = 1] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d; [t0 = 0, c, t1 = 2, i, t2 = 0, j, t3 = 0, k, t4 = 1] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d; [t0 = 0, c, t1 = 1, i, t2 = 0, j, t3 = 0, k, t4 = 1] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d; [t0 = 0, c, t1 = 0, i, t2 = 0, j, t3 = 0, k, t4 = 1] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d; [t0 = 0, c, t1 = 3, i, t2 = 0, j, t3 = 0, k, t4 = 0] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d; [t0 = 0, c, t1 = 2, i, t2 = 0, j, t3 = 0, k, t4 = 0] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d; [t0 = 0, c, t1 = 1, i, t2 = 0, j, t3 = 0, k, t4 = 0] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d; [t0 = 0, c, t1 = 0, i, t2 = 0, j, t3 = 0, k, t4 = 0] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d }",
+  "access_map": "[T, d, QT, KT, VT, OT] -> { [t0 = 0, c, t1 = 2, i, t2 = 0, j, t3 = 0, k, t4 = 2] -> [5, 64c + i, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 0, c, t1 = 1, i, t2 = 0, j, t3 = 0, k, t4 = 2] -> [5, 64c + i, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 0, c, t1 = 3, i, t2 = 0, j, t3 = 0, k, t4 = 1] -> [2, 64c + i, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 0, c, t1 = 3, i, t2 = 0, j, t3 = 0, k, t4 = 0] -> [1, 64c + i, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d and -7 + j <= 8o2 <= j; [t0 = 0, c, t1 = 2, i, t2 = 0, j, t3 = 0, k, t4 = 0] -> [0, 64c + i, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d and -7 + j <= 8o2 <= j; [t0 = 0, c, t1 = 0, i, t2 = 0, j, t3 = 0, k, t4 = 0] -> [0, 64c + i, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 0, c, t1 = 1, i, t2 = 0, j, t3 = 0, k, t4 = 1] -> [2, 64c + j, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 0, c, t1 = 0, i, t2 = 0, j, t3 = 0, k, t4 = 1] -> [1, 64c + j, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 0, c, t1 = 0, i, t2 = 0, j, t3 = 0, k, t4 = 2] -> [3, i, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d and -7 + j <= 8o2 <= j; [t0 = 0, c, t1 = 1, i, t2 = 0, j, t3 = 0, k, t4 = 0] -> [3, i, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j <= 63 and 0 <= k < d and -7 + j <= 8o2 <= j; [t0 = 0, c, t1 = 3, i, t2 = 0, j, t3 = 0, k, t4 = 3] -> [4, j, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 0, c, t1 = 3, i, t2 = 0, j, t3 = 0, k, t4 = 2] -> [4, j, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d and -7 + k <= 8o2 <= k; [t0 = 0, c, t1 = 2, i, t2 = 0, j, t3 = 0, k, t4 = 1] -> [4, j, o2] : 0 <= c < T and 0 <= i <= 63 and 0 <= j < d and 0 <= k < d and -7 + k <= 8o2 <= k }",
+  "ri_distribution": [
+    {
+      "value_plain": "448 * d^2 + 12264 * d + 5",
+      "value_latex": "448 \\cdot d^{2} + 12264 \\cdot d + 5",
+      "mass_plain": "128 * T - 128",
+      "mass_latex": "128 \\cdot T - 128",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0",
+          "count_plain": "128 * T - 128",
+          "count_latex": "128 \\cdot T - 128"
+        }
+      ]
+    },
+    {
+      "value_plain": "448 * d^2 + 12264 * d + (61/8)",
+      "value_latex": "448 \\cdot d^{2} + 12264 \\cdot d + \\frac{61}{8}",
+      "mass_plain": "384 * T - 384",
+      "mass_latex": "384 \\cdot T - 384",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0",
+          "count_plain": "384 * T - 384",
+          "count_latex": "384 \\cdot T - 384"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * d^2 - (211/8)",
+      "value_latex": "4 \\cdot d^{2} - \\frac{211}{8}",
+      "mass_plain": "(63/8) * d^2 * T - 126 * d * T",
+      "mass_latex": "\\frac{63}{8} \\cdot d^{2} \\cdot T - 126 \\cdot d \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(63/8) * d^2 * T - 126 * d * T",
+          "count_latex": "\\frac{63}{8} \\cdot d^{2} \\cdot T - 126 \\cdot d \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * d^2 - 29",
+      "value_latex": "4 \\cdot d^{2} - 29",
+      "mass_plain": "63 * d * T",
+      "mass_latex": "63 \\cdot d \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "63 * d * T",
+          "count_latex": "63 \\cdot d \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "[T > 0 and 2 <= d <= 8] => 64 * d^2 * T + 8192 * d * T + 704 * T + [T > 0 and d >= 9] => 64 * d^2 * T + 8128 * d * T - 7296 * T + [d = 1 and T > 0] => 9086 * T",
+      "mass_latex": "\\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 64 \\cdot d^{2} \\cdot T + 8192 \\cdot d \\cdot T + 704 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 64 \\cdot d^{2} \\cdot T + 8128 \\cdot d \\cdot T - 7296 \\cdot T + \\left[d = 1 and T > 0\\right] \\Rightarrow 9086 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "64 * d^2 * T + 8128 * d * T - 7296 * T",
+          "count_latex": "64 \\cdot d^{2} \\cdot T + 8128 \\cdot d \\cdot T - 7296 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "3 * d^2 - (147/8)",
+      "value_latex": "3 \\cdot d^{2} - \\frac{147}{8}",
+      "mass_plain": "(63/8) * d^2 * T - 126 * d * T",
+      "mass_latex": "\\frac{63}{8} \\cdot d^{2} \\cdot T - 126 \\cdot d \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(63/8) * d^2 * T - 126 * d * T",
+          "count_latex": "\\frac{63}{8} \\cdot d^{2} \\cdot T - 126 \\cdot d \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "3 * d^2 - 21",
+      "value_latex": "3 \\cdot d^{2} - 21",
+      "mass_plain": "63 * d * T",
+      "mass_latex": "63 \\cdot d \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "63 * d * T",
+          "count_latex": "63 \\cdot d \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "3 * d^2 + 24577 * d - 30",
+      "value_latex": "3 \\cdot d^{2} + 24577 \\cdot d - 30",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d >= 9",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "192 * d - (147/8)",
+      "value_latex": "192 \\cdot d - \\frac{147}{8}",
+      "mass_plain": "1008 * d * T - 16128 * T",
+      "mass_latex": "1008 \\cdot d \\cdot T - 16128 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "1008 * d * T - 16128 * T",
+          "count_latex": "1008 \\cdot d \\cdot T - 16128 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "192 * d - 21",
+      "value_latex": "192 \\cdot d - 21",
+      "mass_plain": "8064 * T",
+      "mass_latex": "8064 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "8064 * T",
+          "count_latex": "8064 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * d^2 + 24576 * d - 30",
+      "value_latex": "4 \\cdot d^{2} + 24576 \\cdot d - 30",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d >= 9",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "12264 * d + 1",
+      "value_latex": "12264 \\cdot d + 1",
+      "mass_plain": "128 * T",
+      "mass_latex": "128 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d > 0",
+          "count_plain": "128 * T",
+          "count_latex": "128 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "4",
+      "value_latex": "4",
+      "mass_plain": "[T > 0 and 2 <= d <= 8] => 64 * d^2 * T - 64 * T + [T > 0 and d >= 9] => 64 * d^2 * T - 64 * d * T + [d = 1 and T > 0] => T",
+      "mass_latex": "\\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 64 \\cdot d^{2} \\cdot T - 64 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 64 \\cdot d^{2} \\cdot T - 64 \\cdot d \\cdot T + \\left[d = 1 and T > 0\\right] \\Rightarrow T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "64 * d^2 * T - 64 * d * T",
+          "count_latex": "64 \\cdot d^{2} \\cdot T - 64 \\cdot d \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(21/8)",
+      "value_latex": "\\frac{21}{8}",
+      "mass_plain": "[T > 0 and d >= 9] => 168 * d^2 * T + 14256 * d * T + (1/8) * d^2 - 8376 * T - d + 384 + [T > 0 and 2 <= d <= 8] => 168 * d^2 * T + 14224 * d * T - 8120 * T + 384 + [d = 1 and T > 0] => 6272 * T + 384",
+      "mass_latex": "\\left[T > 0 and d >= 9\\right] \\Rightarrow 168 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{1}{8} \\cdot d^{2} - 8376 \\cdot T - d + 384 + \\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 168 \\cdot d^{2} \\cdot T + 14224 \\cdot d \\cdot T - 8120 \\cdot T + 384 + \\left[d = 1 and T > 0\\right] \\Rightarrow 6272 \\cdot T + 384",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "168 * d^2 * T + 14256 * d * T + (1/8) * d^2 - 8376 * T - d + 384",
+          "count_latex": "168 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{1}{8} \\cdot d^{2} - 8376 \\cdot T - d + 384"
+        }
+      ]
+    },
+    {
+      "value_plain": "12099 * d - (147/8)",
+      "value_latex": "12099 \\cdot d - \\frac{147}{8}",
+      "mass_plain": "(1/8) * d * T - 2 * T",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(1/8) * d * T - 2 * T",
+          "count_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "3 * d - (147/8)",
+      "value_latex": "3 \\cdot d - \\frac{147}{8}",
+      "mass_plain": "8 * d^2 * T + 872 * d * T - 16000 * T",
+      "mass_latex": "8 \\cdot d^{2} \\cdot T + 872 \\cdot d \\cdot T - 16000 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "8 * d^2 * T + 872 * d * T - 16000 * T",
+          "count_latex": "8 \\cdot d^{2} \\cdot T + 872 \\cdot d \\cdot T - 16000 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "189 * d^2 + 3 * d - (147/8)",
+      "value_latex": "189 \\cdot d^{2} + 3 \\cdot d - \\frac{147}{8}",
+      "mass_plain": "(1/8) * d * T - 2 * T",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(1/8) * d * T - 2 * T",
+          "count_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * d - (49/2)",
+      "value_latex": "4 \\cdot d - \\frac{49}{2}",
+      "mass_plain": "8 * d^2 * T - 136 * d * T + 128 * T",
+      "mass_latex": "8 \\cdot d^{2} \\cdot T - 136 \\cdot d \\cdot T + 128 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "8 * d^2 * T - 136 * d * T + 128 * T",
+          "count_latex": "8 \\cdot d^{2} \\cdot T - 136 \\cdot d \\cdot T + 128 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(7/2)",
+      "value_latex": "\\frac{7}{2}",
+      "mass_plain": "56 * d^2 * T - 56 * T",
+      "mass_latex": "56 \\cdot d^{2} \\cdot T - 56 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 2",
+          "count_plain": "56 * d^2 * T - 56 * T",
+          "count_latex": "56 \\cdot d^{2} \\cdot T - 56 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "24387 * d - 21",
+      "value_latex": "24387 \\cdot d - 21",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "12264 * d + (29/8)",
+      "value_latex": "12264 \\cdot d + \\frac{29}{8}",
+      "mass_plain": "384 * T",
+      "mass_latex": "384 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d > 0",
+          "count_plain": "384 * T",
+          "count_latex": "384 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "12099 * d - 21",
+      "value_latex": "12099 \\cdot d - 21",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "3 * d - 21",
+      "value_latex": "3 \\cdot d - 21",
+      "mass_plain": "64 * d * T + 8000 * T",
+      "mass_latex": "64 \\cdot d \\cdot T + 8000 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "64 * d * T + 8000 * T",
+          "count_latex": "64 \\cdot d \\cdot T + 8000 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * d - 28",
+      "value_latex": "4 \\cdot d - 28",
+      "mass_plain": "64 * d * T - 64 * T",
+      "mass_latex": "64 \\cdot d \\cdot T - 64 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "64 * d * T - 64 * T",
+          "count_latex": "64 \\cdot d \\cdot T - 64 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "444 * d^2 + 12291 * d - 22",
+      "value_latex": "444 \\cdot d^{2} + 12291 \\cdot d - 22",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "192 * d^2 + 12480 * d - 22",
+      "value_latex": "192 \\cdot d^{2} + 12480 \\cdot d - 22",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "189 * d^2 + 12291 * d - 21",
+      "value_latex": "189 \\cdot d^{2} + 12291 \\cdot d - 21",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "4 * d^2 - d - 20",
+      "value_latex": "4 \\cdot d^{2} - d - 20",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "444 * d^2 + 3 * d - 21",
+      "value_latex": "444 \\cdot d^{2} + 3 \\cdot d - 21",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "3 * d^2 - 20",
+      "value_latex": "3 \\cdot d^{2} - 20",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "189 * d^2 + 3 * d - 21",
+      "value_latex": "189 \\cdot d^{2} + 3 \\cdot d - 21",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "192 * d^2 + 192 * d - 21",
+      "value_latex": "192 \\cdot d^{2} + 192 \\cdot d - 21",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "1",
+      "value_latex": "1",
+      "mass_plain": "64 * d^2 * T",
+      "mass_latex": "64 \\cdot d^{2} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d > 0",
+          "count_plain": "64 * d^2 * T",
+          "count_latex": "64 \\cdot d^{2} \\cdot T"
+        }
+      ]
+    }
+  ],
+  "rd_distribution": [
+    {
+      "value_plain": "(1/8) * d^2 + (161/4) * d + 512",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{161}{4} \\cdot d + 512",
+      "mass_plain": "62 * T - 62",
+      "mass_latex": "62 \\cdot T - 62",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0 and 0 < i <= 62",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 48 * d + 512",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + 512",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (313/8) * d + 513",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{313}{8} \\cdot d + 513",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (161/4) * d + (4117/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{161}{4} \\cdot d + \\frac{4117}{8}",
+      "mass_plain": "372 * T - 372",
+      "mass_latex": "372 \\cdot T - 372",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0 and 0 < i <= 62",
+          "count_plain": "6 * T - 6",
+          "count_latex": "6 \\cdot T - 6"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 48 * d + (4117/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + \\frac{4117}{8}",
+      "mass_plain": "6 * T - 6",
+      "mass_latex": "6 \\cdot T - 6",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0",
+          "count_plain": "6 * T - 6",
+          "count_latex": "6 \\cdot T - 6"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (321/8) * d + 513",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{321}{8} \\cdot d + 513",
+      "mass_plain": "62 * T - 62",
+      "mass_latex": "62 \\cdot T - 62",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0 and 0 < i <= 62",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (383/8) * d + 513",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{383}{8} \\cdot d + 513",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (129/4) * d + (4125/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{4125}{8}",
+      "mass_plain": "6 * T - 6",
+      "mass_latex": "6 \\cdot T - 6",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and d > 0 and 8 <= j <= 48",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 32 * d + 514",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 514",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d > 0",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d + (35/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{35}{8}",
+      "mass_plain": "(127/32) * d^2 * T - (6223/64) * d * T + (2159/4) * T",
+      "mass_latex": "\\frac{127}{32} \\cdot d^{2} \\cdot T - \\frac{6223}{64} \\cdot d \\cdot T + \\frac{2159}{4} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(127/32) * d^2 * T - (6223/64) * d * T + (2159/4) * T",
+          "count_latex": "\\frac{127}{32} \\cdot d^{2} \\cdot T - \\frac{6223}{64} \\cdot d \\cdot T + \\frac{2159}{4} \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d + (27/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{27}{8}",
+      "mass_plain": "[(-1 + d) mod 8 = 0 and T > 0 and d >= 17] => (119/8) * d * T - (1463/8) * T + [T > 0 and d >= 17 and 8*floor((-1 + d)/8) <= -2 + d] => 7 * d * T - 112 * T",
+      "mass_latex": "\\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 17\\right] \\Rightarrow \\frac{119}{8} \\cdot d \\cdot T - \\frac{1463}{8} \\cdot T + \\left[T > 0 and d >= 17 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 7 \\cdot d \\cdot T - 112 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and (b) mod 8 = 0 and T > 0 and 8 <= b <= -9 + d",
+          "count_plain": "119 * T",
+          "count_latex": "119 \\cdot T"
+        },
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and 8 <= b <= -9 + d and 8*floor((-1 + d)/8) <= -2 + d",
+          "count_plain": "56 * T",
+          "count_latex": "56 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d + (27/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{27}{8}",
+      "mass_plain": "(381/32) * d^2 * T - (3429/16) * d * T + 381 * T",
+      "mass_latex": "\\frac{381}{32} \\cdot d^{2} \\cdot T - \\frac{3429}{16} \\cdot d \\cdot T + 381 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(381/32) * d^2 * T - (3429/16) * d * T + 381 * T",
+          "count_latex": "\\frac{381}{32} \\cdot d^{2} \\cdot T - \\frac{3429}{16} \\cdot d \\cdot T + 381 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d + (19/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{19}{8}",
+      "mass_plain": "(441/64) * d * T - (441/4) * T",
+      "mass_latex": "\\frac{441}{64} \\cdot d \\cdot T - \\frac{441}{4} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and 8 <= b <= -9 + d",
+          "count_plain": "(441/8) * T",
+          "count_latex": "\\frac{441}{8} \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d + (7/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{4}",
+      "mass_plain": "[T > 0 and d >= 10] => (127/4) * d * T - (2159/8) * T + [d = 9 and T > 0] => (127/8) * T",
+      "mass_latex": "\\left[T > 0 and d >= 10\\right] \\Rightarrow \\frac{127}{4} \\cdot d \\cdot T - \\frac{2159}{8} \\cdot T + \\left[d = 9 and T > 0\\right] \\Rightarrow \\frac{127}{8} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 10",
+          "count_plain": "(127/4) * d * T - (2159/8) * T",
+          "count_latex": "\\frac{127}{4} \\cdot d \\cdot T - \\frac{2159}{8} \\cdot T"
+        },
+        {
+          "domain_plain": "d = 9 and T > 0",
+          "count_plain": "(127/8) * T",
+          "count_latex": "\\frac{127}{8} \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d + (7/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{8}",
+      "mass_plain": "[(-1 + d) mod 8 = 0 and T > 0 and d >= 9] => 119 * T + [T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d] => 56 * T",
+      "mass_latex": "\\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 9\\right] \\Rightarrow 119 \\cdot T + \\left[T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 56 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and T > 0 and d >= 9",
+          "count_plain": "119 * T",
+          "count_latex": "119 \\cdot T"
+        },
+        {
+          "domain_plain": "T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d",
+          "count_plain": "56 * T",
+          "count_latex": "56 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d + (3/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{3}{4}",
+      "mass_plain": "(381/4) * d * T - (381/2) * T",
+      "mass_latex": "\\frac{381}{4} \\cdot d \\cdot T - \\frac{381}{2} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "(381/4) * d * T - (381/2) * T",
+          "count_latex": "\\frac{381}{4} \\cdot d \\cdot T - \\frac{381}{2} \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d - (1/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d - \\frac{1}{8}",
+      "mass_plain": "(441/8) * T",
+      "mass_latex": "\\frac{441}{8} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "(441/8) * T",
+          "count_latex": "\\frac{441}{8} \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/4) * d + (11/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{11}{2}",
+      "mass_plain": "[T > 0 and d >= 17] => (191/8) * d * T - (2167/8) * T + [T > 0 and 10 <= d <= 16] => (127/64) * d^2 * T - (2159/64) * d * T + (1143/8) * T",
+      "mass_latex": "\\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{191}{8} \\cdot d \\cdot T - \\frac{2167}{8} \\cdot T + \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow \\frac{127}{64} \\cdot d^{2} \\cdot T - \\frac{2159}{64} \\cdot d \\cdot T + \\frac{1143}{8} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and 8 <= b <= -9 + d",
+          "count_plain": "64 * T",
+          "count_latex": "64 \\cdot T"
+        },
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and d >= 10 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "(127/8) * d * T - (1143/8) * T",
+          "count_latex": "\\frac{127}{8} \\cdot d \\cdot T - \\frac{1143}{8} \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/4) * d + (35/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{35}{8}",
+      "mass_plain": "63 * T",
+      "mass_latex": "63 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and T > 0 and d >= 9",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/4) * d + (9/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{9}{2}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (889/64) * d^2 * T - (4445/32) * d * T + (889/4) * T + [T > 0 and d >= 17] => 119 * d * T - (1393/4) * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{889}{64} \\cdot d^{2} \\cdot T - \\frac{4445}{32} \\cdot d \\cdot T + \\frac{889}{4} \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 119 \\cdot d \\cdot T - \\frac{1393}{4} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "(889/8) * d * T - (889/4) * T",
+          "count_latex": "\\frac{889}{8} \\cdot d \\cdot T - \\frac{889}{4} \\cdot T"
+        },
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and 8 <= b <= -9 + d",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/8) * d + (29/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{8} \\cdot d + \\frac{29}{8}",
+      "mass_plain": "[T > 0 and 10 <= d <= 16] => (63/8) * d * T - (567/8) * T + [T > 0 and d >= 17] => (441/8) * T",
+      "mass_latex": "\\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - \\frac{567}{8} \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{441}{8} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b <= -2 + d",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/4) * d + (7/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{7}{4}",
+      "mass_plain": "[T > 0 and 3 <= d <= 8] => 127 * d * T - 254 * T + [T > 0 and d >= 9] => 63 * T",
+      "mass_latex": "\\left[T > 0 and 3 <= d <= 8\\right] \\Rightarrow 127 \\cdot d \\cdot T - 254 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 63 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 3 <= d <= 8",
+          "count_plain": "127 * d * T - 254 * T",
+          "count_latex": "127 \\cdot d \\cdot T - 254 \\cdot T"
+        },
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (9/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{9}{8}",
+      "mass_plain": "63 * T",
+      "mass_latex": "63 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "a = -1 + d and T > 0 and 2 <= d <= 8",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/8) * d + (53/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{8} \\cdot d + \\frac{53}{8}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => 8 * d * T - 64 * T + [T > 0 and d >= 17] => 64 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 8 \\cdot d \\cdot T - 64 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 64 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "64 * T",
+          "count_latex": "64 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/4) * d + (11/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{11}{4}",
+      "mass_plain": "64 * T",
+      "mass_latex": "64 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "64 * T",
+          "count_latex": "64 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/8) * d + (15/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{8} \\cdot d + \\frac{15}{4}",
+      "mass_plain": "64 * T",
+      "mass_latex": "64 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 2 <= d <= 8",
+          "count_plain": "64 * T",
+          "count_latex": "64 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "[T > 0 and 2 <= d <= 8] => 128 * d^2 * T + 8192 * d * T + 640 * T + [T > 0 and d >= 9] => 128 * d^2 * T + 8064 * d * T - 7296 * T + [d = 1 and T > 0] => 9086 * T",
+      "mass_latex": "\\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 128 \\cdot d^{2} \\cdot T + 8192 \\cdot d \\cdot T + 640 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 128 \\cdot d^{2} \\cdot T + 8064 \\cdot d \\cdot T - 7296 \\cdot T + \\left[d = 1 and T > 0\\right] \\Rightarrow 9086 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 2 <= d <= 8",
+          "count_plain": "128 * d^2 * T + 8192 * d * T + 640 * T",
+          "count_latex": "128 \\cdot d^{2} \\cdot T + 8192 \\cdot d \\cdot T + 640 \\cdot T"
+        },
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "128 * d^2 * T + 8064 * d * T - 7296 * T",
+          "count_latex": "128 \\cdot d^{2} \\cdot T + 8064 \\cdot d \\cdot T - 7296 \\cdot T"
+        },
+        {
+          "domain_plain": "d = 1 and T > 0",
+          "count_plain": "9086 * T",
+          "count_latex": "9086 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d + (35/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{35}{8}",
+      "mass_plain": "8 * d * T - 72 * T",
+      "mass_latex": "8 \\cdot d \\cdot T - 72 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and (b) mod 8 = 0 and T > 0 and 8 <= b <= -9 + d",
+          "count_plain": "64 * T",
+          "count_latex": "64 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (3/8) * d + (15/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{15}{8}",
+      "mass_plain": "64 * T",
+      "mass_latex": "64 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and T > 0 and d >= 9",
+          "count_plain": "64 * T",
+          "count_latex": "64 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/4) * d + (43/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{43}{8}",
+      "mass_plain": "64 * T",
+      "mass_latex": "64 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and T > 0 and d >= 9",
+          "count_plain": "64 * T",
+          "count_latex": "64 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/8) * d + (37/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{8} \\cdot d + \\frac{37}{8}",
+      "mass_plain": "[T > 0 and 10 <= d <= 16] => 8 * d * T - 72 * T + [T > 0 and d >= 17] => 56 * T",
+      "mass_latex": "\\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow 8 \\cdot d \\cdot T - 72 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 56 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b <= -2 + d",
+          "count_plain": "64 * T",
+          "count_latex": "64 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/8) * d + (15/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{8} \\cdot d + \\frac{15}{8}",
+      "mass_plain": "64 * T",
+      "mass_latex": "64 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 2 <= d <= 8",
+          "count_plain": "64 * T",
+          "count_latex": "64 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/8) * d + (45/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{8} \\cdot d + \\frac{45}{8}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (63/8) * d * T - 63 * T + [T > 0 and d >= 17] => 63 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - 63 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 63 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (129/4) * d + (4129/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{4129}{8}",
+      "mass_plain": "(1/32) * d^2 * T - (49/64) * d * T - d^2 + (17/4) * T + (49/64) * d - (17/4)",
+      "mass_latex": "\\frac{1}{32} \\cdot d^{2} \\cdot T - \\frac{49}{64} \\cdot d \\cdot T - d^{2} + \\frac{17}{4} \\cdot T + \\frac{49}{64} \\cdot d - \\frac{17}{4}",
+      "regions": [
+        {
+          "domain_plain": "(a) mod 8 = 0 and T >= 2 and d >= 17 and 8 <= a <= -2 + d",
+          "count_plain": "(1/8) * d * T - 2 * T - d + 2",
+          "count_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T - d + 2"
+        },
+        {
+          "domain_plain": "(1 + a) mod 8 = 0 and T >= 2 and d >= 17 and 7 <= a <= -2 + d",
+          "count_plain": "(1/8) * d * T - 2 * T - d + 2",
+          "count_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T - d + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (257/8) * d + (4123/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{4123}{8}",
+      "mass_plain": "(1/8) * d * T - (9/8) * T - d + (9/8)",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - \\frac{9}{8} \\cdot T - d + \\frac{9}{8}",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and (b) mod 8 = 0 and T >= 2 and 8 <= b <= -9 + d",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (129/4) * d + (4121/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{4121}{8}",
+      "mass_plain": "(3/32) * d^2 * T - (27/16) * d * T - (3/32) * d^2 + 3 * T + (27/16) * d - 3",
+      "mass_latex": "\\frac{3}{32} \\cdot d^{2} \\cdot T - \\frac{27}{16} \\cdot d \\cdot T - \\frac{3}{32} \\cdot d^{2} + 3 \\cdot T + \\frac{27}{16} \\cdot d - 3",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d >= 17 and 0 < a <= -2 + d",
+          "count_plain": "(3/32) * d * T - (3/2) * T - (3/32) * d + (3/2)",
+          "count_latex": "\\frac{3}{32} \\cdot d \\cdot T - \\frac{3}{2} \\cdot T - \\frac{3}{32} \\cdot d + \\frac{3}{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (257/8) * d + (4115/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{4115}{8}",
+      "mass_plain": "(7/64) * d * T - (7/4) * T - (7/64) * d + (7/4)",
+      "mass_latex": "\\frac{7}{64} \\cdot d \\cdot T - \\frac{7}{4} \\cdot T - \\frac{7}{64} \\cdot d + \\frac{7}{4}",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T >= 2 and 8 <= b <= -9 + d",
+          "count_plain": "(7/8) * T - (7/8)",
+          "count_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (129/4) * d + (1027/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{1027}{2}",
+      "mass_plain": "[T >= 2 and d >= 10] => (1/4) * d * T - (17/8) * T - d + (17/8) + [d = 9 and T >= 2] => (1/8) * d * T - T - d + 1",
+      "mass_latex": "\\left[T >= 2 and d >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot d \\cdot T - \\frac{17}{8} \\cdot T - d + \\frac{17}{8} + \\left[d = 9 and T >= 2\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T - d + 1",
+      "regions": [
+        {
+          "domain_plain": "(a) mod 8 = 0 and T >= 2 and 8 <= a <= -2 + d",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        },
+        {
+          "domain_plain": "(1 + a) mod 8 = 0 and T >= 2 and 7 <= a <= -2 + d",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (257/8) * d + (4103/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{4103}{8}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and T >= 2 and d >= 9",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (129/4) * d + (1025/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{1025}{2}",
+      "mass_plain": "(3/4) * d * T - (3/2) * T - (3/4) * d + (3/2)",
+      "mass_latex": "\\frac{3}{4} \\cdot d \\cdot T - \\frac{3}{2} \\cdot T - \\frac{3}{4} \\cdot d + \\frac{3}{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d >= 9 and 0 < a <= -2 + d",
+          "count_plain": "(3/4) * T - (3/4)",
+          "count_latex": "\\frac{3}{4} \\cdot T - \\frac{3}{4}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (257/8) * d + (4095/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{4095}{8}",
+      "mass_plain": "(7/8) * T - (7/8)",
+      "mass_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d >= 9",
+          "count_plain": "(7/8) * T - (7/8)",
+          "count_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (129/4) * d + (2065/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}",
+      "mass_plain": "(1/8) * d * T - 2 * T - d + 2",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T - d + 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d >= 17",
+          "count_plain": "(1/8) * d * T - 2 * T - d + 2",
+          "count_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T - d + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (257/8) * d + (2069/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{2069}{4}",
+      "mass_plain": "[T >= 2 and 10 <= d <= 16] => (1/64) * d^2 * T - (17/64) * d * T - d^2 + (9/8) * T + (17/64) * d - (9/8) + [T >= 2 and d >= 17] => (1/8) * d * T - (9/8) * T - d + (9/8)",
+      "mass_latex": "\\left[T >= 2 and 10 <= d <= 16\\right] \\Rightarrow \\frac{1}{64} \\cdot d^{2} \\cdot T - \\frac{17}{64} \\cdot d \\cdot T - d^{2} + \\frac{9}{8} \\cdot T + \\frac{17}{64} \\cdot d - \\frac{9}{8} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - \\frac{9}{8} \\cdot T - d + \\frac{9}{8}",
+      "regions": [
+        {
+          "domain_plain": "(a) mod 8 = 0 and (b) mod 8 = 0 and T >= 2 and 8 <= a <= -2 + d and -8 + d <= b < d",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 32 * d + (4131/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + \\frac{4131}{8}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and T >= 2 and d >= 9",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (257/8) * d + (2065/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{2065}{4}",
+      "mass_plain": "[T >= 2 and 9 <= d <= 16] => (7/64) * d^2 * T - (35/32) * d * T - (7/64) * d^2 + (7/4) * T + (35/32) * d - (7/4) + [T >= 2 and d >= 17] => (7/8) * d * T - (7/4) * T - (7/8) * d + (7/4)",
+      "mass_latex": "\\left[T >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{7}{64} \\cdot d^{2} \\cdot T - \\frac{35}{32} \\cdot d \\cdot T - \\frac{7}{64} \\cdot d^{2} + \\frac{7}{4} \\cdot T + \\frac{35}{32} \\cdot d - \\frac{7}{4} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{7}{8} \\cdot d \\cdot T - \\frac{7}{4} \\cdot T - \\frac{7}{8} \\cdot d + \\frac{7}{4}",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T >= 2 and 0 < a <= -2 + d and b >= -8 + d and 8 <= b < d",
+          "count_plain": "(7/8) * T - (7/8)",
+          "count_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (255/8) * d + (4125/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + \\frac{4125}{8}",
+      "mass_plain": "[T >= 2 and 10 <= d <= 16] => (1/8) * d * T - (9/8) * T - d + (9/8) + [T >= 2 and d >= 17] => (7/8) * T - (7/8)",
+      "mass_latex": "\\left[T >= 2 and 10 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - \\frac{9}{8} \\cdot T - d + \\frac{9}{8} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{7}{8} \\cdot T - \\frac{7}{8}",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T >= 2 and b >= -8 + d and 8 <= b <= -2 + d",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (257/8) * d + (1027/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{1027}{2}",
+      "mass_plain": "d * T - 2 * T - d + 2",
+      "mass_latex": "d \\cdot T - 2 \\cdot T - d + 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d <= 8 and 0 < a <= -2 + d",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "32 * d + (4105/8)",
+      "value_latex": "32 \\cdot d + \\frac{4105}{8}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "a = -1 + d and T >= 2 and 2 <= d <= 8",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 32 * d + (1037/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + \\frac{1037}{2}",
+      "mass_plain": "[T >= 2 and 9 <= d <= 16] => (1/8) * d * T - T - d + 1 + [T >= 2 and d >= 17] => T - 1",
+      "mass_latex": "\\left[T >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T - d + 1 + \\left[T >= 2 and d >= 17\\right] \\Rightarrow T - 1",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T >= 2 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(33/4) * d + (23/2)",
+      "value_latex": "\\frac{33}{4} \\cdot d + \\frac{23}{2}",
+      "mass_plain": "(441/2) * d * T - 3528 * T",
+      "mass_latex": "\\frac{441}{2} \\cdot d \\cdot T - 3528 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(441/2) * d * T - 3528 * T",
+          "count_latex": "\\frac{441}{2} \\cdot d \\cdot T - 3528 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(33/4) * d + (21/2)",
+      "value_latex": "\\frac{33}{4} \\cdot d + \\frac{21}{2}",
+      "mass_plain": "756 * d * T - 12096 * T",
+      "mass_latex": "756 \\cdot d \\cdot T - 12096 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "756 * d * T - 12096 * T",
+          "count_latex": "756 \\cdot d \\cdot T - 12096 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(33/4) * d + (91/8)",
+      "value_latex": "\\frac{33}{4} \\cdot d + \\frac{91}{8}",
+      "mass_plain": "(63/8) * d * T - 126 * T",
+      "mass_latex": "\\frac{63}{8} \\cdot d \\cdot T - 126 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and 8 <= k <= -9 + d",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(33/4) * d + (71/8)",
+      "value_latex": "\\frac{33}{4} \\cdot d + \\frac{71}{8}",
+      "mass_plain": "1386 * T",
+      "mass_latex": "1386 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "1386 * T",
+          "count_latex": "1386 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(33/4) * d + (63/8)",
+      "value_latex": "\\frac{33}{4} \\cdot d + \\frac{63}{8}",
+      "mass_plain": "6552 * T",
+      "mass_latex": "6552 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "6552 * T",
+          "count_latex": "6552 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(65/8) * d + (93/8)",
+      "value_latex": "\\frac{65}{8} \\cdot d + \\frac{93}{8}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (6489/8) * d * T - 6489 * T + [T > 0 and d >= 17] => (63/8) * d * T + 6363 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{6489}{8} \\cdot d \\cdot T - 6489 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T + 6363 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "6489 * T",
+          "count_latex": "6489 \\cdot T"
+        },
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and 8 <= k <= -9 + d",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(65/8) * d + (101/8)",
+      "value_latex": "\\frac{65}{8} \\cdot d + \\frac{101}{8}",
+      "mass_plain": "[T > 0 and d >= 17] => (63/8) * d * T + 1197 * T + [T > 0 and 9 <= d <= 16] => (1323/8) * d * T - 1323 * T",
+      "mass_latex": "\\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T + 1197 \\cdot T + \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1323}{8} \\cdot d \\cdot T - 1323 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and 8 <= k <= -9 + d",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        },
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "1323 * T",
+          "count_latex": "1323 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * d + (101/8)",
+      "value_latex": "8 \\cdot d + \\frac{101}{8}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (63/4) * d * T - 126 * T + [T > 0 and d >= 17] => 126 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{4} \\cdot d \\cdot T - 126 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 126 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "126 * T",
+          "count_latex": "126 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(65/8) * d + (79/8)",
+      "value_latex": "\\frac{65}{8} \\cdot d + \\frac{79}{8}",
+      "mass_plain": "882 * T",
+      "mass_latex": "882 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < d <= 8",
+          "count_plain": "882 * T",
+          "count_latex": "882 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(65/8) * d + (71/8)",
+      "value_latex": "\\frac{65}{8} \\cdot d + \\frac{71}{8}",
+      "mass_plain": "[T > 0 and 0 < d <= 8] => 6930 * T + [T > 0 and d >= 9] => 126 * T",
+      "mass_latex": "\\left[T > 0 and 0 < d <= 8\\right] \\Rightarrow 6930 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 126 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < d <= 8",
+          "count_plain": "6930 * T",
+          "count_latex": "6930 \\cdot T"
+        },
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "126 * T",
+          "count_latex": "126 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * d + (79/8)",
+      "value_latex": "8 \\cdot d + \\frac{79}{8}",
+      "mass_plain": "252 * T",
+      "mass_latex": "252 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < d <= 8",
+          "count_plain": "252 * T",
+          "count_latex": "252 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * d + (51/4)",
+      "value_latex": "8 \\cdot d + \\frac{51}{4}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (63/8) * d * T - 63 * T + [T > 0 and d >= 17] => 63 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - 63 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 63 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (129/4) * d + (4109/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{4109}{8}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and d >= 9",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 32 * d + (4125/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + \\frac{4125}{8}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 2 <= d <= 8",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(127/4) * d + 515",
+      "value_latex": "\\frac{127}{4} \\cdot d + 515",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "d = 1 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "(33/4) * d + (83/8)",
+      "value_latex": "\\frac{33}{4} \\cdot d + \\frac{83}{8}",
+      "mass_plain": "(63/8) * d * T - 126 * T",
+      "mass_latex": "\\frac{63}{8} \\cdot d \\cdot T - 126 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and 8 <= k <= -9 + d",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * d + (55/4)",
+      "value_latex": "8 \\cdot d + \\frac{55}{4}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (63/8) * d * T - 63 * T + [T > 0 and d >= 17] => 63 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - 63 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 63 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (1/8) * d + (11/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{8} \\cdot d + \\frac{11}{4}",
+      "mass_plain": "63 * T",
+      "mass_latex": "63 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 2 <= d <= 8",
+          "count_plain": "63 * T",
+          "count_latex": "63 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "24 * d + 512",
+      "value_latex": "24 \\cdot d + 512",
+      "mass_plain": "124 * T",
+      "mass_latex": "124 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d > 0",
+          "count_plain": "124 * T",
+          "count_latex": "124 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "23 * d + 512",
+      "value_latex": "23 \\cdot d + 512",
+      "mass_plain": "2 * T",
+      "mass_latex": "2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d > 0",
+          "count_plain": "2 * T",
+          "count_latex": "2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * d + 512",
+      "value_latex": "16 \\cdot d + 512",
+      "mass_plain": "2 * T",
+      "mass_latex": "2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d > 0",
+          "count_plain": "2 * T",
+          "count_latex": "2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(21/8)",
+      "value_latex": "\\frac{21}{8}",
+      "mass_plain": "[(-1 + d) mod 8 = 0 and T > 0 and d >= 9] => 224 * d^2 * T + 14256 * d * T + (113/512) * d^2 - 9200 * T - (71/64) * d + (24583/64) + [T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d] => 224 * d^2 * T + 14256 * d * T + (57/512) * d^2 - 9200 * T - (57/64) * d + 384 + [T > 0 and 2 <= d <= 8] => 224 * d^2 * T + 14224 * d * T - 8944 * T + 384 + [d = 1 and T > 0] => 5504 * T + 384",
+      "mass_latex": "\\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 9\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{113}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{71}{64} \\cdot d + \\frac{24583}{64} + \\left[T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{57}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{57}{64} \\cdot d + 384 + \\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14224 \\cdot d \\cdot T - 8944 \\cdot T + 384 + \\left[d = 1 and T > 0\\right] \\Rightarrow 5504 \\cdot T + 384",
+      "regions": [
+        {
+          "domain_plain": "(-1 + d) mod 8 = 0 and T > 0 and d >= 9",
+          "count_plain": "224 * d^2 * T + 14256 * d * T + (113/512) * d^2 - 9200 * T - (71/64) * d + (24583/64)",
+          "count_latex": "224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{113}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{71}{64} \\cdot d + \\frac{24583}{64}"
+        },
+        {
+          "domain_plain": "T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d",
+          "count_plain": "224 * d^2 * T + 14256 * d * T + (57/512) * d^2 - 9200 * T - (57/64) * d + 384",
+          "count_latex": "224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{57}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{57}{64} \\cdot d + 384"
+        },
+        {
+          "domain_plain": "T > 0 and 2 <= d <= 8",
+          "count_plain": "224 * d^2 * T + 14224 * d * T - 8944 * T + 384",
+          "count_latex": "224 \\cdot d^{2} \\cdot T + 14224 \\cdot d \\cdot T - 8944 \\cdot T + 384"
+        },
+        {
+          "domain_plain": "d = 1 and T > 0",
+          "count_plain": "5504 * T + 384",
+          "count_latex": "5504 \\cdot T + 384"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (129/8) * d + (4005/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{8} \\cdot d + \\frac{4005}{8}",
+      "mass_plain": "(31/4) * d * T - 124 * T",
+      "mass_latex": "\\frac{31}{4} \\cdot d \\cdot T - 124 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17 and 0 < i <= 62",
+          "count_plain": "(1/8) * d * T - 2 * T",
+          "count_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * d + (2039/4)",
+      "value_latex": "16 \\cdot d + \\frac{2039}{4}",
+      "mass_plain": "(1/8) * d * T - 2 * T",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and 8 <= b <= -9 + d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 16 * d + (2003/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 16 \\cdot d + \\frac{2003}{4}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (31/4) * d * T - 62 * T + [T > 0 and d >= 17] => 62 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{31}{4} \\cdot d \\cdot T - 62 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 62 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and 0 < i <= 62 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(127/8) * d + (4079/8)",
+      "value_latex": "\\frac{127}{8} \\cdot d + \\frac{4079}{8}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (1/8) * d * T - T + [T > 0 and d >= 17] => T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T + \\left[T > 0 and d >= 17\\right] \\Rightarrow T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (37/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{37}{8}",
+      "mass_plain": "2 * d^2 * T + 64 * d * T - 1536 * T",
+      "mass_latex": "2 \\cdot d^{2} \\cdot T + 64 \\cdot d \\cdot T - 1536 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "2 * d^2 * T + 64 * d * T - 1536 * T",
+          "count_latex": "2 \\cdot d^{2} \\cdot T + 64 \\cdot d \\cdot T - 1536 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + (29/8)",
+      "value_latex": "\\frac{1}{4} \\cdot d + \\frac{29}{8}",
+      "mass_plain": "14 * d^2 * T + 658 * d * T - 14112 * T",
+      "mass_latex": "14 \\cdot d^{2} \\cdot T + 658 \\cdot d \\cdot T - 14112 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "14 * d^2 * T + 658 * d * T - 14112 * T",
+          "count_latex": "14 \\cdot d^{2} \\cdot T + 658 \\cdot d \\cdot T - 14112 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(47/8)",
+      "value_latex": "\\frac{47}{8}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => 16 * d^2 * T + 808 * d * T - 7488 * T + [T > 0 and d >= 17] => 128 * d * T + 7488 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 16 \\cdot d^{2} \\cdot T + 808 \\cdot d \\cdot T - 7488 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 128 \\cdot d \\cdot T + 7488 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "128 * d * T + 7488 * T",
+          "count_latex": "128 \\cdot d \\cdot T + 7488 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 16 * d + (7/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 16 \\cdot d + \\frac{7}{2}",
+      "mass_plain": "(1/8) * d * T - 2 * T",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and 8 <= b <= -9 + d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (63/4) * d + (19/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{63}{4} \\cdot d + \\frac{19}{4}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (1/8) * d * T - T + [T > 0 and d >= 17] => T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T + \\left[T > 0 and d >= 17\\right] \\Rightarrow T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(69/8)",
+      "value_latex": "\\frac{69}{8}",
+      "mass_plain": "768 * T",
+      "mass_latex": "768 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d > 0 and 50 <= j <= 55",
+          "count_plain": "128 * T",
+          "count_latex": "128 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (193/8) * d + (99/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{193}{8} \\cdot d + \\frac{99}{8}",
+      "mass_plain": "(7/8) * d * T - 14 * T",
+      "mass_latex": "\\frac{7}{8} \\cdot d \\cdot T - 14 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(1 + i) mod 8 = 0 and T > 0 and d >= 17 and 7 <= i <= 55",
+          "count_plain": "(1/8) * d * T - 2 * T",
+          "count_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (193/8) * d + (91/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{193}{8} \\cdot d + \\frac{91}{8}",
+      "mass_plain": "(55/8) * d * T - 110 * T",
+      "mass_latex": "\\frac{55}{8} \\cdot d \\cdot T - 110 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17 and 0 < i <= 62",
+          "count_plain": "(7/64) * d * T - (7/4) * T",
+          "count_latex": "\\frac{7}{64} \\cdot d \\cdot T - \\frac{7}{4} \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (255/8) * d + (37/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + \\frac{37}{8}",
+      "mass_plain": "(1/8) * d * T - 2 * T",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(1/8) * d * T - 2 * T",
+          "count_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 24 * d + (23/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{23}{2}",
+      "mass_plain": "(1/8) * d * T - 2 * T",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(1/8) * d * T - 2 * T",
+          "count_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 24 * d + (25/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{25}{2}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (31/4) * d * T - 62 * T + [T > 0 and d >= 17] => 62 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{31}{4} \\cdot d \\cdot T - 62 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 62 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and 0 < i <= 62 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (127/4) * d + (19/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{127}{4} \\cdot d + \\frac{19}{4}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (1/8) * d * T - T + [T > 0 and d >= 17] => T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T + \\left[T > 0 and d >= 17\\right] \\Rightarrow T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (95/4) * d + (55/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{95}{4} \\cdot d + \\frac{55}{4}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (1/8) * d * T - T + [T > 0 and d >= 17] => T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T + \\left[T > 0 and d >= 17\\right] \\Rightarrow T",
+      "regions": [
+        {
+          "domain_plain": "(b) mod 8 = 0 and T > 0 and b >= -8 + d and 8 <= b < d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 32 * d + (4117/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + \\frac{4117}{8}",
+      "mass_plain": "(63/4) * d * T - 252 * T",
+      "mass_latex": "\\frac{63}{4} \\cdot d \\cdot T - 252 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 17",
+          "count_plain": "(63/4) * d * T - 252 * T",
+          "count_latex": "\\frac{63}{4} \\cdot d \\cdot T - 252 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(257/8) * d + (4117/8)",
+      "value_latex": "\\frac{257}{8} \\cdot d + \\frac{4117}{8}",
+      "mass_plain": "(1/8) * d * T - 2 * T",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(a) mod 8 = 0 and T > 0 and 8 <= a <= -9 + d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 32 * d + 512",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 512",
+      "mass_plain": "126 * T",
+      "mass_latex": "126 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "126 * T",
+          "count_latex": "126 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "32 * d + 512",
+      "value_latex": "32 \\cdot d + 512",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (255/8) * d + (2063/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + \\frac{2063}{4}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (63/4) * d * T - 126 * T + [T > 0 and d >= 17] => 126 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{4} \\cdot d \\cdot T - 126 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 126 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(a) mod 8 = 0 and T > 0 and a >= -8 + d and 8 <= a < d",
+          "count_plain": "126 * T",
+          "count_latex": "126 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "32 * d + (2063/4)",
+      "value_latex": "32 \\cdot d + \\frac{2063}{4}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (1/8) * d * T - T + [T > 0 and d >= 17] => T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T + \\left[T > 0 and d >= 17\\right] \\Rightarrow T",
+      "regions": [
+        {
+          "domain_plain": "(a) mod 8 = 0 and T > 0 and a >= -8 + d and 8 <= a < d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (127/4) * d + 514",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{127}{4} \\cdot d + 514",
+      "mass_plain": "126 * T",
+      "mass_latex": "126 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < d <= 8",
+          "count_plain": "126 * T",
+          "count_latex": "126 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(127/4) * d + 514",
+      "value_latex": "\\frac{127}{4} \\cdot d + 514",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < d <= 8",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(193/8) * d + (4117/8)",
+      "value_latex": "\\frac{193}{8} \\cdot d + \\frac{4117}{8}",
+      "mass_plain": "372 * T",
+      "mass_latex": "372 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d > 0",
+          "count_plain": "372 * T",
+          "count_latex": "372 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(65/4) * d + (4117/8)",
+      "value_latex": "\\frac{65}{4} \\cdot d + \\frac{4117}{8}",
+      "mass_plain": "6 * T",
+      "mass_latex": "6 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T > 0 and d > 0 and 8 <= j <= 48",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (129/8) * d + 498",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{8} \\cdot d + 498",
+      "mass_plain": "62 * T",
+      "mass_latex": "62 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9 and 0 < i <= 62",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * d + 507",
+      "value_latex": "16 \\cdot d + 507",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (127/8) * d + 499",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{127}{8} \\cdot d + 499",
+      "mass_plain": "62 * T",
+      "mass_latex": "62 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 2 <= d <= 8 and 0 < i <= 62",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "515",
+      "value_latex": "515",
+      "mass_plain": "62 * T",
+      "mass_latex": "62 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "d = 1 and T > 0 and 0 < i <= 62",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(127/8) * d + 507",
+      "value_latex": "\\frac{127}{8} \\cdot d + 507",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < d <= 8",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + 2",
+      "value_latex": "\\frac{1}{4} \\cdot d + 2",
+      "mass_plain": "16 * d * T + 320 * T",
+      "mass_latex": "16 \\cdot d \\cdot T + 320 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "16 * d * T + 320 * T",
+          "count_latex": "16 \\cdot d \\cdot T + 320 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/4) * d + 1",
+      "value_latex": "\\frac{1}{4} \\cdot d + 1",
+      "mass_plain": "112 * d * T + 7504 * T",
+      "mass_latex": "112 \\cdot d \\cdot T + 7504 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "112 * d * T + 7504 * T",
+          "count_latex": "112 \\cdot d \\cdot T + 7504 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(55/8)",
+      "value_latex": "\\frac{55}{8}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => 56 * d * T - 448 * T + [T > 0 and d >= 17] => 448 * T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 56 \\cdot d \\cdot T - 448 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 448 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and k >= -8 + d and 8 <= k < d",
+          "count_plain": "448 * T",
+          "count_latex": "448 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (193/8) * d + (1029/2)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{193}{8} \\cdot d + \\frac{1029}{2}",
+      "mass_plain": "(1/8) * d * T - 2 * T",
+      "mass_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(a) mod 8 = 0 and T > 0 and 8 <= a <= -9 + d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (191/8) * d + (2067/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{191}{8} \\cdot d + \\frac{2067}{4}",
+      "mass_plain": "[T > 0 and 9 <= d <= 16] => (1/8) * d * T - T + [T > 0 and d >= 17] => T",
+      "mass_latex": "\\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T + \\left[T > 0 and d >= 17\\right] \\Rightarrow T",
+      "regions": [
+        {
+          "domain_plain": "(a) mod 8 = 0 and T > 0 and a >= -8 + d and 8 <= a < d",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "23 * d + (4117/8)",
+      "value_latex": "23 \\cdot d + \\frac{4117}{8}",
+      "mass_plain": "6 * T",
+      "mass_latex": "6 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T > 0 and d > 0 and 8 <= j <= 48",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (193/8) * d + 512",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{193}{8} \\cdot d + 512",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (95/4) * d + 515",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{95}{4} \\cdot d + 515",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < d <= 8",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (193/8) * d + (39/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{193}{8} \\cdot d + \\frac{39}{4}",
+      "mass_plain": "7 * T",
+      "mass_latex": "7 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(1 + i) mod 8 = 0 and T > 0 and d >= 9 and 7 <= i <= 55",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (193/8) * d + (35/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{193}{8} \\cdot d + \\frac{35}{4}",
+      "mass_plain": "55 * T",
+      "mass_latex": "55 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9 and 0 < i <= 62",
+          "count_plain": "(7/8) * T",
+          "count_latex": "\\frac{7}{8} \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (255/8) * d + 2",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + 2",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 24 * d + (39/4)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{39}{4}",
+      "mass_plain": "62 * T",
+      "mass_latex": "62 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < d <= 8 and 0 < i <= 62",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (65/4) * d + 2",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{65}{4} \\cdot d + 2",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "i = 63 and T > 0 and 0 < d <= 8",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "4",
+      "value_latex": "4",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "d = 1 and T > 0",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 16 * d + 1",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 16 \\cdot d + 1",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (125/8) * d + 3",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{125}{8} \\cdot d + 3",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 2 <= d <= 8",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(75/4)",
+      "value_latex": "\\frac{75}{4}",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "d = 1 and T > 0",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + 24 * d + (71/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{71}{8}",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d >= 9",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1/8) * d^2 + (95/4) * d + (87/8)",
+      "value_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{95}{4} \\cdot d + \\frac{87}{8}",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 2 <= d <= 8",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(139/4)",
+      "value_latex": "\\frac{139}{4}",
+      "mass_plain": "T",
+      "mass_latex": "T",
+      "regions": [
+        {
+          "domain_plain": "d = 1 and T > 0",
+          "count_plain": "T",
+          "count_latex": "T"
+        }
+      ]
+    },
+    {
+      "value_plain": "1",
+      "value_latex": "1",
+      "mass_plain": "64 * d^2 * T",
+      "mass_latex": "64 \\cdot d^{2} \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and d > 0",
+          "count_plain": "64 * d^2 * T",
+          "count_latex": "64 \\cdot d^{2} \\cdot T"
+        }
+      ]
+    }
+  ],
+  "dmd_terms": [
+    {
+      "domain_plain": "T >= 2 and d > 0",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "(1/8) * d^2 + 48 * d + 512",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + 512",
+      "term_plain": "sqrt((1/8) * d^2 + 48 * d + 512) * T - sqrt((1/8) * d^2 + 48 * d + 512)",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + 512} \\cdot T - \\sqrt{\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + 512}"
+    },
+    {
+      "domain_plain": "T >= 2 and d > 0",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "(1/8) * d^2 + (313/8) * d + 513",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{313}{8} \\cdot d + 513",
+      "term_plain": "sqrt((1/8) * d^2 + (313/8) * d + 513) * T - sqrt((1/8) * d^2 + (313/8) * d + 513)",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{313}{8} \\cdot d + 513} \\cdot T - \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{313}{8} \\cdot d + 513}"
+    },
+    {
+      "domain_plain": "T >= 2 and d > 0",
+      "multiplicity_plain": "6 * T - 6",
+      "multiplicity_latex": "6 \\cdot T - 6",
+      "reuse_distance_plain": "(1/8) * d^2 + 48 * d + (4117/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + \\frac{4117}{8}",
+      "term_plain": "6 * sqrt((1/8) * d^2 + 48 * d + (4117/8)) * T - 6 * sqrt((1/8) * d^2 + 48 * d + (4117/8))",
+      "term_latex": "6 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + \\frac{4117}{8}} \\cdot T - 6 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + \\frac{4117}{8}}"
+    },
+    {
+      "domain_plain": "T >= 2 and d > 0",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "(1/8) * d^2 + (383/8) * d + 513",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{383}{8} \\cdot d + 513",
+      "term_plain": "sqrt((1/8) * d^2 + (383/8) * d + 513) * T - sqrt((1/8) * d^2 + (383/8) * d + 513)",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{383}{8} \\cdot d + 513} \\cdot T - \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{383}{8} \\cdot d + 513}"
+    },
+    {
+      "domain_plain": "T >= 2 and d > 0",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "(1/8) * d^2 + 32 * d + 514",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 514",
+      "term_plain": "sqrt((1/8) * d^2 + 32 * d + 514) * T - sqrt((1/8) * d^2 + 32 * d + 514)",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 514} \\cdot T - \\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 514}"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 17",
+      "multiplicity_plain": "(127/32) * d^2 * T - (6223/64) * d * T + (2159/4) * T",
+      "multiplicity_latex": "\\frac{127}{32} \\cdot d^{2} \\cdot T - \\frac{6223}{64} \\cdot d \\cdot T + \\frac{2159}{4} \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + (3/8) * d + (35/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{35}{8}",
+      "term_plain": "(127/32) * sqrt((1/8) * d^2 + (3/8) * d + (35/8)) * d^2 * T - (6223/64) * sqrt((1/8) * d^2 + (3/8) * d + (35/8)) * d * T + (2159/4) * sqrt((1/8) * d^2 + (3/8) * d + (35/8)) * T",
+      "term_latex": "\\frac{127}{32} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{35}{8}} \\cdot d^{2} \\cdot T - \\frac{6223}{64} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{35}{8}} \\cdot d \\cdot T + \\frac{2159}{4} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{35}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 17",
+      "multiplicity_plain": "(381/32) * d^2 * T - (3429/16) * d * T + 381 * T",
+      "multiplicity_latex": "\\frac{381}{32} \\cdot d^{2} \\cdot T - \\frac{3429}{16} \\cdot d \\cdot T + 381 \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + (3/8) * d + (27/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{27}{8}",
+      "term_plain": "(381/32) * sqrt((1/8) * d^2 + (3/8) * d + (27/8)) * d^2 * T - (3429/16) * sqrt((1/8) * d^2 + (3/8) * d + (27/8)) * d * T + 381 * sqrt((1/8) * d^2 + (3/8) * d + (27/8)) * T",
+      "term_latex": "\\frac{381}{32} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{27}{8}} \\cdot d^{2} \\cdot T - \\frac{3429}{16} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{27}{8}} \\cdot d \\cdot T + 381 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{27}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 10",
+      "multiplicity_plain": "(127/4) * d * T - (2159/8) * T",
+      "multiplicity_latex": "\\frac{127}{4} \\cdot d \\cdot T - \\frac{2159}{8} \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + (3/8) * d + (7/4)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{4}",
+      "term_plain": "(127/4) * sqrt((1/8) * d^2 + (3/8) * d + (7/4)) * d * T - (2159/8) * sqrt((1/8) * d^2 + (3/8) * d + (7/4)) * T",
+      "term_latex": "\\frac{127}{4} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{4}} \\cdot d \\cdot T - \\frac{2159}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{4}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d",
+      "multiplicity_plain": "56 * T",
+      "multiplicity_latex": "56 \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + (3/8) * d + (7/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{8}",
+      "term_plain": "56 * sqrt((1/8) * d^2 + (3/8) * d + (7/8)) * T",
+      "term_latex": "56 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "(381/4) * d * T - (381/2) * T",
+      "multiplicity_latex": "\\frac{381}{4} \\cdot d \\cdot T - \\frac{381}{2} \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + (3/8) * d + (3/4)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{3}{4}",
+      "term_plain": "(381/4) * sqrt((1/8) * d^2 + (3/8) * d + (3/4)) * d * T - (381/2) * sqrt((1/8) * d^2 + (3/8) * d + (3/4)) * T",
+      "term_latex": "\\frac{381}{4} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{3}{4}} \\cdot d \\cdot T - \\frac{381}{2} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{3}{4}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "(441/8) * T",
+      "multiplicity_latex": "\\frac{441}{8} \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + (3/8) * d - (1/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d - \\frac{1}{8}",
+      "term_plain": "(441/8) * sqrt((1/8) * d^2 + (3/8) * d - (1/8)) * T",
+      "term_latex": "\\frac{441}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d - \\frac{1}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "63 * T",
+      "multiplicity_latex": "63 \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + (1/4) * d + (7/4)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{7}{4}",
+      "term_plain": "63 * sqrt((1/8) * d^2 + (1/4) * d + (7/4)) * T",
+      "term_latex": "63 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{7}{4}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "64 * T",
+      "multiplicity_latex": "64 \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + (1/4) * d + (11/4)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{11}{4}",
+      "term_plain": "64 * sqrt((1/8) * d^2 + (1/4) * d + (11/4)) * T",
+      "term_latex": "64 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{11}{4}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "128 * d^2 * T + 8064 * d * T - 7296 * T",
+      "multiplicity_latex": "128 \\cdot d^{2} \\cdot T + 8064 \\cdot d \\cdot T - 7296 \\cdot T",
+      "reuse_distance_plain": "3",
+      "reuse_distance_latex": "3",
+      "term_plain": "128 * sqrt(3) * d^2 * T + 8064 * sqrt(3) * d * T - 7296 * sqrt(3) * T",
+      "term_latex": "128 \\cdot \\sqrt{3} \\cdot d^{2} \\cdot T + 8064 \\cdot \\sqrt{3} \\cdot d \\cdot T - 7296 \\cdot \\sqrt{3} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2 and d >= 9",
+      "multiplicity_plain": "(7/8) * T - (7/8)",
+      "multiplicity_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}",
+      "reuse_distance_plain": "(1/8) * d^2 + (257/8) * d + (4095/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{4095}{8}",
+      "term_plain": "(7/8) * sqrt((1/8) * d^2 + (257/8) * d + (4095/8)) * T - (7/8) * sqrt((1/8) * d^2 + (257/8) * d + (4095/8))",
+      "term_latex": "\\frac{7}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{4095}{8}} \\cdot T - \\frac{7}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{4095}{8}}"
+    },
+    {
+      "domain_plain": "T >= 2 and d >= 17",
+      "multiplicity_plain": "(1/8) * d * T - 2 * T - d + 2",
+      "multiplicity_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T - d + 2",
+      "reuse_distance_plain": "(1/8) * d^2 + (129/4) * d + (2065/4)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}",
+      "term_plain": "(1/8) * sqrt((1/8) * d^2 + (129/4) * d + (2065/4)) * d * T - 2 * sqrt((1/8) * d^2 + (129/4) * d + (2065/4)) * T - sqrt((1/8) * d^2 + (129/4) * d + (2065/4)) * d + 2 * sqrt((1/8) * d^2 + (129/4) * d + (2065/4))",
+      "term_latex": "\\frac{1}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}} \\cdot d \\cdot T - 2 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}} \\cdot T - \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}} \\cdot d + 2 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}}"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 17",
+      "multiplicity_plain": "(441/2) * d * T - 3528 * T",
+      "multiplicity_latex": "\\frac{441}{2} \\cdot d \\cdot T - 3528 \\cdot T",
+      "reuse_distance_plain": "(33/4) * d + (23/2)",
+      "reuse_distance_latex": "\\frac{33}{4} \\cdot d + \\frac{23}{2}",
+      "term_plain": "(441/2) * sqrt((33/4) * d + (23/2)) * d * T - 3528 * sqrt((33/4) * d + (23/2)) * T",
+      "term_latex": "\\frac{441}{2} \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{23}{2}} \\cdot d \\cdot T - 3528 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{23}{2}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 17",
+      "multiplicity_plain": "756 * d * T - 12096 * T",
+      "multiplicity_latex": "756 \\cdot d \\cdot T - 12096 \\cdot T",
+      "reuse_distance_plain": "(33/4) * d + (21/2)",
+      "reuse_distance_latex": "\\frac{33}{4} \\cdot d + \\frac{21}{2}",
+      "term_plain": "756 * sqrt((33/4) * d + (21/2)) * d * T - 12096 * sqrt((33/4) * d + (21/2)) * T",
+      "term_latex": "756 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{21}{2}} \\cdot d \\cdot T - 12096 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{21}{2}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "1386 * T",
+      "multiplicity_latex": "1386 \\cdot T",
+      "reuse_distance_plain": "(33/4) * d + (71/8)",
+      "reuse_distance_latex": "\\frac{33}{4} \\cdot d + \\frac{71}{8}",
+      "term_plain": "1386 * sqrt((33/4) * d + (71/8)) * T",
+      "term_latex": "1386 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{71}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "6552 * T",
+      "multiplicity_latex": "6552 \\cdot T",
+      "reuse_distance_plain": "(33/4) * d + (63/8)",
+      "reuse_distance_latex": "\\frac{33}{4} \\cdot d + \\frac{63}{8}",
+      "term_plain": "6552 * sqrt((33/4) * d + (63/8)) * T",
+      "term_latex": "6552 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{63}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "126 * T",
+      "multiplicity_latex": "126 \\cdot T",
+      "reuse_distance_plain": "(65/8) * d + (71/8)",
+      "reuse_distance_latex": "\\frac{65}{8} \\cdot d + \\frac{71}{8}",
+      "term_plain": "126 * sqrt((65/8) * d + (71/8)) * T",
+      "term_latex": "126 \\cdot \\sqrt{\\frac{65}{8} \\cdot d + \\frac{71}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2 and d >= 9",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "(1/8) * d^2 + (129/4) * d + (4109/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{4109}{8}",
+      "term_plain": "sqrt((1/8) * d^2 + (129/4) * d + (4109/8)) * T - sqrt((1/8) * d^2 + (129/4) * d + (4109/8))",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{4109}{8}} \\cdot T - \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{4109}{8}}"
+    },
+    {
+      "domain_plain": "T > 0 and d > 0",
+      "multiplicity_plain": "124 * T",
+      "multiplicity_latex": "124 \\cdot T",
+      "reuse_distance_plain": "24 * d + 512",
+      "reuse_distance_latex": "24 \\cdot d + 512",
+      "term_plain": "124 * sqrt(24 * d + 512) * T",
+      "term_latex": "124 \\cdot \\sqrt{24 \\cdot d + 512} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d > 0",
+      "multiplicity_plain": "2 * T",
+      "multiplicity_latex": "2 \\cdot T",
+      "reuse_distance_plain": "23 * d + 512",
+      "reuse_distance_latex": "23 \\cdot d + 512",
+      "term_plain": "2 * sqrt(23 * d + 512) * T",
+      "term_latex": "2 \\cdot \\sqrt{23 \\cdot d + 512} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d > 0",
+      "multiplicity_plain": "2 * T",
+      "multiplicity_latex": "2 \\cdot T",
+      "reuse_distance_plain": "16 * d + 512",
+      "reuse_distance_latex": "16 \\cdot d + 512",
+      "term_plain": "2 * sqrt(16 * d + 512) * T",
+      "term_latex": "2 \\cdot \\sqrt{16 \\cdot d + 512} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d",
+      "multiplicity_plain": "224 * d^2 * T + 14256 * d * T + (57/512) * d^2 - 9200 * T - (57/64) * d + 384",
+      "multiplicity_latex": "224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{57}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{57}{64} \\cdot d + 384",
+      "reuse_distance_plain": "(21/8)",
+      "reuse_distance_latex": "\\frac{21}{8}",
+      "term_plain": "224 * sqrt((21/8)) * d^2 * T + 14256 * sqrt((21/8)) * d * T + (57/512) * sqrt((21/8)) * d^2 - 9200 * sqrt((21/8)) * T - (57/64) * sqrt((21/8)) * d + 384 * sqrt((21/8))",
+      "term_latex": "224 \\cdot \\sqrt{\\frac{21}{8}} \\cdot d^{2} \\cdot T + 14256 \\cdot \\sqrt{\\frac{21}{8}} \\cdot d \\cdot T + \\frac{57}{512} \\cdot \\sqrt{\\frac{21}{8}} \\cdot d^{2} - 9200 \\cdot \\sqrt{\\frac{21}{8}} \\cdot T - \\frac{57}{64} \\cdot \\sqrt{\\frac{21}{8}} \\cdot d + 384 \\cdot \\sqrt{\\frac{21}{8}}"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 17",
+      "multiplicity_plain": "2 * d^2 * T + 64 * d * T - 1536 * T",
+      "multiplicity_latex": "2 \\cdot d^{2} \\cdot T + 64 \\cdot d \\cdot T - 1536 \\cdot T",
+      "reuse_distance_plain": "(1/4) * d + (37/8)",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot d + \\frac{37}{8}",
+      "term_plain": "2 * sqrt((1/4) * d + (37/8)) * d^2 * T + 64 * sqrt((1/4) * d + (37/8)) * d * T - 1536 * sqrt((1/4) * d + (37/8)) * T",
+      "term_latex": "2 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot d^{2} \\cdot T + 64 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot d \\cdot T - 1536 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 17",
+      "multiplicity_plain": "14 * d^2 * T + 658 * d * T - 14112 * T",
+      "multiplicity_latex": "14 \\cdot d^{2} \\cdot T + 658 \\cdot d \\cdot T - 14112 \\cdot T",
+      "reuse_distance_plain": "(1/4) * d + (29/8)",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot d + \\frac{29}{8}",
+      "term_plain": "14 * sqrt((1/4) * d + (29/8)) * d^2 * T + 658 * sqrt((1/4) * d + (29/8)) * d * T - 14112 * sqrt((1/4) * d + (29/8)) * T",
+      "term_latex": "14 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot d^{2} \\cdot T + 658 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot d \\cdot T - 14112 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 17",
+      "multiplicity_plain": "(1/8) * d * T - 2 * T",
+      "multiplicity_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + (255/8) * d + (37/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + \\frac{37}{8}",
+      "term_plain": "(1/8) * sqrt((1/8) * d^2 + (255/8) * d + (37/8)) * d * T - 2 * sqrt((1/8) * d^2 + (255/8) * d + (37/8)) * T",
+      "term_latex": "\\frac{1}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + \\frac{37}{8}} \\cdot d \\cdot T - 2 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + \\frac{37}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 17",
+      "multiplicity_plain": "(1/8) * d * T - 2 * T",
+      "multiplicity_latex": "\\frac{1}{8} \\cdot d \\cdot T - 2 \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + 24 * d + (23/2)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{23}{2}",
+      "term_plain": "(1/8) * sqrt((1/8) * d^2 + 24 * d + (23/2)) * d * T - 2 * sqrt((1/8) * d^2 + 24 * d + (23/2)) * T",
+      "term_latex": "\\frac{1}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{23}{2}} \\cdot d \\cdot T - 2 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{23}{2}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 17",
+      "multiplicity_plain": "(63/4) * d * T - 252 * T",
+      "multiplicity_latex": "\\frac{63}{4} \\cdot d \\cdot T - 252 \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + 32 * d + (4117/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + \\frac{4117}{8}",
+      "term_plain": "(63/4) * sqrt((1/8) * d^2 + 32 * d + (4117/8)) * d * T - 252 * sqrt((1/8) * d^2 + 32 * d + (4117/8)) * T",
+      "term_latex": "\\frac{63}{4} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + \\frac{4117}{8}} \\cdot d \\cdot T - 252 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + \\frac{4117}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "126 * T",
+      "multiplicity_latex": "126 \\cdot T",
+      "reuse_distance_plain": "(1/8) * d^2 + 32 * d + 512",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 512",
+      "term_plain": "126 * sqrt((1/8) * d^2 + 32 * d + 512) * T",
+      "term_latex": "126 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 512} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "T",
+      "multiplicity_latex": "T",
+      "reuse_distance_plain": "32 * d + 512",
+      "reuse_distance_latex": "32 \\cdot d + 512",
+      "term_plain": "sqrt(32 * d + 512) * T",
+      "term_latex": "\\sqrt{32 \\cdot d + 512} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d > 0",
+      "multiplicity_plain": "372 * T",
+      "multiplicity_latex": "372 \\cdot T",
+      "reuse_distance_plain": "(193/8) * d + (4117/8)",
+      "reuse_distance_latex": "\\frac{193}{8} \\cdot d + \\frac{4117}{8}",
+      "term_plain": "372 * sqrt((193/8) * d + (4117/8)) * T",
+      "term_latex": "372 \\cdot \\sqrt{\\frac{193}{8} \\cdot d + \\frac{4117}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "T",
+      "multiplicity_latex": "T",
+      "reuse_distance_plain": "16 * d + 507",
+      "reuse_distance_latex": "16 \\cdot d + 507",
+      "term_plain": "sqrt(16 * d + 507) * T",
+      "term_latex": "\\sqrt{16 \\cdot d + 507} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "16 * d * T + 320 * T",
+      "multiplicity_latex": "16 \\cdot d \\cdot T + 320 \\cdot T",
+      "reuse_distance_plain": "(1/4) * d + 2",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot d + 2",
+      "term_plain": "16 * sqrt((1/4) * d + 2) * d * T + 320 * sqrt((1/4) * d + 2) * T",
+      "term_latex": "16 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2} \\cdot d \\cdot T + 320 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "112 * d * T + 7504 * T",
+      "multiplicity_latex": "112 \\cdot d \\cdot T + 7504 \\cdot T",
+      "reuse_distance_plain": "(1/4) * d + 1",
+      "reuse_distance_latex": "\\frac{1}{4} \\cdot d + 1",
+      "term_plain": "112 * sqrt((1/4) * d + 1) * d * T + 7504 * sqrt((1/4) * d + 1) * T",
+      "term_latex": "112 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 1} \\cdot d \\cdot T + 7504 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 1} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "T",
+      "multiplicity_latex": "T",
+      "reuse_distance_plain": "(1/8) * d^2 + (193/8) * d + 512",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{193}{8} \\cdot d + 512",
+      "term_plain": "sqrt((1/8) * d^2 + (193/8) * d + 512) * T",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{193}{8} \\cdot d + 512} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "T",
+      "multiplicity_latex": "T",
+      "reuse_distance_plain": "(1/8) * d^2 + (255/8) * d + 2",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + 2",
+      "term_plain": "sqrt((1/8) * d^2 + (255/8) * d + 2) * T",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + 2} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "T",
+      "multiplicity_latex": "T",
+      "reuse_distance_plain": "(1/8) * d^2 + 16 * d + 1",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + 16 \\cdot d + 1",
+      "term_plain": "sqrt((1/8) * d^2 + 16 * d + 1) * T",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot d^{2} + 16 \\cdot d + 1} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d >= 9",
+      "multiplicity_plain": "T",
+      "multiplicity_latex": "T",
+      "reuse_distance_plain": "(1/8) * d^2 + 24 * d + (71/8)",
+      "reuse_distance_latex": "\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{71}{8}",
+      "term_plain": "sqrt((1/8) * d^2 + 24 * d + (71/8)) * T",
+      "term_latex": "\\sqrt{\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{71}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0 and d > 0",
+      "multiplicity_plain": "64 * d^2 * T",
+      "multiplicity_latex": "64 \\cdot d^{2} \\cdot T",
+      "reuse_distance_plain": "1",
+      "reuse_distance_latex": "1",
+      "term_plain": "64 * d^2 * T",
+      "term_latex": "64 \\cdot d^{2} \\cdot T"
+    }
+  ],
+  "dmd_formula_plain": "(127/32) * sqrt((1/8) * d^2 + (3/8) * d + (35/8)) * d^2 * T + (381/32) * sqrt((1/8) * d^2 + (3/8) * d + (27/8)) * d^2 * T - (6223/64) * sqrt((1/8) * d^2 + (3/8) * d + (35/8)) * d * T - (3429/16) * sqrt((1/8) * d^2 + (3/8) * d + (27/8)) * d * T + (127/4) * sqrt((1/8) * d^2 + (3/8) * d + (7/4)) * d * T + (381/4) * sqrt((1/8) * d^2 + (3/8) * d + (3/4)) * d * T + (1/8) * sqrt((1/8) * d^2 + (129/4) * d + (2065/4)) * d * T + 2 * sqrt((1/4) * d + (37/8)) * d^2 * T + 14 * sqrt((1/4) * d + (29/8)) * d^2 * T + (1/8) * sqrt((1/8) * d^2 + (255/8) * d + (37/8)) * d * T + (1/8) * sqrt((1/8) * d^2 + 24 * d + (23/2)) * d * T + (63/4) * sqrt((1/8) * d^2 + 32 * d + (4117/8)) * d * T + 416 * d^2 * T + sqrt((1/8) * d^2 + 48 * d + 512) * T + sqrt((1/8) * d^2 + (313/8) * d + 513) * T + 6 * sqrt((1/8) * d^2 + 48 * d + (4117/8)) * T + sqrt((1/8) * d^2 + (383/8) * d + 513) * T + sqrt((1/8) * d^2 + 32 * d + 514) * T + (2159/4) * sqrt((1/8) * d^2 + (3/8) * d + (35/8)) * T + 381 * sqrt((1/8) * d^2 + (3/8) * d + (27/8)) * T - (2159/8) * sqrt((1/8) * d^2 + (3/8) * d + (7/4)) * T + 56 * sqrt((1/8) * d^2 + (3/8) * d + (7/8)) * T - (381/2) * sqrt((1/8) * d^2 + (3/8) * d + (3/4)) * T + (441/8) * sqrt((1/8) * d^2 + (3/8) * d - (1/8)) * T + 63 * sqrt((1/8) * d^2 + (1/4) * d + (7/4)) * T + 64 * sqrt((1/8) * d^2 + (1/4) * d + (11/4)) * T + 128 * sqrt(3) * d^2 * T + (7/8) * sqrt((1/8) * d^2 + (257/8) * d + (4095/8)) * T - 2 * sqrt((1/8) * d^2 + (129/4) * d + (2065/4)) * T - sqrt((1/8) * d^2 + (129/4) * d + (2065/4)) * d + (441/2) * sqrt((33/4) * d + (23/2)) * d * T + 756 * sqrt((33/4) * d + (21/2)) * d * T + sqrt((1/8) * d^2 + (129/4) * d + (4109/8)) * T + 224 * sqrt((21/8)) * d^2 * T + 64 * sqrt((1/4) * d + (37/8)) * d * T + 658 * sqrt((1/4) * d + (29/8)) * d * T - 2 * sqrt((1/8) * d^2 + (255/8) * d + (37/8)) * T - 2 * sqrt((1/8) * d^2 + 24 * d + (23/2)) * T - 252 * sqrt((1/8) * d^2 + 32 * d + (4117/8)) * T + 126 * sqrt((1/8) * d^2 + 32 * d + 512) * T + 16 * sqrt((1/4) * d + 2) * d * T + 112 * sqrt((1/4) * d + 1) * d * T + sqrt((1/8) * d^2 + (193/8) * d + 512) * T + sqrt((1/8) * d^2 + (255/8) * d + 2) * T + sqrt((1/8) * d^2 + 16 * d + 1) * T + sqrt((1/8) * d^2 + 24 * d + (71/8)) * T + (45807/2) * d * T + (1/8) * d^2 - sqrt((1/8) * d^2 + 48 * d + 512) - sqrt((1/8) * d^2 + (313/8) * d + 513) - 6 * sqrt((1/8) * d^2 + 48 * d + (4117/8)) - sqrt((1/8) * d^2 + (383/8) * d + 513) - sqrt((1/8) * d^2 + 32 * d + 514) + 8064 * sqrt(3) * d * T - (7/8) * sqrt((1/8) * d^2 + (257/8) * d + (4095/8)) + 2 * sqrt((1/8) * d^2 + (129/4) * d + (2065/4)) - 3528 * sqrt((33/4) * d + (23/2)) * T - 12096 * sqrt((33/4) * d + (21/2)) * T + 1386 * sqrt((33/4) * d + (71/8)) * T + 6552 * sqrt((33/4) * d + (63/8)) * T + 126 * sqrt((65/8) * d + (71/8)) * T - sqrt((1/8) * d^2 + (129/4) * d + (4109/8)) + 124 * sqrt(24 * d + 512) * T + 2 * sqrt(23 * d + 512) * T + 2 * sqrt(16 * d + 512) * T + 14256 * sqrt((21/8)) * d * T + (57/512) * sqrt((21/8)) * d^2 - 1536 * sqrt((1/4) * d + (37/8)) * T - 14112 * sqrt((1/4) * d + (29/8)) * T + sqrt(32 * d + 512) * T + 372 * sqrt((193/8) * d + (4117/8)) * T + sqrt(16 * d + 507) * T + 320 * sqrt((1/4) * d + 2) * T + 7504 * sqrt((1/4) * d + 1) * T + (93225/8) * T - (11/32) * d - 7296 * sqrt(3) * T - 9200 * sqrt((21/8)) * T - (57/64) * sqrt((21/8)) * d - [(-1 + d) mod 8 = 0 and T > 0 and d >= 17] => (119/8) * d * T - (1463/8) * T + [T > 0 and d >= 17 and 8*floor((-1 + d)/8) <= -2 + d] => 7 * d * T - 112 * T - [T > 0 and d >= 10] => (127/4) * d * T - (2159/8) * T + [d = 9 and T > 0] => (127/8) * T - [(-1 + d) mod 8 = 0 and T > 0 and d >= 9] => 119 * T + [T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d] => 56 * T - [T > 0 and d >= 17] => (191/8) * d * T - (2167/8) * T + [T > 0 and 10 <= d <= 16] => (127/64) * d^2 * T - (2159/64) * d * T + (1143/8) * T - [T > 0 and 9 <= d <= 16] => (889/64) * d^2 * T - (4445/32) * d * T + (889/4) * T + [T > 0 and d >= 17] => 119 * d * T - (1393/4) * T - [T > 0 and 10 <= d <= 16] => (63/8) * d * T - (567/8) * T + [T > 0 and d >= 17] => (441/8) * T - [T > 0 and 3 <= d <= 8] => 127 * d * T - 254 * T + [T > 0 and d >= 9] => 63 * T - [T > 0 and 9 <= d <= 16] => 8 * d * T - 64 * T + [T > 0 and d >= 17] => 64 * T - [T > 0 and 2 <= d <= 8] => 128 * d^2 * T + 8192 * d * T + 640 * T + [T > 0 and d >= 9] => 128 * d^2 * T + 8064 * d * T - 7296 * T + [d = 1 and T > 0] => 9086 * T - [T > 0 and 10 <= d <= 16] => 8 * d * T - 72 * T + [T > 0 and d >= 17] => 56 * T - 3 * [T > 0 and 9 <= d <= 16] => (63/8) * d * T - 63 * T + [T > 0 and d >= 17] => 63 * T - [T >= 2 and d >= 10] => (1/4) * d * T - (17/8) * T - d + (17/8) + [d = 9 and T >= 2] => (1/8) * d * T - T - d + 1 - [T >= 2 and 10 <= d <= 16] => (1/64) * d^2 * T - (17/64) * d * T - d^2 + (9/8) * T + (17/64) * d - (9/8) + [T >= 2 and d >= 17] => (1/8) * d * T - (9/8) * T - d + (9/8) - [T >= 2 and 9 <= d <= 16] => (7/64) * d^2 * T - (35/32) * d * T - (7/64) * d^2 + (7/4) * T + (35/32) * d - (7/4) + [T >= 2 and d >= 17] => (7/8) * d * T - (7/4) * T - (7/8) * d + (7/4) - [T >= 2 and 10 <= d <= 16] => (1/8) * d * T - (9/8) * T - d + (9/8) + [T >= 2 and d >= 17] => (7/8) * T - (7/8) - [T >= 2 and 9 <= d <= 16] => (1/8) * d * T - T - d + 1 + [T >= 2 and d >= 17] => T - 1 - [T > 0 and 9 <= d <= 16] => (6489/8) * d * T - 6489 * T + [T > 0 and d >= 17] => (63/8) * d * T + 6363 * T - [T > 0 and d >= 17] => (63/8) * d * T + 1197 * T + [T > 0 and 9 <= d <= 16] => (1323/8) * d * T - 1323 * T - 2 * [T > 0 and 9 <= d <= 16] => (63/4) * d * T - 126 * T + [T > 0 and d >= 17] => 126 * T - [T > 0 and 0 < d <= 8] => 6930 * T + [T > 0 and d >= 9] => 126 * T - [(-1 + d) mod 8 = 0 and T > 0 and d >= 9] => 224 * d^2 * T + 14256 * d * T + (113/512) * d^2 - 9200 * T - (71/64) * d + (24583/64) + [T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d] => 224 * d^2 * T + 14256 * d * T + (57/512) * d^2 - 9200 * T - (57/64) * d + 384 + [T > 0 and 2 <= d <= 8] => 224 * d^2 * T + 14224 * d * T - 8944 * T + 384 + [d = 1 and T > 0] => 5504 * T + 384 - 2 * [T > 0 and 9 <= d <= 16] => (31/4) * d * T - 62 * T + [T > 0 and d >= 17] => 62 * T - 6 * [T > 0 and 9 <= d <= 16] => (1/8) * d * T - T + [T > 0 and d >= 17] => T - [T > 0 and 9 <= d <= 16] => 16 * d^2 * T + 808 * d * T - 7488 * T + [T > 0 and d >= 17] => 128 * d * T + 7488 * T - [T > 0 and 9 <= d <= 16] => 56 * d * T - 448 * T + [T > 0 and d >= 17] => 448 * T + 384 * sqrt((21/8)) + (2071/4)",
+  "dmd_formula_latex": "\\frac{127}{32} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{35}{8}} \\cdot d^{2} \\cdot T + \\frac{381}{32} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{27}{8}} \\cdot d^{2} \\cdot T - \\frac{6223}{64} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{35}{8}} \\cdot d \\cdot T - \\frac{3429}{16} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{27}{8}} \\cdot d \\cdot T + \\frac{127}{4} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{4}} \\cdot d \\cdot T + \\frac{381}{4} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{3}{4}} \\cdot d \\cdot T + \\frac{1}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}} \\cdot d \\cdot T + 2 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot d^{2} \\cdot T + 14 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot d^{2} \\cdot T + \\frac{1}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + \\frac{37}{8}} \\cdot d \\cdot T + \\frac{1}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{23}{2}} \\cdot d \\cdot T + \\frac{63}{4} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + \\frac{4117}{8}} \\cdot d \\cdot T + 416 \\cdot d^{2} \\cdot T + \\sqrt{\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + 512} \\cdot T + \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{313}{8} \\cdot d + 513} \\cdot T + 6 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + \\frac{4117}{8}} \\cdot T + \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{383}{8} \\cdot d + 513} \\cdot T + \\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 514} \\cdot T + \\frac{2159}{4} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{35}{8}} \\cdot T + 381 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{27}{8}} \\cdot T - \\frac{2159}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{4}} \\cdot T + 56 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{7}{8}} \\cdot T - \\frac{381}{2} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d + \\frac{3}{4}} \\cdot T + \\frac{441}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{3}{8} \\cdot d - \\frac{1}{8}} \\cdot T + 63 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{7}{4}} \\cdot T + 64 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{1}{4} \\cdot d + \\frac{11}{4}} \\cdot T + 128 \\cdot \\sqrt{3} \\cdot d^{2} \\cdot T + \\frac{7}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{4095}{8}} \\cdot T - 2 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}} \\cdot T - \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}} \\cdot d + \\frac{441}{2} \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{23}{2}} \\cdot d \\cdot T + 756 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{21}{2}} \\cdot d \\cdot T + \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{4109}{8}} \\cdot T + 224 \\cdot \\sqrt{\\frac{21}{8}} \\cdot d^{2} \\cdot T + 64 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot d \\cdot T + 658 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot d \\cdot T - 2 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + \\frac{37}{8}} \\cdot T - 2 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{23}{2}} \\cdot T - 252 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + \\frac{4117}{8}} \\cdot T + 126 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 512} \\cdot T + 16 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2} \\cdot d \\cdot T + 112 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 1} \\cdot d \\cdot T + \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{193}{8} \\cdot d + 512} \\cdot T + \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{255}{8} \\cdot d + 2} \\cdot T + \\sqrt{\\frac{1}{8} \\cdot d^{2} + 16 \\cdot d + 1} \\cdot T + \\sqrt{\\frac{1}{8} \\cdot d^{2} + 24 \\cdot d + \\frac{71}{8}} \\cdot T + \\frac{45807}{2} \\cdot d \\cdot T + \\frac{1}{8} \\cdot d^{2} - \\sqrt{\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + 512} - \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{313}{8} \\cdot d + 513} - 6 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + 48 \\cdot d + \\frac{4117}{8}} - \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{383}{8} \\cdot d + 513} - \\sqrt{\\frac{1}{8} \\cdot d^{2} + 32 \\cdot d + 514} + 8064 \\cdot \\sqrt{3} \\cdot d \\cdot T - \\frac{7}{8} \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{257}{8} \\cdot d + \\frac{4095}{8}} + 2 \\cdot \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{2065}{4}} - 3528 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{23}{2}} \\cdot T - 12096 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{21}{2}} \\cdot T + 1386 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{71}{8}} \\cdot T + 6552 \\cdot \\sqrt{\\frac{33}{4} \\cdot d + \\frac{63}{8}} \\cdot T + 126 \\cdot \\sqrt{\\frac{65}{8} \\cdot d + \\frac{71}{8}} \\cdot T - \\sqrt{\\frac{1}{8} \\cdot d^{2} + \\frac{129}{4} \\cdot d + \\frac{4109}{8}} + 124 \\cdot \\sqrt{24 \\cdot d + 512} \\cdot T + 2 \\cdot \\sqrt{23 \\cdot d + 512} \\cdot T + 2 \\cdot \\sqrt{16 \\cdot d + 512} \\cdot T + 14256 \\cdot \\sqrt{\\frac{21}{8}} \\cdot d \\cdot T + \\frac{57}{512} \\cdot \\sqrt{\\frac{21}{8}} \\cdot d^{2} - 1536 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{37}{8}} \\cdot T - 14112 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + \\frac{29}{8}} \\cdot T + \\sqrt{32 \\cdot d + 512} \\cdot T + 372 \\cdot \\sqrt{\\frac{193}{8} \\cdot d + \\frac{4117}{8}} \\cdot T + \\sqrt{16 \\cdot d + 507} \\cdot T + 320 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 2} \\cdot T + 7504 \\cdot \\sqrt{\\frac{1}{4} \\cdot d + 1} \\cdot T + \\frac{93225}{8} \\cdot T - \\frac{11}{32} \\cdot d - 7296 \\cdot \\sqrt{3} \\cdot T - 9200 \\cdot \\sqrt{\\frac{21}{8}} \\cdot T - \\frac{57}{64} \\cdot \\sqrt{\\frac{21}{8}} \\cdot d - \\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 17\\right] \\Rightarrow \\frac{119}{8} \\cdot d \\cdot T - \\frac{1463}{8} \\cdot T + \\left[T > 0 and d >= 17 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 7 \\cdot d \\cdot T - 112 \\cdot T - \\left[T > 0 and d >= 10\\right] \\Rightarrow \\frac{127}{4} \\cdot d \\cdot T - \\frac{2159}{8} \\cdot T + \\left[d = 9 and T > 0\\right] \\Rightarrow \\frac{127}{8} \\cdot T - \\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 9\\right] \\Rightarrow 119 \\cdot T + \\left[T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 56 \\cdot T - \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{191}{8} \\cdot d \\cdot T - \\frac{2167}{8} \\cdot T + \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow \\frac{127}{64} \\cdot d^{2} \\cdot T - \\frac{2159}{64} \\cdot d \\cdot T + \\frac{1143}{8} \\cdot T - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{889}{64} \\cdot d^{2} \\cdot T - \\frac{4445}{32} \\cdot d \\cdot T + \\frac{889}{4} \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 119 \\cdot d \\cdot T - \\frac{1393}{4} \\cdot T - \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - \\frac{567}{8} \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{441}{8} \\cdot T - \\left[T > 0 and 3 <= d <= 8\\right] \\Rightarrow 127 \\cdot d \\cdot T - 254 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 63 \\cdot T - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 8 \\cdot d \\cdot T - 64 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 64 \\cdot T - \\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 128 \\cdot d^{2} \\cdot T + 8192 \\cdot d \\cdot T + 640 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 128 \\cdot d^{2} \\cdot T + 8064 \\cdot d \\cdot T - 7296 \\cdot T + \\left[d = 1 and T > 0\\right] \\Rightarrow 9086 \\cdot T - \\left[T > 0 and 10 <= d <= 16\\right] \\Rightarrow 8 \\cdot d \\cdot T - 72 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 56 \\cdot T - 3 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T - 63 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 63 \\cdot T - \\left[T >= 2 and d >= 10\\right] \\Rightarrow \\frac{1}{4} \\cdot d \\cdot T - \\frac{17}{8} \\cdot T - d + \\frac{17}{8} + \\left[d = 9 and T >= 2\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T - d + 1 - \\left[T >= 2 and 10 <= d <= 16\\right] \\Rightarrow \\frac{1}{64} \\cdot d^{2} \\cdot T - \\frac{17}{64} \\cdot d \\cdot T - d^{2} + \\frac{9}{8} \\cdot T + \\frac{17}{64} \\cdot d - \\frac{9}{8} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - \\frac{9}{8} \\cdot T - d + \\frac{9}{8} - \\left[T >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{7}{64} \\cdot d^{2} \\cdot T - \\frac{35}{32} \\cdot d \\cdot T - \\frac{7}{64} \\cdot d^{2} + \\frac{7}{4} \\cdot T + \\frac{35}{32} \\cdot d - \\frac{7}{4} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{7}{8} \\cdot d \\cdot T - \\frac{7}{4} \\cdot T - \\frac{7}{8} \\cdot d + \\frac{7}{4} - \\left[T >= 2 and 10 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - \\frac{9}{8} \\cdot T - d + \\frac{9}{8} + \\left[T >= 2 and d >= 17\\right] \\Rightarrow \\frac{7}{8} \\cdot T - \\frac{7}{8} - \\left[T >= 2 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T - d + 1 + \\left[T >= 2 and d >= 17\\right] \\Rightarrow T - 1 - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{6489}{8} \\cdot d \\cdot T - 6489 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T + 6363 \\cdot T - \\left[T > 0 and d >= 17\\right] \\Rightarrow \\frac{63}{8} \\cdot d \\cdot T + 1197 \\cdot T + \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1323}{8} \\cdot d \\cdot T - 1323 \\cdot T - 2 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{63}{4} \\cdot d \\cdot T - 126 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 126 \\cdot T - \\left[T > 0 and 0 < d <= 8\\right] \\Rightarrow 6930 \\cdot T + \\left[T > 0 and d >= 9\\right] \\Rightarrow 126 \\cdot T - \\left[(-1 + d) mod 8 = 0 and T > 0 and d >= 9\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{113}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{71}{64} \\cdot d + \\frac{24583}{64} + \\left[T > 0 and d >= 9 and 8*floor((-1 + d)/8) <= -2 + d\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14256 \\cdot d \\cdot T + \\frac{57}{512} \\cdot d^{2} - 9200 \\cdot T - \\frac{57}{64} \\cdot d + 384 + \\left[T > 0 and 2 <= d <= 8\\right] \\Rightarrow 224 \\cdot d^{2} \\cdot T + 14224 \\cdot d \\cdot T - 8944 \\cdot T + 384 + \\left[d = 1 and T > 0\\right] \\Rightarrow 5504 \\cdot T + 384 - 2 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{31}{4} \\cdot d \\cdot T - 62 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 62 \\cdot T - 6 \\cdot \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow \\frac{1}{8} \\cdot d \\cdot T - T + \\left[T > 0 and d >= 17\\right] \\Rightarrow T - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 16 \\cdot d^{2} \\cdot T + 808 \\cdot d \\cdot T - 7488 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 128 \\cdot d \\cdot T + 7488 \\cdot T - \\left[T > 0 and 9 <= d <= 16\\right] \\Rightarrow 56 \\cdot d \\cdot T - 448 \\cdot T + \\left[T > 0 and d >= 17\\right] \\Rightarrow 448 \\cdot T + 384 \\cdot \\sqrt{\\frac{21}{8}} + \\frac{2071}{4}",
+  "parallel": null,
+  "notes": [
+    "Barvinok runs inside a context initialized with `--approximation-method=scale`.",
+    "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.",
+    "Reuse distance is derived from the cardinality of the access-image inside each reuse interval window, without Denning recursion.",
+    "The compulsory-access term is modeled separately as total accesses minus warm reuses.",
+    "Filtered 98 DMD region(s) whose domains add equality or upper-bound constraints on named scaling dimensions.",
+    "Filtered 76 RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+  ]
+}

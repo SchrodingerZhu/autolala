@@ -19,6 +19,10 @@ pub enum FormulaExpr {
     Div(Box<FormulaExpr>, Box<FormulaExpr>),
     Pow(Box<FormulaExpr>, u32),
     Sqrt(Box<FormulaExpr>),
+    /// Integer floor of the inner expression. Quasi-polynomial div dimensions
+    /// must render through this node: an isl div is floor(affine), and dropping
+    /// the floor collapses integer-valued step terms into wrong rationals.
+    Floor(Box<FormulaExpr>),
 }
 
 impl FormulaExpr {
@@ -61,6 +65,16 @@ impl FormulaExpr {
             plain: plain.into(),
             latex: latex.into(),
         }
+    }
+
+    pub fn floor(expr: FormulaExpr) -> Self {
+        if let Some(rational) = expr.as_rational() {
+            return Self::Rational {
+                numerator: rational.numerator.div_euclid(rational.denominator),
+                denominator: 1,
+            };
+        }
+        Self::Floor(Box::new(expr))
     }
 
     pub fn add(terms: impl IntoIterator<Item = FormulaExpr>) -> Self {
@@ -283,6 +297,33 @@ impl FormulaExpr {
         }
     }
 
+    /// Collect every symbol name appearing in the expression tree. Raw nodes
+    /// are opaque and contribute nothing.
+    pub fn collect_symbols(&self, out: &mut std::collections::HashSet<String>) {
+        match self {
+            FormulaExpr::Rational { .. } | FormulaExpr::Raw { .. } => {}
+            FormulaExpr::Symbol(name) => {
+                out.insert(name.clone());
+            }
+            FormulaExpr::Add(terms) => {
+                for term in terms {
+                    term.collect_symbols(out);
+                }
+            }
+            FormulaExpr::Mul(factors) => {
+                for factor in factors {
+                    factor.collect_symbols(out);
+                }
+            }
+            FormulaExpr::Div(numerator, denominator) => {
+                numerator.collect_symbols(out);
+                denominator.collect_symbols(out);
+            }
+            FormulaExpr::Pow(base, _) => base.collect_symbols(out),
+            FormulaExpr::Sqrt(expr) | FormulaExpr::Floor(expr) => expr.collect_symbols(out),
+        }
+    }
+
     fn degree(&self) -> u32 {
         match self {
             FormulaExpr::Rational { .. } | FormulaExpr::Raw { .. } => 0,
@@ -292,6 +333,7 @@ impl FormulaExpr {
             FormulaExpr::Div(numerator, _) => numerator.degree(),
             FormulaExpr::Pow(base, exponent) => base.degree().saturating_mul(*exponent),
             FormulaExpr::Sqrt(expr) => expr.degree(),
+            FormulaExpr::Floor(expr) => expr.degree(),
         }
     }
 
@@ -376,6 +418,15 @@ impl FormulaExpr {
                 };
                 (3, rendered)
             }
+            FormulaExpr::Floor(expr) => {
+                let rendered = match style {
+                    RenderStyle::Plain => format!("floor({})", expr.render(style, 0)),
+                    RenderStyle::Latex => {
+                        format!("\\left\\lfloor {} \\right\\rfloor", expr.render(style, 0))
+                    }
+                };
+                (4, rendered)
+            }
         };
 
         if precedence < parent_precedence {
@@ -406,7 +457,9 @@ impl FormulaExpr {
                     && *numerator < 0
                 {
                     let mut magnitude = Vec::new();
-                    if *numerator != -1 || factors.len() == 1 {
+                    // Keep the magnitude unless it is exactly one: a leading
+                    // -1/2 must stay as (1/2), not vanish into a bare sign.
+                    if *numerator != -1 || *denominator != 1 || factors.len() == 1 {
                         magnitude.push(FormulaExpr::rational(-numerator, *denominator));
                     }
                     magnitude.extend(factors.into_iter().skip(1));
@@ -441,13 +494,19 @@ impl<'a> FormulaFormatter<'a> {
         Ok(FormulaExpr::add(terms))
     }
 
+    /// The rational value of an isl affine expression:
+    /// `constant + Σ coeff·dim + Σ coeff·floor(nested div)`.
+    /// The `*_val` getters already return fully divided rational values, so no
+    /// further division by the denominator may be applied (doing so was the
+    /// double-division bug that turned `floor((i+1)/8)` into `(i+1)/64`).
+    /// Note an `isl_aff` is exact rational arithmetic — only its *div*
+    /// dimensions carry floors, and those are rendered via [`Self::floor_div`].
     pub fn affine(&self, aff: Affine<'a>) -> Result<FormulaExpr, barvinok::Error> {
-        let denominator = self.value(aff.get_denominator_val()?);
-        let mut numerator_terms = Vec::new();
+        let mut terms = Vec::new();
 
         let constant = self.value(aff.get_constant_val()?);
         if !constant.is_zero() {
-            numerator_terms.push(constant);
+            terms.push(constant);
         }
 
         for ty in [DimType::Param, DimType::In] {
@@ -460,16 +519,34 @@ impl<'a> FormulaFormatter<'a> {
 
                 let symbol =
                     FormulaExpr::symbol(self.space.get_dim_name(ty, index)?.unwrap_or("unnamed"));
-                numerator_terms.push(FormulaExpr::mul([coefficient, symbol]));
+                terms.push(FormulaExpr::mul([coefficient, symbol]));
             }
         }
 
-        let numerator = FormulaExpr::add(numerator_terms);
-        if denominator.is_one() {
-            Ok(numerator)
-        } else {
-            Ok(FormulaExpr::div(numerator, denominator))
+        // An affine may reference (earlier) div dimensions; each use is a
+        // coefficient times the floor of that div's own affine.
+        let div_dims = aff.dim(DimType::Div)?;
+        for index in 0..div_dims {
+            let coefficient = self.value(aff.get_coefficient_val(DimType::Div, index as i32)?);
+            if coefficient.is_zero() {
+                continue;
+            }
+
+            let div_aff = aff
+                .get_div(index as i32)
+                .ok_or(barvinok::Error::VariablePositionOutOfBounds)?;
+            let div = self.floor_div(div_aff)?;
+            terms.push(FormulaExpr::mul([coefficient, div]));
         }
+
+        Ok(FormulaExpr::add(terms))
+    }
+
+    /// An isl div dimension is `floor(<affine>)`; dropping the floor turns an
+    /// integer-valued step term into a wrong rational (the original stencil
+    /// conservation bug), so every div use must come through here.
+    fn floor_div(&self, aff: Affine<'a>) -> Result<FormulaExpr, barvinok::Error> {
+        Ok(FormulaExpr::floor(self.affine(aff)?))
     }
 
     pub fn value(&self, value: Value<'a>) -> FormulaExpr {
@@ -477,8 +554,30 @@ impl<'a> FormulaFormatter<'a> {
     }
 
     fn term(&self, term: Term<'a>) -> Result<FormulaExpr, barvinok::Error> {
+        if std::env::var_os("DMD_DEBUG_TERM_DIMS").is_some() {
+            eprintln!(
+                "term dims: param={:?} in={:?} out={:?} div={:?}; space names: {:?}",
+                term.dim(DimType::Param),
+                term.dim(DimType::In),
+                term.dim(DimType::Out),
+                term.dim(DimType::Div),
+                (0..8)
+                    .map(|i| {
+                        (
+                            self.space.get_dim_name(DimType::In, i),
+                            self.space.get_dim_name(DimType::Out, i),
+                        )
+                    })
+                    .collect::<Vec<_>>()
+            );
+        }
         let mut factors = vec![self.value(term.coefficient()?)];
-        for ty in [DimType::Param, DimType::In] {
+        // isl terms expose their monomial exponents on the *param* and *set*
+        // (= Out) slots only — isl_term_get_exp rejects isl_dim_in — while the
+        // enclosing quasi-polynomial space names those same set dims as In
+        // dims. Reading exponents via In used to silently drop every set-dim
+        // monomial (a value `-7 + 2*i1` rendered as `-5`).
+        for ty in [DimType::Param, DimType::Out] {
             let dims = term.dim(ty)?;
             for index in 0..dims {
                 let exponent = term.exponent(ty, index)?;
@@ -486,8 +585,15 @@ impl<'a> FormulaFormatter<'a> {
                     continue;
                 }
 
-                let factor =
-                    FormulaExpr::symbol(self.space.get_dim_name(ty, index)?.unwrap_or("unnamed"));
+                let name = if matches!(ty, DimType::Param) {
+                    self.space.get_dim_name(DimType::Param, index)?
+                } else {
+                    match self.space.get_dim_name(DimType::In, index)? {
+                        Some(name) => Some(name),
+                        None => self.space.get_dim_name(DimType::Out, index)?,
+                    }
+                };
+                let factor = FormulaExpr::symbol(name.unwrap_or("unnamed"));
                 factors.push(FormulaExpr::pow(factor, exponent));
             }
         }
@@ -499,7 +605,7 @@ impl<'a> FormulaFormatter<'a> {
                 continue;
             }
 
-            let factor = self.affine(term.get_div(index)?)?;
+            let factor = self.floor_div(term.get_div(index)?)?;
             factors.push(FormulaExpr::pow(factor, exponent));
         }
 
@@ -743,5 +849,30 @@ mod tests {
         ]);
         assert_eq!(expr.to_plain(), "2 * N - 2");
         assert_eq!(expr.to_latex(), "2 \\cdot N - 2");
+    }
+
+    /// Regression: a negative fractional coefficient with numerator -1 must
+    /// keep its magnitude when rendered inside a sum. `x - (1/2)*y` once
+    /// rendered as `x - y` because extract_sign dropped any -1/k coefficient.
+    #[test]
+    fn negative_unit_numerator_fraction_keeps_magnitude() {
+        let expr = FormulaExpr::add([
+            FormulaExpr::symbol("x"),
+            FormulaExpr::mul([FormulaExpr::rational(-1, 2), FormulaExpr::symbol("y")]),
+        ]);
+        assert_eq!(expr.to_plain(), "x - (1/2) * y");
+    }
+
+    #[test]
+    fn floors_render_and_fold() {
+        let expr = FormulaExpr::floor(FormulaExpr::add([
+            FormulaExpr::mul([FormulaExpr::rational(1, 8), FormulaExpr::symbol("n")]),
+            FormulaExpr::rational(7, 8),
+        ]));
+        assert_eq!(expr.to_plain(), "floor((1/8) * n + (7/8))");
+        assert_eq!(
+            FormulaExpr::floor(FormulaExpr::rational(-3, 2)).to_plain(),
+            "-2"
+        );
     }
 }

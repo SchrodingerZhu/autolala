@@ -1,15 +1,15 @@
 {
  "sym_2mm": {
   "status": "ok",
-  "secs": 44.6,
+  "secs": 95.8,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_3mm": {
-  "status": "ok",
-  "secs": 133.4,
-  "family": "symbolic",
-  "inf": true
+  "status": "analyze_fail",
+  "secs": 1328.8,
+  "family": "symbolic"
  },
  "sym_adi": {
   "status": "extract_fail",
@@ -18,39 +18,45 @@
  },
  "sym_atax": {
   "status": "ok",
-  "secs": 8.1,
+  "secs": 8.5,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_bicg": {
   "status": "ok",
-  "secs": 7.3,
+  "secs": 7.7,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_cholesky": {
   "status": "ok",
-  "secs": 42.3,
+  "secs": 45.4,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_convolution": {
   "status": "ok",
-  "secs": 60.1,
+  "secs": 342.4,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_correlation": {
   "status": "ok",
-  "secs": 285.1,
+  "secs": 341.5,
   "family": "symbolic",
-  "inf": false
+  "inf": true,
+  "method": "exact"
  },
  "sym_covariance": {
   "status": "ok",
-  "secs": 147.7,
+  "secs": 163.1,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_deriche": {
   "status": "extract_fail",
@@ -59,9 +65,10 @@
  },
  "sym_doitgen": {
   "status": "ok",
-  "secs": 28.1,
+  "secs": 30.4,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_durbin": {
   "status": "extract_fail",
@@ -70,241 +77,280 @@
  },
  "sym_fdtd": {
   "status": "ok",
-  "secs": 285.1,
+  "secs": 385.9,
   "family": "symbolic",
-  "inf": false
+  "inf": true,
+  "method": "exact"
  },
  "sym_floyd_warshall": {
   "status": "ok",
-  "secs": 60.6,
+  "secs": 65.8,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_gemm": {
   "status": "ok",
-  "secs": 6.2,
+  "secs": 7.1,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_gemver": {
   "status": "ok",
-  "secs": 40.4,
+  "secs": 41.4,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_gesummv": {
   "status": "ok",
-  "secs": 18.6,
+  "secs": 19.3,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_gramschmidt": {
   "status": "ok",
-  "secs": 55.6,
+  "secs": 61.6,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_heat-3d": {
-  "status": "analyze_fail",
-  "secs": 160.1,
-  "family": "symbolic"
+  "status": "ok",
+  "secs": 3006.2,
+  "family": "symbolic",
+  "inf": false,
+  "method": "exact"
  },
  "sym_imperfect": {
-  "status": "ok",
-  "secs": 131.4,
-  "family": "symbolic",
-  "inf": true
+  "status": "analyze_fail",
+  "secs": 1072.1,
+  "family": "symbolic"
  },
  "sym_jacobi-1d": {
   "status": "ok",
-  "secs": 12.7,
+  "secs": 13.4,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_jacobi-2d": {
   "status": "ok",
-  "secs": 207.7,
+  "secs": 390.8,
   "family": "symbolic",
-  "inf": false
+  "inf": true,
+  "method": "exact"
  },
  "sym_lu": {
   "status": "ok",
-  "secs": 163.2,
+  "secs": 245.8,
   "family": "symbolic",
-  "inf": false
+  "inf": true,
+  "method": "exact"
  },
  "sym_lu_decomp": {
   "status": "ok",
-  "secs": 41.5,
+  "secs": 53.5,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_mvt": {
   "status": "ok",
-  "secs": 4.9,
+  "secs": 5.2,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_seidel-2d": {
   "status": "ok",
-  "secs": 165.9,
+  "secs": 218.4,
   "family": "symbolic",
-  "inf": false
+  "inf": true,
+  "method": "exact"
  },
  "sym_symm": {
   "status": "ok",
-  "secs": 42.1,
+  "secs": 47.2,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_syr2k": {
   "status": "ok",
-  "secs": 26.1,
+  "secs": 28.2,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_syrk": {
   "status": "ok",
-  "secs": 5.9,
+  "secs": 6.6,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_trisolve": {
   "status": "ok",
-  "secs": 5.5,
+  "secs": 6.1,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "sym_trmm": {
   "status": "ok",
-  "secs": 9.5,
+  "secs": 10.6,
   "family": "symbolic",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_3mm": {
   "status": "ok",
-  "secs": 53.9,
+  "secs": 54.8,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_atax": {
   "status": "ok",
-  "secs": 5.4,
+  "secs": 5.5,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_bicg": {
   "status": "ok",
-  "secs": 3.3,
+  "secs": 3.4,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_cholesky": {
   "status": "ok",
-  "secs": 26.6,
+  "secs": 29.0,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_convolution": {
   "status": "ok",
-  "secs": 7.7,
+  "secs": 8.3,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_correlation": {
   "status": "ok",
-  "secs": 178.8,
+  "secs": 194.9,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_covariance": {
   "status": "ok",
-  "secs": 75.0,
+  "secs": 86.3,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_doitgen": {
   "status": "ok",
-  "secs": 9.1,
+  "secs": 9.7,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_floyd_warshall": {
   "status": "ok",
-  "secs": 32.5,
+  "secs": 36.6,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_gemm": {
   "status": "ok",
-  "secs": 2.1,
+  "secs": 2.3,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_gemver": {
   "status": "ok",
-  "secs": 17.4,
+  "secs": 18.1,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_gesummv": {
   "status": "ok",
-  "secs": 7.5,
+  "secs": 7.6,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_gramschmidt": {
   "status": "ok",
-  "secs": 33.1,
+  "secs": 36.4,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_lu": {
   "status": "ok",
-  "secs": 25.1,
+  "secs": 27.3,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_mvt": {
   "status": "ok",
-  "secs": 2.2,
+  "secs": 2.4,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_seidel-2d": {
   "status": "ok",
-  "secs": 47.9,
+  "secs": 48.5,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_symm": {
   "status": "ok",
-  "secs": 16.2,
+  "secs": 17.5,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_syr2k": {
   "status": "ok",
-  "secs": 9.6,
+  "secs": 10.4,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_syrk": {
   "status": "ok",
-  "secs": 2.6,
+  "secs": 2.9,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_trisolve": {
   "status": "ok",
-  "secs": 3.9,
+  "secs": 4.2,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  },
  "const_trmm": {
   "status": "ok",
-  "secs": 3.7,
+  "secs": 4.0,
   "family": "const",
-  "inf": true
+  "inf": true,
+  "method": "exact"
  }
 }

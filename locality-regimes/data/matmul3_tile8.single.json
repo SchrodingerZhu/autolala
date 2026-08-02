@@ -1,0 +1,656 @@
+{
+  "options": {
+    "block_size": 8,
+    "num_sets": 1,
+    "max_operations": 3000000000,
+    "approximation_method": "scale",
+    "infinite_repeat": false
+  },
+  "total_accesses_plain": "1536 * T^3",
+  "total_accesses_latex": "1536 \\cdot T^{3}",
+  "warm_accesses_plain": "1535 * T^3 - 23 * T^2 + [T >= 3] => T^3 - T^2 + [T = 2] => 4",
+  "warm_accesses_latex": "1535 \\cdot T^{3} - 23 \\cdot T^{2} + \\left[T >= 3\\right] \\Rightarrow T^{3} - T^{2} + \\left[T = 2\\right] \\Rightarrow 4",
+  "compulsory_accesses_plain": "T^3 + 23 * T^2 - [T >= 3] => T^3 - T^2 + [T = 2] => 4",
+  "compulsory_accesses_latex": "T^{3} + 23 \\cdot T^{2} - \\left[T >= 3\\right] \\Rightarrow T^{3} - T^{2} + \\left[T = 2\\right] \\Rightarrow 4",
+  "timestamp_space": "[T, Ad0, Ad1, Bd0, Bd1, Cd0, Cd1] -> { [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 2] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 7 and 0 <= j <= 7 and 0 <= k <= 7; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 1] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 7 and 0 <= j <= 7 and 0 <= k <= 7; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 0] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 7 and 0 <= j <= 7 and 0 <= k <= 7 }",
+  "access_map": "[T, Ad0, Ad1, Bd0, Bd1, Cd0, Cd1] -> { [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 2] -> [2, 8i0 + i, j0] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 7 and 0 <= j <= 7 and 0 <= k <= 7; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 1] -> [1, 8k0 + k, j0] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 7 and 0 <= j <= 7 and 0 <= k <= 7; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 0] -> [0, 8i0 + i, k0] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 7 and 0 <= j <= 7 and 0 <= k <= 7 }",
+  "ri_distribution": [
+    {
+      "value_plain": "1536 * T^2 - 1512",
+      "value_latex": "1536 \\cdot T^{2} - 1512",
+      "mass_plain": "[T >= 3] => 8 * T^3 - 8 * T^2 + [T = 2] => 32",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow 8 \\cdot T^{3} - 8 \\cdot T^{2} + \\left[T = 2\\right] \\Rightarrow 32",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "8 * T^3 - 8 * T^2",
+          "count_latex": "8 \\cdot T^{3} - 8 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "1536 * T - 189",
+      "value_latex": "1536 \\cdot T - 189",
+      "mass_plain": "[T >= 3] => 8 * T^3 - 8 * T^2 + [T = 2] => 32",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow 8 \\cdot T^{3} - 8 \\cdot T^{2} + \\left[T = 2\\right] \\Rightarrow 32",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "8 * T^3 - 8 * T^2",
+          "count_latex": "8 \\cdot T^{3} - 8 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "24",
+      "value_latex": "24",
+      "mass_plain": "504 * T^3",
+      "mass_latex": "504 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "504 * T^3",
+          "count_latex": "504 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "1347",
+      "value_latex": "1347",
+      "mass_plain": "7 * T^3 - 7 * T^2",
+      "mass_latex": "7 \\cdot T^{3} - 7 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "7 * T^3 - 7 * T^2",
+          "count_latex": "7 \\cdot T^{3} - 7 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "1008 * T^3",
+      "mass_latex": "1008 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "1008 * T^3",
+          "count_latex": "1008 \\cdot T^{3}"
+        }
+      ]
+    }
+  ],
+  "rd_distribution": [
+    {
+      "value_plain": "8 * T^2 + 24 * T + 8",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T + 8",
+      "mass_plain": "7 * T^3 - 35 * T^2 + 56 * T - 28",
+      "mass_latex": "7 \\cdot T^{3} - 35 \\cdot T^{2} + 56 \\cdot T - 28",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "7 * T^3 - 35 * T^2 + 56 * T - 28",
+          "count_latex": "7 \\cdot T^{3} - 35 \\cdot T^{2} + 56 \\cdot T - 28"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 24 * T + 2",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T + 2",
+      "mass_plain": "T^3 - 5 * T^2 + 8 * T - 4",
+      "mass_latex": "T^{3} - 5 \\cdot T^{2} + 8 \\cdot T - 4",
+      "regions": [
+        {
+          "domain_plain": "k = 7 and T >= 3",
+          "count_plain": "T^3 - 5 * T^2 + 8 * T - 4",
+          "count_latex": "T^{3} - 5 \\cdot T^{2} + 8 \\cdot T - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 24 * T + 1",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T + 1",
+      "mass_plain": "14 * T^2 - 42 * T + 28",
+      "mass_latex": "14 \\cdot T^{2} - 42 \\cdot T + 28",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "14 * T^2 - 42 * T + 28",
+          "count_latex": "14 \\cdot T^{2} - 42 \\cdot T + 28"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 24 * T - 7",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T - 7",
+      "mass_plain": "7 * T^2 - 21 * T + 14",
+      "mass_latex": "7 \\cdot T^{2} - 21 \\cdot T + 14",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "7 * T - 7",
+          "count_latex": "7 \\cdot T - 7"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 24 * T - 14",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T - 14",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "k = 7 and 0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 16 * T + 2",
+      "value_latex": "8 \\cdot T^{2} + 16 \\cdot T + 2",
+      "mass_plain": "13 * T - 13",
+      "mass_latex": "13 \\cdot T - 13",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "13 * T - 13",
+          "count_latex": "13 \\cdot T - 13"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 16 * T + 1",
+      "value_latex": "8 \\cdot T^{2} + 16 \\cdot T + 1",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "2 * T - 2",
+          "count_latex": "2 \\cdot T - 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 24 * T - 5",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T - 5",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "k = 7 and T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 24 * T - 6",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T - 6",
+      "mass_plain": "14 * T - 14",
+      "mass_latex": "14 \\cdot T - 14",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "14 * T - 14",
+          "count_latex": "14 \\cdot T - 14"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 24 * T - 13",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T - 13",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "k = 7 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 24 * T",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 24 * T - 7",
+      "value_latex": "8 \\cdot T^{2} + 24 \\cdot T - 7",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 16 * T + 17",
+      "value_latex": "8 \\cdot T^{2} + 16 \\cdot T + 17",
+      "mass_plain": "7 * T^2 - 21 * T + 14",
+      "mass_latex": "7 \\cdot T^{2} - 21 \\cdot T + 14",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "7 * T - 7",
+          "count_latex": "7 \\cdot T - 7"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 16 * T + 11",
+      "value_latex": "8 \\cdot T^{2} + 16 \\cdot T + 11",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "k = 7 and 0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "8 * T^2 + 16 * T - 4",
+      "value_latex": "8 \\cdot T^{2} + 16 \\cdot T - 4",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "k = 7 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * T + 24",
+      "value_latex": "16 \\cdot T + 24",
+      "mass_plain": "6 * T^3 - 18 * T^2 + 12 * T",
+      "mass_latex": "6 \\cdot T^{3} - 18 \\cdot T^{2} + 12 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "6 * T^3 - 18 * T^2 + 12 * T",
+          "count_latex": "6 \\cdot T^{3} - 18 \\cdot T^{2} + 12 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * T + 17",
+      "value_latex": "16 \\cdot T + 17",
+      "mass_plain": "T^3 - 3 * T^2 + 2 * T",
+      "mass_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * T + 23",
+      "value_latex": "16 \\cdot T + 23",
+      "mass_plain": "6 * T^2 - 6 * T",
+      "mass_latex": "6 \\cdot T^{2} - 6 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < i <= 6",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * T + 10",
+      "value_latex": "16 \\cdot T + 10",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * T + 16",
+      "value_latex": "16 \\cdot T + 16",
+      "mass_plain": "[T >= 3] => T^3 - T^2 + [T = 2] => 4",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow T^{3} - T^{2} + \\left[T = 2\\right] \\Rightarrow 4",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        },
+        {
+          "domain_plain": "T = 2",
+          "count_plain": "4",
+          "count_latex": "4"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * T + 17",
+      "value_latex": "16 \\cdot T + 17",
+      "mass_plain": "6 * T^2 - 6 * T",
+      "mass_latex": "6 \\cdot T^{2} - 6 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < i <= 6",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "16 * T + 8",
+      "value_latex": "16 \\cdot T + 8",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "10",
+      "value_latex": "10",
+      "mass_plain": "392 * T^3",
+      "mass_latex": "392 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "392 * T^3",
+          "count_latex": "392 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "4",
+      "value_latex": "4",
+      "mass_plain": "56 * T^3",
+      "mass_latex": "56 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "k = 7 and T > 0",
+          "count_plain": "56 * T^3",
+          "count_latex": "56 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "12",
+      "value_latex": "12",
+      "mass_plain": "42 * T^3",
+      "mass_latex": "42 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "42 * T^3",
+          "count_latex": "42 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "11",
+      "value_latex": "11",
+      "mass_plain": "14 * T^3",
+      "mass_latex": "14 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "14 * T^3",
+          "count_latex": "14 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "32",
+      "value_latex": "32",
+      "mass_plain": "6 * T^3 - 6 * T^2",
+      "mass_latex": "6 \\cdot T^{3} - 6 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "6 * T^3 - 6 * T^2",
+          "count_latex": "6 \\cdot T^{3} - 6 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "12",
+      "value_latex": "12",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "i = 7 and T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "25",
+      "value_latex": "25",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "1008 * T^3",
+      "mass_latex": "1008 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "1008 * T^3",
+          "count_latex": "1008 \\cdot T^{3}"
+        }
+      ]
+    }
+  ],
+  "dmd_terms": [
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "7 * T^3 - 35 * T^2 + 56 * T - 28",
+      "multiplicity_latex": "7 \\cdot T^{3} - 35 \\cdot T^{2} + 56 \\cdot T - 28",
+      "reuse_distance_plain": "8 * T^2 + 24 * T + 8",
+      "reuse_distance_latex": "8 \\cdot T^{2} + 24 \\cdot T + 8",
+      "term_plain": "7 * sqrt(8 * T^2 + 24 * T + 8) * T^3 - 35 * sqrt(8 * T^2 + 24 * T + 8) * T^2 + 56 * sqrt(8 * T^2 + 24 * T + 8) * T - 28 * sqrt(8 * T^2 + 24 * T + 8)",
+      "term_latex": "7 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 8} \\cdot T^{3} - 35 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 8} \\cdot T^{2} + 56 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 8} \\cdot T - 28 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 8}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "14 * T^2 - 42 * T + 28",
+      "multiplicity_latex": "14 \\cdot T^{2} - 42 \\cdot T + 28",
+      "reuse_distance_plain": "8 * T^2 + 24 * T + 1",
+      "reuse_distance_latex": "8 \\cdot T^{2} + 24 \\cdot T + 1",
+      "term_plain": "14 * sqrt(8 * T^2 + 24 * T + 1) * T^2 - 42 * sqrt(8 * T^2 + 24 * T + 1) * T + 28 * sqrt(8 * T^2 + 24 * T + 1)",
+      "term_latex": "14 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 1} \\cdot T^{2} - 42 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 1} \\cdot T + 28 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 1}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "13 * T - 13",
+      "multiplicity_latex": "13 \\cdot T - 13",
+      "reuse_distance_plain": "8 * T^2 + 16 * T + 2",
+      "reuse_distance_latex": "8 \\cdot T^{2} + 16 \\cdot T + 2",
+      "term_plain": "13 * sqrt(8 * T^2 + 16 * T + 2) * T - 13 * sqrt(8 * T^2 + 16 * T + 2)",
+      "term_latex": "13 \\cdot \\sqrt{8 \\cdot T^{2} + 16 \\cdot T + 2} \\cdot T - 13 \\cdot \\sqrt{8 \\cdot T^{2} + 16 \\cdot T + 2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "2 * T - 2",
+      "multiplicity_latex": "2 \\cdot T - 2",
+      "reuse_distance_plain": "8 * T^2 + 16 * T + 1",
+      "reuse_distance_latex": "8 \\cdot T^{2} + 16 \\cdot T + 1",
+      "term_plain": "2 * sqrt(8 * T^2 + 16 * T + 1) * T - 2 * sqrt(8 * T^2 + 16 * T + 1)",
+      "term_latex": "2 \\cdot \\sqrt{8 \\cdot T^{2} + 16 \\cdot T + 1} \\cdot T - 2 \\cdot \\sqrt{8 \\cdot T^{2} + 16 \\cdot T + 1}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "14 * T - 14",
+      "multiplicity_latex": "14 \\cdot T - 14",
+      "reuse_distance_plain": "8 * T^2 + 24 * T - 6",
+      "reuse_distance_latex": "8 \\cdot T^{2} + 24 \\cdot T - 6",
+      "term_plain": "14 * sqrt(8 * T^2 + 24 * T - 6) * T - 14 * sqrt(8 * T^2 + 24 * T - 6)",
+      "term_latex": "14 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T - 6} \\cdot T - 14 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T - 6}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^2 - 3 * T + 2",
+      "multiplicity_latex": "T^{2} - 3 \\cdot T + 2",
+      "reuse_distance_plain": "8 * T^2 + 24 * T",
+      "reuse_distance_latex": "8 \\cdot T^{2} + 24 \\cdot T",
+      "term_plain": "sqrt(8 * T^2 + 24 * T) * T^2 - 3 * sqrt(8 * T^2 + 24 * T) * T + 2 * sqrt(8 * T^2 + 24 * T)",
+      "term_latex": "\\sqrt{8 \\cdot T^{2} + 24 \\cdot T} \\cdot T^{2} - 3 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T} \\cdot T + 2 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "8 * T^2 + 24 * T - 7",
+      "reuse_distance_latex": "8 \\cdot T^{2} + 24 \\cdot T - 7",
+      "term_plain": "sqrt(8 * T^2 + 24 * T - 7) * T - sqrt(8 * T^2 + 24 * T - 7)",
+      "term_latex": "\\sqrt{8 \\cdot T^{2} + 24 \\cdot T - 7} \\cdot T - \\sqrt{8 \\cdot T^{2} + 24 \\cdot T - 7}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "6 * T^3 - 18 * T^2 + 12 * T",
+      "multiplicity_latex": "6 \\cdot T^{3} - 18 \\cdot T^{2} + 12 \\cdot T",
+      "reuse_distance_plain": "16 * T + 24",
+      "reuse_distance_latex": "16 \\cdot T + 24",
+      "term_plain": "6 * sqrt(16 * T + 24) * T^3 - 18 * sqrt(16 * T + 24) * T^2 + 12 * sqrt(16 * T + 24) * T",
+      "term_latex": "6 \\cdot \\sqrt{16 \\cdot T + 24} \\cdot T^{3} - 18 \\cdot \\sqrt{16 \\cdot T + 24} \\cdot T^{2} + 12 \\cdot \\sqrt{16 \\cdot T + 24} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^3 - 3 * T^2 + 2 * T",
+      "multiplicity_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "reuse_distance_plain": "16 * T + 17",
+      "reuse_distance_latex": "16 \\cdot T + 17",
+      "term_plain": "sqrt(16 * T + 17) * T^3 - 3 * sqrt(16 * T + 17) * T^2 + 2 * sqrt(16 * T + 17) * T",
+      "term_latex": "\\sqrt{16 \\cdot T + 17} \\cdot T^{3} - 3 \\cdot \\sqrt{16 \\cdot T + 17} \\cdot T^{2} + 2 \\cdot \\sqrt{16 \\cdot T + 17} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "16 * T + 10",
+      "reuse_distance_latex": "16 \\cdot T + 10",
+      "term_plain": "sqrt(16 * T + 10) * T^2 - sqrt(16 * T + 10) * T",
+      "term_latex": "\\sqrt{16 \\cdot T + 10} \\cdot T^{2} - \\sqrt{16 \\cdot T + 10} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^3 - T^2",
+      "multiplicity_latex": "T^{3} - T^{2}",
+      "reuse_distance_plain": "16 * T + 16",
+      "reuse_distance_latex": "16 \\cdot T + 16",
+      "term_plain": "sqrt(16 * T + 16) * T^3 - sqrt(16 * T + 16) * T^2",
+      "term_latex": "\\sqrt{16 \\cdot T + 16} \\cdot T^{3} - \\sqrt{16 \\cdot T + 16} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "16 * T + 8",
+      "reuse_distance_latex": "16 \\cdot T + 8",
+      "term_plain": "sqrt(16 * T + 8) * T^2 - sqrt(16 * T + 8) * T",
+      "term_latex": "\\sqrt{16 \\cdot T + 8} \\cdot T^{2} - \\sqrt{16 \\cdot T + 8} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "392 * T^3",
+      "multiplicity_latex": "392 \\cdot T^{3}",
+      "reuse_distance_plain": "10",
+      "reuse_distance_latex": "10",
+      "term_plain": "392 * sqrt(10) * T^3",
+      "term_latex": "392 \\cdot \\sqrt{10} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "42 * T^3",
+      "multiplicity_latex": "42 \\cdot T^{3}",
+      "reuse_distance_plain": "12",
+      "reuse_distance_latex": "12",
+      "term_plain": "42 * sqrt(12) * T^3",
+      "term_latex": "42 \\cdot \\sqrt{12} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "14 * T^3",
+      "multiplicity_latex": "14 \\cdot T^{3}",
+      "reuse_distance_plain": "11",
+      "reuse_distance_latex": "11",
+      "term_plain": "14 * sqrt(11) * T^3",
+      "term_latex": "14 \\cdot \\sqrt{11} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "6 * T^3 - 6 * T^2",
+      "multiplicity_latex": "6 \\cdot T^{3} - 6 \\cdot T^{2}",
+      "reuse_distance_plain": "32",
+      "reuse_distance_latex": "32",
+      "term_plain": "6 * sqrt(32) * T^3 - 6 * sqrt(32) * T^2",
+      "term_latex": "6 \\cdot \\sqrt{32} \\cdot T^{3} - 6 \\cdot \\sqrt{32} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^3 - T^2",
+      "multiplicity_latex": "T^{3} - T^{2}",
+      "reuse_distance_plain": "25",
+      "reuse_distance_latex": "25",
+      "term_plain": "5 * T^3 - 5 * T^2",
+      "term_latex": "5 \\cdot T^{3} - 5 \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "1008 * T^3",
+      "multiplicity_latex": "1008 \\cdot T^{3}",
+      "reuse_distance_plain": "3",
+      "reuse_distance_latex": "3",
+      "term_plain": "1008 * sqrt(3) * T^3",
+      "term_latex": "1008 \\cdot \\sqrt{3} \\cdot T^{3}"
+    }
+  ],
+  "dmd_formula_plain": "7 * sqrt(8 * T^2 + 24 * T + 8) * T^3 - 35 * sqrt(8 * T^2 + 24 * T + 8) * T^2 + 14 * sqrt(8 * T^2 + 24 * T + 1) * T^2 + sqrt(8 * T^2 + 24 * T) * T^2 + 6 * sqrt(16 * T + 24) * T^3 + sqrt(16 * T + 17) * T^3 + sqrt(16 * T + 16) * T^3 + 6 * T^3 + 56 * sqrt(8 * T^2 + 24 * T + 8) * T - 42 * sqrt(8 * T^2 + 24 * T + 1) * T + 13 * sqrt(8 * T^2 + 16 * T + 2) * T + 2 * sqrt(8 * T^2 + 16 * T + 1) * T + 14 * sqrt(8 * T^2 + 24 * T - 6) * T - 3 * sqrt(8 * T^2 + 24 * T) * T + sqrt(8 * T^2 + 24 * T - 7) * T - 18 * sqrt(16 * T + 24) * T^2 - 3 * sqrt(16 * T + 17) * T^2 + sqrt(16 * T + 10) * T^2 - sqrt(16 * T + 16) * T^2 + sqrt(16 * T + 8) * T^2 + 392 * sqrt(10) * T^3 + 42 * sqrt(12) * T^3 + 14 * sqrt(11) * T^3 + 6 * sqrt(32) * T^3 + 1008 * sqrt(3) * T^3 + 18 * T^2 - 28 * sqrt(8 * T^2 + 24 * T + 8) + 28 * sqrt(8 * T^2 + 24 * T + 1) - 13 * sqrt(8 * T^2 + 16 * T + 2) - 2 * sqrt(8 * T^2 + 16 * T + 1) - 14 * sqrt(8 * T^2 + 24 * T - 6) + 2 * sqrt(8 * T^2 + 24 * T) - sqrt(8 * T^2 + 24 * T - 7) + 12 * sqrt(16 * T + 24) * T + 2 * sqrt(16 * T + 17) * T - sqrt(16 * T + 10) * T - sqrt(16 * T + 8) * T - 6 * sqrt(32) * T^2 - [T >= 3] => T^3 - T^2 + [T = 2] => 4",
+  "dmd_formula_latex": "7 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 8} \\cdot T^{3} - 35 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 8} \\cdot T^{2} + 14 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 1} \\cdot T^{2} + \\sqrt{8 \\cdot T^{2} + 24 \\cdot T} \\cdot T^{2} + 6 \\cdot \\sqrt{16 \\cdot T + 24} \\cdot T^{3} + \\sqrt{16 \\cdot T + 17} \\cdot T^{3} + \\sqrt{16 \\cdot T + 16} \\cdot T^{3} + 6 \\cdot T^{3} + 56 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 8} \\cdot T - 42 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 1} \\cdot T + 13 \\cdot \\sqrt{8 \\cdot T^{2} + 16 \\cdot T + 2} \\cdot T + 2 \\cdot \\sqrt{8 \\cdot T^{2} + 16 \\cdot T + 1} \\cdot T + 14 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T - 6} \\cdot T - 3 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T} \\cdot T + \\sqrt{8 \\cdot T^{2} + 24 \\cdot T - 7} \\cdot T - 18 \\cdot \\sqrt{16 \\cdot T + 24} \\cdot T^{2} - 3 \\cdot \\sqrt{16 \\cdot T + 17} \\cdot T^{2} + \\sqrt{16 \\cdot T + 10} \\cdot T^{2} - \\sqrt{16 \\cdot T + 16} \\cdot T^{2} + \\sqrt{16 \\cdot T + 8} \\cdot T^{2} + 392 \\cdot \\sqrt{10} \\cdot T^{3} + 42 \\cdot \\sqrt{12} \\cdot T^{3} + 14 \\cdot \\sqrt{11} \\cdot T^{3} + 6 \\cdot \\sqrt{32} \\cdot T^{3} + 1008 \\cdot \\sqrt{3} \\cdot T^{3} + 18 \\cdot T^{2} - 28 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 8} + 28 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T + 1} - 13 \\cdot \\sqrt{8 \\cdot T^{2} + 16 \\cdot T + 2} - 2 \\cdot \\sqrt{8 \\cdot T^{2} + 16 \\cdot T + 1} - 14 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T - 6} + 2 \\cdot \\sqrt{8 \\cdot T^{2} + 24 \\cdot T} - \\sqrt{8 \\cdot T^{2} + 24 \\cdot T - 7} + 12 \\cdot \\sqrt{16 \\cdot T + 24} \\cdot T + 2 \\cdot \\sqrt{16 \\cdot T + 17} \\cdot T - \\sqrt{16 \\cdot T + 10} \\cdot T - \\sqrt{16 \\cdot T + 8} \\cdot T - 6 \\cdot \\sqrt{32} \\cdot T^{2} - \\left[T >= 3\\right] \\Rightarrow T^{3} - T^{2} + \\left[T = 2\\right] \\Rightarrow 4",
+  "parallel": null,
+  "notes": [
+    "Barvinok runs inside a context initialized with `--approximation-method=scale`.",
+    "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.",
+    "Reuse distance is derived from the cardinality of the access-image inside each reuse interval window, without Denning recursion.",
+    "The compulsory-access term is modeled separately as total accesses minus warm reuses.",
+    "Filtered 13 DMD region(s) whose domains add equality or upper-bound constraints on named scaling dimensions.",
+    "Filtered 3 RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+  ]
+}

@@ -6,6 +6,18 @@ geometry: margin=1in
 fontsize: 10pt
 ---
 
+> **Supersession note (2026-07-30).** After this report was written, six
+> formula-rendering bugs were found and fixed in the analyzer (floors dropped
+> from quasi-polynomial divs, double division of affine coefficients, guards
+> dropped on single-piece renders, zero-count cells counted as warm, `-1/k`
+> coefficients losing their magnitude, and set-dimension monomials silently
+> erased — the last corrupted every triangular-kernel distance). An exact
+> counting mode was also added and the whole suite regenerated with it. The
+> quantitative tables in this report predate those fixes; **`TERMS.md` is the
+> corrected, authoritative term list** and supersedes this report's
+> coefficients wherever they disagree. The qualitative structure (the
+> d = a + ρ/2 law, the three classes, the infinite-repeat jumps) survives.
+
 This report measures the **data-movement cost** of the PolyBench kernels and
 explains what drives it. We use the AutoLALA `dmd` analyzer, which reads a loop
 nest and produces *symbolic* formulas — cost as a function of the problem size,
@@ -197,26 +209,33 @@ inf-repeat order marks a kernel whose growth rate *rises* under repetition.
 | gesummv     | 2 | 2.5 | 0.5 | 0.076 | **3.0** | 0.125 |
 | atax        | 2 | 2.5 | 0.5 | 0.062 | **3.0** | 0.044 |
 
-**Headroom 0.0** — data movement grows in lockstep with the work; no asymptotic
-locality slack.
+**Headroom 0.0 — *as read by the simple order estimate*.** These are all
+triangular kernels, and this is where the simple "order at large $N$" is least
+reliable. **§10 shows most of these readings are too low**: the exact trace puts
+`syrk`, `syr2k`, `symm`, `cholesky`, `lu` at positive, still-climbing headroom, and
+`trmm` at $+1$ once bin masses are summed exactly. Read this table as "what the
+smooth model reports," not "the truth," for the triangular kernels — the † marks
+the ones §10 corrects.
 
 | kernel | $a$ | $d$ | headroom | coeff | $d$ (inf) | coeff (inf) |
 |--------|:--:|:--:|:--:|--:|:--:|--:|
-| syr2k     | 3 | 3.0 | 0.0 | 3.789 | 3.0 | 3.827 |
-| symm      | 3 | 3.0 | 0.0 | 2.899 | 3.0 | 2.943 |
-| syrk      | 3 | 3.0 | 0.0 | 2.158 | 3.0 | 2.191 |
-| lu_decomp | 3 | 3.0 | 0.0 | 1.899 | 3.0 | 1.881 |
-| lu        | 3 | 3.0 | 0.0 | 1.378 | — | — |
-| trmm      | 3 | 3.0 | 0.0 | 1.366 | 3.0 | 1.351 |
-| cholesky  | 3 | 3.0 | 0.0 | 0.923 | 3.0 | 0.940 |
-| trisolve  | 2 | 2.0 | 0.0 | 2.871 | **3.0** | 0.031 |
+| syr2k†    | 3 | 3.0 | 0.0 | 3.789 | 3.0 | 3.827 |
+| symm†     | 3 | 3.0 | 0.0 | 2.899 | 3.0 | 2.943 |
+| syrk†     | 3 | 3.0 | 0.0 | 2.158 | 3.0 | 2.191 |
+| lu_decomp† | 3 | 3.0 | 0.0 | 1.899 | 3.0 | 1.881 |
+| lu†       | 3 | 3.0 | 0.0 | 1.378 | — | — |
+| trmm†     | 3 | 3.0 | 0.0 | 1.366 | 3.0 | 1.351 |
+| cholesky† | 3 | 3.0 | 0.0 | 0.923 | 3.0 | 0.940 |
+| trisolve   | 2 | 2.0 | 0.0 | 2.871 | **3.0** | 0.031 |
 
-Two things stand out immediately. First, **every headroom value is 0.0, 0.5, or
-1.0** — nothing in between. The reuse-distance growth $\rho$ is quantized to
-$\{0,1,2\}$ across the entire suite; there is no kernel whose worst reuse distance
-grows like, say, $N^{1.3}$. Second, within a headroom band the **coefficients
-spread over 1–2 orders of magnitude**, which is exactly the ranking information
-the growth rate alone throws away (§4).
+Two things stand out for the kernels whose order *has* anchored (headroom 1.0 and
+0.5, and `trisolve` here). First, **every such headroom value is 0.0, 0.5, or
+1.0** — nothing in between; the reuse-distance growth $\rho$ is quantized to
+$\{0,1,2\}$, with no kernel whose worst reuse distance grows like, say, $N^{1.3}$.
+Second, within a band the **coefficients spread over 1–2 orders of magnitude**,
+which is exactly the ranking information the growth rate alone throws away (§4).
+The catch — that the quantization looks *cleaner* than it is because the triangular
+kernels were mis-binned into headroom 0 — is the subject of §10.
 
 ---
 
@@ -243,17 +262,25 @@ it is stored by rows, or re-streamed on each pass — so its reuse distance grow
 $N$. The fix is **loop interchange or fusion** to bring that access's reuse close,
 recovering about $\sqrt{N}$.
 
-**Class C — headroom 0.0 (reuse distance bounded).** Triangular and
-accumulator kernels: `syrk`, `syr2k`, `cholesky`, `lu`, `lu_decomp`, `trmm`,
-`trisolve`, `symm`. Every element's reuse is already local — a resident
-accumulator, or a bounded triangular band — so there is no asymptotic locality
-slack. Tiling cannot change the growth rate (it may still help the constant
-factor). Optimization effort is better spent on vectorization and register use
-than on data locality.
+**Class C — headroom 0.0 (reuse distance bounded), as the *scale model* reports
+it.** The kernels the model puts here are the triangular ones: `syrk`, `syr2k`,
+`cholesky`, `lu`, `lu_decomp`, `trmm`, `trisolve`, `symm`. Taken at face value the
+reading is "reuse is already local, no asymptotic slack, don't bother tiling." **This
+label is mostly wrong, and §10 shows why.** On a triangular iteration space the
+leading DMD term is hard to anchor and the scale approximation under-resolves the
+largest reuse distances, so it reports headroom 0 for kernels that actually reuse
+data at whole-matrix distance. The exact trace puts `syrk`, `syr2k`, `symm`,
+`cholesky`, `lu` with *positive*, still-climbing headroom (and `trmm` at $+1$ once
+bin masses are summed correctly) — they do reward tiling, just past a larger cache
+threshold. The only kernel that stays genuinely near the bottom is `trisolve`
+(reuse distance $\sim N$, and even that is promoted by repetition, §7). **Treat a
+headroom-0 reading on a triangular kernel as provisional and check its curvature
+(§10) before concluding there is nothing to optimize.**
 
 The point of the taxonomy is predictive: given a new affine kernel, its headroom
 tells you up front whether a locality transformation is worth attempting at all,
-and if so which one and roughly what payoff to expect.
+and if so which one and roughly what payoff to expect — *provided the order has
+anchored*, which §10 shows is not automatic on triangular nests.
 
 ---
 
@@ -344,19 +371,29 @@ cache; loop interchange fixes the access order and pins it at 7.5% across all
 sizes — about **4$\times$ lower** at $N{=}2048$. Headroom-½ signature: a growing
 reuse distance from one mis-ordered access, capped by interchange.
 
-**Class C — `syrk` (predicted headroom 0: reuse distance bounded).** Every reuse
-is already local, so the miss rate should be flat in $N$ with nothing to fix.
+**Class C — `syrk` (scale model predicts headroom 0).** The scale model says
+reuse is bounded, so the miss rate should be flat. Over the sweep we ran, it is:
 
 | last-level miss rate | N=128 | N=256 | N=384 | N=512 |
 |----------------------|:--:|:--:|:--:|:--:|
 | naive | 0.31% | 0.13% | 0.12% | 0.09% |
 
-It is flat — if anything *declining*, as one-time costs amortize — and wall-clock
-time per access falls slightly (0.51 → 0.39 → 0.38 ns) rather than rising. There
-is no locality problem to solve. Headroom-0 signature.
+**But this "confirmation" is a size-range artifact, not a headroom-0 signature —
+see §10.** The sweep stopped at $N=512$. `syrk` actually reuses data at
+whole-matrix distance just like `gemm`; its cache cliff is simply at a slightly
+larger size, because its triangular structure shrinks the reuse distance by a
+constant factor. Extending the exact trace one octave further, `syrk`'s last-level
+miss rate jumps from $0.04\%$ at $N=512$ to $1.86\%$ at $N=640$ — the same
+two-order-of-magnitude cliff `gemm` shows at $512$. So `syrk` is *not* a
+headroom-0 kernel; §8's flat table caught it just before its crossing. The honest
+Class-C example is instead `trisolve`, whose reuse distance genuinely grows only
+like $N$.
 
-All three predicted behaviors are observed, on real cache hardware, for the class
-the growth-rate analysis assigned each kernel.
+The Class A and B predictions (a cliff that tiling removes; a climbing rate that
+interchange flattens) are observed cleanly on real cache hardware. The Class C
+prediction is the cautionary one: a flat miss curve confirms headroom 0 only if
+the sweep actually reaches the kernel's cache threshold — which §10 shows requires
+checking the reuse distance, not just eyeballing the range you happened to run.
 
 > A note on ground truth. Cachegrind is used only as an *independent check of the
 > reuse-distance prediction* — does the miss rate move the way the model says? —
@@ -398,7 +435,7 @@ data movement grows far less than the asymptotic headroom of $1.0$ promises. You
 are *pre-asymptotic*: the tiling payoff is latent, and how latent depends on where
 your $N$ sits.
 
-Contrast a headroom-0 kernel, `syrk`:
+Contrast what the *scale model* shows for `syrk`:
 
 | $N$ | DMD$(2N)/$DMD$(N)$ | local $p(N)$ | naive $2^d$ | local headroom |
 |----:|:--:|:--:|:--:|:--:|
@@ -406,10 +443,15 @@ Contrast a headroom-0 kernel, `syrk`:
 | 256  | 7.99 | 3.00 | 8.0 | 0.003 |
 | 4096 | 8.00 | 3.00 | 8.0 | 0.000 |
 
-`syrk` sits *at* its asymptote immediately — local exponent $3.00$, local headroom
-$0.00$ across the whole range. There is no pre-asymptotic regime and no latent
-payoff, because there is no growing reuse distance to wait for. This is the
-finite-$N$ face of "headroom 0 means nothing to optimize."
+In the scale model `syrk` sits *at* exponent $3.00$ with zero local headroom, and
+one would read this as "no growing reuse distance, no latent payoff." **§10 shows
+this is the scale approximation under-resolving `syrk`'s reuse: the exact trace has
+its local exponent at $3.5$–$3.6$ and climbing.** The lesson of this table is
+therefore double-edged — the local exponent is exact *for the model you feed it*,
+but if that model has compressed the reuse distances (as the scale approximation
+does on triangular nests), an exact local exponent of a wrong curve is still wrong.
+Curvature is the guard: the exact `syrk` curve has $q>0$ throughout, flagging the
+un-anchored term; the scale curve reports a spurious $q=0$.
 
 **The cliff the smooth exponent hides.** DMD is a smooth polynomial, so its local
 exponent drifts continuously. The real *miss* curve does not — it has a cliff at
@@ -421,10 +463,12 @@ $$N^{*} \;=\; \sqrt{2\,\text{MB}/8\,\text{B}} \;=\; 512.$$
 
 The cachegrind sweep in §8 put `gemm`'s last-level miss-rate jump at **exactly
 $N{=}512$**. The model's reuse-distance *coefficient* predicted the measured cliff
-location, not merely its existence. `syrk`'s dominant growing distance, by
-contrast, is only $\sim N^1$ and carries a vanishing fraction of the accesses, so
-its crossing size is astronomically large ($N^{*}\!\approx\!2.6\times10^5$) and no
-cliff appears in range — consistent with its flat measured miss rate.
+location, not merely its existence. `syrk` has the *same* kind of $\sim N^2$
+dominant distance — the scale model just could not see it — so it has a real cliff
+too, near $N\approx560$ (§10); the smooth headroom-0 curve above hides it entirely.
+This is why the threshold check must be run against the *exact* reuse distance, not
+the scale model's compressed one, whenever curvature says the order has not
+anchored.
 
 So the complete finite-range recipe is: use the **local exponent** $p(N)$ (exact,
 from the formula) for the smooth cost, and separately test whether your octave
@@ -433,12 +477,127 @@ the exponent; the threshold catches the discontinuity the exponent cannot see.
 
 ---
 
-## 10. What we could and could not analyze
+## 10. Re-examining the headroom-0 class: anchoring, curvature, and the exact trace
+
+The three-class taxonomy has a soft spot exactly where §9 was most confident. The
+kernels the model calls "headroom 0" are almost all **triangular** — `syrk`,
+`syr2k`, `symm`, `cholesky`, `lu`, `trmm`, `trisolve`. On a triangular iteration
+space two things conspire to make the leading DMD term hard to read, and both
+push the *reported* headroom below the *true* one.
+
+**Why the order is hard to anchor.** A triangular loop nest produces reuse-distance
+bin populations that are quasi-polynomials like $\tfrac{1}{6}N^3-\tfrac12 N^2+\dots$
+— a large leading term and large, opposite-sign lower terms. Fitting a single
+"order at large $N$" to such a curve converges slowly, and worse, a genuinely
+faster-growing DMD term can hide underneath with a *small coefficient*, so it does
+not overtake until $N$ is in the thousands. Reading one exponent off the formula
+then reports the bulk term and misses the faster one entirely. This is precisely
+the situation the user anticipated: "those loops are triangular and it is hard to
+anchor the leading term."
+
+We characterize it three ways instead of one (`anchor_analysis.py`).
+
+**1. An anchored term spectrum, exact.** We first made the analyzer emit, per
+reuse-distance bin, an exact **mass** — the parameter-only bin population — rather
+than a per-iteration-point count that has to be summed by hand (a fix that also
+corrected the warm/compulsory split; see §12). With exact masses, we anchor each
+term with no fitting at all: on the residue class $N=N_0+8k$ (step 8 absorbs the
+cache-line periodicity) a mass is an exact polynomial, so finite differences over
+rational arithmetic give its **exact degree and leading coefficient**. Summing
+$\text{mass}\cdot\sqrt{\text{distance}}$ term by term yields the DMD *spectrum*.
+The hidden term becomes visible — for `syrk`,
+
+$$\text{DMD}_{\text{scale}}(N) \;\approx\; 2.77\,N^{3} \;+\; 0.022\,N^{3.5} \;+\;\dots,$$
+
+an $N^{3.5}$ term (headroom $+\tfrac12$) with a coefficient $120\times$ smaller than
+the bulk, so it only overtakes near $N\approx16{,}000$. The naive "order at large
+$N$" reads $3$ and calls the headroom $0$; the spectrum shows the headroom is
+positive but *latent*.
+
+**2. Curvature as the anchoring diagnostic.** A pure power law is a straight line in
+log–log axes, so the discrete second derivative
+
+$$q(N)\;=\;p(2N)-p(N),\qquad p(N)=\log_2\frac{\text{DMD}(2N)}{\text{DMD}(N)},$$
+
+is zero once the leading term has anchored, and *positive* while a faster term is
+still mixing in. Curvature is the model-independent answer to "should I trust this
+exponent?" — $q\approx0$ means yes; $q>0$ and rising means the reported order is a
+lower bound. Across the triangular kernels $q$ is persistently positive
+($+0.05$ to $+0.14$); across the kernels whose order *has* anchored it sits at
+zero. This is exactly the "second-order/curvature" quantity worth having, and in
+DMD it is not a curiosity — it is the flag that separates a trustworthy order from
+a premature one.
+
+**3. The exact trace as arbiter.** To settle what the scale approximation itself
+gets wrong, we generate a C simulator directly from each kernel's DSL and compute
+**exact** reuse distances over 64-byte lines with a Fenwick-tree stack-distance
+pass (`exact/gen_sim.py`; validated to the digit against brute force). No
+approximation, no formula. The result is decisive:
+
+| kernel | scale headroom | exact $p(N)$, small→large $N$ | curvature $q$ | exact/scale DMD ratio | max reuse dist.: exact vs scale |
+|--------|:--:|:--:|:--:|:--:|:--:|
+| `syrk`     | 0.0 | 3.45 → 3.63 ↑ | $+0.07$ | 1.5 → 5.2 | 2079 vs **20** lines |
+| `syr2k`    | 0.0 | 3.48 → 3.61 ↑ | $+0.07$ | 1.8 → 5.2 | huge gap |
+| `symm`     | 0.0 | 3.48 → 3.66 ↑ | $+0.07$ | 2.1 → 7.5 | huge gap |
+| `cholesky` | 0.0 | 3.34 → 3.66 ↑ | $+0.13$ | 0.9 → 2.9 | 1087 vs **24** lines |
+| `lu`       | 0.0 | 3.48 → 3.61 ↑ | $+0.05$ | 1.9 → 4.6 | large gap |
+| `trmm`     | **+1.0** | 3.53 → 3.59 ↑ | $+0.02$ | 0.83 (flat) | matches |
+| `trisolve` | 0.0 | 2.09 → 2.25 ↑ | $+0.04$ | ~flat | small |
+| `gemm` (ref)  | +1.0 | 3.34 → 3.73 ↑ | $+0.15$ | ~flat | matches |
+| `mvt` (ref)   | +1.0 | 2.43 → 2.79 ↑ | $+0.08$ | ~flat | matches |
+
+Read the table across. Wherever the exact and scale models **agree** (`trmm`,
+`gemm`, `mvt`), the exact/scale DMD ratio is flat and the two models resolve the
+same maximum reuse distance — the scale headroom is trustworthy. Wherever the
+scale model reports **headroom 0** for a triangular kernel, its ratio to the exact
+DMD *grows* with $N$ (up to $7.5\times$), and it resolves reuse distances only up
+to ~20 lines when the true ones reach $N^2/8$ lines — hundreds to thousands. The
+scale approximation is **blind to these kernels' whole-matrix reuse**, and its
+headroom-0 label is an artifact.
+
+Two corrections to the taxonomy follow. First, the exact-mass fix alone moves
+**`trmm` out of Class C** — with masses summed correctly it plainly carries an
+$N^{4}$ term (headroom $+1$), which the scale model does capture. Second, the
+exact trace moves **`syrk`, `syr2k`, `symm`, `cholesky`, `lu`** out of "no
+locality slack": their DMD grows faster than their access count (exact exponent
+already $3.5$–$3.7$ and climbing, versus the scale model's flat $3.0$), because
+they reuse data at whole-matrix distance just like `gemm`. `trisolve` is the one
+kernel that stays genuinely near the bottom — its reuse distance grows only like
+$N$, and even its mild drift is the vector reuse that infinite-repeat (§7)
+promotes.
+
+**This is not academic — the cache cliff is real, §8 just stopped short.** §8 read
+`syrk`'s flat measured miss rate as confirmation of headroom 0. But the same exact
+trace, asked for capacity misses against a 2 MB last-level cache, shows the cliff
+is simply at a larger size:
+
+| last-level miss rate (2 MB, exact) | N=384 | N=448 | N=512 | N=640 | N=768 |
+|---|:--:|:--:|:--:|:--:|:--:|
+| `gemm` | 0.02% | 0.02% | **3.13%** | 3.13% | 3.13% |
+| `syrk` | 0.02% | 0.02% | 0.04% | **1.86%** | 2.52% |
+
+`syrk` has the *same* cliff as `gemm` — its miss rate jumps two orders of
+magnitude once its whole-matrix reuse outgrows the cache — only it crosses near
+$N\approx560$ instead of $512$, because the triangular structure makes its reuse
+distance a constant factor smaller. §8's cachegrind sweep stopped at $N=512$,
+exactly in the gap where `gemm` has crossed and `syrk` has not yet, which is why
+`syrk` looked flat. The "nothing to optimize" reading was the miss-rate twin of
+the un-anchored exponent: **both were finite-size artifacts, and curvature plus
+the exact trace expose both.**
+
+The practical upshot: for a triangular BLAS-3 kernel, do not trust a headroom-0
+reading from the smooth model. Check the curvature; if it is positive and rising,
+the kernel has latent locality slack and *will* reward tiling once $N$ is large
+enough to cross its (later, but real) cache threshold.
+
+---
+
+## 11. What we could and could not analyze
 
 Of the 53 PolyBench programs (31 symbolic-size, 22 fixed-size), the analyzer
 handled **48 under the single-shot model**, and **43 of those also under
 infinite-repeat**. That single-shot figure is up from 41 before this work: the
-reduction-loop fix in §11 recovered the six accumulator kernels (`convolution`,
+reduction-loop fix in §12 recovered the six accumulator kernels (`convolution`,
 `symm`, `gramschmidt` in both size families) that the extractor had previously
 refused. The growth-rate table in §5 covers the 27 symbolic kernels that yield a
 size-dependent formula (the fixed-size kernels give one number, not a growth
@@ -468,7 +627,7 @@ kernels that do produce clean formulas.
 
 ---
 
-## 11. Implementation notes
+## 12. Implementation notes
 
 Two toolchain changes made this study possible; both live in this branch.
 
@@ -493,6 +652,20 @@ passes suffice and the second-pass filter yields the steady-state distribution
 directly. A unit test pins the behavior to the §2 example — the wraparound reuse
 must appear at footprint distance and the access total must stay at one period.
 
+**Exact reuse-distance bin mass.** Each reuse-distance bin previously reported only
+per-region *counts*, and when a bin's value depended on loop iterators those
+iterators were lifted into parameter space, so the count became per-point and a
+naive read under-counted the bin population. We added an exact, parameter-only
+**mass** per bin — the cardinality of the un-projected piece domain, from isl —
+which fixed the warm/compulsory split and is what the §10 anchoring relies on.
+
+**Exact-trace simulator.** `exact/gen_sim.py` parses each kernel's DSL, emits its
+loop nest as C, and computes exact stack distances with a Fenwick tree over
+64-byte lines, reporting DMD, the reuse-distance histogram, the maximum reuse
+distance, and capacity misses against 2 MB / 8 MB caches. It is the approximation-
+free ground truth used in §10; validated to the digit against a brute-force
+reference on small sizes.
+
 **Block size.** The analyzer's block size is in elements. A 64-byte cache line is
 8 doubles, so we pass `--block-size 8` (16 would model single precision). This
 matches the line cachegrind simulates.
@@ -505,6 +678,8 @@ matches the line cachegrind simulates.
 python3 run_analysis.py both --resume   # analyze all kernels, both models -> results/
 python3 analyze_math.py                 # growth rates + coefficients -> order_table.json
 python3 local_analysis.py               # local exponent / doubling cost / cache threshold N*
+python3 anchor_analysis.py              # exact-anchored spectrum + curvature vs exact trace (§10)
+cd exact && python3 gen_sim.py          # exact stack-distance trace -> exact/<kernel>.json
 cd confirm && python3 sweep.py          # cachegrind miss-scaling -> cg.json
 pandoc REPORT.md -o REPORT.pdf --pdf-engine=xelatex \
    -V mainfont="DejaVu Serif" -V monofont="DejaVu Sans Mono"

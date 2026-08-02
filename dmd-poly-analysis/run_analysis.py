@@ -16,18 +16,18 @@ POLY = "/home/schrodingerzy/Documents/autolala/analyzer/misc/polybench"
 # or 16 f32 (float). PolyBench is double precision, so 8 elements == one 64-byte
 # line. (This matches the legacy autolala run, which used --block-size=8.)
 BLOCK = 8
-MAXOPS = "300000000"
-TIMEOUT = 360
+MAXOPS = "2000000000"
+TIMEOUT = 1500
 
 sys.path.insert(0, HERE)
 from tag_outer import tag  # noqa
 
 
-def run_dmd(dsl, infinite_repeat):
-    """Run dmd-cli on one DSL, single-shot or with --infinite-repeat.
+def run_dmd_method(dsl, infinite_repeat, method):
+    """Run dmd-cli on one DSL with the given counting method.
     Returns (record, error). record is None on failure."""
     args = [DMDCLI, "--block-size", str(BLOCK), "--max-operations", MAXOPS,
-            "--approximation-method", "scale", "--json"]
+            "--approximation-method", method, "--json"]
     if infinite_repeat:
         args.append("--infinite-repeat")
     try:
@@ -38,12 +38,27 @@ def run_dmd(dsl, infinite_repeat):
         return None, an.stderr.strip()[:400]
     d = json.loads(an.stdout)
     return {
+        "method": method,
         "total": d["total_accesses_plain"], "warm": d["warm_accesses_plain"],
         "compulsory": d["compulsory_accesses_plain"], "dmd": d["dmd_formula_plain"],
         "ri": d["ri_distribution"], "rd": d["rd_distribution"],
         "n_ri": len(d["ri_distribution"]), "n_rd": len(d["rd_distribution"]),
         "n_dmd_terms": len(d.get("dmd_terms", [])),
     }, None
+
+
+def run_dmd(dsl, infinite_repeat):
+    """Exact counting first (masses conserve to the integer); fall back to the
+    scale approximation when exact exceeds the operation budget or times out.
+    The record carries `method` so downstream tables can gate on it."""
+    rec, err = run_dmd_method(dsl, infinite_repeat, "exact")
+    if rec is not None:
+        return rec, None
+    rec2, err2 = run_dmd_method(dsl, infinite_repeat, "scale")
+    if rec2 is not None:
+        rec2["exact_error"] = err
+        return rec2, None
+    return None, f"exact: {err}; scale: {err2}"
 
 
 def analyze(mlir_path):
@@ -80,19 +95,43 @@ def analyze(mlir_path):
 # heavily parametric) and not worth the analysis budget. fdtd-apml times out.
 SKIP = {"const_fdtd-apml"}
 
+def rebuild_summary(files):
+    """Rebuild summary.json from the per-kernel result files."""
+    summary = {}
+    for f in files:
+        name = os.path.basename(f)[:-5]
+        path = f"{HERE}/results/{name}.json"
+        if not os.path.exists(path):
+            continue
+        rec = json.load(open(path))
+        summary[name] = {k: rec[k] for k in ("status", "secs", "family") if k in rec}
+        if rec.get("status") == "ok":
+            summary[name]["inf"] = bool(rec.get("inf"))
+            summary[name]["method"] = rec.get("single", {}).get("method")
+    json.dump(summary, open(f"{HERE}/summary.json", "w"), indent=1)
+    return summary
+
+
 if __name__ == "__main__":
     which = sys.argv[1] if len(sys.argv) > 1 else "both"
     resume = "--resume" in sys.argv
+    only = None
+    for arg in sys.argv[2:]:
+        if arg.startswith("--only="):
+            only = set(arg[len("--only="):].split(","))
+    no_summary = "--no-summary" in sys.argv
     files = []
     if which in ("symbolic", "both"):
         files += sorted(glob.glob(f"{POLY}/symbolic/*.mlir"))
     if which in ("const", "both"):
         files += sorted(glob.glob(f"{POLY}/const/*.mlir"))
-    summary = json.load(open(f"{HERE}/summary.json")) if (resume and os.path.exists(f"{HERE}/summary.json")) else {}
     for f in files:
         name0 = os.path.basename(f)[:-5]
         if name0 in SKIP:
-            print(f"{name0:28s} skipped (known bad case)", flush=True)
+            if only is None or name0 in only:
+                print(f"{name0:28s} skipped (known bad case)", flush=True)
+            continue
+        if only is not None and name0 not in only:
             continue
         if resume and os.path.exists(f"{HERE}/results/{name0}.json"):
             existing = json.load(open(f"{HERE}/results/{name0}.json"))
@@ -104,14 +143,14 @@ if __name__ == "__main__":
         rec["secs"] = round(time.time() - t0, 1)
         rec["family"] = "symbolic" if "/symbolic/" in f else "const"
         json.dump(rec, open(f"{HERE}/results/{name}.json", "w"), indent=1)
-        summary[name] = {k: rec[k] for k in ("status", "secs", "family") if k in rec}
         if rec["status"] == "ok":
+            m = rec["single"].get("method", "?")
             infn = "inf_ok" if rec.get("inf") else f"inf_fail({(rec.get('inf_error') or '')[:20]})"
-            summary[name]["inf"] = bool(rec.get("inf"))
-            note = f"single n_rd={rec['single']['n_rd']} / {infn}"
+            note = f"[{m}] single n_rd={rec['single']['n_rd']} / {infn}"
         else:
             note = rec.get("error", "")[:50]
         print(f"{name:28s} {rec['status']:14s} {rec['secs']:6.1f}s {note}", flush=True)
-        json.dump(summary, open(f"{HERE}/summary.json", "w"), indent=1)
-    nok = sum(1 for v in summary.values() if v["status"] == "ok")
-    print(f"DONE  ok={nok}/{len(files)}")
+    if not no_summary:
+        summary = rebuild_summary(files)
+        nok = sum(1 for v in summary.values() if v["status"] == "ok")
+        print(f"DONE  ok={nok}/{len(files)}")

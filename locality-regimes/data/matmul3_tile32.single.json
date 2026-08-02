@@ -1,0 +1,2832 @@
+{
+  "options": {
+    "block_size": 8,
+    "num_sets": 1,
+    "max_operations": 3000000000,
+    "approximation_method": "scale",
+    "infinite_repeat": false
+  },
+  "total_accesses_plain": "98304 * T^3",
+  "total_accesses_latex": "98304 \\cdot T^{3}",
+  "warm_accesses_plain": "98304 * T^3 - 96 * T^2",
+  "warm_accesses_latex": "98304 \\cdot T^{3} - 96 \\cdot T^{2}",
+  "compulsory_accesses_plain": "96 * T^2",
+  "compulsory_accesses_latex": "96 \\cdot T^{2}",
+  "timestamp_space": "[T, Ad0, Ad1, Bd0, Bd1, Cd0, Cd1] -> { [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 2] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 1] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 0] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31 }",
+  "access_map": "[T, Ad0, Ad1, Bd0, Bd1, Cd0, Cd1] -> { [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 2] -> [2, 32i0 + i, o2] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31 and -7 + 32j0 + j <= 8o2 <= 32j0 + j; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 0] -> [0, 32i0 + i, o2] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31 and -7 + 32k0 + k <= 8o2 <= 32k0 + k; [t0 = 0, i0, t1 = 0, j0, t2 = 0, k0, t3 = 0, i, t4 = 0, j, t5 = 0, k, t6 = 1] -> [1, 32k0 + k, o2] : 0 <= i0 < T and 0 <= j0 < T and 0 <= k0 < T and 0 <= i <= 31 and 0 <= j <= 31 and 0 <= k <= 31 and -7 + 32j0 + j <= 8o2 <= 32j0 + j }",
+  "ri_distribution": [
+    {
+      "value_plain": "98304 * T^2 - 95820",
+      "value_latex": "98304 \\cdot T^{2} - 95820",
+      "mass_plain": "[T >= 3] => 96 * T^3 - 96 * T^2 + [T = 2] => 384",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow 96 \\cdot T^{3} - 96 \\cdot T^{2} + \\left[T = 2\\right] \\Rightarrow 384",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "96 * T^3 - 96 * T^2",
+          "count_latex": "96 \\cdot T^{3} - 96 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "98304 * T^2 - 95904",
+      "value_latex": "98304 \\cdot T^{2} - 95904",
+      "mass_plain": "[T >= 3] => 32 * T^3 - 32 * T^2 + [T = 2] => 128",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow 32 \\cdot T^{3} - 32 \\cdot T^{2} + \\left[T = 2\\right] \\Rightarrow 128",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "32 * T^3 - 32 * T^2",
+          "count_latex": "32 \\cdot T^{3} - 32 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "98304 * T - (23955/8)",
+      "value_latex": "98304 \\cdot T - \\frac{23955}{8}",
+      "mass_plain": "[T >= 3] => 96 * T^3 - 96 * T^2 + [T = 2] => 384",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow 96 \\cdot T^{3} - 96 \\cdot T^{2} + \\left[T = 2\\right] \\Rightarrow 384",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "96 * T^3 - 96 * T^2",
+          "count_latex": "96 \\cdot T^{3} - 96 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "98304 * T - 2997",
+      "value_latex": "98304 \\cdot T - 2997",
+      "mass_plain": "[T >= 3] => 32 * T^3 - 32 * T^2 + [T = 2] => 128",
+      "mass_latex": "\\left[T >= 3\\right] \\Rightarrow 32 \\cdot T^{3} - 32 \\cdot T^{2} + \\left[T = 2\\right] \\Rightarrow 128",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "32 * T^3 - 32 * T^2",
+          "count_latex": "32 \\cdot T^{3} - 32 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "2484",
+      "value_latex": "2484",
+      "mass_plain": "2976 * T^3",
+      "mass_latex": "2976 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "2976 * T^3",
+          "count_latex": "2976 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "84",
+      "value_latex": "84",
+      "mass_plain": "28672 * T^3 + 96 * T^2",
+      "mass_latex": "28672 \\cdot T^{3} + 96 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "28672 * T^3 + 96 * T^2",
+          "count_latex": "28672 \\cdot T^{3} + 96 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "2400",
+      "value_latex": "2400",
+      "mass_plain": "992 * T^3",
+      "mass_latex": "992 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "992 * T^3",
+          "count_latex": "992 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(780333/8)",
+      "value_latex": "\\frac{780333}{8}",
+      "mass_plain": "64 * T^3 - 64 * T^2",
+      "mass_latex": "64 \\cdot T^{3} - 64 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "64 * T^3 - 64 * T^2",
+          "count_latex": "64 \\cdot T^{3} - 64 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "97539",
+      "value_latex": "97539",
+      "mass_plain": "32 * T^3 - 32 * T^2",
+      "mass_latex": "32 \\cdot T^{3} - 32 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "32 * T^3 - 32 * T^2",
+          "count_latex": "32 \\cdot T^{3} - 32 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "31744 * T^3",
+      "mass_latex": "31744 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31744 * T^3",
+          "count_latex": "31744 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(21/8)",
+      "value_latex": "\\frac{21}{8}",
+      "mass_plain": "29568 * T^3 + 192 * T^2",
+      "mass_latex": "29568 \\cdot T^{3} + 192 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "29568 * T^3 + 192 * T^2",
+          "count_latex": "29568 \\cdot T^{3} + 192 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(621/8)",
+      "value_latex": "\\frac{621}{8}",
+      "mass_plain": "2976 * T^3",
+      "mass_latex": "2976 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "2976 * T^3",
+          "count_latex": "2976 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "75",
+      "value_latex": "75",
+      "mass_plain": "992 * T^3",
+      "mass_latex": "992 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "992 * T^3",
+          "count_latex": "992 \\cdot T^{3}"
+        }
+      ]
+    }
+  ],
+  "rd_distribution": [
+    {
+      "value_plain": "128 * T^2 + 384 * T + (1283/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}",
+      "mass_plain": "12 * T^3 - 60 * T^2 + 96 * T - 48",
+      "mass_latex": "12 \\cdot T^{3} - 60 \\cdot T^{2} + 96 \\cdot T - 48",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "12 * T^3 - 60 * T^2 + 96 * T - 48",
+          "count_latex": "12 \\cdot T^{3} - 60 \\cdot T^{2} + 96 \\cdot T - 48"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (319/2)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}",
+      "mass_plain": "63 * T^3 - 315 * T^2 + 504 * T - 252",
+      "mass_latex": "63 \\cdot T^{3} - 315 \\cdot T^{2} + 504 \\cdot T - 252",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "63 * T^3 - 315 * T^2 + 504 * T - 252",
+          "count_latex": "63 \\cdot T^{3} - 315 \\cdot T^{2} + 504 \\cdot T - 252"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (10047/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{10047}{64}",
+      "mass_plain": "18 * T^3 - 90 * T^2 + 144 * T - 72",
+      "mass_latex": "18 \\cdot T^{3} - 90 \\cdot T^{2} + 144 \\cdot T - 72",
+      "regions": [
+        {
+          "domain_plain": "T >= 3 and 25 <= k <= 30",
+          "count_plain": "3 * T^3 - 15 * T^2 + 24 * T - 12",
+          "count_latex": "3 \\cdot T^{3} - 15 \\cdot T^{2} + 24 \\cdot T - 12"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (10257/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}",
+      "mass_plain": "2 * T^3 - 10 * T^2 + 16 * T - 8",
+      "mass_latex": "2 \\cdot T^{3} - 10 \\cdot T^{2} + 16 \\cdot T - 8",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "2 * T^3 - 10 * T^2 + 16 * T - 8",
+          "count_latex": "2 \\cdot T^{3} - 10 \\cdot T^{2} + 16 \\cdot T - 8"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (559/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{559}{64}",
+      "mass_plain": "T^3 - 5 * T^2 + 8 * T - 4",
+      "mass_latex": "T^{3} - 5 \\cdot T^{2} + 8 \\cdot T - 4",
+      "regions": [
+        {
+          "domain_plain": "j = 24 and k = 31 and T >= 3",
+          "count_plain": "T^3 - 5 * T^2 + 8 * T - 4",
+          "count_latex": "T^{3} - 5 \\cdot T^{2} + 8 \\cdot T - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (145/4)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{145}{4}",
+      "mass_plain": "8 * T^2 - 24 * T + 16",
+      "mass_latex": "8 \\cdot T^{2} - 24 \\cdot T + 16",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 3 and 8 <= j <= 16",
+          "count_plain": "4 * T^2 - 12 * T + 8",
+          "count_latex": "4 \\cdot T^{2} - 12 \\cdot T + 8"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (267/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{267}{8}",
+      "mass_plain": "4 * T^2 - 12 * T + 8",
+      "mass_latex": "4 \\cdot T^{2} - 12 \\cdot T + 8",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "4 * T^2 - 12 * T + 8",
+          "count_latex": "4 \\cdot T^{2} - 12 \\cdot T + 8"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (283/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{283}{8}",
+      "mass_plain": "42 * T^2 - 126 * T + 84",
+      "mass_latex": "42 \\cdot T^{2} - 126 \\cdot T + 84",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 3 and 8 <= j <= 16",
+          "count_plain": "21 * T^2 - 63 * T + 42",
+          "count_latex": "21 \\cdot T^{2} - 63 \\cdot T + 42"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (65/2)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{65}{2}",
+      "mass_plain": "21 * T^2 - 63 * T + 42",
+      "mass_latex": "21 \\cdot T^{2} - 63 \\cdot T + 42",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "21 * T^2 - 63 * T + 42",
+          "count_latex": "21 \\cdot T^{2} - 63 \\cdot T + 42"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (2103/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{2103}{64}",
+      "mass_plain": "12 * T^2 - 36 * T + 24",
+      "mass_latex": "12 \\cdot T^{2} - 36 \\cdot T + 24",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 3 and 8 <= j <= 16 and 25 <= k <= 30",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (1919/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{1919}{64}",
+      "mass_plain": "6 * T^2 - 18 * T + 12",
+      "mass_latex": "6 \\cdot T^{2} - 18 \\cdot T + 12",
+      "regions": [
+        {
+          "domain_plain": "T >= 3 and 25 <= k <= 30",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (2313/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{2313}{64}",
+      "mass_plain": "2 * T^2 - 6 * T + 4",
+      "mass_latex": "2 \\cdot T^{2} - 6 \\cdot T + 4",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 3 and 8 <= j <= 16",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (2129/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{2129}{64}",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (733/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{733}{8}",
+      "mass_plain": "8 * T^2 - 24 * T + 16",
+      "mass_latex": "8 \\cdot T^{2} - 24 \\cdot T + 16",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "8 * T - 8",
+          "count_latex": "8 \\cdot T - 8"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (735/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{735}{8}",
+      "mass_plain": "2 * T^2 - 6 * T + 4",
+      "mass_latex": "2 \\cdot T^{2} - 6 \\cdot T + 4",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and 0 < k0 <= -2 + T and 8 <= k <= 16",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (379/4)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{379}{4}",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (185/2)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{185}{2}",
+      "mass_plain": "42 * T^2 - 126 * T + 84",
+      "mass_latex": "42 \\cdot T^{2} - 126 \\cdot T + 84",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "42 * T - 42",
+          "count_latex": "42 \\cdot T - 42"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (371/4)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{371}{4}",
+      "mass_plain": "21 * T^2 - 63 * T + 42",
+      "mass_latex": "21 \\cdot T^{2} - 63 \\cdot T + 42",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T and 0 < k <= 23",
+          "count_plain": "(7/8) * T - (7/8)",
+          "count_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (6081/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{6081}{64}",
+      "mass_plain": "12 * T^2 - 36 * T + 24",
+      "mass_latex": "12 \\cdot T^{2} - 36 \\cdot T + 24",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T and 25 <= k <= 30",
+          "count_plain": "2 * T - 2",
+          "count_latex": "2 \\cdot T - 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (6097/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{6097}{64}",
+      "mass_plain": "6 * T^2 - 18 * T + 12",
+      "mass_latex": "6 \\cdot T^{2} - 18 \\cdot T + 12",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T and 25 <= k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (5871/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{5871}{64}",
+      "mass_plain": "2 * T^2 - 6 * T + 4",
+      "mass_latex": "2 \\cdot T^{2} - 6 \\cdot T + 4",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "2 * T - 2",
+          "count_latex": "2 \\cdot T - 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (15825/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{15825}{64}",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "j = 24 and k = 31 and 0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (161/4)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{161}{4}",
+      "mass_plain": "8 * T - 8",
+      "mass_latex": "8 \\cdot T - 8",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "4 * T - 4",
+          "count_latex": "4 \\cdot T - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (297/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{297}{8}",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 2 and 8 <= k <= 16",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (137/4)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{137}{4}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (315/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{315}{8}",
+      "mass_plain": "42 * T - 42",
+      "mass_latex": "42 \\cdot T - 42",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "21 * T - 21",
+          "count_latex": "21 \\cdot T - 21"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (145/4)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{145}{4}",
+      "mass_plain": "21 * T - 21",
+      "mass_latex": "21 \\cdot T - 21",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 23",
+          "count_plain": "(7/8) * T - (7/8)",
+          "count_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2359/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2359}{64}",
+      "mass_plain": "12 * T - 12",
+      "mass_latex": "12 \\cdot T - 12",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16 and 25 <= k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2159/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2159}{64}",
+      "mass_plain": "6 * T - 6",
+      "mass_latex": "6 \\cdot T - 6",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 25 <= k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2569/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2569}{64}",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2129/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2129}{64}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (367/4)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{367}{4}",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (149/4)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{149}{4}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + 128",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + 128",
+      "mass_plain": "31 * T^3 - 155 * T^2 + 248 * T - 124",
+      "mass_latex": "31 \\cdot T^{3} - 155 \\cdot T^{2} + 248 \\cdot T - 124",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "31 * T^3 - 155 * T^2 + 248 * T - 124",
+          "count_latex": "31 \\cdot T^{3} - 155 \\cdot T^{2} + 248 \\cdot T - 124"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + 98",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + 98",
+      "mass_plain": "T^3 - 5 * T^2 + 8 * T - 4",
+      "mass_latex": "T^{3} - 5 \\cdot T^{2} + 8 \\cdot T - 4",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 3",
+          "count_plain": "T^3 - 5 * T^2 + 8 * T - 4",
+          "count_latex": "T^{3} - 5 \\cdot T^{2} + 8 \\cdot T - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + 4",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + 4",
+      "mass_plain": "32 * T^2 - 96 * T + 64",
+      "mass_latex": "32 \\cdot T^{2} - 96 \\cdot T + 64",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "32 * T^2 - 96 * T + 64",
+          "count_latex": "32 \\cdot T^{2} - 96 \\cdot T + 64"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - 124",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - 124",
+      "mass_plain": "31 * T^2 - 93 * T + 62",
+      "mass_latex": "31 \\cdot T^{2} - 93 \\cdot T + 62",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "31 * T - 31",
+          "count_latex": "31 \\cdot T - 31"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - 154",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - 154",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and 0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + 8",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + 8",
+      "mass_plain": "32 * T - 32",
+      "mass_latex": "32 \\cdot T - 32",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "32 * T - 32",
+          "count_latex": "32 \\cdot T - 32"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (67/2)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{67}{2}",
+      "mass_plain": "6 * T^2 - 18 * T + 12",
+      "mass_latex": "6 \\cdot T^{2} - 18 \\cdot T + 12",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 3 and 8 <= j <= 16",
+          "count_plain": "3 * T^2 - 9 * T + 6",
+          "count_latex": "3 \\cdot T^{2} - 9 \\cdot T + 6"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (291/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{291}{8}",
+      "mass_plain": "3 * T^2 - 9 * T + 6",
+      "mass_latex": "3 \\cdot T^{2} - 9 \\cdot T + 6",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "3 * T^2 - 9 * T + 6",
+          "count_latex": "3 \\cdot T^{2} - 9 \\cdot T + 6"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (261/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{261}{8}",
+      "mass_plain": "42 * T^2 - 126 * T + 84",
+      "mass_latex": "42 \\cdot T^{2} - 126 \\cdot T + 84",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 3 and 8 <= j <= 16",
+          "count_plain": "21 * T^2 - 63 * T + 42",
+          "count_latex": "21 \\cdot T^{2} - 63 \\cdot T + 42"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (71/2)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{71}{2}",
+      "mass_plain": "21 * T^2 - 63 * T + 42",
+      "mass_latex": "21 \\cdot T^{2} - 63 \\cdot T + 42",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "21 * T^2 - 63 * T + 42",
+          "count_latex": "21 \\cdot T^{2} - 63 \\cdot T + 42"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (1927/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{1927}{64}",
+      "mass_plain": "12 * T^2 - 36 * T + 24",
+      "mass_latex": "12 \\cdot T^{2} - 36 \\cdot T + 24",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 3 and 8 <= j <= 16 and 25 <= k <= 30",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (2111/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{2111}{64}",
+      "mass_plain": "6 * T^2 - 18 * T + 12",
+      "mass_latex": "6 \\cdot T^{2} - 18 \\cdot T + 12",
+      "regions": [
+        {
+          "domain_plain": "T >= 3 and 25 <= k <= 30",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (2137/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{2137}{64}",
+      "mass_plain": "2 * T^2 - 6 * T + 4",
+      "mass_latex": "2 \\cdot T^{2} - 6 \\cdot T + 4",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 3 and 8 <= j <= 16",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (7561/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{7561}{64}",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "j = 24 and k = 31 and T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (181/2)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{181}{2}",
+      "mass_plain": "6 * T - 6",
+      "mass_latex": "6 \\cdot T - 6",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "3 * T - 3",
+          "count_latex": "3 \\cdot T - 3"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (703/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{703}{8}",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 2 and 8 <= k <= 16",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (363/4)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{363}{4}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (731/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{731}{8}",
+      "mass_plain": "42 * T - 42",
+      "mass_latex": "42 \\cdot T - 42",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "21 * T - 21",
+          "count_latex": "21 \\cdot T - 21"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (355/4)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{355}{4}",
+      "mass_plain": "21 * T - 21",
+      "mass_latex": "21 \\cdot T - 21",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 23",
+          "count_plain": "(7/8) * T - (7/8)",
+          "count_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (6009/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{6009}{64}",
+      "mass_plain": "12 * T - 12",
+      "mass_latex": "12 \\cdot T - 12",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16 and 25 <= k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (5841/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{5841}{64}",
+      "mass_plain": "6 * T - 6",
+      "mass_latex": "6 \\cdot T - 6",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 25 <= k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (5799/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{5799}{64}",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (15753/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{15753}{64}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "j = 24 and k = 31 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (65/2)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{65}{2}",
+      "mass_plain": "2 * T^2 - 6 * T + 4",
+      "mass_latex": "2 \\cdot T^{2} - 6 \\cdot T + 4",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 3 and 8 <= j <= 16",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + (283/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{283}{8}",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (183/2)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{183}{2}",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (355/4)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{355}{4}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T + 1",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T + 1",
+      "mass_plain": "30 * T^2 - 90 * T + 60",
+      "mass_latex": "30 \\cdot T^{2} - 90 \\cdot T + 60",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "30 * T^2 - 90 * T + 60",
+          "count_latex": "30 \\cdot T^{2} - 90 \\cdot T + 60"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - 29",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - 29",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - 123",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - 123",
+      "mass_plain": "31 * T - 31",
+      "mass_latex": "31 \\cdot T - 31",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "31 * T - 31",
+          "count_latex": "31 \\cdot T - 31"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - 153",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - 153",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^2 - 3 * T + 2",
+          "count_latex": "T^{2} - 3 \\cdot T + 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - 124",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - 124",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2339/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2339}{8}",
+      "mass_plain": "12 * T^2 - 36 * T + 24",
+      "mass_latex": "12 \\cdot T^{2} - 36 \\cdot T + 24",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "12 * T - 12",
+          "count_latex": "12 \\cdot T - 12"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (583/2)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{583}{2}",
+      "mass_plain": "63 * T^2 - 189 * T + 126",
+      "mass_latex": "63 \\cdot T^{2} - 189 \\cdot T + 126",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "63 * T - 63",
+          "count_latex": "63 \\cdot T - 63"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (18495/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{18495}{64}",
+      "mass_plain": "18 * T^2 - 54 * T + 36",
+      "mass_latex": "18 \\cdot T^{2} - 54 \\cdot T + 36",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T and 25 <= k <= 30",
+          "count_plain": "3 * T - 3",
+          "count_latex": "3 \\cdot T - 3"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (18705/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{18705}{64}",
+      "mass_plain": "2 * T^2 - 6 * T + 4",
+      "mass_latex": "2 \\cdot T^{2} - 6 \\cdot T + 4",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "2 * T - 2",
+          "count_latex": "2 \\cdot T - 2"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (9007/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{9007}{64}",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "j = 24 and k = 31 and 0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (351/4)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{351}{4}",
+      "mass_plain": "8 * T - 8",
+      "mass_latex": "8 \\cdot T - 8",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "4 * T - 4",
+          "count_latex": "4 \\cdot T - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (725/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{725}{8}",
+      "mass_plain": "4 * T - 4",
+      "mass_latex": "4 \\cdot T - 4",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "4 * T - 4",
+          "count_latex": "4 \\cdot T - 4"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (709/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{709}{8}",
+      "mass_plain": "42 * T - 42",
+      "mass_latex": "42 \\cdot T - 42",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "21 * T - 21",
+          "count_latex": "21 \\cdot T - 21"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (183/2)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{183}{2}",
+      "mass_plain": "21 * T - 21",
+      "mass_latex": "21 \\cdot T - 21",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "21 * T - 21",
+          "count_latex": "21 \\cdot T - 21"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (5833/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{5833}{64}",
+      "mass_plain": "12 * T - 12",
+      "mass_latex": "12 \\cdot T - 12",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16 and 25 <= k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (6017/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{6017}{64}",
+      "mass_plain": "6 * T - 6",
+      "mass_latex": "6 \\cdot T - 6",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 25 <= k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (5623/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{5623}{64}",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (5807/64)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{5807}{64}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2057/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2057}{8}",
+      "mass_plain": "3 * T^2 - 9 * T + 6",
+      "mass_latex": "3 \\cdot T^{2} - 9 \\cdot T + 6",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and 0 < k0 <= -2 + T and 8 <= k <= 24",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (983/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{983}{8}",
+      "mass_plain": "3 * T - 3",
+      "mass_latex": "3 \\cdot T - 3",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 2 and 8 <= k <= 24",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2049/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2049}{8}",
+      "mass_plain": "27 * T^2 - 81 * T + 54",
+      "mass_latex": "27 \\cdot T^{2} - 81 \\cdot T + 54",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T and 0 < k <= 30",
+          "count_plain": "(7/8) * T - (7/8)",
+          "count_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (1809/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{1809}{8}",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and 0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (991/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{991}{8}",
+      "mass_plain": "27 * T - 27",
+      "mass_latex": "27 \\cdot T - 27",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "(7/8) * T - (7/8)",
+          "count_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 384 * T - (961/8)",
+      "value_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{961}{8}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + 257",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + 257",
+      "mass_plain": "T^2 - 3 * T + 2",
+      "mass_latex": "T^{2} - 3 \\cdot T + 2",
+      "regions": [
+        {
+          "domain_plain": "0 < k0 <= -2 + T",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (75/2)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{75}{2}",
+      "mass_plain": "6 * T - 6",
+      "mass_latex": "6 \\cdot T - 6",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "3 * T - 3",
+          "count_latex": "3 \\cdot T - 3"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (323/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{323}{8}",
+      "mass_plain": "3 * T - 3",
+      "mass_latex": "3 \\cdot T - 3",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "3 * T - 3",
+          "count_latex": "3 \\cdot T - 3"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (293/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{293}{8}",
+      "mass_plain": "42 * T - 42",
+      "mass_latex": "42 \\cdot T - 42",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "21 * T - 21",
+          "count_latex": "21 \\cdot T - 21"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (79/2)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{79}{2}",
+      "mass_plain": "21 * T - 21",
+      "mass_latex": "21 \\cdot T - 21",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "21 * T - 21",
+          "count_latex": "21 \\cdot T - 21"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2183/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2183}{64}",
+      "mass_plain": "12 * T - 12",
+      "mass_latex": "12 \\cdot T - 12",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16 and 25 <= k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2367/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2367}{64}",
+      "mass_plain": "6 * T - 6",
+      "mass_latex": "6 \\cdot T - 6",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 25 <= k <= 30",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (2393/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2393}{64}",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T - (7305/64)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T - \\frac{7305}{64}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "j = 24 and k = 31 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (73/2)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{73}{2}",
+      "mass_plain": "2 * T - 2",
+      "mass_latex": "2 \\cdot T - 2",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (315/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{315}{8}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (17/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{17}{8}",
+      "mass_plain": "3 * T - 3",
+      "mass_latex": "3 \\cdot T - 3",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 2 and 8 <= k <= 24",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + (9/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{9}{8}",
+      "mass_plain": "27 * T - 27",
+      "mass_latex": "27 \\cdot T - 27",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < k <= 30",
+          "count_plain": "(7/8) * T - (7/8)",
+          "count_latex": "\\frac{7}{8} \\cdot T - \\frac{7}{8}"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T - (231/8)",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T - \\frac{231}{8}",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "128 * T^2 + 256 * T + 1",
+      "value_latex": "128 \\cdot T^{2} + 256 \\cdot T + 1",
+      "mass_plain": "T - 1",
+      "mass_latex": "T - 1",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T - 1",
+          "count_latex": "T - 1"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (3093/8)",
+      "value_latex": "256 \\cdot T + \\frac{3093}{8}",
+      "mass_plain": "60 * T^3 - 180 * T^2 + 120 * T",
+      "mass_latex": "60 \\cdot T^{3} - 180 \\cdot T^{2} + 120 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "60 * T^3 - 180 * T^2 + 120 * T",
+          "count_latex": "60 \\cdot T^{3} - 180 \\cdot T^{2} + 120 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (1535/4)",
+      "value_latex": "256 \\cdot T + \\frac{1535}{4}",
+      "mass_plain": "30 * T^3 - 90 * T^2 + 60 * T",
+      "mass_latex": "30 \\cdot T^{3} - 90 \\cdot T^{2} + 60 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "k = 24 and T >= 3",
+          "count_plain": "30 * T^3 - 90 * T^2 + 60 * T",
+          "count_latex": "30 \\cdot T^{3} - 90 \\cdot T^{2} + 60 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (2261/8)",
+      "value_latex": "256 \\cdot T + \\frac{2261}{8}",
+      "mass_plain": "2 * T^3 - 6 * T^2 + 4 * T",
+      "mass_latex": "2 \\cdot T^{3} - 6 \\cdot T^{2} + 4 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 3 and 8 <= k <= 16",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (2077/8)",
+      "value_latex": "256 \\cdot T + \\frac{2077}{8}",
+      "mass_plain": "T^3 - 3 * T^2 + 2 * T",
+      "mass_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (3037/8)",
+      "value_latex": "256 \\cdot T + \\frac{3037}{8}",
+      "mass_plain": "90 * T^2 - 90 * T",
+      "mass_latex": "90 \\cdot T^{2} - 90 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < i <= 30",
+          "count_plain": "3 * T^2 - 3 * T",
+          "count_latex": "3 \\cdot T^{2} - 3 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (1245/8)",
+      "value_latex": "256 \\cdot T + \\frac{1245}{8}",
+      "mass_plain": "2 * T^2 - 2 * T",
+      "mass_latex": "2 \\cdot T^{2} - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 2 and 8 <= k <= 16",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (1061/8)",
+      "value_latex": "256 \\cdot T + \\frac{1061}{8}",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + 384",
+      "value_latex": "256 \\cdot T + 384",
+      "mass_plain": "30 * T^3 - 90 * T^2 + 60 * T",
+      "mass_latex": "30 \\cdot T^{3} - 90 \\cdot T^{2} + 60 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "30 * T^3 - 90 * T^2 + 60 * T",
+          "count_latex": "30 \\cdot T^{3} - 90 \\cdot T^{2} + 60 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + 281",
+      "value_latex": "256 \\cdot T + 281",
+      "mass_plain": "T^3 - 3 * T^2 + 2 * T",
+      "mass_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + 377",
+      "value_latex": "256 \\cdot T + 377",
+      "mass_plain": "30 * T^2 - 30 * T",
+      "mass_latex": "30 \\cdot T^{2} - 30 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < i <= 30",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + 154",
+      "value_latex": "256 \\cdot T + 154",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (2077/8)",
+      "value_latex": "256 \\cdot T + \\frac{2077}{8}",
+      "mass_plain": "2 * T^3 - 6 * T^2 + 4 * T",
+      "mass_latex": "2 \\cdot T^{3} - 6 \\cdot T^{2} + 4 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 3 and 8 <= k <= 16",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (1027/4)",
+      "value_latex": "256 \\cdot T + \\frac{1027}{4}",
+      "mass_plain": "T^3 - 3 * T^2 + 2 * T",
+      "mass_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "k = 24 and T >= 3",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (2053/8)",
+      "value_latex": "256 \\cdot T + \\frac{2053}{8}",
+      "mass_plain": "2 * T^2 - 2 * T",
+      "mass_latex": "2 \\cdot T^{2} - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 2 and 8 <= k <= 16",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (2237/8)",
+      "value_latex": "256 \\cdot T + \\frac{2237}{8}",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + 256",
+      "value_latex": "256 \\cdot T + 256",
+      "mass_plain": "T^3 - 3 * T^2 + 2 * T",
+      "mass_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 3",
+          "count_plain": "T^3 - 3 * T^2 + 2 * T",
+          "count_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + 253",
+      "value_latex": "256 \\cdot T + 253",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (2109/8)",
+      "value_latex": "256 \\cdot T + \\frac{2109}{8}",
+      "mass_plain": "60 * T^2 - 60 * T",
+      "mass_latex": "60 \\cdot T^{2} - 60 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < i <= 30",
+          "count_plain": "2 * T^2 - 2 * T",
+          "count_latex": "2 \\cdot T^{2} - 2 \\cdot T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (1043/4)",
+      "value_latex": "256 \\cdot T + \\frac{1043}{4}",
+      "mass_plain": "30 * T^2 - 30 * T",
+      "mass_latex": "30 \\cdot T^{2} - 30 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "k = 24 and T >= 2 and 0 < i <= 30",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (2237/8)",
+      "value_latex": "256 \\cdot T + \\frac{2237}{8}",
+      "mass_plain": "2 * T^2 - 2 * T",
+      "mass_latex": "2 \\cdot T^{2} - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 2 and 8 <= k <= 16",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (2053/8)",
+      "value_latex": "256 \\cdot T + \\frac{2053}{8}",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + 260",
+      "value_latex": "256 \\cdot T + 260",
+      "mass_plain": "30 * T^2 - 30 * T",
+      "mass_latex": "30 \\cdot T^{2} - 30 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2 and 0 < i <= 30",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + 277",
+      "value_latex": "256 \\cdot T + 277",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (1061/8)",
+      "value_latex": "256 \\cdot T + \\frac{1061}{8}",
+      "mass_plain": "2 * T^2 - 2 * T",
+      "mass_latex": "2 \\cdot T^{2} - 2 \\cdot T",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T >= 2 and 8 <= k <= 16",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + (519/4)",
+      "value_latex": "256 \\cdot T + \\frac{519}{4}",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "k = 24 and T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "256 * T + 128",
+      "value_latex": "256 \\cdot T + 128",
+      "mass_plain": "T^2 - T",
+      "mass_latex": "T^{2} - T",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^2 - T",
+          "count_latex": "T^{2} - T"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1387/8)",
+      "value_latex": "\\frac{1387}{8}",
+      "mass_plain": "186 * T^3",
+      "mass_latex": "186 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "186 * T^3",
+          "count_latex": "186 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1385/8)",
+      "value_latex": "\\frac{1385}{8}",
+      "mass_plain": "62 * T^3",
+      "mass_latex": "62 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and 8 <= k <= 16",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(681/4)",
+      "value_latex": "\\frac{681}{4}",
+      "mass_plain": "31 * T^3",
+      "mass_latex": "31 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(345/2)",
+      "value_latex": "\\frac{345}{2}",
+      "mass_plain": "1302 * T^3",
+      "mass_latex": "1302 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "1302 * T^3",
+          "count_latex": "1302 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(10879/64)",
+      "value_latex": "\\frac{10879}{64}",
+      "mass_plain": "372 * T^3",
+      "mass_latex": "372 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 25 <= k <= 30",
+          "count_plain": "62 * T^3",
+          "count_latex": "62 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(689/4)",
+      "value_latex": "\\frac{689}{4}",
+      "mass_plain": "651 * T^3",
+      "mass_latex": "651 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < k <= 23",
+          "count_plain": "(217/8) * T^3",
+          "count_latex": "\\frac{217}{8} \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(10863/64)",
+      "value_latex": "\\frac{10863}{64}",
+      "mass_plain": "186 * T^3",
+      "mass_latex": "186 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 25 <= k <= 30",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(11089/64)",
+      "value_latex": "\\frac{11089}{64}",
+      "mass_plain": "62 * T^3",
+      "mass_latex": "62 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "62 * T^3",
+          "count_latex": "62 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(10833/64)",
+      "value_latex": "\\frac{10833}{64}",
+      "mass_plain": "31 * T^3",
+      "mass_latex": "31 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(259/8)",
+      "value_latex": "\\frac{259}{8}",
+      "mass_plain": "2688 * T^3 + 9 * T^2",
+      "mass_latex": "2688 \\cdot T^{3} + 9 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "2688 * T^3 + 9 * T^2",
+          "count_latex": "2688 \\cdot T^{3} + 9 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1911/64)",
+      "value_latex": "\\frac{1911}{64}",
+      "mass_plain": "896 * T^3 + 3 * T^2",
+      "mass_latex": "896 \\cdot T^{3} + 3 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "k = 24 and T > 0",
+          "count_plain": "896 * T^3 + 3 * T^2",
+          "count_latex": "896 \\cdot T^{3} + 3 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(63/2)",
+      "value_latex": "\\frac{63}{2}",
+      "mass_plain": "18816 * T^3 + 63 * T^2",
+      "mass_latex": "18816 \\cdot T^{3} + 63 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "18816 * T^3 + 63 * T^2",
+          "count_latex": "18816 \\cdot T^{3} + 63 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1855/64)",
+      "value_latex": "\\frac{1855}{64}",
+      "mass_plain": "5376 * T^3 + 18 * T^2",
+      "mass_latex": "5376 \\cdot T^{3} + 18 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 25 <= k <= 30",
+          "count_plain": "896 * T^3 + 3 * T^2",
+          "count_latex": "896 \\cdot T^{3} + 3 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(175/64)",
+      "value_latex": "\\frac{175}{64}",
+      "mass_plain": "896 * T^3 + 3 * T^2",
+      "mass_latex": "896 \\cdot T^{3} + 3 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "k = 31 and T > 0",
+          "count_plain": "896 * T^3 + 3 * T^2",
+          "count_latex": "896 \\cdot T^{3} + 3 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1379/8)",
+      "value_latex": "\\frac{1379}{8}",
+      "mass_plain": "62 * T^3",
+      "mass_latex": "62 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "62 * T^3",
+          "count_latex": "62 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(689/4)",
+      "value_latex": "\\frac{689}{4}",
+      "mass_plain": "31 * T^3",
+      "mass_latex": "31 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1105/8)",
+      "value_latex": "\\frac{1105}{8}",
+      "mass_plain": "93 * T^3",
+      "mass_latex": "93 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "(k) mod 8 = 0 and T > 0 and 8 <= k <= 24",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1097/8)",
+      "value_latex": "\\frac{1097}{8}",
+      "mass_plain": "837 * T^3",
+      "mass_latex": "837 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0 and 0 < k <= 30",
+          "count_plain": "(217/8) * T^3",
+          "count_latex": "\\frac{217}{8} \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1127/8)",
+      "value_latex": "\\frac{1127}{8}",
+      "mass_plain": "31 * T^3",
+      "mass_latex": "31 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(4149/8)",
+      "value_latex": "\\frac{4149}{8}",
+      "mass_plain": "60 * T^3 - 60 * T^2",
+      "mass_latex": "60 \\cdot T^{3} - 60 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "60 * T^3 - 60 * T^2",
+          "count_latex": "60 \\cdot T^{3} - 60 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(2047/4)",
+      "value_latex": "\\frac{2047}{4}",
+      "mass_plain": "30 * T^3 - 30 * T^2",
+      "mass_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "j = 24 and T >= 2",
+          "count_plain": "30 * T^3 - 30 * T^2",
+          "count_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3861/8)",
+      "value_latex": "\\frac{3861}{8}",
+      "mass_plain": "2 * T^3 - 2 * T^2",
+      "mass_latex": "2 \\cdot T^{3} - 2 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1535/4)",
+      "value_latex": "\\frac{1535}{4}",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "j = 24 and T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "513",
+      "value_latex": "513",
+      "mass_plain": "30 * T^3 - 30 * T^2",
+      "mass_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "30 * T^3 - 30 * T^2",
+          "count_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "481",
+      "value_latex": "481",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(3165/8)",
+      "value_latex": "\\frac{3165}{8}",
+      "mass_plain": "2 * T^3 - 2 * T^2",
+      "mass_latex": "2 \\cdot T^{3} - 2 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "(j) mod 8 = 0 and T >= 2 and 8 <= j <= 16",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(1555/4)",
+      "value_latex": "\\frac{1555}{4}",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "j = 24 and T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "386",
+      "value_latex": "386",
+      "mass_plain": "T^3 - T^2",
+      "mass_latex": "T^{3} - T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T >= 2",
+          "count_plain": "T^3 - T^2",
+          "count_latex": "T^{3} - T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "137",
+      "value_latex": "137",
+      "mass_plain": "31 * T^3",
+      "mass_latex": "31 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31 * T^3",
+          "count_latex": "31 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "3",
+      "value_latex": "3",
+      "mass_plain": "31744 * T^3",
+      "mass_latex": "31744 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "31744 * T^3",
+          "count_latex": "31744 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(21/8)",
+      "value_latex": "\\frac{21}{8}",
+      "mass_plain": "29568 * T^3 + 192 * T^2",
+      "mass_latex": "29568 \\cdot T^{3} + 192 \\cdot T^{2}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "29568 * T^3 + 192 * T^2",
+          "count_latex": "29568 \\cdot T^{3} + 192 \\cdot T^{2}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(269/8)",
+      "value_latex": "\\frac{269}{8}",
+      "mass_plain": "288 * T^3",
+      "mass_latex": "288 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "288 * T^3",
+          "count_latex": "288 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "(261/8)",
+      "value_latex": "\\frac{261}{8}",
+      "mass_plain": "2688 * T^3",
+      "mass_latex": "2688 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "2688 * T^3",
+          "count_latex": "2688 \\cdot T^{3}"
+        }
+      ]
+    },
+    {
+      "value_plain": "30",
+      "value_latex": "30",
+      "mass_plain": "992 * T^3",
+      "mass_latex": "992 \\cdot T^{3}",
+      "regions": [
+        {
+          "domain_plain": "T > 0",
+          "count_plain": "992 * T^3",
+          "count_latex": "992 \\cdot T^{3}"
+        }
+      ]
+    }
+  ],
+  "dmd_terms": [
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "12 * T^3 - 60 * T^2 + 96 * T - 48",
+      "multiplicity_latex": "12 \\cdot T^{3} - 60 \\cdot T^{2} + 96 \\cdot T - 48",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + (1283/8)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}",
+      "term_plain": "12 * sqrt(128 * T^2 + 384 * T + (1283/8)) * T^3 - 60 * sqrt(128 * T^2 + 384 * T + (1283/8)) * T^2 + 96 * sqrt(128 * T^2 + 384 * T + (1283/8)) * T - 48 * sqrt(128 * T^2 + 384 * T + (1283/8))",
+      "term_latex": "12 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}} \\cdot T^{3} - 60 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}} \\cdot T^{2} + 96 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}} \\cdot T - 48 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "63 * T^3 - 315 * T^2 + 504 * T - 252",
+      "multiplicity_latex": "63 \\cdot T^{3} - 315 \\cdot T^{2} + 504 \\cdot T - 252",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + (319/2)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}",
+      "term_plain": "63 * sqrt(128 * T^2 + 384 * T + (319/2)) * T^3 - 315 * sqrt(128 * T^2 + 384 * T + (319/2)) * T^2 + 504 * sqrt(128 * T^2 + 384 * T + (319/2)) * T - 252 * sqrt(128 * T^2 + 384 * T + (319/2))",
+      "term_latex": "63 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}} \\cdot T^{3} - 315 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}} \\cdot T^{2} + 504 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}} \\cdot T - 252 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "2 * T^3 - 10 * T^2 + 16 * T - 8",
+      "multiplicity_latex": "2 \\cdot T^{3} - 10 \\cdot T^{2} + 16 \\cdot T - 8",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + (10257/64)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}",
+      "term_plain": "2 * sqrt(128 * T^2 + 384 * T + (10257/64)) * T^3 - 10 * sqrt(128 * T^2 + 384 * T + (10257/64)) * T^2 + 16 * sqrt(128 * T^2 + 384 * T + (10257/64)) * T - 8 * sqrt(128 * T^2 + 384 * T + (10257/64))",
+      "term_latex": "2 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}} \\cdot T^{3} - 10 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}} \\cdot T^{2} + 16 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}} \\cdot T - 8 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "4 * T^2 - 12 * T + 8",
+      "multiplicity_latex": "4 \\cdot T^{2} - 12 \\cdot T + 8",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + (267/8)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{267}{8}",
+      "term_plain": "4 * sqrt(128 * T^2 + 384 * T + (267/8)) * T^2 - 12 * sqrt(128 * T^2 + 384 * T + (267/8)) * T + 8 * sqrt(128 * T^2 + 384 * T + (267/8))",
+      "term_latex": "4 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{267}{8}} \\cdot T^{2} - 12 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{267}{8}} \\cdot T + 8 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{267}{8}}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "21 * T^2 - 63 * T + 42",
+      "multiplicity_latex": "21 \\cdot T^{2} - 63 \\cdot T + 42",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + (65/2)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{65}{2}",
+      "term_plain": "21 * sqrt(128 * T^2 + 384 * T + (65/2)) * T^2 - 63 * sqrt(128 * T^2 + 384 * T + (65/2)) * T + 42 * sqrt(128 * T^2 + 384 * T + (65/2))",
+      "term_latex": "21 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{65}{2}} \\cdot T^{2} - 63 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{65}{2}} \\cdot T + 42 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{65}{2}}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^2 - 3 * T + 2",
+      "multiplicity_latex": "T^{2} - 3 \\cdot T + 2",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + (2129/64)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{2129}{64}",
+      "term_plain": "sqrt(128 * T^2 + 384 * T + (2129/64)) * T^2 - 3 * sqrt(128 * T^2 + 384 * T + (2129/64)) * T + 2 * sqrt(128 * T^2 + 384 * T + (2129/64))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{2129}{64}} \\cdot T^{2} - 3 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{2129}{64}} \\cdot T + 2 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{2129}{64}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 256 * T + (137/4)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{137}{4}",
+      "term_plain": "sqrt(128 * T^2 + 256 * T + (137/4)) * T - sqrt(128 * T^2 + 256 * T + (137/4))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{137}{4}} \\cdot T - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{137}{4}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 256 * T + (2129/64)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{2129}{64}",
+      "term_plain": "sqrt(128 * T^2 + 256 * T + (2129/64)) * T - sqrt(128 * T^2 + 256 * T + (2129/64))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{2129}{64}} \\cdot T - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{2129}{64}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 256 * T + (149/4)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{149}{4}",
+      "term_plain": "sqrt(128 * T^2 + 256 * T + (149/4)) * T - sqrt(128 * T^2 + 256 * T + (149/4))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{149}{4}} \\cdot T - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{149}{4}}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "31 * T^3 - 155 * T^2 + 248 * T - 124",
+      "multiplicity_latex": "31 \\cdot T^{3} - 155 \\cdot T^{2} + 248 \\cdot T - 124",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + 128",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + 128",
+      "term_plain": "31 * sqrt(128 * T^2 + 384 * T + 128) * T^3 - 155 * sqrt(128 * T^2 + 384 * T + 128) * T^2 + 248 * sqrt(128 * T^2 + 384 * T + 128) * T - 124 * sqrt(128 * T^2 + 384 * T + 128)",
+      "term_latex": "31 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 128} \\cdot T^{3} - 155 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 128} \\cdot T^{2} + 248 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 128} \\cdot T - 124 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 128}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "32 * T^2 - 96 * T + 64",
+      "multiplicity_latex": "32 \\cdot T^{2} - 96 \\cdot T + 64",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + 4",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + 4",
+      "term_plain": "32 * sqrt(128 * T^2 + 384 * T + 4) * T^2 - 96 * sqrt(128 * T^2 + 384 * T + 4) * T + 64 * sqrt(128 * T^2 + 384 * T + 4)",
+      "term_latex": "32 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 4} \\cdot T^{2} - 96 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 4} \\cdot T + 64 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 4}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "32 * T - 32",
+      "multiplicity_latex": "32 \\cdot T - 32",
+      "reuse_distance_plain": "128 * T^2 + 256 * T + 8",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 256 \\cdot T + 8",
+      "term_plain": "32 * sqrt(128 * T^2 + 256 * T + 8) * T - 32 * sqrt(128 * T^2 + 256 * T + 8)",
+      "term_latex": "32 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + 8} \\cdot T - 32 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + 8}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "3 * T^2 - 9 * T + 6",
+      "multiplicity_latex": "3 \\cdot T^{2} - 9 \\cdot T + 6",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + (291/8)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{291}{8}",
+      "term_plain": "3 * sqrt(128 * T^2 + 384 * T + (291/8)) * T^2 - 9 * sqrt(128 * T^2 + 384 * T + (291/8)) * T + 6 * sqrt(128 * T^2 + 384 * T + (291/8))",
+      "term_latex": "3 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{291}{8}} \\cdot T^{2} - 9 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{291}{8}} \\cdot T + 6 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{291}{8}}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "21 * T^2 - 63 * T + 42",
+      "multiplicity_latex": "21 \\cdot T^{2} - 63 \\cdot T + 42",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + (71/2)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{71}{2}",
+      "term_plain": "21 * sqrt(128 * T^2 + 384 * T + (71/2)) * T^2 - 63 * sqrt(128 * T^2 + 384 * T + (71/2)) * T + 42 * sqrt(128 * T^2 + 384 * T + (71/2))",
+      "term_latex": "21 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{71}{2}} \\cdot T^{2} - 63 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{71}{2}} \\cdot T + 42 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{71}{2}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 384 * T - (363/4)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{363}{4}",
+      "term_plain": "sqrt(128 * T^2 + 384 * T - (363/4)) * T - sqrt(128 * T^2 + 384 * T - (363/4))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{363}{4}} \\cdot T - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{363}{4}}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^2 - 3 * T + 2",
+      "multiplicity_latex": "T^{2} - 3 \\cdot T + 2",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + (283/8)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + \\frac{283}{8}",
+      "term_plain": "sqrt(128 * T^2 + 384 * T + (283/8)) * T^2 - 3 * sqrt(128 * T^2 + 384 * T + (283/8)) * T + 2 * sqrt(128 * T^2 + 384 * T + (283/8))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{283}{8}} \\cdot T^{2} - 3 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{283}{8}} \\cdot T + 2 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{283}{8}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 384 * T - (355/4)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{355}{4}",
+      "term_plain": "sqrt(128 * T^2 + 384 * T - (355/4)) * T - sqrt(128 * T^2 + 384 * T - (355/4))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{355}{4}} \\cdot T - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{355}{4}}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "30 * T^2 - 90 * T + 60",
+      "multiplicity_latex": "30 \\cdot T^{2} - 90 \\cdot T + 60",
+      "reuse_distance_plain": "128 * T^2 + 384 * T + 1",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T + 1",
+      "term_plain": "30 * sqrt(128 * T^2 + 384 * T + 1) * T^2 - 90 * sqrt(128 * T^2 + 384 * T + 1) * T + 60 * sqrt(128 * T^2 + 384 * T + 1)",
+      "term_latex": "30 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 1} \\cdot T^{2} - 90 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 1} \\cdot T + 60 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 1}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "31 * T - 31",
+      "multiplicity_latex": "31 \\cdot T - 31",
+      "reuse_distance_plain": "128 * T^2 + 384 * T - 123",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T - 123",
+      "term_plain": "31 * sqrt(128 * T^2 + 384 * T - 123) * T - 31 * sqrt(128 * T^2 + 384 * T - 123)",
+      "term_latex": "31 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - 123} \\cdot T - 31 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - 123}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^2 - 3 * T + 2",
+      "multiplicity_latex": "T^{2} - 3 \\cdot T + 2",
+      "reuse_distance_plain": "128 * T^2 + 384 * T",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T",
+      "term_plain": "sqrt(128 * T^2 + 384 * T) * T^2 - 3 * sqrt(128 * T^2 + 384 * T) * T + 2 * sqrt(128 * T^2 + 384 * T)",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 384 \\cdot T} \\cdot T^{2} - 3 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T} \\cdot T + 2 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 384 * T - 124",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T - 124",
+      "term_plain": "sqrt(128 * T^2 + 384 * T - 124) * T - sqrt(128 * T^2 + 384 * T - 124)",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 384 \\cdot T - 124} \\cdot T - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - 124}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "4 * T - 4",
+      "multiplicity_latex": "4 \\cdot T - 4",
+      "reuse_distance_plain": "128 * T^2 + 384 * T - (725/8)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{725}{8}",
+      "term_plain": "4 * sqrt(128 * T^2 + 384 * T - (725/8)) * T - 4 * sqrt(128 * T^2 + 384 * T - (725/8))",
+      "term_latex": "4 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{725}{8}} \\cdot T - 4 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{725}{8}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "21 * T - 21",
+      "multiplicity_latex": "21 \\cdot T - 21",
+      "reuse_distance_plain": "128 * T^2 + 384 * T - (183/2)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{183}{2}",
+      "term_plain": "21 * sqrt(128 * T^2 + 384 * T - (183/2)) * T - 21 * sqrt(128 * T^2 + 384 * T - (183/2))",
+      "term_latex": "21 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{183}{2}} \\cdot T - 21 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{183}{2}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 384 * T - (5807/64)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{5807}{64}",
+      "term_plain": "sqrt(128 * T^2 + 384 * T - (5807/64)) * T - sqrt(128 * T^2 + 384 * T - (5807/64))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{5807}{64}} \\cdot T - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{5807}{64}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 384 * T - (961/8)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 384 \\cdot T - \\frac{961}{8}",
+      "term_plain": "sqrt(128 * T^2 + 384 * T - (961/8)) * T - sqrt(128 * T^2 + 384 * T - (961/8))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{961}{8}} \\cdot T - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{961}{8}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "3 * T - 3",
+      "multiplicity_latex": "3 \\cdot T - 3",
+      "reuse_distance_plain": "128 * T^2 + 256 * T + (323/8)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{323}{8}",
+      "term_plain": "3 * sqrt(128 * T^2 + 256 * T + (323/8)) * T - 3 * sqrt(128 * T^2 + 256 * T + (323/8))",
+      "term_latex": "3 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{323}{8}} \\cdot T - 3 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{323}{8}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "21 * T - 21",
+      "multiplicity_latex": "21 \\cdot T - 21",
+      "reuse_distance_plain": "128 * T^2 + 256 * T + (79/2)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{79}{2}",
+      "term_plain": "21 * sqrt(128 * T^2 + 256 * T + (79/2)) * T - 21 * sqrt(128 * T^2 + 256 * T + (79/2))",
+      "term_latex": "21 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{79}{2}} \\cdot T - 21 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{79}{2}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 256 * T + (315/8)",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 256 \\cdot T + \\frac{315}{8}",
+      "term_plain": "sqrt(128 * T^2 + 256 * T + (315/8)) * T - sqrt(128 * T^2 + 256 * T + (315/8))",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{315}{8}} \\cdot T - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{315}{8}}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T - 1",
+      "multiplicity_latex": "T - 1",
+      "reuse_distance_plain": "128 * T^2 + 256 * T + 1",
+      "reuse_distance_latex": "128 \\cdot T^{2} + 256 \\cdot T + 1",
+      "term_plain": "sqrt(128 * T^2 + 256 * T + 1) * T - sqrt(128 * T^2 + 256 * T + 1)",
+      "term_latex": "\\sqrt{128 \\cdot T^{2} + 256 \\cdot T + 1} \\cdot T - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + 1}"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "60 * T^3 - 180 * T^2 + 120 * T",
+      "multiplicity_latex": "60 \\cdot T^{3} - 180 \\cdot T^{2} + 120 \\cdot T",
+      "reuse_distance_plain": "256 * T + (3093/8)",
+      "reuse_distance_latex": "256 \\cdot T + \\frac{3093}{8}",
+      "term_plain": "60 * sqrt(256 * T + (3093/8)) * T^3 - 180 * sqrt(256 * T + (3093/8)) * T^2 + 120 * sqrt(256 * T + (3093/8)) * T",
+      "term_latex": "60 \\cdot \\sqrt{256 \\cdot T + \\frac{3093}{8}} \\cdot T^{3} - 180 \\cdot \\sqrt{256 \\cdot T + \\frac{3093}{8}} \\cdot T^{2} + 120 \\cdot \\sqrt{256 \\cdot T + \\frac{3093}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^3 - 3 * T^2 + 2 * T",
+      "multiplicity_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "reuse_distance_plain": "256 * T + (2077/8)",
+      "reuse_distance_latex": "256 \\cdot T + \\frac{2077}{8}",
+      "term_plain": "sqrt(256 * T + (2077/8)) * T^3 - 3 * sqrt(256 * T + (2077/8)) * T^2 + 2 * sqrt(256 * T + (2077/8)) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + \\frac{2077}{8}} \\cdot T^{3} - 3 \\cdot \\sqrt{256 \\cdot T + \\frac{2077}{8}} \\cdot T^{2} + 2 \\cdot \\sqrt{256 \\cdot T + \\frac{2077}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "256 * T + (1061/8)",
+      "reuse_distance_latex": "256 \\cdot T + \\frac{1061}{8}",
+      "term_plain": "sqrt(256 * T + (1061/8)) * T^2 - sqrt(256 * T + (1061/8)) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + \\frac{1061}{8}} \\cdot T^{2} - \\sqrt{256 \\cdot T + \\frac{1061}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "30 * T^3 - 90 * T^2 + 60 * T",
+      "multiplicity_latex": "30 \\cdot T^{3} - 90 \\cdot T^{2} + 60 \\cdot T",
+      "reuse_distance_plain": "256 * T + 384",
+      "reuse_distance_latex": "256 \\cdot T + 384",
+      "term_plain": "30 * sqrt(256 * T + 384) * T^3 - 90 * sqrt(256 * T + 384) * T^2 + 60 * sqrt(256 * T + 384) * T",
+      "term_latex": "30 \\cdot \\sqrt{256 \\cdot T + 384} \\cdot T^{3} - 90 \\cdot \\sqrt{256 \\cdot T + 384} \\cdot T^{2} + 60 \\cdot \\sqrt{256 \\cdot T + 384} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^3 - 3 * T^2 + 2 * T",
+      "multiplicity_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "reuse_distance_plain": "256 * T + 281",
+      "reuse_distance_latex": "256 \\cdot T + 281",
+      "term_plain": "sqrt(256 * T + 281) * T^3 - 3 * sqrt(256 * T + 281) * T^2 + 2 * sqrt(256 * T + 281) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + 281} \\cdot T^{3} - 3 \\cdot \\sqrt{256 \\cdot T + 281} \\cdot T^{2} + 2 \\cdot \\sqrt{256 \\cdot T + 281} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "256 * T + 154",
+      "reuse_distance_latex": "256 \\cdot T + 154",
+      "term_plain": "sqrt(256 * T + 154) * T^2 - sqrt(256 * T + 154) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + 154} \\cdot T^{2} - \\sqrt{256 \\cdot T + 154} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "256 * T + (2237/8)",
+      "reuse_distance_latex": "256 \\cdot T + \\frac{2237}{8}",
+      "term_plain": "sqrt(256 * T + (2237/8)) * T^2 - sqrt(256 * T + (2237/8)) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + \\frac{2237}{8}} \\cdot T^{2} - \\sqrt{256 \\cdot T + \\frac{2237}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 3",
+      "multiplicity_plain": "T^3 - 3 * T^2 + 2 * T",
+      "multiplicity_latex": "T^{3} - 3 \\cdot T^{2} + 2 \\cdot T",
+      "reuse_distance_plain": "256 * T + 256",
+      "reuse_distance_latex": "256 \\cdot T + 256",
+      "term_plain": "sqrt(256 * T + 256) * T^3 - 3 * sqrt(256 * T + 256) * T^2 + 2 * sqrt(256 * T + 256) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + 256} \\cdot T^{3} - 3 \\cdot \\sqrt{256 \\cdot T + 256} \\cdot T^{2} + 2 \\cdot \\sqrt{256 \\cdot T + 256} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "256 * T + 253",
+      "reuse_distance_latex": "256 \\cdot T + 253",
+      "term_plain": "sqrt(256 * T + 253) * T^2 - sqrt(256 * T + 253) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + 253} \\cdot T^{2} - \\sqrt{256 \\cdot T + 253} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "256 * T + (2053/8)",
+      "reuse_distance_latex": "256 \\cdot T + \\frac{2053}{8}",
+      "term_plain": "sqrt(256 * T + (2053/8)) * T^2 - sqrt(256 * T + (2053/8)) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + \\frac{2053}{8}} \\cdot T^{2} - \\sqrt{256 \\cdot T + \\frac{2053}{8}} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "256 * T + 277",
+      "reuse_distance_latex": "256 \\cdot T + 277",
+      "term_plain": "sqrt(256 * T + 277) * T^2 - sqrt(256 * T + 277) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + 277} \\cdot T^{2} - \\sqrt{256 \\cdot T + 277} \\cdot T"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^2 - T",
+      "multiplicity_latex": "T^{2} - T",
+      "reuse_distance_plain": "256 * T + 128",
+      "reuse_distance_latex": "256 \\cdot T + 128",
+      "term_plain": "sqrt(256 * T + 128) * T^2 - sqrt(256 * T + 128) * T",
+      "term_latex": "\\sqrt{256 \\cdot T + 128} \\cdot T^{2} - \\sqrt{256 \\cdot T + 128} \\cdot T"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "186 * T^3",
+      "multiplicity_latex": "186 \\cdot T^{3}",
+      "reuse_distance_plain": "(1387/8)",
+      "reuse_distance_latex": "\\frac{1387}{8}",
+      "term_plain": "186 * sqrt((1387/8)) * T^3",
+      "term_latex": "186 \\cdot \\sqrt{\\frac{1387}{8}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "31 * T^3",
+      "multiplicity_latex": "31 \\cdot T^{3}",
+      "reuse_distance_plain": "(681/4)",
+      "reuse_distance_latex": "\\frac{681}{4}",
+      "term_plain": "31 * sqrt((681/4)) * T^3",
+      "term_latex": "31 \\cdot \\sqrt{\\frac{681}{4}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "1302 * T^3",
+      "multiplicity_latex": "1302 \\cdot T^{3}",
+      "reuse_distance_plain": "(345/2)",
+      "reuse_distance_latex": "\\frac{345}{2}",
+      "term_plain": "1302 * sqrt((345/2)) * T^3",
+      "term_latex": "1302 \\cdot \\sqrt{\\frac{345}{2}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "62 * T^3",
+      "multiplicity_latex": "62 \\cdot T^{3}",
+      "reuse_distance_plain": "(11089/64)",
+      "reuse_distance_latex": "\\frac{11089}{64}",
+      "term_plain": "62 * sqrt((11089/64)) * T^3",
+      "term_latex": "62 \\cdot \\sqrt{\\frac{11089}{64}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "31 * T^3",
+      "multiplicity_latex": "31 \\cdot T^{3}",
+      "reuse_distance_plain": "(10833/64)",
+      "reuse_distance_latex": "\\frac{10833}{64}",
+      "term_plain": "31 * sqrt((10833/64)) * T^3",
+      "term_latex": "31 \\cdot \\sqrt{\\frac{10833}{64}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "2688 * T^3 + 9 * T^2",
+      "multiplicity_latex": "2688 \\cdot T^{3} + 9 \\cdot T^{2}",
+      "reuse_distance_plain": "(259/8)",
+      "reuse_distance_latex": "\\frac{259}{8}",
+      "term_plain": "2688 * sqrt((259/8)) * T^3 + 9 * sqrt((259/8)) * T^2",
+      "term_latex": "2688 \\cdot \\sqrt{\\frac{259}{8}} \\cdot T^{3} + 9 \\cdot \\sqrt{\\frac{259}{8}} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "18816 * T^3 + 63 * T^2",
+      "multiplicity_latex": "18816 \\cdot T^{3} + 63 \\cdot T^{2}",
+      "reuse_distance_plain": "(63/2)",
+      "reuse_distance_latex": "\\frac{63}{2}",
+      "term_plain": "18816 * sqrt((63/2)) * T^3 + 63 * sqrt((63/2)) * T^2",
+      "term_latex": "18816 \\cdot \\sqrt{\\frac{63}{2}} \\cdot T^{3} + 63 \\cdot \\sqrt{\\frac{63}{2}} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "62 * T^3",
+      "multiplicity_latex": "62 \\cdot T^{3}",
+      "reuse_distance_plain": "(1379/8)",
+      "reuse_distance_latex": "\\frac{1379}{8}",
+      "term_plain": "62 * sqrt((1379/8)) * T^3",
+      "term_latex": "62 \\cdot \\sqrt{\\frac{1379}{8}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "31 * T^3",
+      "multiplicity_latex": "31 \\cdot T^{3}",
+      "reuse_distance_plain": "(689/4)",
+      "reuse_distance_latex": "\\frac{689}{4}",
+      "term_plain": "31 * sqrt((689/4)) * T^3",
+      "term_latex": "31 \\cdot \\sqrt{\\frac{689}{4}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "31 * T^3",
+      "multiplicity_latex": "31 \\cdot T^{3}",
+      "reuse_distance_plain": "(1127/8)",
+      "reuse_distance_latex": "\\frac{1127}{8}",
+      "term_plain": "31 * sqrt((1127/8)) * T^3",
+      "term_latex": "31 \\cdot \\sqrt{\\frac{1127}{8}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "60 * T^3 - 60 * T^2",
+      "multiplicity_latex": "60 \\cdot T^{3} - 60 \\cdot T^{2}",
+      "reuse_distance_plain": "(4149/8)",
+      "reuse_distance_latex": "\\frac{4149}{8}",
+      "term_plain": "60 * sqrt((4149/8)) * T^3 - 60 * sqrt((4149/8)) * T^2",
+      "term_latex": "60 \\cdot \\sqrt{\\frac{4149}{8}} \\cdot T^{3} - 60 \\cdot \\sqrt{\\frac{4149}{8}} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "30 * T^3 - 30 * T^2",
+      "multiplicity_latex": "30 \\cdot T^{3} - 30 \\cdot T^{2}",
+      "reuse_distance_plain": "513",
+      "reuse_distance_latex": "513",
+      "term_plain": "30 * sqrt(513) * T^3 - 30 * sqrt(513) * T^2",
+      "term_latex": "30 \\cdot \\sqrt{513} \\cdot T^{3} - 30 \\cdot \\sqrt{513} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^3 - T^2",
+      "multiplicity_latex": "T^{3} - T^{2}",
+      "reuse_distance_plain": "481",
+      "reuse_distance_latex": "481",
+      "term_plain": "sqrt(481) * T^3 - sqrt(481) * T^2",
+      "term_latex": "\\sqrt{481} \\cdot T^{3} - \\sqrt{481} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T >= 2",
+      "multiplicity_plain": "T^3 - T^2",
+      "multiplicity_latex": "T^{3} - T^{2}",
+      "reuse_distance_plain": "386",
+      "reuse_distance_latex": "386",
+      "term_plain": "sqrt(386) * T^3 - sqrt(386) * T^2",
+      "term_latex": "\\sqrt{386} \\cdot T^{3} - \\sqrt{386} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "31 * T^3",
+      "multiplicity_latex": "31 \\cdot T^{3}",
+      "reuse_distance_plain": "137",
+      "reuse_distance_latex": "137",
+      "term_plain": "31 * sqrt(137) * T^3",
+      "term_latex": "31 \\cdot \\sqrt{137} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "31744 * T^3",
+      "multiplicity_latex": "31744 \\cdot T^{3}",
+      "reuse_distance_plain": "3",
+      "reuse_distance_latex": "3",
+      "term_plain": "31744 * sqrt(3) * T^3",
+      "term_latex": "31744 \\cdot \\sqrt{3} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "29568 * T^3 + 192 * T^2",
+      "multiplicity_latex": "29568 \\cdot T^{3} + 192 \\cdot T^{2}",
+      "reuse_distance_plain": "(21/8)",
+      "reuse_distance_latex": "\\frac{21}{8}",
+      "term_plain": "29568 * sqrt((21/8)) * T^3 + 192 * sqrt((21/8)) * T^2",
+      "term_latex": "29568 \\cdot \\sqrt{\\frac{21}{8}} \\cdot T^{3} + 192 \\cdot \\sqrt{\\frac{21}{8}} \\cdot T^{2}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "288 * T^3",
+      "multiplicity_latex": "288 \\cdot T^{3}",
+      "reuse_distance_plain": "(269/8)",
+      "reuse_distance_latex": "\\frac{269}{8}",
+      "term_plain": "288 * sqrt((269/8)) * T^3",
+      "term_latex": "288 \\cdot \\sqrt{\\frac{269}{8}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "2688 * T^3",
+      "multiplicity_latex": "2688 \\cdot T^{3}",
+      "reuse_distance_plain": "(261/8)",
+      "reuse_distance_latex": "\\frac{261}{8}",
+      "term_plain": "2688 * sqrt((261/8)) * T^3",
+      "term_latex": "2688 \\cdot \\sqrt{\\frac{261}{8}} \\cdot T^{3}"
+    },
+    {
+      "domain_plain": "T > 0",
+      "multiplicity_plain": "992 * T^3",
+      "multiplicity_latex": "992 \\cdot T^{3}",
+      "reuse_distance_plain": "30",
+      "reuse_distance_latex": "30",
+      "term_plain": "992 * sqrt(30) * T^3",
+      "term_latex": "992 \\cdot \\sqrt{30} \\cdot T^{3}"
+    }
+  ],
+  "dmd_formula_plain": "12 * sqrt(128 * T^2 + 384 * T + (1283/8)) * T^3 + 63 * sqrt(128 * T^2 + 384 * T + (319/2)) * T^3 + 2 * sqrt(128 * T^2 + 384 * T + (10257/64)) * T^3 + 31 * sqrt(128 * T^2 + 384 * T + 128) * T^3 - 60 * sqrt(128 * T^2 + 384 * T + (1283/8)) * T^2 - 315 * sqrt(128 * T^2 + 384 * T + (319/2)) * T^2 - 10 * sqrt(128 * T^2 + 384 * T + (10257/64)) * T^2 + 4 * sqrt(128 * T^2 + 384 * T + (267/8)) * T^2 + 21 * sqrt(128 * T^2 + 384 * T + (65/2)) * T^2 + sqrt(128 * T^2 + 384 * T + (2129/64)) * T^2 - 155 * sqrt(128 * T^2 + 384 * T + 128) * T^2 + 32 * sqrt(128 * T^2 + 384 * T + 4) * T^2 + 3 * sqrt(128 * T^2 + 384 * T + (291/8)) * T^2 + 21 * sqrt(128 * T^2 + 384 * T + (71/2)) * T^2 + sqrt(128 * T^2 + 384 * T + (283/8)) * T^2 + 30 * sqrt(128 * T^2 + 384 * T + 1) * T^2 + sqrt(128 * T^2 + 384 * T) * T^2 + 60 * sqrt(256 * T + (3093/8)) * T^3 + sqrt(256 * T + (2077/8)) * T^3 + 30 * sqrt(256 * T + 384) * T^3 + sqrt(256 * T + 281) * T^3 + sqrt(256 * T + 256) * T^3 + 96 * sqrt(128 * T^2 + 384 * T + (1283/8)) * T + 504 * sqrt(128 * T^2 + 384 * T + (319/2)) * T + 16 * sqrt(128 * T^2 + 384 * T + (10257/64)) * T - 12 * sqrt(128 * T^2 + 384 * T + (267/8)) * T - 63 * sqrt(128 * T^2 + 384 * T + (65/2)) * T - 3 * sqrt(128 * T^2 + 384 * T + (2129/64)) * T + sqrt(128 * T^2 + 256 * T + (137/4)) * T + sqrt(128 * T^2 + 256 * T + (2129/64)) * T + sqrt(128 * T^2 + 256 * T + (149/4)) * T + 248 * sqrt(128 * T^2 + 384 * T + 128) * T - 96 * sqrt(128 * T^2 + 384 * T + 4) * T + 32 * sqrt(128 * T^2 + 256 * T + 8) * T - 9 * sqrt(128 * T^2 + 384 * T + (291/8)) * T - 63 * sqrt(128 * T^2 + 384 * T + (71/2)) * T + sqrt(128 * T^2 + 384 * T - (363/4)) * T - 3 * sqrt(128 * T^2 + 384 * T + (283/8)) * T + sqrt(128 * T^2 + 384 * T - (355/4)) * T - 90 * sqrt(128 * T^2 + 384 * T + 1) * T + 31 * sqrt(128 * T^2 + 384 * T - 123) * T - 3 * sqrt(128 * T^2 + 384 * T) * T + sqrt(128 * T^2 + 384 * T - 124) * T + 4 * sqrt(128 * T^2 + 384 * T - (725/8)) * T + 21 * sqrt(128 * T^2 + 384 * T - (183/2)) * T + sqrt(128 * T^2 + 384 * T - (5807/64)) * T + sqrt(128 * T^2 + 384 * T - (961/8)) * T + 3 * sqrt(128 * T^2 + 256 * T + (323/8)) * T + 21 * sqrt(128 * T^2 + 256 * T + (79/2)) * T + sqrt(128 * T^2 + 256 * T + (315/8)) * T + sqrt(128 * T^2 + 256 * T + 1) * T - 180 * sqrt(256 * T + (3093/8)) * T^2 - 3 * sqrt(256 * T + (2077/8)) * T^2 + sqrt(256 * T + (1061/8)) * T^2 - 90 * sqrt(256 * T + 384) * T^2 - 3 * sqrt(256 * T + 281) * T^2 + sqrt(256 * T + 154) * T^2 + sqrt(256 * T + (2237/8)) * T^2 - 3 * sqrt(256 * T + 256) * T^2 + sqrt(256 * T + 253) * T^2 + sqrt(256 * T + (2053/8)) * T^2 + sqrt(256 * T + 277) * T^2 + sqrt(256 * T + 128) * T^2 + 186 * sqrt((1387/8)) * T^3 + 31 * sqrt((681/4)) * T^3 + 1302 * sqrt((345/2)) * T^3 + 62 * sqrt((11089/64)) * T^3 + 31 * sqrt((10833/64)) * T^3 + 2688 * sqrt((259/8)) * T^3 + 18816 * sqrt((63/2)) * T^3 + 62 * sqrt((1379/8)) * T^3 + 31 * sqrt((689/4)) * T^3 + 31 * sqrt((1127/8)) * T^3 + 60 * sqrt((4149/8)) * T^3 + 30 * sqrt(513) * T^3 + sqrt(481) * T^3 + sqrt(386) * T^3 + 31 * sqrt(137) * T^3 + 31744 * sqrt(3) * T^3 + 29568 * sqrt((21/8)) * T^3 + 288 * sqrt((269/8)) * T^3 + 2688 * sqrt((261/8)) * T^3 + 992 * sqrt(30) * T^3 + 96 * T^2 - 48 * sqrt(128 * T^2 + 384 * T + (1283/8)) - 252 * sqrt(128 * T^2 + 384 * T + (319/2)) - 8 * sqrt(128 * T^2 + 384 * T + (10257/64)) + 8 * sqrt(128 * T^2 + 384 * T + (267/8)) + 42 * sqrt(128 * T^2 + 384 * T + (65/2)) + 2 * sqrt(128 * T^2 + 384 * T + (2129/64)) - sqrt(128 * T^2 + 256 * T + (137/4)) - sqrt(128 * T^2 + 256 * T + (2129/64)) - sqrt(128 * T^2 + 256 * T + (149/4)) - 124 * sqrt(128 * T^2 + 384 * T + 128) + 64 * sqrt(128 * T^2 + 384 * T + 4) - 32 * sqrt(128 * T^2 + 256 * T + 8) + 6 * sqrt(128 * T^2 + 384 * T + (291/8)) + 42 * sqrt(128 * T^2 + 384 * T + (71/2)) - sqrt(128 * T^2 + 384 * T - (363/4)) + 2 * sqrt(128 * T^2 + 384 * T + (283/8)) - sqrt(128 * T^2 + 384 * T - (355/4)) + 60 * sqrt(128 * T^2 + 384 * T + 1) - 31 * sqrt(128 * T^2 + 384 * T - 123) + 2 * sqrt(128 * T^2 + 384 * T) - sqrt(128 * T^2 + 384 * T - 124) - 4 * sqrt(128 * T^2 + 384 * T - (725/8)) - 21 * sqrt(128 * T^2 + 384 * T - (183/2)) - sqrt(128 * T^2 + 384 * T - (5807/64)) - sqrt(128 * T^2 + 384 * T - (961/8)) - 3 * sqrt(128 * T^2 + 256 * T + (323/8)) - 21 * sqrt(128 * T^2 + 256 * T + (79/2)) - sqrt(128 * T^2 + 256 * T + (315/8)) - sqrt(128 * T^2 + 256 * T + 1) + 120 * sqrt(256 * T + (3093/8)) * T + 2 * sqrt(256 * T + (2077/8)) * T - sqrt(256 * T + (1061/8)) * T + 60 * sqrt(256 * T + 384) * T + 2 * sqrt(256 * T + 281) * T - sqrt(256 * T + 154) * T - sqrt(256 * T + (2237/8)) * T + 2 * sqrt(256 * T + 256) * T - sqrt(256 * T + 253) * T - sqrt(256 * T + (2053/8)) * T - sqrt(256 * T + 277) * T - sqrt(256 * T + 128) * T + 9 * sqrt((259/8)) * T^2 + 63 * sqrt((63/2)) * T^2 - 60 * sqrt((4149/8)) * T^2 - 30 * sqrt(513) * T^2 - sqrt(481) * T^2 - sqrt(386) * T^2 + 192 * sqrt((21/8)) * T^2",
+  "dmd_formula_latex": "12 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}} \\cdot T^{3} + 63 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}} \\cdot T^{3} + 2 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}} \\cdot T^{3} + 31 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 128} \\cdot T^{3} - 60 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}} \\cdot T^{2} - 315 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}} \\cdot T^{2} - 10 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}} \\cdot T^{2} + 4 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{267}{8}} \\cdot T^{2} + 21 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{65}{2}} \\cdot T^{2} + \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{2129}{64}} \\cdot T^{2} - 155 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 128} \\cdot T^{2} + 32 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 4} \\cdot T^{2} + 3 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{291}{8}} \\cdot T^{2} + 21 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{71}{2}} \\cdot T^{2} + \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{283}{8}} \\cdot T^{2} + 30 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 1} \\cdot T^{2} + \\sqrt{128 \\cdot T^{2} + 384 \\cdot T} \\cdot T^{2} + 60 \\cdot \\sqrt{256 \\cdot T + \\frac{3093}{8}} \\cdot T^{3} + \\sqrt{256 \\cdot T + \\frac{2077}{8}} \\cdot T^{3} + 30 \\cdot \\sqrt{256 \\cdot T + 384} \\cdot T^{3} + \\sqrt{256 \\cdot T + 281} \\cdot T^{3} + \\sqrt{256 \\cdot T + 256} \\cdot T^{3} + 96 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}} \\cdot T + 504 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}} \\cdot T + 16 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}} \\cdot T - 12 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{267}{8}} \\cdot T - 63 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{65}{2}} \\cdot T - 3 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{2129}{64}} \\cdot T + \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{137}{4}} \\cdot T + \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{2129}{64}} \\cdot T + \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{149}{4}} \\cdot T + 248 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 128} \\cdot T - 96 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 4} \\cdot T + 32 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + 8} \\cdot T - 9 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{291}{8}} \\cdot T - 63 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{71}{2}} \\cdot T + \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{363}{4}} \\cdot T - 3 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{283}{8}} \\cdot T + \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{355}{4}} \\cdot T - 90 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 1} \\cdot T + 31 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - 123} \\cdot T - 3 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T} \\cdot T + \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - 124} \\cdot T + 4 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{725}{8}} \\cdot T + 21 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{183}{2}} \\cdot T + \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{5807}{64}} \\cdot T + \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{961}{8}} \\cdot T + 3 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{323}{8}} \\cdot T + 21 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{79}{2}} \\cdot T + \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{315}{8}} \\cdot T + \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + 1} \\cdot T - 180 \\cdot \\sqrt{256 \\cdot T + \\frac{3093}{8}} \\cdot T^{2} - 3 \\cdot \\sqrt{256 \\cdot T + \\frac{2077}{8}} \\cdot T^{2} + \\sqrt{256 \\cdot T + \\frac{1061}{8}} \\cdot T^{2} - 90 \\cdot \\sqrt{256 \\cdot T + 384} \\cdot T^{2} - 3 \\cdot \\sqrt{256 \\cdot T + 281} \\cdot T^{2} + \\sqrt{256 \\cdot T + 154} \\cdot T^{2} + \\sqrt{256 \\cdot T + \\frac{2237}{8}} \\cdot T^{2} - 3 \\cdot \\sqrt{256 \\cdot T + 256} \\cdot T^{2} + \\sqrt{256 \\cdot T + 253} \\cdot T^{2} + \\sqrt{256 \\cdot T + \\frac{2053}{8}} \\cdot T^{2} + \\sqrt{256 \\cdot T + 277} \\cdot T^{2} + \\sqrt{256 \\cdot T + 128} \\cdot T^{2} + 186 \\cdot \\sqrt{\\frac{1387}{8}} \\cdot T^{3} + 31 \\cdot \\sqrt{\\frac{681}{4}} \\cdot T^{3} + 1302 \\cdot \\sqrt{\\frac{345}{2}} \\cdot T^{3} + 62 \\cdot \\sqrt{\\frac{11089}{64}} \\cdot T^{3} + 31 \\cdot \\sqrt{\\frac{10833}{64}} \\cdot T^{3} + 2688 \\cdot \\sqrt{\\frac{259}{8}} \\cdot T^{3} + 18816 \\cdot \\sqrt{\\frac{63}{2}} \\cdot T^{3} + 62 \\cdot \\sqrt{\\frac{1379}{8}} \\cdot T^{3} + 31 \\cdot \\sqrt{\\frac{689}{4}} \\cdot T^{3} + 31 \\cdot \\sqrt{\\frac{1127}{8}} \\cdot T^{3} + 60 \\cdot \\sqrt{\\frac{4149}{8}} \\cdot T^{3} + 30 \\cdot \\sqrt{513} \\cdot T^{3} + \\sqrt{481} \\cdot T^{3} + \\sqrt{386} \\cdot T^{3} + 31 \\cdot \\sqrt{137} \\cdot T^{3} + 31744 \\cdot \\sqrt{3} \\cdot T^{3} + 29568 \\cdot \\sqrt{\\frac{21}{8}} \\cdot T^{3} + 288 \\cdot \\sqrt{\\frac{269}{8}} \\cdot T^{3} + 2688 \\cdot \\sqrt{\\frac{261}{8}} \\cdot T^{3} + 992 \\cdot \\sqrt{30} \\cdot T^{3} + 96 \\cdot T^{2} - 48 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{1283}{8}} - 252 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{319}{2}} - 8 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{10257}{64}} + 8 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{267}{8}} + 42 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{65}{2}} + 2 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{2129}{64}} - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{137}{4}} - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{2129}{64}} - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{149}{4}} - 124 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 128} + 64 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 4} - 32 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + 8} + 6 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{291}{8}} + 42 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{71}{2}} - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{363}{4}} + 2 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + \\frac{283}{8}} - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{355}{4}} + 60 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T + 1} - 31 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - 123} + 2 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T} - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - 124} - 4 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{725}{8}} - 21 \\cdot \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{183}{2}} - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{5807}{64}} - \\sqrt{128 \\cdot T^{2} + 384 \\cdot T - \\frac{961}{8}} - 3 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{323}{8}} - 21 \\cdot \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{79}{2}} - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + \\frac{315}{8}} - \\sqrt{128 \\cdot T^{2} + 256 \\cdot T + 1} + 120 \\cdot \\sqrt{256 \\cdot T + \\frac{3093}{8}} \\cdot T + 2 \\cdot \\sqrt{256 \\cdot T + \\frac{2077}{8}} \\cdot T - \\sqrt{256 \\cdot T + \\frac{1061}{8}} \\cdot T + 60 \\cdot \\sqrt{256 \\cdot T + 384} \\cdot T + 2 \\cdot \\sqrt{256 \\cdot T + 281} \\cdot T - \\sqrt{256 \\cdot T + 154} \\cdot T - \\sqrt{256 \\cdot T + \\frac{2237}{8}} \\cdot T + 2 \\cdot \\sqrt{256 \\cdot T + 256} \\cdot T - \\sqrt{256 \\cdot T + 253} \\cdot T - \\sqrt{256 \\cdot T + \\frac{2053}{8}} \\cdot T - \\sqrt{256 \\cdot T + 277} \\cdot T - \\sqrt{256 \\cdot T + 128} \\cdot T + 9 \\cdot \\sqrt{\\frac{259}{8}} \\cdot T^{2} + 63 \\cdot \\sqrt{\\frac{63}{2}} \\cdot T^{2} - 60 \\cdot \\sqrt{\\frac{4149}{8}} \\cdot T^{2} - 30 \\cdot \\sqrt{513} \\cdot T^{2} - \\sqrt{481} \\cdot T^{2} - \\sqrt{386} \\cdot T^{2} + 192 \\cdot \\sqrt{\\frac{21}{8}} \\cdot T^{2}",
+  "parallel": null,
+  "notes": [
+    "Barvinok runs inside a context initialized with `--approximation-method=scale`.",
+    "Reuse intervals are computed from the symbolic access relation, following the autolala-style Barvinok construction.",
+    "Reuse distance is derived from the cardinality of the access-image inside each reuse interval window, without Denning recursion.",
+    "The compulsory-access term is modeled separately as total accesses minus warm reuses.",
+    "Filtered 99 DMD region(s) whose domains add equality or upper-bound constraints on named scaling dimensions.",
+    "Filtered 5 RI region(s) whose domains add equality or upper-bound constraints on named scaling dimensions."
+  ]
+}
